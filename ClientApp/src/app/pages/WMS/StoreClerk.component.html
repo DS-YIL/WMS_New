@@ -1,0 +1,126 @@
+<h5>GRN Posting</h5>
+<div style="text-align: center;">
+  <button type="button" class="btn btn-primary" (click)="scanBarcode()" label="Save">Scan Barcode</button>
+</div>
+
+<div *ngIf="podetailsList.length>0">
+  <div class="row " style="margin-top:10px">
+    <div class="col-md-3 pt-2">
+      PO No : <span style="color:#dc3545;">{{podetailsList[0].pono}}</span>
+    </div>
+    <div class="col-md-3 pt-2">
+      Invoice No : <span style="color:#dc3545;">{{podetailsList[0].invoiceno}}</span>
+    </div>
+    <div class="col-md-3 pt-2">
+      GRN No : <span style="color:#dc3545;">{{grnnumber}}</span>
+    </div>
+  </div>
+</div>
+<br />
+<p-table #dt [value]="podetailsList">
+  <ng-template pTemplate="header">
+    <tr class="mprltbldata">
+      <th style="text-align:center;width:70px">S.No</th>
+      <!--<th>PO No</th>
+      <th>Invoice No</th>-->
+      <th style="text-align:center">Project Name</th>
+      <th style="text-align:center">Material</th>
+      <th style="text-align:center">Material Description</th>
+      <th style="text-align:center">PO Quantity</th>
+      <th style="text-align:center">Recieved Quantity</th>
+      <th style="text-align:center">Accepted Quantity</th>
+      <th style="text-align:center">Return Quantity</th>
+    </tr>
+    <tr>
+      <th></th>
+      <!--<th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'pono', 'contains')"></th>
+      <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'invoiceno', 'contains')"></th>-->
+      <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'projectcode', 'contains')"></th>
+      <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'material', 'contains')"></th>
+      <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'materialdescription', 'contains')"></th>
+      <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'quotationqty', 'contains')"></th>
+      <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'receivedqty', 'contains')"></th>
+      <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'confirmqty', 'contains')"></th>
+      <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'returnqty', 'contains')"></th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowData let-editing="editing" let-ri="rowIndex">
+    <tr>
+      <td class="ptable-cell" style="text-align:right">{{ri+1}}</td>
+      <!--<td class="ptable-cell">{{rowData.pono}}</td>
+      <td class="ptable-cell">{{rowData.invoiceno}}</td>-->
+      <td class="ptable-cell" style="text-align:center">{{rowData.projectcode}}</td>
+      <td class="ptable-cell" style="text-align:center">{{rowData.material}}</td>
+      <td class="ptable-cell" style="text-align:left">{{rowData.materialdescription}}</td>
+      <td class="ptable-cell" style="text-align:right">{{rowData.quotationqty}}</td>
+      <td class="ptable-cell"  style="text-align:right">
+        <span *ngIf="grnnumber">{{rowData.receivedqty}}</span>
+        <input *ngIf="!grnnumber" pInputText type="number" class="form-control" [(ngModel)]="rowData.receivedqty">
+      </td>
+      <td class="ptable-cell" style="text-align:right">
+        <span *ngIf="grnnumber">{{rowData.confirmqty}}</span>
+        <input *ngIf="!grnnumber" pInputText type="number" class="form-control" [(ngModel)]="rowData.confirmqty">
+      </td>
+      <td class="ptable-cell" style="text-align:right">
+        <span *ngIf="grnnumber">{{rowData.returnqty}}</span>
+        <input *ngIf="!grnnumber" style="text-align:right" pInputText type="number" class="form-control" [(ngModel)]="rowData.returnqty">
+      </td>
+      <!--<td class="ptable-cell">
+        <div style="text-align: center;">
+          <button type="button" class="btn btn-primary" (click)="onVerifyDetails(rowData)" label="Save">Verify</button>
+        </div>
+      </td>-->
+    </tr>
+  </ng-template>
+</p-table>
+<br />
+<br />
+<!--<div *ngIf="showDetails">
+  <div class="form-control" style="height:100%;border-radius:0px;">
+    <div class="row " style="margin-top:10px">
+      <div class="col-lg-4 col-md-4 col-sm-4 form-group">
+        <label class="form-label">PO No : </label>&nbsp;&nbsp;
+        <input class="form-control" type="text" [(ngModel)]="PoDetails.pono">
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-4 form-group">
+        <label class="form-label">Invoice No : </label>
+        <input class="form-control" type="text" [(ngModel)]="PoDetails.invoiceno">
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-4 form-group">
+        <label class="form-label">Quantity : </label>
+        <input class="form-control" type="text" [(ngModel)]="PoDetails.quotationqty">
+      </div>
+    </div>
+    <div class="row " style="margin-top:10px">
+      <div class="col-lg-4 col-md-4 col-sm-4 form-group">
+        <label class="form-label">Material : </label>
+        <input class="form-control" type="text" [(ngModel)]="PoDetails.material">
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-4 form-group">
+        <label class="form-label">Material Description : </label>
+        <input class="form-control" type="text" [(ngModel)]="PoDetails.materialdescription">
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-4 form-group">
+        <label class="form-label">Project : </label>
+        <input class="form-control" type="text" [(ngModel)]="PoDetails.projectcode">
+      </div>
+    </div>
+    <div class="row " style="margin-top:10px">
+    </div>
+    <div style="text-align: center;">
+      <button type="button" class="btn btn-success" (click)="onVerifyDetails()" label="Save">Verify</button>
+    </div>
+  </div>
+</div>-->
+
+<div class="footer">
+  <div class="row">
+    <div class="col-lg-4 col-md-4 col-sm-4">
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-4" style="margin-top:5px;margin-bottom:5px">
+      <button type="button" class="btn btn-primary" (click)="onsubmitGRN()">Post GRN </button>
+    </div>
+  </div>
+</div>
+
+

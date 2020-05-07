@@ -1,0 +1,222 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="checkponoexists" xml:space="preserve">
+    <value>select distinct* from wms.openpolistview openpo inner join wms.wms_inwardmaster inw on openpo.pono=inw.pono where openpo.pono='#pono'  order by receiveddate desc limit 1</value>
+    <comment>checkpono</comment>
+  </data>
+  <data name="GetdetailsByrequestid" xml:space="preserve">
+    <value>select * from wms.wms_issuerequest where requestid=#requestid</value>
+  </data>
+  <data name="GetListForMaterialRequestByapproverid" xml:space="preserve">
+    <value>select req.requestid,req.requesteddate,req.requesterid,po.projectname from wms.wms_issuerequest req inner join wms.openpolistview po on po.pono=req.pono 
+left join wms.employee emp on req.requesterid=emp.employeeno  where req.approverid='#approverid' group by req.requestid,req.requesteddate,req.requesterid,po.projectname</value>
+  </data>
+  <data name="GetListForMaterialRequestByrequesterid" xml:space="preserve">
+    <value>select * from wms.wms_issuerequest where requesterid='#requesterid'</value>
+  </data>
+  <data name="getnextrequestid" xml:space="preserve">
+    <value>select requestid from wms.wms_issuerequest order by requestid desc limit 1</value>
+  </data>
+  <data name="Getponodetailsformaterialissue" xml:space="preserve">
+    <value>select distinct* from wms.wms_inward inw inner join wms.wms_inwardmaster inwmaster on inwmaster.inwmasterid=inw.inwmasterid  
+where  inwmaster.pono='#pono'</value>
+    <comment>Getponodetailsformaterialissue</comment>
+  </data>
+  <data name="insertbarcodedata" xml:space="preserve">
+    <value>INSERT INTO wms.wms_barcodemaster(barcodeid,paitemid,barcode,createddate,createdby,deleteflag)VALUES(DEFAULT,@paitemid,@barcode,@createddate,@createdby,@deleteflag)returning barcodeid</value>
+    <comment>barcodedata insertion</comment>
+  </data>
+  <data name="insertinvoicedata" xml:space="preserve">
+    <value>INSERT INTO wms.wms_inwardmaster(pono,invoiceno,invoicedate,receivedby,receiveddate,deleteflag,barcodeid)VALUES(@pono,@invoiceno,@invoicedate,@receivedby,@receiveddate,@deleteflag,@barcodeid)</value>
+    <comment>invoice data insertion</comment>
+  </data>
+  <data name="materialquest" xml:space="preserve">
+    <value>INSERT INTO wms.wms_issuerequest(requestforissueid,paitemid,quantity,approveremailid,approverid,pono,materialid,requesterid,requestid,requestedquantity)VALUES(default,@paitemid,@quantity,@approveremailid,@approverid,@pono,@materialid,@requesterid,@requestid,@requestedquantity)</value>
+    <comment>insert material request data</comment>
+  </data>
+  <data name="openpolist" xml:space="preserve">
+    <value>select * from wms.openpolistview  where  approverid='#approverid' </value>
+    <comment>getopenpono list</comment>
+  </data>
+  <data name="Getdetailsforthreewaymatching" xml:space="preserve">
+    <value>select * from wms.wms_inward inw inner join wms.wms_inwardmaster inwa on inw.inwmasterid=inwa.inwmasterid inner join wms.openpolistview openpo on openpo.pono=inwa.pono where inwa.pono='#pono' limit 50</value>
+  </data>
+  <data name="getGRNNo" xml:space="preserve">
+    <value>select grnnumber from wms.wms_inwardmaster   where pono='#pono' and grnnumber is not null limit 1</value>
+  </data>
+  <data name="getinwmasterid" xml:space="preserve">
+    <value>select inwmasterid from wms.wms_inwardmaster where pono='#pono' limit 1</value>
+  </data>
+  <data name="getlocationasresponse" xml:space="preserve">
+    <value>select * from wms.wms_stock  stock 
+left join wms.wms_rd_bin bins on bins.binid=stock.binid
+left join wms.wms_rd_rack rack on rack.rackid=stock.rackid
+where itemid=#itemid</value>
+  </data>
+  <data name="insertforinvoicequery" xml:space="preserve">
+    <value>INSERT INTO wms.wms_inward(inwmasterid,poitemid,receiveddate,receivedby,returnqty,confirmqty,deleteflag)VALUES(@inwmasterid,@poitemid,@receiveddate,@receivedby,@returnqty,@confirmqty,@deleteflag)returning inwardid</value>
+  </data>
+  <data name="insertqueryforlocationhistory" xml:space="preserve">
+    <value>INSERT INTO wms.wms_storageallowcationhistorymaster(itemlocation,itemid,createddate,createdby)values(@itemlocation,@itemid,@createddate,@createdby)</value>
+  </data>
+  <data name="insertqueryforqualitycheck" xml:space="preserve">
+    <value>INSERT INTO wms.wms_qualitycheck(inwardid,quality,qtype,qcdate,qcby,remarks,deleteflag)VALUES(@inwardid,@quality,@qtype,@qcdate,@qcby,@remarks,@deleteflag)</value>
+  </data>
+  <data name="insertqueryforstatusforqty" xml:space="preserve">
+    <value>INSERT INTO wms.wms_trackstatus(pono,status,enteredon,returnqty)VALUES(@pono,'Quality and Quantity Checked',current_date,@returnqty)</value>
+  </data>
+  <data name="insertqueryforstatuswarehouse" xml:space="preserve">
+    <value>INSERT INTO wms.wms_trackstatus(pono,status,enteredon)VALUES(@pono,'WareHouse Checked',current_date)</value>
+  </data>
+  <data name="insertstock" xml:space="preserve">
+    <value>INSERT INTO wms.wms_stock(paitemid,pono,binid,vendorid,totalquantity,shelflife,availableqty,deleteflag,itemlocation,createddate,createdby)VALUES(@paitemid,@pono,@binid,@vendorid,@totalquantity,@shelflife,@availableqty,@deleteflag,@itemlocation,@createddate,@createdby)returning itemid</value>
+  </data>
+  <data name="lastinsertedgrn" xml:space="preserve">
+    <value>select * from  wms.wms_sequencemaster  where  enddate&gt;=current_date and id=1</value>
+  </data>
+  <data name="materialrequestquery" xml:space="preserve">
+    <value>select distinct * from   wms.wms_inward inw inner join  wms.wms_inwardmaster inwmaster on inw.inwmasterid = inwmaster.inwmasterid inner join wms.openpolistview openpo on openpo.pono = inwmaster.pono left join wms.wms_issuerequest req on req.pono = openpo.pono where req.ackstatus is not null</value>
+  </data>
+  <data name="queryforitemdetails" xml:space="preserve">
+    <value>select distinct * from wms.wms_inward inw 
+inner join wms.wms_inwardmaster inwa on inw.inwmasterid=inwa.inwmasterid 
+inner join wms.wms_stock stocks on stocks.pono=inwa.pono
+inner join wms.openpolistview openpo on openpo.pono=inwa.pono 
+where inwa.grnnumber='#grnnumber' limit 10</value>
+  </data>
+  <data name="statusupdatebySecurity" xml:space="preserve">
+    <value>INSERT INTO wms.wms_trackstatus(pono,status,enteredon)VALUES(@pono,'Security Check Done',current_date)</value>
+  </data>
+  <data name="updateackstatus" xml:space="preserve">
+    <value>update  wms.wms_issuerequest set ackstatus=@ackstatus,ackremarks=@ackremarks where requestforissueid=@requestforissueid and materialid=@materialid</value>
+  </data>
+  <data name="updateapproverstatus" xml:space="preserve">
+    <value>update  wms.wms_issuerequest set approvedstatus=@approverstatus,approveddate=@approveddate,issuedquantity=@issuedquantity where requestforissueid=#requestforissueid and materialid='#materialid'</value>
+  </data>
+  <data name="updategrnnumber" xml:space="preserve">
+    <value>update wms.wms_inwardmaster set grnnumber=@grnnumber,grndate=current_date where invoiceno='#invoiceno' and pono='#pono'</value>
+  </data>
+  <data name="updateseqnumber" xml:space="preserve">
+    <value>update wms.wms_sequencemaster set sequencenumber=@grnnextsequence where id=@id</value>
+  </data>
+  <data name="Verifythreewaymatch" xml:space="preserve">
+    <value>select Count(*) from wms.wms_inwardmaster inw inner join wms.openpolistview openpo on inw.pono=openpo.pono where inw.invoiceno='#invoiceno' and openpo.pono='#pono' and openpo.projectcode='#projectcode' and openpo.quotationqty=#quantity and openpo.material='#material'</value>
+  </data>
+</root>
