@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
@@ -13,13 +13,14 @@ import { Text } from '@angular/compiler/src/i18n/i18n_ast';
 })
 export class wmsService {
 
-  public url = this.constants.url;
+  public url = "";
   public httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
   private currentUserSubject: BehaviorSubject<Employee>;
   public currentUser: Observable<Employee>;
-  constructor(private http: HttpClient, private constants: constants) {
+  constructor(private http: HttpClient, private constants: constants, @Inject('BASE_URL') baseUrl: string) {
     this.currentUserSubject = new BehaviorSubject<Employee>(JSON.parse(localStorage.getItem('Employee')));
     this.currentUser = this.currentUserSubject.asObservable();
+    this.url = baseUrl;
   }
   public get currentUserValue(): Employee {
     return this.currentUserSubject.value;
