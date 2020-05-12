@@ -12,6 +12,7 @@ import { MaterialRequestComponent } from './WMS/MaterialRequest.component';
 import { MaterialIssueDashBoardComponent } from './WMS/MaterialIssueDashBoard.component';
 import { MaterialIssueComponent } from './WMS/MaterialIssue.component';
 import { HomeComponent } from './Home/Home.component';
+import { GatePassComponent } from './WMS/Gatepass.component';
 
 const routes: Routes = [{
   path: '',
@@ -35,7 +36,8 @@ const routes: Routes = [{
     { path: "MaterialRequest", component: MaterialRequestComponent, canActivate: [AuthGuard] },
     { path: 'MaterialRequest/:pono', component: MaterialRequestComponent, canActivate: [AuthGuard] },
     { path: "MaterialIssueDashboard", component: MaterialIssueDashBoardComponent, canActivate: [AuthGuard] },
-    { path: "MaterialIssue/:requestid", component: MaterialIssueComponent, canActivate: [AuthGuard] }
+    { path: "MaterialIssue/:requestid", component: MaterialIssueComponent, canActivate: [AuthGuard] },
+    { path: "GatePass", component: GatePassComponent, canActivate: [AuthGuard] },
   ],
 }];
 

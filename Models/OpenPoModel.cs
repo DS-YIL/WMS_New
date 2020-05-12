@@ -109,6 +109,7 @@ namespace WMS.Models
 	{
 		public string tableName { get; set; }
 		public string searchCondition { get; set; }
+		public  string query { get; set; }
 
 	}
    

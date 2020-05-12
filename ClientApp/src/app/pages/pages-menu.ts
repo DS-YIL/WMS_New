@@ -31,6 +31,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'home-outline',
     link: '/WMS/Dashboard'
   },
+  {
+    title: 'Gate Pass',
+    icon: 'list-outline',
+    link: '/WMS/GatePass'
+  },
   //{
   //  title: 'Material Request',
   //  link: '/WMS/MaterialRequest',

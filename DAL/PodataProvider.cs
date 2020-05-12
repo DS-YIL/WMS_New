@@ -419,7 +419,11 @@ namespace WMS.DAL
                     pgsql.OpenAsync();
                     DataTable dataTable = new DataTable();
                     IDbCommand selectCommand = pgsql.CreateCommand();
-                    selectCommand.CommandText = "select * from " + Result.tableName + Result.searchCondition + "";
+                    string query = "";
+                    query = "select * from " + Result.tableName + Result.searchCondition + "";
+                    if (!string.IsNullOrEmpty(Result.query))
+                        query = Result.query;
+                    selectCommand.CommandText = query;
                     IDbDataAdapter dbDataAdapter = new NpgsqlDataAdapter();
                     dbDataAdapter.SelectCommand = selectCommand;
 

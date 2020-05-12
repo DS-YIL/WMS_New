@@ -16,6 +16,7 @@ import { ListboxModule } from 'primeng/listbox';
 import { CalendarModule } from 'primeng/calendar';
 import { CheckboxModule } from 'primeng/checkbox';
 import { TooltipModule } from 'primeng/tooltip';
+import { AutoCompleteModule } from 'primeng/autocomplete';
 
 import { PagesComponent } from './pages.component';
 import { LoginComponent } from './Home/Login.component';
@@ -28,7 +29,7 @@ import { WarehouseInchargeComponent } from './WMS/WarehouseIncharge.component';
 import { MaterialRequestComponent } from './WMS/MaterialRequest.component';
 import { MaterialIssueDashBoardComponent } from './WMS/MaterialIssueDashBoard.component';
 import { MaterialIssueComponent } from './WMS/MaterialIssue.component';
-
+import { GatePassComponent } from './WMS/Gatepass.component';
 
 @NgModule({
   imports: [
@@ -48,7 +49,8 @@ import { MaterialIssueComponent } from './WMS/MaterialIssue.component';
     ListboxModule,
     CalendarModule,
     CheckboxModule,
-    TooltipModule
+    TooltipModule,
+    AutoCompleteModule
   ],
   declarations: [
     SelectfilterPipe,
@@ -63,7 +65,8 @@ import { MaterialIssueComponent } from './WMS/MaterialIssue.component';
     WarehouseInchargeComponent,
     MaterialRequestComponent,
     MaterialIssueDashBoardComponent,
-    MaterialIssueComponent
+    MaterialIssueComponent,
+    GatePassComponent
   ],
   providers: [MessageService, ConfirmationService],
   entryComponents: [ConfirmationDialogComponent]

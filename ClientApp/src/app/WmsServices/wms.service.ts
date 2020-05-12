@@ -45,8 +45,7 @@ export class wmsService {
   }
 
   GetListItems(search: DynamicSearchResult): Observable<any> {
-    const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
-    return this.http.post<any>(this.url + 'POData/GetListItems/', search, httpOptions);
+    return this.http.post<any>(this.url + 'POData/GetListItems/', search, this.httpOptions);
   }
 
   getPoDetails(PoNo: string): Observable<any> {
@@ -107,6 +106,9 @@ export class wmsService {
     return this.http.post<any>(this.url + 'POData/ackmaterialreceived/', materialAckList, this.httpOptions);
   }
 
+  getGatePassList(): Observable<any> {
+    return this.http.get<any>(this.url + 'POData/getGatePassList/', this.httpOptions);
+  }
 
   logout() {
     //localStorage.removeItem('Employee');

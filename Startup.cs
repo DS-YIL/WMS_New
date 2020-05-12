@@ -1,13 +1,9 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
 using WMS.DAL;
 using WMS.Helpers;
 using WMS.Interfaces;
@@ -30,6 +26,9 @@ namespace WMS
 			services.AddControllersWithViews();
 			services.AddScoped<IUserService, LoginDataProvider>();
 			services.AddScoped<IPodataService<OpenPoModel>, PodataProvider>();
+			services.AddControllers().AddNewtonsoftJson(options =>
+	options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+);
 			// In production, the Angular files will be served from this directory
 			services.AddSpaStaticFiles(configuration =>
 			{
@@ -40,7 +39,7 @@ namespace WMS
 
 			// configure jwt authentication
 			var appSettings = appSettingsSection.Get<AppSettings>();
-			
+
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -63,7 +62,7 @@ namespace WMS
 			{
 				app.UseSpaStaticFiles();
 			}
-			
+
 			app.UseRouting();
 
 			app.UseEndpoints(endpoints =>

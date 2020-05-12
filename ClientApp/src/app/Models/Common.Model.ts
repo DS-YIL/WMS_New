@@ -22,6 +22,7 @@ export class Login {
 export class DynamicSearchResult {
   tableName: string;
   searchCondition: string;
+  query: string;
 }
 
 export class searchParams {
