@@ -159,6 +159,7 @@ namespace WMS.Models
         public int gatepassmaterialid { get; set; }
         public string    materialid { get; set; }
         public int quantity { get; set; }
-    }
+		public string name { get; set; }
+	}
 
 }

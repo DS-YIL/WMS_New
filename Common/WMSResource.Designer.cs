@@ -88,7 +88,7 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to select * from wms.wms_gatepass gate left join wms.wms_gatepassmaterial mat on gate.gatepassid=mat.gatepassid where gate.deleteflag=false.
+        ///   Looks up a localized string similar to select emp.name,* from wms.wms_gatepass gate left join wms.wms_gatepassmaterial mat on gate.gatepassid=mat.gatepassid left join wms.employee emp on emp.employeeno=gate.creatorid where gate.deleteflag=false.
         /// </summary>
         public static string getgatepasslist {
             get {
@@ -179,6 +179,15 @@ namespace WMS.Common {
         public static string insertforinvoicequery {
             get {
                 return ResourceManager.GetString("insertforinvoicequery", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to insert into wms.wms_gatepass(gatepassid, gatepasstype, status, referenceno, vehicleno, creatorid, createddate)values(default,@gatepasstype,@status,@referenceno,@creatorid,@createddate).
+        /// </summary>
+        public static string insertgatepassdata {
+            get {
+                return ResourceManager.GetString("insertgatepassdata", resourceCulture);
             }
         }
         

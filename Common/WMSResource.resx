@@ -220,6 +220,9 @@ where inwa.grnnumber='#grnnumber' limit 10</value>
     <value>select Count(*) from wms.wms_inwardmaster inw inner join wms.openpolistview openpo on inw.pono=openpo.pono where inw.invoiceno='#invoiceno' and openpo.pono='#pono' and openpo.projectcode='#projectcode' and openpo.quotationqty=#quantity and openpo.material='#material'</value>
   </data>
   <data name="getgatepasslist" xml:space="preserve">
-    <value>select * from wms.wms_gatepass gate left join wms.wms_gatepassmaterial mat on gate.gatepassid=mat.gatepassid where gate.deleteflag=false</value>
+    <value>select emp.name,* from wms.wms_gatepass gate left join wms.wms_gatepassmaterial mat on gate.gatepassid=mat.gatepassid left join wms.employee emp on emp.employeeno=gate.creatorid where gate.deleteflag=false</value>
+  </data>
+  <data name="insertgatepassdata" xml:space="preserve">
+    <value>insert into wms.wms_gatepass(gatepassid, gatepasstype, status, referenceno, vehicleno, creatorid, createddate)values(default,@gatepasstype,@status,@referenceno,@creatorid,@createddate)</value>
   </data>
 </root>
