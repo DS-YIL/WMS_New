@@ -154,12 +154,13 @@ namespace WMS.Models
         public string status { get; set; }
         public string referenceno { get; set; }
         public string vehicleno { get; set; }
-        public int creatorid { get; set; }
+        public string creatorid { get; set; }
         public DateTime createddate { get; set; }
         public int gatepassmaterialid { get; set; }
         public string    materialid { get; set; }
         public int quantity { get; set; }
 		public string name { get; set; }
+		public bool deleteflag { get; set; }
 	}
 
 }

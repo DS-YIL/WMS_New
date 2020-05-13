@@ -192,7 +192,7 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to insert into wms.wms_gatepassmaterial(gatepassmaterialid,gatepassid,materialid,quantity)values(default,@gatepassid,@materialid,@quantity).
+        ///   Looks up a localized string similar to insert into wms.wms_gatepassmaterial(gatepassmaterialid,gatepassid,materialid,quantity,deleteflag)values(default,@gatepassid,@materialid,@quantity,@deleteflag).
         /// </summary>
         public static string insertgatepassmaterial {
             get {
@@ -327,6 +327,24 @@ namespace WMS.Common {
         public static string updateapproverstatus {
             get {
                 return ResourceManager.GetString("updateapproverstatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to update wms.wms_gatepass set gatepasstype=@gatepasstype,status=@status,referenceno=@referenceno,vehicleno=@vehicleno,creatorid=@creatorid where gatepassid=#gatepassid.
+        /// </summary>
+        public static string updategatepass {
+            get {
+                return ResourceManager.GetString("updategatepass", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to update wms.wms_gatepassmaterial set gatepassid=@gatepassid,materialid=@materialid,quantity=@quantity where gatepassmaterialid=#gatepassmaterialid.
+        /// </summary>
+        public static string updategatepassmaterial {
+            get {
+                return ResourceManager.GetString("updategatepassmaterial", resourceCulture);
             }
         }
         

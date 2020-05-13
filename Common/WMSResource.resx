@@ -226,6 +226,12 @@ where inwa.grnnumber='#grnnumber' limit 10</value>
     <value>insert into wms.wms_gatepass(gatepassid, gatepasstype, status, referenceno, vehicleno, creatorid, createddate,deleteflag)values(default,@gatepasstype,@status,@referenceno,@vehicleno, @creatorid,@createddate,@deleteflag)</value>
   </data>
   <data name="insertgatepassmaterial" xml:space="preserve">
-    <value>insert into wms.wms_gatepassmaterial(gatepassmaterialid,gatepassid,materialid,quantity)values(default,@gatepassid,@materialid,@quantity)</value>
+    <value>insert into wms.wms_gatepassmaterial(gatepassmaterialid,gatepassid,materialid,quantity,deleteflag)values(default,@gatepassid,@materialid,@quantity,@deleteflag)</value>
+  </data>
+  <data name="updategatepass" xml:space="preserve">
+    <value>update wms.wms_gatepass set gatepasstype=@gatepasstype,status=@status,referenceno=@referenceno,vehicleno=@vehicleno,creatorid=@creatorid where gatepassid=#gatepassid</value>
+  </data>
+  <data name="updategatepassmaterial" xml:space="preserve">
+    <value>update wms.wms_gatepassmaterial set gatepassid=@gatepassid,materialid=@materialid,quantity=@quantity where gatepassmaterialid=#gatepassmaterialid</value>
   </data>
 </root>
