@@ -223,6 +223,9 @@ where inwa.grnnumber='#grnnumber' limit 10</value>
     <value>select emp.name,* from wms.wms_gatepass gate left join wms.wms_gatepassmaterial mat on gate.gatepassid=mat.gatepassid left join wms.employee emp on emp.employeeno=gate.creatorid where gate.deleteflag=false</value>
   </data>
   <data name="insertgatepassdata" xml:space="preserve">
-    <value>insert into wms.wms_gatepass(gatepassid, gatepasstype, status, referenceno, vehicleno, creatorid, createddate)values(default,@gatepasstype,@status,@referenceno,@creatorid,@createddate)</value>
+    <value>insert into wms.wms_gatepass(gatepassid, gatepasstype, status, referenceno, vehicleno, creatorid, createddate,deleteflag)values(default,@gatepasstype,@status,@referenceno,@vehicleno, @creatorid,@createddate,@deleteflag)</value>
+  </data>
+  <data name="insertgatepassmaterial" xml:space="preserve">
+    <value>insert into wms.wms_gatepassmaterial(gatepassmaterialid,gatepassid,materialid,quantity)values(default,@gatepassid,@materialid,@quantity)</value>
   </data>
 </root>

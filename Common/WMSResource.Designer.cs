@@ -183,11 +183,20 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to insert into wms.wms_gatepass(gatepassid, gatepasstype, status, referenceno, vehicleno, creatorid, createddate)values(default,@gatepasstype,@status,@referenceno,@creatorid,@createddate).
+        ///   Looks up a localized string similar to insert into wms.wms_gatepass(gatepassid, gatepasstype, status, referenceno, vehicleno, creatorid, createddate,deleteflag)values(default,@gatepasstype,@status,@referenceno,@vehicleno, @creatorid,@createddate,@deleteflag).
         /// </summary>
         public static string insertgatepassdata {
             get {
                 return ResourceManager.GetString("insertgatepassdata", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to insert into wms.wms_gatepassmaterial(gatepassmaterialid,gatepassid,materialid,quantity)values(default,@gatepassid,@materialid,@quantity).
+        /// </summary>
+        public static string insertgatepassmaterial {
+            get {
+                return ResourceManager.GetString("insertgatepassmaterial", resourceCulture);
             }
         }
         

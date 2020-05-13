@@ -125,9 +125,15 @@ namespace WMS.Controllers
 
         }
         [HttpGet("getgatepasslist")]
-        public async Task<IEnumerable<getepassModel>> getgatepasslist()
+        public async Task<IEnumerable<gatepassModel>> getgatepasslist()
         {
             return await this._poService.GetgatepassList();
+        }
+
+        [HttpPost("saveoreditgatepassmaterial")]
+        public int saveorupdate([FromBody] List<gatepassModel> obj)
+        {
+            return  this._poService.SaveOrUpdateGatepassDetails(obj);
         }
     }
 }

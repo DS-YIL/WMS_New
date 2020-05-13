@@ -147,7 +147,7 @@ namespace WMS.Models
         public int year { get; set; }
         public int sequencenumber { get; set; }
     }
-    public class getepassModel
+    public class gatepassModel
     {
         public int gatepassid { get; set; }
         public string gatepasstype { get; set; }

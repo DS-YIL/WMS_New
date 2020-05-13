@@ -862,7 +862,7 @@ namespace WMS.DAL
             }
         }
 
-        public async Task<IEnumerable<getepassModel>> GetgatepassList()
+        public async Task<IEnumerable<gatepassModel>> GetgatepassList()
         {
             using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
             {
@@ -872,7 +872,7 @@ namespace WMS.DAL
                     string query = WMSResource.getgatepasslist;
 
                     await pgsql.OpenAsync();
-                    return await pgsql.QueryAsync<getepassModel>(
+                    return await pgsql.QueryAsync<gatepassModel>(
                        query, null, commandType: CommandType.Text);
 
 
@@ -890,9 +890,47 @@ namespace WMS.DAL
             }
         }
 
-        public int SaveOrUpdateGatepassDetails(List<getepassModel> dataobj)
+        public int SaveOrUpdateGatepassDetails(List<gatepassModel> dataobj)
         {
-            throw new NotImplementedException();
+            try
+            {
+                foreach(var item in dataobj)
+                { 
+                   
+                item.createddate = System.DateTime.Now;
+                string insertquery = WMSResource.insertgatepassdata;
+                    
+                    using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
+                    {
+                        var result = DB.ExecuteScalar(insertquery, new
+                        {
+
+                            item.gatepasstype,
+                            item.status,
+                            item.createddate,
+                            item.referenceno,
+                            item.vehicleno,
+                            item.creatorid,
+                            
+                        });
+                        string insertqueryforinvoice = WMSResource.insertgatepassmaterial;
+                      
+                            var results = DB.ExecuteScalar(insertqueryforinvoice, new
+                            {
+
+                                item.gatepassid,
+                                item.materialid,
+                                item.quantity,
+                            });
+                    }
+                }
+                return (1);
+            }
+            catch (Exception Ex)
+            {
+                log.ErrorMessage("PODataProvider", "SaveOrUpdateGatepassDetails", Ex.StackTrace.ToString());
+                return 0;
+            }
         }
     }
 }
