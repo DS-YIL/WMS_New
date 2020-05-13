@@ -19,7 +19,7 @@ namespace WMS.Common {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class WMSResource {
@@ -84,6 +84,15 @@ namespace WMS.Common {
         public static string Getdetailsforthreewaymatching {
             get {
                 return ResourceManager.GetString("Getdetailsforthreewaymatching", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to select * from wms.wms_gatepass gate left join wms.wms_gatepassmaterial mat on gate.gatepassid=mat.gatepassid where gate.deleteflag=false.
+        /// </summary>
+        public static string getgatepasslist {
+            get {
+                return ResourceManager.GetString("getgatepasslist", resourceCulture);
             }
         }
         

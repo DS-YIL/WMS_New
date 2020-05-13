@@ -26,5 +26,7 @@ namespace WMS.Interfaces
         Task<IEnumerable<IssueRequestModel>> GetPonodetails(string pono);
         int updaterequestedqty(List<IssueRequestModel> dataobj);
         int ApproveMaterialissue(List<IssueRequestModel> dataobj);
+        Task<IEnumerable<getepassModel>> GetgatepassList();
+        int SaveOrUpdateGatepassDetails(List<getepassModel> dataobj);
     }
 }

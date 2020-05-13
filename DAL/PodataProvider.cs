@@ -861,5 +861,38 @@ namespace WMS.DAL
                 return 0;
             }
         }
+
+        public async Task<IEnumerable<getepassModel>> GetgatepassList()
+        {
+            using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
+            {
+
+                try
+                {
+                    string query = WMSResource.getgatepasslist;
+
+                    await pgsql.OpenAsync();
+                    return await pgsql.QueryAsync<getepassModel>(
+                       query, null, commandType: CommandType.Text);
+
+
+                }
+                catch (Exception Ex)
+                {
+                    log.ErrorMessage("PODataProvider", "GetgatepassList", Ex.StackTrace.ToString());
+                    return null;
+                }
+                finally
+                {
+                    pgsql.Close();
+                }
+
+            }
+        }
+
+        public int SaveOrUpdateGatepassDetails(List<getepassModel> dataobj)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

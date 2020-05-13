@@ -147,5 +147,18 @@ namespace WMS.Models
         public int year { get; set; }
         public int sequencenumber { get; set; }
     }
+    public class getepassModel
+    {
+        public int gatepassid { get; set; }
+        public string gatepasstype { get; set; }
+        public string status { get; set; }
+        public string referenceno { get; set; }
+        public string vehicleno { get; set; }
+        public int creatorid { get; set; }
+        public DateTime createddate { get; set; }
+        public int gatepassmaterialid { get; set; }
+        public string    materialid { get; set; }
+        public int quantity { get; set; }
+    }
 
 }

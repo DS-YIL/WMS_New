@@ -122,6 +122,12 @@ namespace WMS.Controllers
         public int approvematerial([FromBody] List<IssueRequestModel> data)
         {
             return this._poService.ApproveMaterialissue(data);
+
+        }
+        [HttpGet("getgatepasslist")]
+        public async Task<IEnumerable<getepassModel>> getgatepasslist()
+        {
+            return await this._poService.GetgatepassList();
         }
     }
 }
