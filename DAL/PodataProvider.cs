@@ -890,58 +890,58 @@ namespace WMS.DAL
             }
         }
 
-        public int SaveOrUpdateGatepassDetails(List<gatepassModel> dataobj)
+        public int SaveOrUpdateGatepassDetails(gatepassModel dataobj)
         {
             try
             {
-                foreach(var item in dataobj)
+                foreach(var item in dataobj._list)
                 {
                     if (item.gatepassmaterialid == 0)
                     {
-                        item.createddate = System.DateTime.Now;
+                        dataobj.createddate = System.DateTime.Now;
                         string insertquery = WMSResource.insertgatepassdata;
-                        item.deleteflag = false;
+                        dataobj.deleteflag = false;
                         using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
                         {
                             var result = DB.ExecuteScalar(insertquery, new
                             {
 
-                                item.gatepasstype,
-                                item.status,
-                                item.createddate,
-                                item.referenceno,
-                                item.vehicleno,
-                                item.creatorid,
-                                item.deleteflag,
+                                dataobj.gatepasstype,
+                                dataobj.status,
+                                dataobj.createddate,
+                                dataobj.referenceno,
+                                dataobj.vehicleno,
+                                dataobj.creatorid,
+                                dataobj.deleteflag,
                             });
                             string insertqueryforinvoice = WMSResource.insertgatepassmaterial;
 
                             var results = DB.ExecuteScalar(insertqueryforinvoice, new
                             {
 
-                                item.gatepassid,
+                                dataobj.gatepassid,
                                 item.materialid,
                                 item.quantity,
-                                item.deleteflag
+                                dataobj.deleteflag
                             });
                         }
                     }
                     else
                     {
-                        item.createddate = System.DateTime.Now;
-                        string insertquery = WMSResource.updategatepass.Replace("#gatepassid",Convert.ToString(item.gatepassid));
+                        dataobj.createddate = System.DateTime.Now;
+                        string insertquery = WMSResource.updategatepass.Replace("#gatepassid",Convert.ToString(dataobj.gatepassid));
 
                         using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
                         {
                             var result = DB.ExecuteScalar(insertquery, new
                             {
 
-                                item.gatepasstype,
-                                item.status,
-                                item.createddate,
-                                item.referenceno,
-                                item.vehicleno,
-                                item.creatorid,
+                                dataobj.gatepasstype,
+                                dataobj.status,
+                                dataobj.createddate,
+                                dataobj.referenceno,
+                                dataobj.vehicleno,
+                                dataobj.creatorid,
 
                             });
                             string insertqueryforinvoice = WMSResource.updategatepassmaterial.Replace("#gatepassmaterialid",Convert.ToString(item.gatepassmaterialid));
@@ -949,7 +949,7 @@ namespace WMS.DAL
                             var results = DB.ExecuteScalar(insertqueryforinvoice, new
                             {
 
-                                item.gatepassid,
+                                dataobj.gatepassid,
                                 item.materialid,
                                 item.quantity,
                             });

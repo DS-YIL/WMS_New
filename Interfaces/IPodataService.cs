@@ -27,6 +27,6 @@ namespace WMS.Interfaces
         int updaterequestedqty(List<IssueRequestModel> dataobj);
         int ApproveMaterialissue(List<IssueRequestModel> dataobj);
         Task<IEnumerable<gatepassModel>> GetgatepassList();
-        int SaveOrUpdateGatepassDetails(List<gatepassModel> dataobj);
+        int SaveOrUpdateGatepassDetails(gatepassModel dataobj);
     }
 }

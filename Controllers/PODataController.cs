@@ -131,7 +131,7 @@ namespace WMS.Controllers
         }
 
         [HttpPost("saveoreditgatepassmaterial")]
-        public int saveorupdate([FromBody] List<gatepassModel> obj)
+        public int saveorupdate([FromBody] gatepassModel obj)
         {
             return  this._poService.SaveOrUpdateGatepassDetails(obj);
         }

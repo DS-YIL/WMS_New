@@ -161,6 +161,14 @@ namespace WMS.Models
         public int quantity { get; set; }
 		public string name { get; set; }
 		public bool deleteflag { get; set; }
+		public List<materialistModel> _list { get; set; }
 	}
+	public class materialistModel
+	{
+		public string materialid { get; set; }
+		public int quantity { get; set; }
+		public int gatepassmaterialid { get; set; }
+	}
+
 
 }
