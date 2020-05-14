@@ -107,7 +107,18 @@ export class wmsService {
   }
 
   getGatePassList(): Observable<any> {
-    return this.http.get<any>(this.url + 'POData/getGatePassList/', this.httpOptions);
+    return this.http.get<any>(this.url + 'POData/getgatepasslist/', this.httpOptions);
+  }
+ 
+  checkMaterialandQty(material, qty): Observable<any> {
+    const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }), responseType: 'text' as any };
+    return this.http.get<any>(this.url + 'POData/checkmaterialandqty?material=' + material + '&qty=' + qty + '', httpOptions);
+  }
+  saveoreditgatepassmaterial(gatepassList: any): Observable<any> {
+    return this.http.post<any>(this.url + 'POData/saveoreditgatepassmaterial/', gatepassList, this.httpOptions);
+  }
+  getInventoryList(): Observable<any> {
+    return this.http.get<any>(this.url + 'POData/getInventoryList/', this.httpOptions);
   }
 
   logout() {

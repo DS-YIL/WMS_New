@@ -30,6 +30,7 @@ import { MaterialRequestComponent } from './WMS/MaterialRequest.component';
 import { MaterialIssueDashBoardComponent } from './WMS/MaterialIssueDashBoard.component';
 import { MaterialIssueComponent } from './WMS/MaterialIssue.component';
 import { GatePassComponent } from './WMS/Gatepass.component';
+import { InventoryMovementComponent } from './WMS/InventoryMovement.component';
 
 @NgModule({
   imports: [
@@ -66,7 +67,8 @@ import { GatePassComponent } from './WMS/Gatepass.component';
     MaterialRequestComponent,
     MaterialIssueDashBoardComponent,
     MaterialIssueComponent,
-    GatePassComponent
+    GatePassComponent,
+    InventoryMovementComponent
   ],
   providers: [MessageService, ConfirmationService],
   entryComponents: [ConfirmationDialogComponent]

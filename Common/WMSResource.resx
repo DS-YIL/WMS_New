@@ -224,7 +224,7 @@ where inwa.grnnumber='#grnnumber' limit 10</value>
    inner join wms.wms_gatepassmaterial mat on gate.gatepassid=mat.gatepassid 
    left join wms.employee emp on emp.employeeno=gate.creatorid
    inner join wms."MaterialMasterYGS" ygs on ygs.material=mat.materialid
-   where gate.deleteflag=false</value>
+   where gate.deleteflag=false order by gate.gatepassid desc</value>
   </data>
   <data name="insertgatepassdata" xml:space="preserve">
     <value>insert into wms.wms_gatepass(gatepassid, gatepasstype, status, referenceno, vehicleno, creatorid, createddate,deleteflag)values(default,@gatepasstype,@status,@referenceno,@vehicleno, @creatorid,@createddate,@deleteflag)returning gatepassid</value>

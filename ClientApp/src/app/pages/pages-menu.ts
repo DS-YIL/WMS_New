@@ -36,6 +36,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'list-outline',
     link: '/WMS/GatePass'
   },
+  {
+    title: 'Inventory Movement',
+    icon: 'list-outline',
+    link: '/WMS/InventoryMovement'
+  },
   //{
   //  title: 'Material Request',
   //  link: '/WMS/MaterialRequest',

@@ -13,6 +13,7 @@ import { MaterialIssueDashBoardComponent } from './WMS/MaterialIssueDashBoard.co
 import { MaterialIssueComponent } from './WMS/MaterialIssue.component';
 import { HomeComponent } from './Home/Home.component';
 import { GatePassComponent } from './WMS/Gatepass.component';
+import { InventoryMovementComponent } from  './WMS/InventoryMovement.component';
 
 const routes: Routes = [{
   path: '',
@@ -38,6 +39,7 @@ const routes: Routes = [{
     { path: "MaterialIssueDashboard", component: MaterialIssueDashBoardComponent, canActivate: [AuthGuard] },
     { path: "MaterialIssue/:requestid", component: MaterialIssueComponent, canActivate: [AuthGuard] },
     { path: "GatePass", component: GatePassComponent, canActivate: [AuthGuard] },
+    { path: "InventoryMovement", component: InventoryMovementComponent, canActivate: [AuthGuard] },
   ],
 }];
 

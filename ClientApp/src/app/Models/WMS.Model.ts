@@ -88,3 +88,25 @@ export class materialRequestDetails {
   projectcode: string;
   pono: string = "";
 }
+
+export class gatepassModel {
+  gatepassid: number;
+  gatepasstype: string;
+  status: string;
+  referenceno: string;
+  vehicleno: string;
+  creatorid: string;
+  createddate: Date
+  gatepassmaterialid: number;
+  materialid: string;
+  quantity: number
+  name: string;
+  deleteflag: boolean;
+  materialList: Array<materialistModel> = [];
+}
+export class materialistModel {
+  gatepassmaterialid: string;
+  materialid: string;
+  materialdescription: string;
+  quantity: number=0;
+}
