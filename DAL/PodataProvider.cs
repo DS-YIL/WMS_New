@@ -894,26 +894,31 @@ namespace WMS.DAL
         {
             try
             {
-                foreach(var item in dataobj._list)
-                {
-                    if (item.gatepassmaterialid == 0)
+                //foreach(var item in dataobj._list)
+                //{
+                    if (dataobj._list[0].gatepassmaterialid == 0)
                     {
                         dataobj.createddate = System.DateTime.Now;
                         string insertquery = WMSResource.insertgatepassdata;
                         dataobj.deleteflag = false;
+                    using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
+                    {
+                        var result = DB.ExecuteScalar(insertquery, new
+                        {
+
+                            dataobj.gatepasstype,
+                            dataobj.status,
+                            dataobj.createddate,
+                            dataobj.referenceno,
+                            dataobj.vehicleno,
+                            dataobj.creatorid,
+                            dataobj.deleteflag,
+                        });
+                    }
+                    foreach (var item in dataobj._list)
+                    {
                         using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
                         {
-                            var result = DB.ExecuteScalar(insertquery, new
-                            {
-
-                                dataobj.gatepasstype,
-                                dataobj.status,
-                                dataobj.createddate,
-                                dataobj.referenceno,
-                                dataobj.vehicleno,
-                                dataobj.creatorid,
-                                dataobj.deleteflag,
-                            });
                             string insertqueryforinvoice = WMSResource.insertgatepassmaterial;
 
                             var results = DB.ExecuteScalar(insertqueryforinvoice, new
@@ -926,25 +931,32 @@ namespace WMS.DAL
                             });
                         }
                     }
+                }
+                   
                     else
                     {
                         dataobj.createddate = System.DateTime.Now;
                         string insertquery = WMSResource.updategatepass.Replace("#gatepassid",Convert.ToString(dataobj.gatepassid));
 
-                        using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
+                    using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
+                    {
+                        var result = DB.ExecuteScalar(insertquery, new
                         {
-                            var result = DB.ExecuteScalar(insertquery, new
-                            {
 
-                                dataobj.gatepasstype,
-                                dataobj.status,
-                                dataobj.createddate,
-                                dataobj.referenceno,
-                                dataobj.vehicleno,
-                                dataobj.creatorid,
+                            dataobj.gatepasstype,
+                            dataobj.status,
+                            dataobj.createddate,
+                            dataobj.referenceno,
+                            dataobj.vehicleno,
+                            dataobj.creatorid,
 
-                            });
-                            string insertqueryforinvoice = WMSResource.updategatepassmaterial.Replace("#gatepassmaterialid",Convert.ToString(item.gatepassmaterialid));
+                        });
+                    }
+                    using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
+                    {
+                        foreach (var item in dataobj._list)
+                        {
+                            string insertqueryforinvoice = WMSResource.updategatepassmaterial.Replace("#gatepassmaterialid", Convert.ToString(item.gatepassmaterialid));
 
                             var results = DB.ExecuteScalar(insertqueryforinvoice, new
                             {
@@ -955,8 +967,8 @@ namespace WMS.DAL
                             });
                         }
                     }
-                }
-                return (1);
+                    }
+                 return (1);
             }
             catch (Exception Ex)
             {
