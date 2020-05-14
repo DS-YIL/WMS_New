@@ -225,6 +225,15 @@ where inwa.grnnumber='#grnnumber' limit 10</value>
   <data name="insertgatepassdata" xml:space="preserve">
     <value>insert into wms.wms_gatepass(gatepassid, gatepasstype, status, referenceno, vehicleno, creatorid, createddate,deleteflag)values(default,@gatepasstype,@status,@referenceno,@vehicleno, @creatorid,@createddate,@deleteflag)</value>
   </data>
+  <data name="checkmaterial" xml:space="preserve">
+    <value>select * from wms.wms_stock where materialid='#materialid' limit 1</value>
+  </data>
+  <data name="checkmaterialandqty" xml:space="preserve">
+    <value>select * from wms.wms_stock where materialid='#materialid' and availableqty=#availableqty limit 1</value>
+  </data>
+  <data name="checkqty" xml:space="preserve">
+    <value>select * from wms.wms_stock where availableqty=#availableqty limit 1</value>
+  </data>
   <data name="insertgatepassmaterial" xml:space="preserve">
     <value>insert into wms.wms_gatepassmaterial(gatepassmaterialid,gatepassid,materialid,quantity,deleteflag)values(default,@gatepassid,@materialid,@quantity,@deleteflag)</value>
   </data>

@@ -135,5 +135,10 @@ namespace WMS.Controllers
         {
             return  this._poService.SaveOrUpdateGatepassDetails(obj);
         }
+        [HttpGet("checkmaterialandqty")]
+        public string check(string material=null,int qty=0)
+        {
+            return  this._poService.checkmaterialandqty(material,qty);
+        }
     }
 }

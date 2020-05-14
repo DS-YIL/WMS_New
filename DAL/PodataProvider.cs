@@ -975,5 +975,73 @@ namespace WMS.DAL
                 return 0;
             }
         }
+
+        public string checkmaterialandqty(string material = null, int qty = 0)
+        {
+            using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
+            {
+                materialistModel obj = new materialistModel();
+                string returnvalue = string.Empty;
+                try
+                {
+                    pgsql.Open();
+                    if (material != null && qty==0)
+                    {
+                        string query = WMSResource.checkmaterial.Replace("#materialid", material);
+                        obj = pgsql.QueryFirstOrDefault<materialistModel>(
+                           query, null, commandType: CommandType.Text);
+                        if(obj==null)
+                        {
+                             returnvalue = "material does not exists";
+                        }
+                        else
+                        {
+                            returnvalue = "true";
+                        }
+                    }
+                   else if(qty!=0 && material==null)
+                    {
+                        string query = WMSResource.checkqty.Replace("#availableqty", Convert.ToString(qty));
+                        obj = pgsql.QueryFirstOrDefault<materialistModel>(
+                    query, null, commandType: CommandType.Text);
+                        if (obj == null)
+                        {
+                            returnvalue = "qty not available";
+                        }
+                        else
+                        {
+                            returnvalue = "true";
+                        }
+                    }
+                    else if(material!=null && qty!=0)
+                    {
+                        string query = WMSResource.checkmaterialandqty.Replace("#availableqty", Convert.ToString(qty)).Replace("#materialid", material);
+                        obj = pgsql.QueryFirstOrDefault<materialistModel>(
+                    query, null, commandType: CommandType.Text);
+                        if (obj == null)
+                        {
+                            returnvalue = "material and quantity does not exists";
+                        }
+                        else
+                        {
+                            returnvalue = "true";
+                        }
+                    }
+                    return returnvalue;
+
+
+                }
+                catch (Exception Ex)
+                {
+                    log.ErrorMessage("PODataProvider", "checkmaterialandqty", Ex.StackTrace.ToString());
+                    return "false";
+                }
+                finally
+                {
+                    pgsql.Close();
+                }
+
+            }
+        }
     }
 }

@@ -61,11 +61,38 @@ namespace WMS.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to select * from wms.wms_stock where materialid=&apos;#materialid&apos; limit 1.
+        /// </summary>
+        public static string checkmaterial {
+            get {
+                return ResourceManager.GetString("checkmaterial", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to select * from wms.wms_stock where materialid=&apos;#materialid&apos; and availableqty=#availableqty limit 1.
+        /// </summary>
+        public static string checkmaterialandqty {
+            get {
+                return ResourceManager.GetString("checkmaterialandqty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to select distinct* from wms.openpolistview openpo inner join wms.wms_inwardmaster inw on openpo.pono=inw.pono where openpo.pono=&apos;#pono&apos;  order by receiveddate desc limit 1.
         /// </summary>
         public static string checkponoexists {
             get {
                 return ResourceManager.GetString("checkponoexists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to select * from wms.wms_stock where availableqty=#availableqty limit 1.
+        /// </summary>
+        public static string checkqty {
+            get {
+                return ResourceManager.GetString("checkqty", resourceCulture);
             }
         }
         
