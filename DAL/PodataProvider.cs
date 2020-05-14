@@ -45,7 +45,7 @@ namespace WMS.DAL
 
 
 
-        public async Task<IEnumerable<OpenPoModel>> getOpenPoList(string loginid,string pono = null, string docno = null, string vendorid = null)
+        public async Task<IEnumerable<OpenPoModel>> getOpenPoList(string loginid, string pono = null, string docno = null, string vendorid = null)
         {
             using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
             {
@@ -55,11 +55,11 @@ namespace WMS.DAL
                     string query = WMSResource.openpolist.Replace("#approverid", loginid);
                     if (pono != null)
                     {
-                        query = query + " and pono='" + pono+"'";
+                        query = query + " and pono='" + pono + "'";
                     }
                     if (docno != null)
                     {
-                        query = query + " and documentno='" + docno+"'";
+                        query = query + " and documentno='" + docno + "'";
                     }
                     if (vendorid != null)
                     {
@@ -170,7 +170,7 @@ namespace WMS.DAL
                     pgsql.Open();
                     string lastinsertedgrn = WMSResource.lastinsertedgrn; ;
 
-                    string query = WMSResource.Verifythreewaymatch.Replace("#pono",pono).Replace("#invoiceno", invoiceno).Replace("#quantity",quantity.ToString()).Replace("#projectcode", projectcode).Replace("#material", material);
+                    string query = WMSResource.Verifythreewaymatch.Replace("#pono", pono).Replace("#invoiceno", invoiceno).Replace("#quantity", quantity.ToString()).Replace("#projectcode", projectcode).Replace("#material", material);
                     var info = pgsql.QuerySingle(
                        query, null, commandType: CommandType.Text);
                     if (info != null)
@@ -184,7 +184,7 @@ namespace WMS.DAL
                         {
                             grnnextsequence = (Convert.ToInt32(obj.sequencenumber) + 1);
                             grnnumber = obj.sequenceid + "-" + obj.year + "-" + grnnextsequence.ToString().PadLeft(6, '0');
-                            string updategrnnumber = WMSResource.updategrnnumber.Replace("#invoiceno", invoiceno).Replace("#pono",pono);
+                            string updategrnnumber = WMSResource.updategrnnumber.Replace("#invoiceno", invoiceno).Replace("#pono", pono);
                             using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
                             {
                                 var results = DB.ExecuteScalar(updategrnnumber, new
@@ -194,7 +194,7 @@ namespace WMS.DAL
                                 });
                             }
                             int id = obj.id;
-                            string updateseqnumber =WMSResource.updateseqnumber;
+                            string updateseqnumber = WMSResource.updateseqnumber;
                             using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
                             {
                                 var results = DB.ExecuteScalar(updateseqnumber, new
@@ -250,18 +250,18 @@ namespace WMS.DAL
 
                 try
                 {
-                        datamodel[0].receiveddate = System.DateTime.Now;
-                        await pgsql.OpenAsync();
+                    datamodel[0].receiveddate = System.DateTime.Now;
+                    await pgsql.OpenAsync();
 
-                        string query = WMSResource.getinwmasterid.Replace("#pono", datamodel[0].pono);
-                        obj = pgsql.QuerySingle<inwardModel>(
-                           query, null, commandType: CommandType.Text);
+                    string query = WMSResource.getinwmasterid.Replace("#pono", datamodel[0].pono);
+                    obj = pgsql.QuerySingle<inwardModel>(
+                       query, null, commandType: CommandType.Text);
                     string getGRNno = WMSResource.getGRNNo.Replace("#pono", datamodel[0].pono);
                     getgrnnoforpo = pgsql.QuerySingle<inwardModel>(
                        getGRNno, null, commandType: CommandType.Text);
 
                     if (obj.inwmasterid != 0)
-                        {
+                    {
 
                         foreach (var item in datamodel)
                         {
@@ -307,7 +307,7 @@ namespace WMS.DAL
                             }
                         }
                     }
-                   
+
                     //}
                     return (getgrnnoforpo.grnnumber);
                 }
@@ -327,7 +327,7 @@ namespace WMS.DAL
         {
             try
             {
-               StockModel obj = new StockModel();
+                StockModel obj = new StockModel();
                 string loactiontext = string.Empty;
                 var result = 0;
                 //foreach (var item in data) { 
@@ -382,11 +382,11 @@ namespace WMS.DAL
                             string selectqueryforloaction = WMSResource.getlocationasresponse.Replace("#itemid", itemid.ToString());
                             obj = pgsql.QuerySingle<StockModel>(
                                    selectqueryforloaction, null, commandType: CommandType.Text);
-                            if(obj.binnumber!=null)
+                            if (obj.binnumber != null)
                             {
                                 loactiontext = obj.binnumber;
                             }
-                            else if(obj.racknumber!=null)
+                            else if (obj.racknumber != null)
                             {
                                 loactiontext = obj.racknumber;
                             }
@@ -398,8 +398,8 @@ namespace WMS.DAL
 
                     }
                 }
-                  
-               // }
+
+                // }
                 return (loactiontext);
             }
             catch (Exception Ex)
@@ -452,10 +452,10 @@ namespace WMS.DAL
             using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
             {
                 IssueRequestModel obj = new IssueRequestModel();
-                    pgsql.Open();
-                    string query = WMSResource.getnextrequestid;
-                    obj= pgsql.QuerySingle<IssueRequestModel>(
-                       query, null, commandType: CommandType.Text);
+                pgsql.Open();
+                string query = WMSResource.getnextrequestid;
+                obj = pgsql.QuerySingle<IssueRequestModel>(
+                   query, null, commandType: CommandType.Text);
                 requestid = obj.requestid + 1;
             }
             try
@@ -466,10 +466,10 @@ namespace WMS.DAL
                 {
 
                     item.requesteddate = System.DateTime.Now;
-                string insertquery = WMSResource.materialquest;
+                    string insertquery = WMSResource.materialquest;
                     using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
                     {
-                         result = DB.Execute(insertquery, new
+                        result = DB.Execute(insertquery, new
                         {
                             item.paitemid,
                             item.quantity,
@@ -479,10 +479,10 @@ namespace WMS.DAL
                             item.pono,
                             item.materialid,
                             item.requesterid,
-                             requestid,
-                         });
+                            requestid,
+                        });
                     }
-                   
+
 
 
                 }
@@ -502,7 +502,7 @@ namespace WMS.DAL
 
                 try
                 {
-                   await pgsql.OpenAsync();
+                    await pgsql.OpenAsync();
                     string queryforitemdetails = WMSResource.queryforitemdetails.Replace("#grnnumber", grnnumber);
                     return await pgsql.QueryAsync<inwardModel>(
                        queryforitemdetails, null, commandType: CommandType.Text);
@@ -564,11 +564,11 @@ namespace WMS.DAL
                 foreach (var item in dataobj)
                 {
                     string ackstatus = string.Empty;
-                    if(item.status !=true)
+                    if (item.status != true)
                     {
                         ackstatus = "received";
                     }
-                    else if(item.status ==false)
+                    else if (item.status == false)
                     {
                         ackstatus = "not received";
                     }
@@ -589,7 +589,7 @@ namespace WMS.DAL
                             ackremarks,
                             requestforissueid,
                             materialid,
-                           
+
                         });
                     }
                 }
@@ -827,7 +827,7 @@ namespace WMS.DAL
                 foreach (var item in dataobj)
                 {
                     string approverstatus = string.Empty;
-                    if (item.issuedquantity !=0)
+                    if (item.issuedquantity != 0)
                     {
                         approverstatus = "approved";
                     }
@@ -840,7 +840,7 @@ namespace WMS.DAL
                     int requestforissueid = item.requestforissueid;
                     string materialid = item.Material;
                     int issuedquantity = item.issuedquantity;
-                    string updateapproverstatus = WMSResource.updateapproverstatus.Replace("#requestforissueid",requestforissueid.ToString()).Replace("#materialid", materialid);
+                    string updateapproverstatus = WMSResource.updateapproverstatus.Replace("#requestforissueid", requestforissueid.ToString()).Replace("#materialid", materialid);
 
                     using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
                     {
@@ -896,11 +896,11 @@ namespace WMS.DAL
             {
                 //foreach(var item in dataobj._list)
                 //{
-                    if (dataobj._list[0].gatepassmaterialid == 0)
-                    {
-                        dataobj.createddate = System.DateTime.Now;
-                        string insertquery = WMSResource.insertgatepassdata;
-                        dataobj.deleteflag = false;
+                if (dataobj.gatepassid == 0)
+                {
+                    dataobj.createddate = System.DateTime.Now;
+                    string insertquery = WMSResource.insertgatepassdata;
+                    dataobj.deleteflag = false;
                     using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
                     {
                         var result = DB.ExecuteScalar(insertquery, new
@@ -915,28 +915,11 @@ namespace WMS.DAL
                             dataobj.deleteflag,
                         });
                     }
-                    foreach (var item in dataobj._list)
-                    {
-                        using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
-                        {
-                            string insertqueryforinvoice = WMSResource.insertgatepassmaterial;
-
-                            var results = DB.ExecuteScalar(insertqueryforinvoice, new
-                            {
-
-                                dataobj.gatepassid,
-                                item.materialid,
-                                item.quantity,
-                                dataobj.deleteflag
-                            });
-                        }
-                    }
                 }
-                   
-                    else
-                    {
-                        dataobj.createddate = System.DateTime.Now;
-                        string insertquery = WMSResource.updategatepass.Replace("#gatepassid",Convert.ToString(dataobj.gatepassid));
+                else
+                {
+                    dataobj.createddate = System.DateTime.Now;
+                    string insertquery = WMSResource.updategatepass.Replace("#gatepassid", Convert.ToString(dataobj.gatepassid));
 
                     using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
                     {
@@ -952,13 +935,29 @@ namespace WMS.DAL
 
                         });
                     }
+                }
+                foreach (var item in dataobj.mat)
+                {
                     using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
                     {
-                        foreach (var item in dataobj._list)
+                        if (item.gatepassmaterialid == 0)
                         {
-                            string insertqueryforinvoice = WMSResource.updategatepassmaterial.Replace("#gatepassmaterialid", Convert.ToString(item.gatepassmaterialid));
+                            string insertquerymaterial = WMSResource.insertgatepassmaterial;
 
-                            var results = DB.ExecuteScalar(insertqueryforinvoice, new
+                            var results = DB.ExecuteScalar(insertquerymaterial, new
+                            {
+
+                                dataobj.gatepassid,
+                                item.materialid,
+                                item.quantity,
+                                dataobj.deleteflag
+                            });
+                        }
+                        else
+                        {
+                            string updatequery = WMSResource.updategatepassmaterial.Replace("#gatepassmaterialid", Convert.ToString(item.gatepassmaterialid));
+
+                            var result = DB.ExecuteScalar(updatequery, new
                             {
 
                                 dataobj.gatepassid,
@@ -967,8 +966,8 @@ namespace WMS.DAL
                             });
                         }
                     }
-                    }
-                 return (1);
+                }
+                return (1);
             }
             catch (Exception Ex)
             {
