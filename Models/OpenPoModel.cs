@@ -158,10 +158,11 @@ namespace WMS.Models
         public DateTime createddate { get; set; }
         public int gatepassmaterialid { get; set; }
         public string    materialid { get; set; }
-        public int quantity { get; set; }
+		public string materialdescription { get; set; }
+		public int quantity { get; set; }
 		public string name { get; set; }
 		public bool deleteflag { get; set; }
-		public List<materialistModel> mat { get; set; }
+		public List<materialistModel> materialList { get; set; }
 	}
 	public class materialistModel
 	{

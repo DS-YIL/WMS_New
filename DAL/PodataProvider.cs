@@ -936,7 +936,7 @@ namespace WMS.DAL
                         });
                     }
                 }
-                foreach (var item in dataobj.mat)
+                foreach (var item in dataobj.materialList)
                 {
                     using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
                     {
