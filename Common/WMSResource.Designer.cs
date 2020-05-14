@@ -97,6 +97,15 @@ namespace WMS.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to update wms.wms_gatepassmaterial set deleteflag=&apos;true&apos; where gatepassmaterialid=#gatepassmaterialid.
+        /// </summary>
+        public static string deletegatepassmaterial {
+            get {
+                return ResourceManager.GetString("deletegatepassmaterial", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to select * from wms.wms_issuerequest where requestid=#requestid.
         /// </summary>
         public static string GetdetailsByrequestid {
@@ -116,10 +125,10 @@ namespace WMS.Common {
         
         /// <summary>
         ///   Looks up a localized string similar to select ygs.materialdescription,emp.name,* from wms.wms_gatepass gate
-        ///   inner join wms.wms_gatepassmaterial mat on gate.gatepassid=mat.gatepassid 
+        ///   left join wms.wms_gatepassmaterial mat on gate.gatepassid=mat.gatepassid 
         ///   left join wms.employee emp on emp.employeeno=gate.creatorid
         ///   inner join wms.&quot;MaterialMasterYGS&quot; ygs on ygs.material=mat.materialid
-        ///   where gate.deleteflag=false order by gate.gatepassid desc.
+        ///   where gate.deleteflag=false  and mat.deleteflag=false order by gate.gatepassid desc.
         /// </summary>
         public static string getgatepasslist {
             get {

@@ -221,10 +221,10 @@ where inwa.grnnumber='#grnnumber' limit 10</value>
   </data>
   <data name="getgatepasslist" xml:space="preserve">
     <value>select ygs.materialdescription,emp.name,* from wms.wms_gatepass gate
-   inner join wms.wms_gatepassmaterial mat on gate.gatepassid=mat.gatepassid 
+   left join wms.wms_gatepassmaterial mat on gate.gatepassid=mat.gatepassid 
    left join wms.employee emp on emp.employeeno=gate.creatorid
    inner join wms."MaterialMasterYGS" ygs on ygs.material=mat.materialid
-   where gate.deleteflag=false order by gate.gatepassid desc</value>
+   where gate.deleteflag=false  and mat.deleteflag=false order by gate.gatepassid desc</value>
   </data>
   <data name="insertgatepassdata" xml:space="preserve">
     <value>insert into wms.wms_gatepass(gatepassid, gatepasstype, status, referenceno, vehicleno, creatorid, createddate,deleteflag)values(default,@gatepasstype,@status,@referenceno,@vehicleno, @creatorid,@createddate,@deleteflag)returning gatepassid</value>
@@ -246,5 +246,8 @@ where inwa.grnnumber='#grnnumber' limit 10</value>
   </data>
   <data name="updategatepassmaterial" xml:space="preserve">
     <value>update wms.wms_gatepassmaterial set gatepassid=@gatepassid,materialid=@materialid,quantity=@quantity where gatepassmaterialid=#gatepassmaterialid</value>
+  </data>
+  <data name="deletegatepassmaterial" xml:space="preserve">
+    <value>update wms.wms_gatepassmaterial set deleteflag='true' where gatepassmaterialid=#gatepassmaterialid</value>
   </data>
 </root>

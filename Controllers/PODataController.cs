@@ -140,5 +140,10 @@ namespace WMS.Controllers
         {
             return  this._poService.checkmaterialandqty(material,qty);
         }
+        [HttpDelete("deletegatepassmaterial")]
+        public int deletematerial(int gatepassmaterialid)
+        {
+            return this._poService.deletegatepassmaterial(gatepassmaterialid);
+        }
     }
 }

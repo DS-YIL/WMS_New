@@ -1047,5 +1047,31 @@ namespace WMS.DAL
 
             }
         }
+
+        public int deletegatepassmaterial(int gatepassmaterialid)
+        {
+            int returndata = 0;
+                try
+                {
+                string insertquery = WMSResource.deletegatepassmaterial.Replace("#gatepassmaterialid", Convert.ToString(gatepassmaterialid));
+                    using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
+                    {
+                        var data = DB.Execute(insertquery, new
+
+                        {
+
+                           
+                        });
+                    returndata = Convert.ToInt32(data);
+                    }
+                return returndata;
+
+                }
+                catch (Exception Ex)
+                {
+                    log.ErrorMessage("PODataProvider", "GetgatepassList", Ex.StackTrace.ToString());
+                    return 0;
+                }
+        }
     }
 }
