@@ -119,7 +119,7 @@ namespace WMS.Common {
         ///   inner join wms.wms_gatepassmaterial mat on gate.gatepassid=mat.gatepassid 
         ///   left join wms.employee emp on emp.employeeno=gate.creatorid
         ///   inner join wms.&quot;MaterialMasterYGS&quot; ygs on ygs.material=mat.materialid
-        ///   where gate.deleteflag=false.
+        ///   where gate.deleteflag=false order by gate.gatepassid desc.
         /// </summary>
         public static string getgatepasslist {
             get {

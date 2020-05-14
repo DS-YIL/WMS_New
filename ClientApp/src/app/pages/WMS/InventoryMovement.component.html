@@ -1,0 +1,62 @@
+<h5 style="text-align:center">Inventory Movement</h5>
+<div class="row">
+  <div class="col-lg-2 col-md-2 col-sm-2 form-group">
+    <label class="form-label">Item Name</label>
+    <input type="text" class="form-control">
+  </div>
+  <div class="col-lg-2 col-md-2 col-sm-2 form-group">
+    <label class="form-label">Location</label>
+    <input type="text" class="form-control">
+  </div>
+  <div class="col-lg-2 col-md-2 col-sm-2 form-group">
+    <label class="form-label">From Date</label>
+    <input type="date" class="form-control">
+  </div>
+  <div class="col-lg-2 col-md-2 col-sm-2 form-group">
+    <label class="form-label">To Date</label>
+    <input type="date" class="form-control">
+  </div>
+  <div class="col-lg-3 col-md-3 col-sm-3">
+    <button type="button" class="btn btn-primary" style="margin-top: 22px" (click)="getinventoryList()" label="Save">Submit</button>
+  </div>
+</div>
+
+<p-table #dt [value]="iventoryList">
+  <ng-template pTemplate="header">
+    <tr class="mprltbldata">
+      <th style="text-align:center;width:70px">S.No</th>
+      <th style="text-align:center">Item</th>
+      <th style="text-align:center">Location</th>
+      <th style="text-align:center">0-30</th>
+      <th style="text-align:center">30-60</th>
+      <th style="text-align:center">60-90</th>
+      <th style="text-align:center">90-120</th>
+      <th style="text-align:center">120+</th>
+    </tr>
+    <tr>
+      <th></th>
+      <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'material', 'contains')"></th>
+      <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'location', 'contains')"></th>
+      <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'qty', 'contains')"></th>
+      <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'qty', 'contains')"></th>
+      <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'qty', 'contains')"></th>
+      <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'qty', 'contains')"></th>
+      <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'qty', 'contains')"></th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowData let-editing="editing" let-ri="rowIndex">
+    <tr>
+      <td class="ptable-cell" style="text-align:right">
+        {{ri+1}}
+      </td>
+      <td class="ptable-cell" style="text-align:center">{{rowData.item}}</td>
+      <td class="ptable-cell" style="text-align:center">{{rowData.location}}</td>
+      <td class="ptable-cell" style="text-align:center">{{rowData.qty}}</td>
+      <td class="ptable-cell" style="text-align:center">{{rowData.qty}}</td>
+      <td class="ptable-cell" style="text-align:right">{{rowData.qty}}</td>
+      <td class="ptable-cell" style="text-align:right">{{rowData.qty}}</td>
+      <td class="ptable-cell" style="text-align:right">{{rowData.qty}}</td>
+    </tr>
+  </ng-template>
+</p-table>
+<br />
