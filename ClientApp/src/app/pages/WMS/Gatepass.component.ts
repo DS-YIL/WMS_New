@@ -30,6 +30,7 @@ export class GatePassComponent implements OnInit {
   public gatepassModel: gatepassModel;
   public materialistModel: materialistModel;
   public material: any;
+  public gpIndx: number;
 
   ngOnInit() {
     if (localStorage.getItem("Employee"))
@@ -42,6 +43,7 @@ export class GatePassComponent implements OnInit {
 
   }
 
+  //bind materials based search
   public bindSearchListData(event: any, name?: string) {
     var searchTxt = event.query;
     if (searchTxt == undefined)
@@ -65,31 +67,54 @@ export class GatePassComponent implements OnInit {
     });
   }
 
+  //get gatepass list
   getGatePassList() {
     this.wmsService.getGatePassList().subscribe(data => {
       this.gatepasslist = data;
+      this.gatepassModelList = [];
       this.prepareGatepassList();
     });
   }
 
+  //prepare list based on gate pass id
   prepareGatepassList() {
     this.gatepasslist.forEach(item => {
       var res = this.gatepassModelList.filter(li => li.gatepassid == item.gatepassid);
       if (res.length == 0) {
-        item.materialList = this.gatepasslist.filter(li => li.gatepassid == item.gatepassid);
+        item.materialList = [];
+        var result = this.gatepasslist.filter(li => li.gatepassid == item.gatepassid && li.gatepassmaterialid != "0");
+        for (var i = 0; i < result.length; i++) {
+          var material = new materialistModel();
+          material.gatepassmaterialid = result[i].gatepassmaterialid;
+          material.materialid = result[i].materialid;
+          material.materialdescription = result[i].materialdescription;
+          material.quantity = result[i].quantity;
+          item.materialList.push(material);
+        }
+
         this.gatepassModelList.push(item);
       }
     });
   }
-  openGatepassDialog(gatepassobject: gatepassModel) {
+
+  //open gate pass dialog
+  openGatepassDialog(gatepassobject: gatepassModel, gpIndx: number) {
     this.gatepassdialog = true;
+    this.gatepassModel = new gatepassModel();
     if (gatepassobject) {
+      this.gpIndx = gpIndx;
       this.gatepassModel = gatepassobject;
     } else {
       this.gatepassModel.gatepasstype = "0";
     }
   }
+
+  //add materials for gate pass
   addMaterial() {
+    if (this.gatepassModel.materialList.filter(li => li.materialid == this.material.code).length > 0) {
+      this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Material already exist' });
+      return false;
+    }
     this.materialistModel.materialid = this.material.code;
     this.materialistModel.materialdescription = this.material.name;
     if (this.materialistModel.materialid && this.materialistModel.quantity) {
@@ -100,7 +125,7 @@ export class GatePassComponent implements OnInit {
           this.material = "";
         }
         else
-          this.messageService.add({ severity: 'error', summary: 'Error Message', detail: data});
+          this.messageService.add({ severity: 'error', summary: 'Error Message', detail: data });
       });
     }
     else {
@@ -112,10 +137,36 @@ export class GatePassComponent implements OnInit {
 
   }
 
+  //check material and quntity availablity in stock
+  checkMaterialandQty(material: any, matIndex: number) {
+    if (material.quantity) {
+      this.wmsService.checkMaterialandQty(material.code, material.quantity).subscribe(data => {
+        if (data == "true") {
+        }
+        else {
+          this.gatepassModelList[this.gpIndx].materialList[matIndex].quantity = 1;
+          this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Quantity Exceeded' });
+        }
+      });
+    }
+  }
+
+  //Delete material for gatepass
+  removematerial(id: number, matIndex: number) {
+    this.wmsService.deleteGatepassmaterial(id).subscribe(data => {
+      this.gatepassModelList[this.gpIndx].materialList.splice(matIndex, 1);
+      this.messageService.add({ severity: 'success', summary: 'success Message', detail: 'Material Deleted' });
+    });
+
+  }
+
+  //saving gatepass details
   onSubmitgatepassDetails() {
     if (this.gatepassModel.gatepasstype != "0") {
       this.gatepassModel.creatorid = this.employee.employeeno;
       this.wmsService.saveoreditgatepassmaterial(this.gatepassModel).subscribe(data => {
+        this.gatepassdialog = false;
+        this.getGatePassList();
         if (data)
           this.messageService.add({ severity: 'success', summary: 'success Message', detail: 'Data saved' });
       })
