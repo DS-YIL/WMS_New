@@ -896,6 +896,7 @@ namespace WMS.DAL
             {
                 //foreach(var item in dataobj._list)
                 //{
+            
                 if (dataobj.gatepassid == 0)
                 {
                     dataobj.createddate = System.DateTime.Now;
@@ -903,7 +904,7 @@ namespace WMS.DAL
                     dataobj.deleteflag = false;
                     using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
                     {
-                        var result = DB.ExecuteScalar(insertquery, new
+                      var  gatepassid = DB.ExecuteScalar(insertquery, new
                         {
 
                             dataobj.gatepasstype,
@@ -914,6 +915,8 @@ namespace WMS.DAL
                             dataobj.creatorid,
                             dataobj.deleteflag,
                         });
+                        if (dataobj.gatepassid == 0)
+                            dataobj.gatepassid = Convert.ToInt32(gatepassid);
                     }
                 }
                 else
@@ -938,6 +941,7 @@ namespace WMS.DAL
                 }
                 foreach (var item in dataobj.materialList)
                 {
+                    
                     using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
                     {
                         if (item.gatepassmaterialid == 0)
