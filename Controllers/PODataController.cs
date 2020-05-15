@@ -145,7 +145,7 @@ namespace WMS.Controllers
         {
             return this._poService.deletegatepassmaterial(gatepassmaterialid);
         }
-        [HttpGet("updategatepassapproverstatus")]
+        [HttpPost("updategatepassapproverstatus")]
         public int gatepassapproverstatus(gatepassModel model)
         {
             return this._poService.updategatepassapproverstatus(model);
