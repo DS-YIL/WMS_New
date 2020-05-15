@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using System.Threading.Tasks;
 
 namespace WMS.Models
@@ -168,6 +169,7 @@ namespace WMS.Models
 		public string approverremarks { get; set; }
 		public Boolean print { get; set; }
 		public int reprintcount { get; set; }
+		public DateTime approvedon { get; set; }
 		public List<materialistModel> materialList { get; set; }
 	}
 	public class materialistModel

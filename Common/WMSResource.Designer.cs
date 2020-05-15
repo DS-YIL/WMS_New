@@ -137,6 +137,15 @@ namespace WMS.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to select * from wms.wms_gatepassmaterial where gatepassid=#gatepassid and deleteflag=false.
+        /// </summary>
+        public static string getgatepassmaterialdetailList {
+            get {
+                return ResourceManager.GetString("getgatepassmaterialdetailList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to select grnnumber from wms.wms_inwardmaster   where pono=&apos;#pono&apos; and grnnumber is not null limit 1.
         /// </summary>
         public static string getGRNNo {
@@ -376,6 +385,15 @@ namespace WMS.Common {
         public static string updategatepass {
             get {
                 return ResourceManager.GetString("updategatepass", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to update wms.wms_gatepass set approverstatus=@approverstatus,approverremarks=@approverremarks,approvedon=@approvedon where gatepassid=#gatepassid.
+        /// </summary>
+        public static string updategatepassapproverstatus {
+            get {
+                return ResourceManager.GetString("updategatepassapproverstatus", resourceCulture);
             }
         }
         

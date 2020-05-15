@@ -250,4 +250,10 @@ where inwa.grnnumber='#grnnumber' limit 10</value>
   <data name="deletegatepassmaterial" xml:space="preserve">
     <value>update wms.wms_gatepassmaterial set deleteflag='true' where gatepassmaterialid=#gatepassmaterialid</value>
   </data>
+  <data name="getgatepassmaterialdetailList" xml:space="preserve">
+    <value>select * from wms.wms_gatepassmaterial where gatepassid=#gatepassid and deleteflag=false</value>
+  </data>
+  <data name="updategatepassapproverstatus" xml:space="preserve">
+    <value>update wms.wms_gatepass set approverstatus=@approverstatus,approverremarks=@approverremarks,approvedon=@approvedon where gatepassid=#gatepassid</value>
+  </data>
 </root>

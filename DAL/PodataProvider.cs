@@ -1079,9 +1079,66 @@ namespace WMS.DAL
                 }
                 catch (Exception Ex)
                 {
-                    log.ErrorMessage("PODataProvider", "GetgatepassList", Ex.StackTrace.ToString());
+                    log.ErrorMessage("PODataProvider", "deletegatepassmaterial", Ex.StackTrace.ToString());
                     return 0;
                 }
+        }
+
+        public int updategatepassapproverstatus(gatepassModel model)
+        {
+            int returndata = 0;
+            try
+            {
+                model.approvedon = System.DateTime.Now;
+                string insertquery = WMSResource.updategatepassapproverstatus.Replace("#gatepassid", Convert.ToString(model.gatepassid));
+                using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
+                {
+                    var data = DB.Execute(insertquery, new
+
+                    {
+                        model.approverremarks,
+                        model.approverstatus,
+                        model.approvedon,
+
+                    });
+                    returndata = Convert.ToInt32(data);
+                }
+                return returndata;
+
+            }
+            catch (Exception Ex)
+            {
+                log.ErrorMessage("PODataProvider", "updategatepassapproverstatus", Ex.StackTrace.ToString());
+                return 0;
+            }
+        }
+
+        public async Task<IEnumerable<materialistModel>> GetmaterialList(int gatepassid)
+        {
+            using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
+            {
+
+                try
+                {
+                    string query = WMSResource.getgatepassmaterialdetailList.Replace("#gatepassid", Convert.ToString(gatepassid));
+
+                    await pgsql.OpenAsync();
+                    return await pgsql.QueryAsync<materialistModel>(
+                       query, null, commandType: CommandType.Text);
+
+
+                }
+                catch (Exception Ex)
+                {
+                    log.ErrorMessage("PODataProvider", "GetmaterialList", Ex.StackTrace.ToString());
+                    return null;
+                }
+                finally
+                {
+                    pgsql.Close();
+                }
+
+            }
         }
     }
 }

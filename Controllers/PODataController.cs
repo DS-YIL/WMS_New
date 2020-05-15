@@ -145,5 +145,15 @@ namespace WMS.Controllers
         {
             return this._poService.deletegatepassmaterial(gatepassmaterialid);
         }
+        [HttpGet("updategatepassapproverstatus")]
+        public int gatepassapproverstatus(gatepassModel model)
+        {
+            return this._poService.updategatepassapproverstatus(model);
+        }
+        [HttpGet("getmaterialdetailsbygatepassid")]
+        public async Task<IEnumerable<materialistModel>> gatepassmaterialdetail(int gatepassid)
+        {
+            return await this._poService.GetmaterialList(gatepassid);
+        }
     }
 }
