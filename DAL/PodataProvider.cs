@@ -914,6 +914,7 @@ namespace WMS.DAL
                             dataobj.vehicleno,
                             dataobj.creatorid,
                             dataobj.deleteflag,
+                            dataobj.vendorname,
                         });
                         if (dataobj.gatepassid == 0)
                             dataobj.gatepassid = Convert.ToInt32(gatepassid);
@@ -935,6 +936,7 @@ namespace WMS.DAL
                             dataobj.referenceno,
                             dataobj.vehicleno,
                             dataobj.creatorid,
+                            dataobj.vendorname,
 
                         });
                     }
@@ -954,7 +956,8 @@ namespace WMS.DAL
                                 dataobj.gatepassid,
                                 item.materialid,
                                 item.quantity,
-                                dataobj.deleteflag
+                                dataobj.deleteflag,
+                                item.remarks,
                             });
                         }
                         else
@@ -967,6 +970,7 @@ namespace WMS.DAL
                                 dataobj.gatepassid,
                                 item.materialid,
                                 item.quantity,
+                                item.remarks,
                             });
                         }
                     }

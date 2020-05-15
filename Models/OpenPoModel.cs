@@ -160,6 +160,7 @@ namespace WMS.Models
         public string    materialid { get; set; }
 		public string materialdescription { get; set; }
 		public int quantity { get; set; }
+		public string vendorname { get; set; }
 		public string name { get; set; }
 		public bool deleteflag { get; set; }
 		public List<materialistModel> materialList { get; set; }
@@ -167,6 +168,7 @@ namespace WMS.Models
 	public class materialistModel
 	{
 		public string materialid { get; set; }
+		public string remarks { get; set; }
 		public int quantity { get; set; }
 		public int gatepassmaterialid { get; set; }
 	}
