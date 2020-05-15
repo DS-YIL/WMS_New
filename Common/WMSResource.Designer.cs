@@ -223,7 +223,7 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to insert into wms.wms_gatepass(gatepassid, gatepasstype, status, referenceno, vehicleno, creatorid, createddate,deleteflag,vendorname)values(default,@gatepasstype,@status,@referenceno,@vehicleno, @creatorid,@createddate,@deleteflag,@vendorname)returning gatepassid.
+        ///   Looks up a localized string similar to insert into wms.wms_gatepass(gatepassid, gatepasstype, status, referenceno, vehicleno, creatorid, createddate,deleteflag,vendorname,print,reasonforgatepass)values(default,@gatepasstype,@status,@referenceno,@vehicleno, @creatorid,@createddate,@deleteflag,@vendorname,&apos;true&apos;,@reasonforgatepass)returning gatepassid.
         /// </summary>
         public static string insertgatepassdata {
             get {
@@ -232,7 +232,7 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to insert into wms.wms_gatepassmaterial(gatepassmaterialid,gatepassid,materialid,quantity,deleteflag,remarks)values(default,@gatepassid,@materialid,@quantity,@deleteflag,@remarks).
+        ///   Looks up a localized string similar to insert into wms.wms_gatepassmaterial(gatepassmaterialid,gatepassid,materialid,quantity,deleteflag,remarks,materialcost,expecteddate)values(default,@gatepassid,@materialid,@quantity,@deleteflag,@remarks,@materialcost,@expecteddate).
         /// </summary>
         public static string insertgatepassmaterial {
             get {
@@ -371,7 +371,7 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to update wms.wms_gatepass set gatepasstype=@gatepasstype,status=@status,referenceno=@referenceno,vehicleno=@vehicleno,creatorid=@creatorid,vendorname=@vendorname where gatepassid=#gatepassid.
+        ///   Looks up a localized string similar to update wms.wms_gatepass set gatepasstype=@gatepasstype,status=@status,referenceno=@referenceno,vehicleno=@vehicleno,creatorid=@creatorid,vendorname=@vendorname,reasonforgatepass=@reasonforgatepass where gatepassid=#gatepassid.
         /// </summary>
         public static string updategatepass {
             get {
@@ -380,7 +380,7 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to update wms.wms_gatepassmaterial set gatepassid=@gatepassid,materialid=@materialid,quantity=@quantity,remarks=@remarks where gatepassmaterialid=#gatepassmaterialid.
+        ///   Looks up a localized string similar to update wms.wms_gatepassmaterial set gatepassid=@gatepassid,materialid=@materialid,quantity=@quantity,remarks=@remarks,materialcost=@materialcost,expecteddate=@expecteddate where gatepassmaterialid=#gatepassmaterialid.
         /// </summary>
         public static string updategatepassmaterial {
             get {

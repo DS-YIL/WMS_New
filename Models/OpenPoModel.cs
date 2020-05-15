@@ -163,6 +163,11 @@ namespace WMS.Models
 		public string vendorname { get; set; }
 		public string name { get; set; }
 		public bool deleteflag { get; set; }
+		public string reasonforgatepass { get; set; }
+		public string approverstatus { get; set; }
+		public string approverremarks { get; set; }
+		public Boolean print { get; set; }
+		public int reprintcount { get; set; }
 		public List<materialistModel> materialList { get; set; }
 	}
 	public class materialistModel
@@ -171,6 +176,8 @@ namespace WMS.Models
 		public string remarks { get; set; }
 		public int quantity { get; set; }
 		public int gatepassmaterialid { get; set; }
+		public int materialcost { get; set; }
+		public DateTime expecteddate { get; set; }
 	}
 
 
