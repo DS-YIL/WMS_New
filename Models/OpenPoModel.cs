@@ -180,6 +180,7 @@ namespace WMS.Models
 		public int gatepassmaterialid { get; set; }
 		public int materialcost { get; set; }
 		public DateTime expecteddate { get; set; }
+		public DateTime returneddate { get; set; }
 	}
 
 

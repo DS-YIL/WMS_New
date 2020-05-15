@@ -239,19 +239,20 @@ where inwa.grnnumber='#grnnumber' limit 10</value>
     <value>select * from wms.wms_stock where availableqty=#availableqty limit 1</value>
   </data>
   <data name="insertgatepassmaterial" xml:space="preserve">
-    <value>insert into wms.wms_gatepassmaterial(gatepassmaterialid,gatepassid,materialid,quantity,deleteflag,remarks,materialcost,expecteddate)values(default,@gatepassid,@materialid,@quantity,@deleteflag,@remarks,@materialcost,@expecteddate)</value>
+    <value>insert into wms.wms_gatepassmaterial(gatepassmaterialid,gatepassid,materialid,quantity,deleteflag,remarks,materialcost,expecteddate,returneddate)values(default,@gatepassid,@materialid,@quantity,@deleteflag,@remarks,@materialcost,@expecteddate,@returneddate)</value>
   </data>
   <data name="updategatepass" xml:space="preserve">
     <value>update wms.wms_gatepass set gatepasstype=@gatepasstype,status=@status,referenceno=@referenceno,vehicleno=@vehicleno,creatorid=@creatorid,vendorname=@vendorname,reasonforgatepass=@reasonforgatepass where gatepassid=#gatepassid</value>
   </data>
   <data name="updategatepassmaterial" xml:space="preserve">
-    <value>update wms.wms_gatepassmaterial set gatepassid=@gatepassid,materialid=@materialid,quantity=@quantity,remarks=@remarks,materialcost=@materialcost,expecteddate=@expecteddate where gatepassmaterialid=#gatepassmaterialid</value>
+    <value>update wms.wms_gatepassmaterial set gatepassid=@gatepassid,materialid=@materialid,quantity=@quantity,remarks=@remarks,materialcost=@materialcost,expecteddate=@expecteddate,returneddate=@returneddate where gatepassmaterialid=#gatepassmaterialid</value>
   </data>
   <data name="deletegatepassmaterial" xml:space="preserve">
     <value>update wms.wms_gatepassmaterial set deleteflag='true' where gatepassmaterialid=#gatepassmaterialid</value>
   </data>
   <data name="getgatepassmaterialdetailList" xml:space="preserve">
-    <value>select * from wms.wms_gatepassmaterial where gatepassid=#gatepassid and deleteflag=false</value>
+    <value>select * from wms.wms_gatepassmaterial material inner join wms.wms_gatepass pass on pass.gatepassid=material.gatepassid
+      where pass.gatepassid=#gatepassid and pass.deleteflag=false and material.deleteflag=false</value>
   </data>
   <data name="updategatepassapproverstatus" xml:space="preserve">
     <value>update wms.wms_gatepass set approverstatus=@approverstatus,approverremarks=@approverremarks,approvedon=@approvedon where gatepassid=#gatepassid</value>

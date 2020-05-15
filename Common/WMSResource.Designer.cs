@@ -137,7 +137,8 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to select * from wms.wms_gatepassmaterial where gatepassid=#gatepassid and deleteflag=false.
+        ///   Looks up a localized string similar to select * from wms.wms_gatepassmaterial material inner join wms.wms_gatepass pass on pass.gatepassid=material.gatepassid
+        ///      where pass.gatepassid=#gatepassid and pass.deleteflag=false and material.deleteflag=false.
         /// </summary>
         public static string getgatepassmaterialdetailList {
             get {
@@ -241,7 +242,7 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to insert into wms.wms_gatepassmaterial(gatepassmaterialid,gatepassid,materialid,quantity,deleteflag,remarks,materialcost,expecteddate)values(default,@gatepassid,@materialid,@quantity,@deleteflag,@remarks,@materialcost,@expecteddate).
+        ///   Looks up a localized string similar to insert into wms.wms_gatepassmaterial(gatepassmaterialid,gatepassid,materialid,quantity,deleteflag,remarks,materialcost,expecteddate,returneddate)values(default,@gatepassid,@materialid,@quantity,@deleteflag,@remarks,@materialcost,@expecteddate,@returneddate).
         /// </summary>
         public static string insertgatepassmaterial {
             get {
@@ -398,7 +399,7 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to update wms.wms_gatepassmaterial set gatepassid=@gatepassid,materialid=@materialid,quantity=@quantity,remarks=@remarks,materialcost=@materialcost,expecteddate=@expecteddate where gatepassmaterialid=#gatepassmaterialid.
+        ///   Looks up a localized string similar to update wms.wms_gatepassmaterial set gatepassid=@gatepassid,materialid=@materialid,quantity=@quantity,remarks=@remarks,materialcost=@materialcost,expecteddate=@expecteddate,returneddate=@returneddate where gatepassmaterialid=#gatepassmaterialid.
         /// </summary>
         public static string updategatepassmaterial {
             get {

@@ -961,6 +961,7 @@ namespace WMS.DAL
                                 item.remarks,
                                 item.materialcost,
                                 item.expecteddate,
+                                item.returneddate,
                             });
                         }
                         else
@@ -976,7 +977,8 @@ namespace WMS.DAL
                                 item.remarks,
                                 item.materialcost,
                                 item.expecteddate,
-                                
+                                item.returneddate,
+
                             });
                         }
                     }
