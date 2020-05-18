@@ -97,6 +97,15 @@ namespace WMS.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to select * from wms.wms_reprinthistory where .
+        /// </summary>
+        public static string checkreprintalreadydone {
+            get {
+                return ResourceManager.GetString("checkreprintalreadydone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to update wms.wms_gatepassmaterial set deleteflag=&apos;true&apos; where gatepassmaterialid=#gatepassmaterialid.
         /// </summary>
         public static string deletegatepassmaterial {
@@ -305,6 +314,15 @@ namespace WMS.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to insert into wms.wms_reprinthistory(reprinthistoryid,gatepassid,reprintedon,reprintedby,reprintcount,inwmasterid)values(default,@gatepassid,current_date,@reprintedby,@reprintcount,@inwmasterid)returning reprinthistoryid.
+        /// </summary>
+        public static string insertreprintcount {
+            get {
+                return ResourceManager.GetString("insertreprintcount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to INSERT INTO wms.wms_stock(paitemid,pono,binid,vendorid,totalquantity,shelflife,availableqty,deleteflag,itemlocation,createddate,createdby)VALUES(@paitemid,@pono,@binid,@vendorid,@totalquantity,@shelflife,@availableqty,@deleteflag,@itemlocation,@createddate,@createdby)returning itemid.
         /// </summary>
         public static string insertstock {
@@ -372,6 +390,15 @@ namespace WMS.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to update wms.wms_gatepass set reprintedon=current_date,reprintedby=@reprintedby,reprintcount=@reprintcount where gatepassid=#gatepassid.
+        /// </summary>
+        public static string reprintcountupdate {
+            get {
+                return ResourceManager.GetString("reprintcountupdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to INSERT INTO wms.wms_trackstatus(pono,status,enteredon)VALUES(@pono,&apos;Security Check Done&apos;,current_date).
         /// </summary>
         public static string statusupdatebySecurity {
@@ -431,6 +458,16 @@ namespace WMS.Common {
         public static string updategrnnumber {
             get {
                 return ResourceManager.GetString("updategrnnumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to update wms.wms_reprinthistory
+        ///          set reprintcount=@reprintcount where reprinthistoryid=#reprinthistoryid.
+        /// </summary>
+        public static string updatereprintcount {
+            get {
+                return ResourceManager.GetString("updatereprintcount", resourceCulture);
             }
         }
         

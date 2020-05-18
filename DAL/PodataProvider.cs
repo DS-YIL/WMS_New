@@ -1168,5 +1168,65 @@ namespace WMS.DAL
                 return 0;
             }
         }
+
+        public int updatereprintstatus(reprintModel model)
+        {
+            reprintModel obj = new reprintModel();
+            reprintModel secondobj = new reprintModel();
+            int returndata = 0;
+            try
+            {
+                int data = 0;
+                model.inwmasterid = (model.inwmasterid == null) ? null : model.inwmasterid;
+                model.gatepassid = (model.gatepassid == null) ? null : model.gatepassid;
+                    string insertquery = WMSResource.insertreprintcount;
+                    using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
+                    {
+                         data = Convert.ToInt32(DB.ExecuteScalar(insertquery, new
+
+                        {
+                            model.inwmasterid,
+                            model.gatepassid,
+                            model.reprintcount,
+                            model.reprintedby,
+                           
+
+                        }));
+                        returndata = Convert.ToInt32(data);
+                    }
+                using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
+                {
+                    string query = WMSResource.checkreprintalreadydone;
+                    if(model.inwmasterid!=null)
+                    {
+                        query = query + " inwmasterid=" + model.inwmasterid + " order by reprintcount desc limit 1";
+                    }
+                    else if (model.gatepassid != null)
+                    {
+                        query = query + " gatepassid=" + model.gatepassid + " order by reprintcount desc limit 1";
+                    }
+                    pgsql.Open();
+                    obj = pgsql.QuerySingle<reprintModel>(
+                       query, null, commandType: CommandType.Text);
+                }
+                string updatequery = WMSResource.updatereprintcount.Replace("#reprinthistoryid",Convert.ToString(data));
+                int reprintcount = obj.reprintcount + 1;
+                using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
+                {
+                    var data1 = DB.Execute(updatequery, new
+                    {
+                        reprintcount
+                    });
+                    returndata = Convert.ToInt32(data);
+                }
+                return returndata;
+
+            }
+            catch (Exception Ex)
+            {
+                log.ErrorMessage("PODataProvider", "updategatepassapproverstatus", Ex.StackTrace.ToString());
+                return 0;
+            }
+        }
     }
 }

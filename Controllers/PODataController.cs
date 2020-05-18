@@ -160,5 +160,10 @@ namespace WMS.Controllers
         {
             return  this._poService.updateprintstatus(model);
         }
+        [HttpGet("updatereprintstatus")]
+        public int updatereprintstatus(reprintModel model)
+        {
+            return this._poService.updatereprintstatus(model);
+        }
     }
 }

@@ -166,6 +166,7 @@ namespace WMS.Models
 		public bool deleteflag { get; set; }
 		public string reasonforgatepass { get; set; }
 		public string approverstatus { get; set; }
+		
 		public string approverremarks { get; set; }
 		public Boolean print { get; set; }
 		public int reprintcount { get; set; }
@@ -190,5 +191,13 @@ namespace WMS.Models
 		public DateTime returneddate { get; set; }
 	}
 
-
+		public class reprintModel
+		{
+		public int reprinthistoryid { get; set; }
+		public int? gatepassid { get; set; }
+		public int? inwmasterid { get; set; }
+		public DateTime reprintedon { get; set; }
+		public string reprintedby { get; set; }
+		public int reprintcount { get; set; }
+	}
 }
