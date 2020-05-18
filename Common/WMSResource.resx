@@ -264,7 +264,7 @@ where inwa.grnnumber='#grnnumber' limit 10</value>
     <value>select * from wms.wms_gatepass where gatepassid=#gatepassid and deleteflag=false</value>
   </data>
   <data name="insertreprintcount" xml:space="preserve">
-    <value>insert into wms.wms_reprinthistory(reprinthistoryid,gatepassid,reprintedon,reprintedby,reprintcount,inwmasterid)values(default,@gatepassid,current_date,@reprintedby,@reprintcount,@inwmasterid)returning reprinthistoryid</value>
+    <value>insert into wms.wms_reprinthistory(reprinthistoryid,gatepassid,reprintedon,reprintedby,reprintcount)values(default,@gatepassid,current_date,@reprintedby,@reprintcount)returning reprinthistoryid</value>
   </data>
   <data name="printstatusupdate" xml:space="preserve">
     <value>update wms.wms_gatepass set print=false,printedon=current_date,printedby=@printedby where gatepassid=#gatepassid</value>

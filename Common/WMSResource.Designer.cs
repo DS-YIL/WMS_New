@@ -314,7 +314,7 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to insert into wms.wms_reprinthistory(reprinthistoryid,gatepassid,reprintedon,reprintedby,reprintcount,inwmasterid)values(default,@gatepassid,current_date,@reprintedby,@reprintcount,@inwmasterid)returning reprinthistoryid.
+        ///   Looks up a localized string similar to insert into wms.wms_reprinthistory(reprinthistoryid,gatepassid,reprintedon,reprintedby,reprintcount)values(default,@gatepassid,current_date,@reprintedby,@reprintcount)returning reprinthistoryid.
         /// </summary>
         public static string insertreprintcount {
             get {

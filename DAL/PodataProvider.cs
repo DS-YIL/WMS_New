@@ -1145,31 +1145,117 @@ namespace WMS.DAL
 
         public int updateprintstatus(gatepassModel model)
         {
-            int returndata = 0;
-            try
             {
-                
-                string insertquery = WMSResource.printstatusupdate.Replace("#gatepassid", Convert.ToString(model.gatepassid));
-                using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
+                int returndata = 0;
+                int data = 0;
+                try
                 {
-                    var data = DB.Execute(insertquery, new
+                    gatepassModel obj = new gatepassModel();
 
-                    {  
-                        model.printedby,
-                    });
-                    returndata = Convert.ToInt32(data);
+                    using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
+                    {
+                        string query = WMSResource.getprintdetails.Replace("#gatepassid", Convert.ToString(model.gatepassid));
+
+                        pgsql.Open();
+                        obj = pgsql.QueryFirstOrDefault<gatepassModel>(
+                           query, null, commandType: CommandType.Text);
+                    }
+                    if (obj.print == true)
+                    {
+                        string insertquery = WMSResource.printstatusupdate.Replace("#gatepassid", Convert.ToString(model.gatepassid));
+                        using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
+                        {
+                            var data1 = DB.Execute(insertquery, new
+
+                            {
+                                model.printedby,
+                            });
+                            returndata = Convert.ToInt32(data);
+                        }
+                    }
+                    else
+                    {
+                        using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
+                        {
+                            string query = WMSResource.checkreprintalreadydone;
+
+                            query = query + " gatepassid=" + model.gatepassid + " order by reprintcount desc limit 1";
+
+                            pgsql.Open();
+                            obj = pgsql.QueryFirstOrDefault<gatepassModel>(
+                               query, null, commandType: CommandType.Text);
+                           
+                                
+                        }
+                        string insertquery = WMSResource.insertreprintcount;
+                        using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
+                        {
+
+                            if (obj == null)
+                            { model.reprintcount = 1; }
+                            else
+                            {
+                                model.reprintcount = model.reprintcount + 1;
+                            }
+                            data = Convert.ToInt32(DB.ExecuteScalar(insertquery, new
+
+                            {
+                               
+                                model.gatepassid,
+                                model.reprintedby,
+                                model.reprintcount,
+
+                            }));
+                            returndata = Convert.ToInt32(data);
+                        }
+
+                       
+                        string updatequery = WMSResource.updatereprintcount.Replace("#reprinthistoryid", Convert.ToString(data));
+                        
+                        model.reprintcount = model.reprintcount + 1;
+                        using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
+                        {
+                            var data1 = DB.Execute(updatequery, new
+                            {
+                                model.reprintcount,
+                            });
+                            returndata = Convert.ToInt32(data);
+                        }
+                    }
+                    return returndata;
                 }
-                return returndata;
-
-            }
-            catch (Exception Ex)
-            {
-                log.ErrorMessage("PODataProvider", "updateprintstatus", Ex.StackTrace.ToString());
-                return 0;
+                catch (Exception Ex)
+                {
+                    log.ErrorMessage("PODataProvider", "updateprintstatus", Ex.StackTrace.ToString());
+                    return 0;
+                }
             }
         }
+                //int returndata = 0;
+                //try
+                //{
 
-        public int updatereprintstatus(reprintModel model)
+                //    string insertquery = WMSResource.printstatusupdate.Replace("#gatepassid", Convert.ToString(model.gatepassid));
+                //    using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
+                //    {
+                //        var data = DB.Execute(insertquery, new
+
+                //        {  
+                //            model.printedby,
+                //        });
+                //        returndata = Convert.ToInt32(data);
+                //    }
+                //    return returndata;
+
+                //}
+                //catch (Exception Ex)
+                //{
+                //    log.ErrorMessage("PODataProvider", "updateprintstatus", Ex.StackTrace.ToString());
+                //    return 0;
+                //}
+                //}
+            
+                public int updatereprintstatus(reprintModel model)
         {
             reprintModel obj = new reprintModel();
             reprintModel secondobj = new reprintModel();
