@@ -155,5 +155,10 @@ namespace WMS.Controllers
         {
             return await this._poService.GetmaterialList(gatepassid);
         }
+        [HttpGet("updateprintstatus")]
+        public int updateprintstatus(gatepassModel model)
+        {
+            return  this._poService.updateprintstatus(model);
+        }
     }
 }

@@ -32,5 +32,6 @@ namespace WMS.Interfaces
         int deletegatepassmaterial(int gatepassmaterialid);
         int updategatepassapproverstatus(gatepassModel model);
         Task<IEnumerable<materialistModel>> GetmaterialList(int gatepassid);
+        int updateprintstatus(gatepassModel model);
     }
 }

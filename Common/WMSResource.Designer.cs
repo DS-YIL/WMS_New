@@ -215,6 +215,15 @@ namespace WMS.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to select * from wms.wms_gatepass where gatepassid=#gatepassid and deleteflag=false.
+        /// </summary>
+        public static string getprintdetails {
+            get {
+                return ResourceManager.GetString("getprintdetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to INSERT INTO wms.wms_barcodemaster(barcodeid,paitemid,barcode,createddate,createdby,deleteflag)VALUES(DEFAULT,@paitemid,@barcode,@createddate,@createdby,@deleteflag)returning barcodeid.
         /// </summary>
         public static string insertbarcodedata {
@@ -337,6 +346,15 @@ namespace WMS.Common {
         public static string openpolist {
             get {
                 return ResourceManager.GetString("openpolist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to update wms.wms_gatepass set print=false,printedon=current_date,printedby=@printedby where gatepassid=#gatepassid.
+        /// </summary>
+        public static string printstatusupdate {
+            get {
+                return ResourceManager.GetString("printstatusupdate", resourceCulture);
             }
         }
         

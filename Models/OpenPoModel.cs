@@ -171,6 +171,8 @@ namespace WMS.Models
 		public int reprintcount { get; set; }
 		public DateTime approvedon { get; set; }
 		public List<materialistModel> materialList { get; set; }
+		public string printedby { get; set; }
+		public DateTime printedon { get; set; }
 	}
 	public class materialistModel
 	{

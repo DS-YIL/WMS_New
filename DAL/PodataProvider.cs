@@ -1142,5 +1142,31 @@ namespace WMS.DAL
 
             }
         }
+
+        public int updateprintstatus(gatepassModel model)
+        {
+            int returndata = 0;
+            try
+            {
+                
+                string insertquery = WMSResource.printstatusupdate.Replace("#gatepassid", Convert.ToString(model.gatepassid));
+                using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
+                {
+                    var data = DB.Execute(insertquery, new
+
+                    {  
+                        model.printedby,
+                    });
+                    returndata = Convert.ToInt32(data);
+                }
+                return returndata;
+
+            }
+            catch (Exception Ex)
+            {
+                log.ErrorMessage("PODataProvider", "updateprintstatus", Ex.StackTrace.ToString());
+                return 0;
+            }
+        }
     }
 }
