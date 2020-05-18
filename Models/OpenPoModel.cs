@@ -173,6 +173,11 @@ namespace WMS.Models
 		public List<materialistModel> materialList { get; set; }
 		public string printedby { get; set; }
 		public DateTime printedon { get; set; }
+		public string remarks { get; set; }
+		
+		public int materialcost { get; set; }
+		public DateTime expecteddate { get; set; }
+		public DateTime returneddate { get; set; }
 	}
 	public class materialistModel
 	{

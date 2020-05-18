@@ -1115,7 +1115,7 @@ namespace WMS.DAL
             }
         }
 
-        public async Task<IEnumerable<materialistModel>> GetmaterialList(int gatepassid)
+        public async Task<IEnumerable<gatepassModel>> GetmaterialList(int gatepassid)
         {
             using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
             {
@@ -1125,7 +1125,7 @@ namespace WMS.DAL
                     string query = WMSResource.getgatepassmaterialdetailList.Replace("#gatepassid", Convert.ToString(gatepassid));
 
                     await pgsql.OpenAsync();
-                    return await pgsql.QueryAsync<materialistModel>(
+                    return await pgsql.QueryAsync<gatepassModel>(
                        query, null, commandType: CommandType.Text);
 
 

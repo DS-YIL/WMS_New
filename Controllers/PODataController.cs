@@ -151,7 +151,7 @@ namespace WMS.Controllers
             return this._poService.updategatepassapproverstatus(model);
         }
         [HttpGet("getmaterialdetailsbygatepassid")]
-        public async Task<IEnumerable<materialistModel>> gatepassmaterialdetail(int gatepassid)
+        public async Task<IEnumerable<gatepassModel>> gatepassmaterialdetail(int gatepassid)
         {
             return await this._poService.GetmaterialList(gatepassid);
         }
