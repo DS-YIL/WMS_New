@@ -381,6 +381,26 @@ a.disabled {
   cursor: pointer;
 }
 
+.watermark {
+  opacity: 0.5;
+  color: BLACK;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.printheader {
+  /*position: fixed;*/
+  top: 0;
+}
+
+.printfooter {
+  position: fixed;
+  display: table-footer-group;
+  bottom: 0;
+}
+
+
 @-moz-keyframes blinker {
   0% {
     opacity: 1.0;

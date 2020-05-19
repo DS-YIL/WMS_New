@@ -101,12 +101,23 @@ export class gatepassModel {
   materialid: string;
   quantity: number
   name: string;
+  vendorname: string;
   deleteflag: boolean;
   materialList: Array<materialistModel> = [];
+  approverremarks: string;
+  approverstatus: string;
+  printedon: Date;
+  printedby: string;
+  print: boolean;
+  reasonforgatepass: string;
 }
 export class materialistModel {
   gatepassmaterialid: string;
   materialid: string;
   materialdescription: string;
-  quantity: number=0;
+  quantity: number = 0;
+  remarks: string;
+  expecteddate: Date;
+  returneddate: Date;
+  materialcost: string;
 }
