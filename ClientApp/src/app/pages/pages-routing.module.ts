@@ -13,7 +13,11 @@ import { MaterialIssueDashBoardComponent } from './WMS/MaterialIssueDashBoard.co
 import { MaterialIssueComponent } from './WMS/MaterialIssue.component';
 import { HomeComponent } from './Home/Home.component';
 import { GatePassComponent } from './WMS/Gatepass.component';
-import { InventoryMovementComponent } from  './WMS/InventoryMovement.component';
+import { GatePassApproverComponent } from './WMS/GatepassApproverForm.component';
+import { GatePassPrintComponent } from './WMS/GatepassPrint.component';
+import { InventoryMovementComponent } from './WMS/InventoryMovement.component';
+import { ObsoleteInventoryMovementComponent } from './WMS/ObsoleteInventoryMovement.component';
+import { ExcessInventoryMovementComponent } from './WMS/ExcessInventoryMovement.component';
 
 const routes: Routes = [{
   path: '',
@@ -39,7 +43,11 @@ const routes: Routes = [{
     { path: "MaterialIssueDashboard", component: MaterialIssueDashBoardComponent, canActivate: [AuthGuard] },
     { path: "MaterialIssue/:requestid", component: MaterialIssueComponent, canActivate: [AuthGuard] },
     { path: "GatePass", component: GatePassComponent, canActivate: [AuthGuard] },
+    { path: "GatePassApprover/:gatepassid", component: GatePassApproverComponent, canActivate: [AuthGuard] },
+    { path: "GatePassPrint/:gatepassid", component: GatePassPrintComponent, canActivate: [AuthGuard] },
     { path: "InventoryMovement", component: InventoryMovementComponent, canActivate: [AuthGuard] },
+    { path: "ObsoleteInventoryMovement", component: ObsoleteInventoryMovementComponent, canActivate: [AuthGuard] },
+    { path: "ExcessInventoryMovement", component: ExcessInventoryMovementComponent, canActivate: [AuthGuard] }
   ],
 }];
 

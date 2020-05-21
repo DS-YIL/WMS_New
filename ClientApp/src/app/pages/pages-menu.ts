@@ -41,10 +41,15 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'list-outline',
     link: '/WMS/InventoryMovement'
   },
-  //{
-  //  title: 'Material Request',
-  //  link: '/WMS/MaterialRequest',
-  //  icon: 'list-outline'
-  //},
+  {
+    title: 'Obsolete IM',
+    icon: 'list-outline',
+    link: '/WMS/ObsoleteInventoryMovement'
+  },
+  {
+    title: 'Excess IM',
+    icon: 'list-outline',
+    link: '/WMS/ExcessInventoryMovement'
+  }
   
 ];

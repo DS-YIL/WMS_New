@@ -1,0 +1,75 @@
+<div *ngIf="materialList.length>0">
+  <div class="row">
+    <div class="col-lg-2 col-md-2 col-sm-2 form-inline">
+      <label class="form-label"><b>GatePass Id:</b></label>&nbsp;<span>{{materialList[0].gatepassid}}</span>
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-2 form-inline">
+      <label class="form-label"><b>Sendor Name:</b></label>&nbsp;<span>{{materialList[0].name}}</span>
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-2 form-inline">
+      <label class="form-label"><b>Supplier Name:</b></label>&nbsp;<span>{{materialList[0].vendorname}}</span>
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-2 form-inline">
+      <label class="form-label"><b>Type:</b></label>&nbsp;<span>{{materialList[0].gatepasstype}}</span>
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-2 form-inline">
+      <label class="form-label"><b>Reason:</b></label>&nbsp;<span>{{materialList[0].reasonforgatepass}}</span>
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-2 form-inline">
+      <label class="form-label"><b>Vehicle No:</b></label>&nbsp;<span>{{materialList[0].vehicleno}}</span>
+    </div>
+    <br />
+    <div class="row mt-4" style="margin:14px">
+      <p-table [value]="materialList">
+        <ng-template pTemplate="header">
+          <tr class="mprltbldata">
+            <th class="ptable-cell">S No</th>
+            <th class="ptable-cell">Material</th>
+            <th class="ptable-cell">Materia Description</th>
+            <th class="ptable-cell">Quantity</th>
+            <th class="ptable-cell">Value</th>
+            <th class="ptable-cell">Remarks</th>
+            <th class="ptable-cell">Expected Date</th>
+            <th *ngIf="materialList[0].gatepasstype=='Returnable'" class="ptable-cell">Returned Date</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-editing="editing" let-ri="rowIndex" let-rindex=0>
+          <tr>
+            <td class="ptable-cell" style="text-align:right"> {{ri+1}} </td>
+            <td class="ptable-cell" style="text-align:right"> {{rowData.materialid}} </td>
+            <td class="ptable-cell" style="text-align:right"> {{rowData.materialdescription}} </td>
+            <td class="ptable-cell" style="text-align:right">{{rowData.quantity}}</td>
+            <td class="ptable-cell" style="text-align:right">{{rowData.materialcost}}</td>
+            <td class="ptable-cell" style="text-align:right"> {{rowData.remarks}} </td>
+            <td class="ptable-cell" style="text-align:right">{{rowData.expecteddate | date :  constants.dateFormat}}</td>
+            <td *ngIf="materialList[0].gatepasstype=='Returnable'" class="ptable-cell" style="text-align:right">{{rowData.returneddate | date :  constants.dateFormat}}</td>
+
+        </ng-template>
+      </p-table>
+    </div>
+    </div>
+    <div class="footer">
+      <div class="row">
+        <div class="col-lg-2 col-md-2 col-sm-2"></div>
+        <div class="col-lg-2 col-md-2 col-sm-2  form-inline">
+          <label class="form-label">Status:</label>&nbsp;&nbsp;
+          <div class="form-inline-list">
+            <select class="form-control forms-input" [(ngModel)]="gatepassModel.approverstatus">
+              <option value='Approved'>Approved</option>
+              <option value='Sent for Modification'>Sent for Modification</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-3 form-inline">
+          <label class="form-label">Remarks:</label>&nbsp;&nbsp;
+          <div class="form-inline-list">
+            <input type="text" class="form-control" [(ngModel)]="gatepassModel.approverremarks" />
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-2 form-inline">
+          <button [disabled]="btnDisable" type="button" class="btn btn-primary" (click)="updategatepassapproverstatus()">Submit</button>
+        </div>
+      </div>
+    </div>
+
+  </div>

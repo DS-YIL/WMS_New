@@ -89,6 +89,7 @@ export class GatePassComponent implements OnInit {
           material.materialid = result[i].materialid;
           material.materialdescription = result[i].materialdescription;
           material.quantity = result[i].quantity;
+          material.remarks = result[i].remarks;
           item.materialList.push(material);
         }
 
@@ -98,7 +99,7 @@ export class GatePassComponent implements OnInit {
   }
 
   //open gate pass dialog
-  openGatepassDialog(gatepassobject: gatepassModel, gpIndx: number) {
+  openGatepassDialog(gatepassobject: any, gpIndx: any) {
     this.gatepassdialog = true;
     this.gatepassModel = new gatepassModel();
     if (gatepassobject) {
@@ -106,6 +107,7 @@ export class GatePassComponent implements OnInit {
       this.gatepassModel = gatepassobject;
     } else {
       this.gatepassModel.gatepasstype = "0";
+      this.gatepassModel.reasonforgatepass = "0";
     }
   }
 
@@ -174,4 +176,10 @@ export class GatePassComponent implements OnInit {
     else
       this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Select Type' });
   }
+
+  showprint(gatepassobject: gatepassModel) {
+    this.router.navigate(['/WMS/GatePassPrint', gatepassobject.gatepassid]);
+  }
+
+
 }

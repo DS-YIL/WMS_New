@@ -5,7 +5,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { constants } from '../Models/WMSConstants'
 import { Employee, Login, DynamicSearchResult } from '../Models/Common.Model';
-import { PoFilterParams, PoDetails, BarcodeModel, StockModel, materialRequestDetails, inwardModel } from '../Models/WMS.Model';
+import { PoFilterParams, PoDetails, BarcodeModel, StockModel, materialRequestDetails, inwardModel, gatepassModel } from '../Models/WMS.Model';
 import { Text } from '@angular/compiler/src/i18n/i18n_ast';
 
 @Injectable({
@@ -109,18 +109,27 @@ export class wmsService {
   getGatePassList(): Observable<any> {
     return this.http.get<any>(this.url + 'POData/getgatepasslist/', this.httpOptions);
   }
+  gatepassmaterialdetail(gatepassId): Observable<any> {
+    return this.http.get<any>(this.url + 'POData/getmaterialdetailsbygatepassid?gatepassid=' + gatepassId + '', this.httpOptions);
+  }
 
   checkMaterialandQty(material, qty): Observable<any> {
     const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }), responseType: 'text' as any };
     return this.http.get<any>(this.url + 'POData/checkmaterialandqty?material=' + material + '&qty=' + qty + '', httpOptions);
   }
+  updategatepassapproverstatus(gatepassModel: gatepassModel): Observable<any> {
+    return this.http.post<any>(this.url + 'POData/updategatepassapproverstatus/', gatepassModel, this.httpOptions);
+  }
   deleteGatepassmaterial(id: number): Observable<any> {
     return this.http.delete<any>(this.url + 'POData/deletegatepassmaterial?gatepassmaterialid=' + id + '', this.httpOptions);
-
+  }
+  updateprintstatus(gatepassModel: gatepassModel) {
+    return this.http.post<any>(this.url + 'POData/updateprintstatus/', gatepassModel, this.httpOptions);
   }
   saveoreditgatepassmaterial(gatepassList: any): Observable<any> {
     return this.http.post<any>(this.url + 'POData/saveoreditgatepassmaterial/', gatepassList, this.httpOptions);
   }
+
   getInventoryList(): Observable<any> {
     return this.http.get<any>(this.url + 'POData/getInventoryList/', this.httpOptions);
   }

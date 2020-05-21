@@ -130,6 +130,7 @@ export class WarehouseInchargeComponent implements OnInit {
   onSubmitStockDetails() {
 
     this.StockModel.pono = this.PoDetails.pono;
+    this.StockModel.grnnumber = this.PoDetails.grnnumber;
     this.StockModel.vendorid = this.PoDetails.vendorid;
     this.StockModel.paitemid = this.PoDetails.paitemid;
     this.StockModel.totalquantity = this.PoDetails.quotationqty;
