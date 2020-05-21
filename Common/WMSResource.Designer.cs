@@ -79,7 +79,7 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to select distinct* from wms.openpolistview openpo inner join wms.wms_inwardmaster inw on openpo.pono=inw.pono where openpo.pono=&apos;#pono&apos;  order by receiveddate desc limit 1.
+        ///   Looks up a localized string similar to select distinct* from wms.openpolistview openpo inner join wms.wms_securityinward inw on openpo.pono=inw.pono where openpo.pono=&apos;#pono&apos;  order by receiveddate desc limit 1.
         /// </summary>
         public static string checkponoexists {
             get {
@@ -115,7 +115,7 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to select * from wms.wms_issuerequest where requestid=#requestid.
+        ///   Looks up a localized string similar to select * from wms.wms_materialrequest where requestid=#requestid.
         /// </summary>
         public static string GetdetailsByrequestid {
             get {
@@ -124,7 +124,10 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to select * from wms.wms_inward inw inner join wms.wms_inwardmaster inwa on inw.inwmasterid=inwa.inwmasterid inner join wms.openpolistview openpo on openpo.pono=inwa.pono where inwa.pono=&apos;#pono&apos; limit 50.
+        ///   Looks up a localized string similar to select * from wms.wms_storeinward inw 
+        /// inner join wms.wms_securityinward inwa on inw.inwmasterid=inwa.inwmasterid 
+        /// inner join wms.openpolistview openpo on openpo.pono=inwa.pono 
+        /// where  inwa.pono=&apos;#pono&apos; limit 50.
         /// </summary>
         public static string Getdetailsforthreewaymatching {
             get {
@@ -156,7 +159,8 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to select grnnumber from wms.wms_inwardmaster   where pono=&apos;#pono&apos; and grnnumber is not null limit 1.
+        ///   Looks up a localized string similar to select grnnumber from wms.wms_securityinward   where pono=&apos;#pono&apos; and grnnumber is not null 
+        ///and deleteflag=false order by grndate desc limit 1.
         /// </summary>
         public static string getGRNNo {
             get {
@@ -165,7 +169,16 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to select inwmasterid from wms.wms_inwardmaster where pono=&apos;#pono&apos; limit 1.
+        ///   Looks up a localized string similar to select inwmasterid from wms.wms_securityinward where grnnumber=&apos;#grnnumber&apos;.
+        /// </summary>
+        public static string getinwardmasterid {
+            get {
+                return ResourceManager.GetString("getinwardmasterid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to select inwmasterid from wms.wms_securityinward where pono=&apos;#pono&apos; limit 1.
         /// </summary>
         public static string getinwmasterid {
             get {
@@ -174,7 +187,16 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to select req.requestid,req.requesteddate,req.requesterid,po.projectname from wms.wms_issuerequest req inner join wms.openpolistview po on po.pono=req.pono 
+        ///   Looks up a localized string similar to select itemid from wms.wms_stock where materialid=&apos;#materialid&apos; and pono=&apos;#pono&apos; limit 1.
+        /// </summary>
+        public static string getitemid {
+            get {
+                return ResourceManager.GetString("getitemid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to select req.requestid,req.requesteddate,req.requesterid,po.projectname from wms.wms_materialrequest req inner join wms.openpolistview po on po.pono=req.pono 
         ///left join wms.employee emp on req.requesterid=emp.employeeno  where req.approverid=&apos;#approverid&apos; group by req.requestid,req.requesteddate,req.requesterid,po.projectname.
         /// </summary>
         public static string GetListForMaterialRequestByapproverid {
@@ -184,7 +206,7 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to select * from wms.wms_issuerequest where requesterid=&apos;#requesterid&apos;.
+        ///   Looks up a localized string similar to select * from wms.wms_materialrequest where requesterid=&apos;#requesterid&apos;.
         /// </summary>
         public static string GetListForMaterialRequestByrequesterid {
             get {
@@ -205,7 +227,7 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to select requestid from wms.wms_issuerequest order by requestid desc limit 1.
+        ///   Looks up a localized string similar to select requestid from wms.wms_materialrequest order by requestid desc limit 1.
         /// </summary>
         public static string getnextrequestid {
             get {
@@ -214,7 +236,7 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to select distinct* from wms.wms_inward inw inner join wms.wms_inwardmaster inwmaster on inwmaster.inwmasterid=inw.inwmasterid  
+        ///   Looks up a localized string similar to select distinct* from wms.wms_storeinward inw inner join wms.wms_securityinward inwmaster on inwmaster.inwmasterid=inw.inwmasterid  
         ///where  inwmaster.pono=&apos;#pono&apos;.
         /// </summary>
         public static string Getponodetailsformaterialissue {
@@ -233,7 +255,16 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to INSERT INTO wms.wms_barcodemaster(barcodeid,paitemid,barcode,createddate,createdby,deleteflag)VALUES(DEFAULT,@paitemid,@barcode,@createddate,@createdby,@deleteflag)returning barcodeid.
+        ///   Looks up a localized string similar to select requestforissueid  from wms.wms_materialrequest where materialid=&apos;materialid&apos; and pono=&apos;#pono&apos; limit 1.
+        /// </summary>
+        public static string getrequestforissueid {
+            get {
+                return ResourceManager.GetString("getrequestforissueid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to INSERT INTO wms.wms_barcode(barcodeid,barcode,createddate,createdby,deleteflag)VALUES(DEFAULT,@barcode,@createddate,@createdby,@deleteflag)returning barcodeid.
         /// </summary>
         public static string insertbarcodedata {
             get {
@@ -242,7 +273,7 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to INSERT INTO wms.wms_inward(inwmasterid,poitemid,receiveddate,receivedby,returnqty,confirmqty,deleteflag)VALUES(@inwmasterid,@poitemid,@receiveddate,@receivedby,@returnqty,@confirmqty,@deleteflag)returning inwardid.
+        ///   Looks up a localized string similar to INSERT INTO wms.wms_storeinward(inwmasterid,receiveddate,receivedby,returnqty,confirmqty,deleteflag)VALUES(@inwmasterid,@receiveddate,@receivedby,@returnqty,@confirmqty,@deleteflag)returning inwardid.
         /// </summary>
         public static string insertforinvoicequery {
             get {
@@ -251,7 +282,7 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to insert into wms.wms_gatepass(gatepassid, gatepasstype, status, referenceno, vehicleno, creatorid, createddate,deleteflag,vendorname,print,reasonforgatepass)values(default,@gatepasstype,@status,@referenceno,@vehicleno, @creatorid,@createddate,@deleteflag,@vendorname,&apos;true&apos;,@reasonforgatepass)returning gatepassid.
+        ///   Looks up a localized string similar to insert into wms.wms_gatepass(gatepassid, gatepasstype, status, referenceno, vehicleno, requestedby, requestedon,deleteflag,vendorname,print,reasonforgatepass)values(default,@gatepasstype,@status,@referenceno,@vehicleno, @requestedby,@requestedon,@deleteflag,@vendorname,&apos;true&apos;,@reasonforgatepass)returning gatepassid.
         /// </summary>
         public static string insertgatepassdata {
             get {
@@ -269,7 +300,7 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to INSERT INTO wms.wms_inwardmaster(pono,invoiceno,invoicedate,receivedby,receiveddate,deleteflag,barcodeid)VALUES(@pono,@invoiceno,@invoicedate,@receivedby,@receiveddate,@deleteflag,@barcodeid).
+        ///   Looks up a localized string similar to INSERT INTO wms.wms_securityinward(inwmasterid,pono,invoiceno,invoicedate,receivedby,receiveddate,deleteflag)VALUES(default,@pono,@invoiceno,@invoicedate,@receivedby,@receiveddate,@deleteflag).
         /// </summary>
         public static string insertinvoicedata {
             get {
@@ -323,7 +354,7 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to INSERT INTO wms.wms_stock(paitemid,pono,binid,vendorid,totalquantity,shelflife,availableqty,deleteflag,itemlocation,createddate,createdby)VALUES(@paitemid,@pono,@binid,@vendorid,@totalquantity,@shelflife,@availableqty,@deleteflag,@itemlocation,@createddate,@createdby)returning itemid.
+        ///   Looks up a localized string similar to INSERT INTO wms.wms_stock(inwmasterid,stockstatus,pono,binid,vendorid,totalquantity,shelflife,availableqty,deleteflag,itemlocation,createddate,createdby)VALUES(@inwmasterid,@stockstatus,@pono,@binid,@vendorid,@totalquantity,@shelflife,@availableqty,@deleteflag,@itemlocation,@createddate,@createdby)returning itemid.
         /// </summary>
         public static string insertstock {
             get {
@@ -341,7 +372,7 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to INSERT INTO wms.wms_issuerequest(requestforissueid,paitemid,quantity,approveremailid,approverid,pono,materialid,requesterid,requestid,requestedquantity)VALUES(default,@paitemid,@quantity,@approveremailid,@approverid,@pono,@materialid,@requesterid,@requestid,@requestedquantity).
+        ///   Looks up a localized string similar to INSERT INTO wms.wms_materialrequest(requestforissueid,quantity,approveremailid,approverid,pono,materialid,requesterid,requestid,requestedquantity)VALUES(default,@quantity,@approveremailid,@approverid,@pono,@materialid,@requesterid,@requestid,@requestedquantity).
         /// </summary>
         public static string materialquest {
             get {
@@ -350,7 +381,7 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to select distinct * from   wms.wms_inward inw inner join  wms.wms_inwardmaster inwmaster on inw.inwmasterid = inwmaster.inwmasterid inner join wms.openpolistview openpo on openpo.pono = inwmaster.pono left join wms.wms_issuerequest req on req.pono = openpo.pono where req.ackstatus is not null.
+        ///   Looks up a localized string similar to select distinct * from   wms.wms_storeinward inw inner join  wms.wms_securityinward inwmaster on inw.inwmasterid = inwmaster.inwmasterid inner join wms.openpolistview openpo on openpo.pono = inwmaster.pono left join wms.wms_materialrequest req on req.pono = openpo.pono where req.ackstatus is not null.
         /// </summary>
         public static string materialrequestquery {
             get {
@@ -359,7 +390,7 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to select * from wms.openpolistview  where  approverid=&apos;#approverid&apos; .
+        ///   Looks up a localized string similar to select * from wms.openpolistview  where  projectmanager=&apos;#projectmanager&apos; .
         /// </summary>
         public static string openpolist {
             get {
@@ -377,8 +408,8 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to select distinct * from wms.wms_inward inw 
-        ///inner join wms.wms_inwardmaster inwa on inw.inwmasterid=inwa.inwmasterid 
+        ///   Looks up a localized string similar to select distinct * from wms.wms_storeinward inw 
+        ///inner join wms.wms_securityinward inwa on inw.inwmasterid=inwa.inwmasterid 
         ///inner join wms.wms_stock stocks on stocks.pono=inwa.pono
         ///inner join wms.openpolistview openpo on openpo.pono=inwa.pono 
         ///where inwa.grnnumber=&apos;#grnnumber&apos; limit 10.
@@ -408,7 +439,7 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to update  wms.wms_issuerequest set ackstatus=@ackstatus,ackremarks=@ackremarks where requestforissueid=@requestforissueid and materialid=@materialid.
+        ///   Looks up a localized string similar to update  wms.wms_materialrequest set ackstatus=@ackstatus,ackremarks=@ackremarks where requestforissueid=@requestforissueid and materialid=@materialid.
         /// </summary>
         public static string updateackstatus {
             get {
@@ -417,7 +448,8 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to update  wms.wms_issuerequest set approvedstatus=@approverstatus,approveddate=@approveddate,issuedquantity=@issuedquantity where requestforissueid=#requestforissueid and materialid=&apos;#materialid&apos;.
+        ///   Looks up a localized string similar to insert into wms.wms_materialissue(materialissueid,pono,itemid,requestforissueid,itemissueddate,itemreceiverid,deleteflag,itemreturnable,approvedby,approvedon,issuedqty)
+        ///values(default,@pono,@itemid,@requestforissueid,@itemissueddate,@itemreceiverid,false,@itemreturnable,@approvedby,@approvedon,@issuedqty).
         /// </summary>
         public static string updateapproverstatus {
             get {
@@ -453,7 +485,7 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to update wms.wms_inwardmaster set grnnumber=@grnnumber,grndate=current_date where invoiceno=&apos;#invoiceno&apos; and pono=&apos;#pono&apos;.
+        ///   Looks up a localized string similar to update wms.wms_securityinward set grnnumber=@grnnumber,grndate=current_date where invoiceno=&apos;#invoiceno&apos; and pono=&apos;#pono&apos;.
         /// </summary>
         public static string updategrnnumber {
             get {
@@ -481,7 +513,9 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to select Count(*) from wms.wms_inwardmaster inw inner join wms.openpolistview openpo on inw.pono=openpo.pono where inw.invoiceno=&apos;#invoiceno&apos; and openpo.pono=&apos;#pono&apos; and openpo.projectcode=&apos;#projectcode&apos; and openpo.quotationqty=#quantity and openpo.material=&apos;#material&apos;.
+        ///   Looks up a localized string similar to select Count(*) from wms.wms_securityinward inw 
+        ///inner join wms.openpolistview openpo on inw.pono=openpo.pono 
+        ///where  inw.invoiceno=&apos;#invoiceno&apos; and openpo.pono=&apos;#pono&apos; and openpo.projectcode=&apos;#projectcode&apos; and openpo.quotationqty=#quantity and openpo.material=&apos;#material&apos;.
         /// </summary>
         public static string Verifythreewaymatch {
             get {

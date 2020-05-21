@@ -52,7 +52,7 @@ namespace WMS.DAL
 
                 try
                 {
-                    string query = WMSResource.openpolist.Replace("#approverid", loginid);
+                    string query = WMSResource.openpolist.Replace("#projectmanager", loginid);
                     if (pono != null)
                     {
                         query = query + " and pono='" + pono + "'";
@@ -93,22 +93,23 @@ namespace WMS.DAL
                 string insertquery = WMSResource.insertbarcodedata;
                 using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
                 {
-                    var result = DB.ExecuteScalar(insertquery, new
-                    {
+                    var result = 0;
+                    //var result = DB.ExecuteScalar(insertquery, new
+                    //{
 
-                        dataobj.paitemid,
-                        dataobj.barcode,
-                        dataobj.createddate,
-                        dataobj.createdby,
-                        dataobj.deleteflag,
-                    });
+                    //    dataobj.paitemid,
+                    //    dataobj.barcode,
+                    //    dataobj.createddate,
+                    //    dataobj.createdby,
+                    //    dataobj.deleteflag,
+                    //});
                     string insertqueryforinvoice = WMSResource.insertinvoicedata;
-                    int barcodeid = Convert.ToInt32(result);
+                    //int barcodeid = Convert.ToInt32(result);
                     dataobj.receiveddate = System.DateTime.Now;
-                    if (barcodeid != 0)
-                    {
+                    //if (barcodeid != 0)
+                    //{
 
-                        var results = DB.ExecuteScalar(insertqueryforinvoice, new
+                        var results = DB.Execute(insertqueryforinvoice, new
                         {
 
                             dataobj.invoicedate,
@@ -117,10 +118,10 @@ namespace WMS.DAL
                             dataobj.receivedby,
                             dataobj.pono,
                             dataobj.deleteflag,
-                            barcodeid,
+                            //barcodeid,
                         });
-                    }
-                    return (Convert.ToInt32(result));
+                    //}
+                    return (Convert.ToInt32(results));
 
 
                 }
@@ -168,7 +169,7 @@ namespace WMS.DAL
                 try
                 {
                     pgsql.Open();
-                    string lastinsertedgrn = WMSResource.lastinsertedgrn; ;
+                    string lastinsertedgrn = WMSResource.lastinsertedgrn;
 
                     string query = WMSResource.Verifythreewaymatch.Replace("#pono", pono).Replace("#invoiceno", invoiceno).Replace("#quantity", quantity.ToString()).Replace("#projectcode", projectcode).Replace("#material", material);
                     var info = pgsql.QuerySingle(
@@ -330,6 +331,16 @@ namespace WMS.DAL
                 StockModel obj = new StockModel();
                 string loactiontext = string.Empty;
                 var result = 0;
+              int inwmasterid = 0;
+                using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
+                {
+                    StockModel objs = new StockModel();
+                    pgsql.Open();
+                    string query = WMSResource.getinwardmasterid.Replace("#grnnumber",data.grnnumber);
+                    objs = pgsql.QuerySingle<StockModel>(
+                       query, null, commandType: CommandType.Text);
+                    inwmasterid = objs.inwmasterid;
+                }
                 //foreach (var item in data) { 
                 data.createddate = System.DateTime.Now;
                 string insertquery = WMSResource.insertstock;
@@ -337,7 +348,7 @@ namespace WMS.DAL
                 {
                     result = Convert.ToInt32(DB.ExecuteScalar(insertquery, new
                     {
-                        data.paitemid,
+                        inwmasterid,
                         data.pono,
                         data.binid,
                         data.vendorid,
@@ -349,9 +360,9 @@ namespace WMS.DAL
                         data.itemlocation,
                         data.createddate,
                         data.createdby,
-
+                        data.stockstatus
                     }));
-                    if (result != null)
+                    if (result != 0)
                     {
                         int itemid = Convert.ToInt32(result);
                         string insertqueryforlocationhistory = WMSResource.insertqueryforlocationhistory;
@@ -471,7 +482,7 @@ namespace WMS.DAL
                     {
                         result = DB.Execute(insertquery, new
                         {
-                            item.paitemid,
+                           // item.paitemid,
                             item.quantity,
                             item.requesteddate,
                             item.approveremailid,
@@ -479,6 +490,7 @@ namespace WMS.DAL
                             item.pono,
                             item.materialid,
                             item.requesterid,
+                            item.requestedquantity,
                             requestid,
                         });
                     }
@@ -532,7 +544,7 @@ namespace WMS.DAL
                 }
                 if (approverid != null)
                 {
-                    materialrequestquery = materialrequestquery + " and openpo.approverid = '" + approverid + "' limit 50";
+                    materialrequestquery = materialrequestquery + " and openpo.projectmanager = '" + approverid + "' limit 50";
                 }
                 try
                 {
@@ -765,7 +777,7 @@ namespace WMS.DAL
                     {
                         result = DB.Execute(insertquery, new
                         {
-                            item.paitemid,
+                            //item.paitemid,
                             item.quantity,
                             item.requesteddate,
                             item.approveremailid,
@@ -835,12 +847,32 @@ namespace WMS.DAL
                     {
                         approverstatus = "rejected";
                     }
-                    DateTime approveddate = System.DateTime.Now;
+                    DateTime approvedon = System.DateTime.Now;
+                    int itemid = 0;
+                    using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
+                    {
+                        IssueRequestModel obj = new IssueRequestModel();
+                        IssueRequestModel objs = new IssueRequestModel();
+                        pgsql.Open();
+                        string getitemidqry = WMSResource.getitemid.Replace("#materialid",item.materialid).Replace("#pono",item.pono) ;
+                       // string getmaterialidqry = WMSResource.getrequestforissueid.Replace("#materialid", item.materialid).Replace("#pono", item.pono);
+
+                        obj = pgsql.QuerySingle<IssueRequestModel>(
+                           getitemidqry, null, commandType: CommandType.Text);
+                        itemid = obj.itemid;
+                        //objs = pgsql.QuerySingle<IssueRequestModel>(
+                        //getmaterialidqry, null, commandType: CommandType.Text);
+                        
+                        //requestforissueid = objs.requestforissueid;
+                    }
+
+
 
                     int requestforissueid = item.requestforissueid;
                     string materialid = item.Material;
-                    int issuedquantity = item.issuedquantity;
-                    string updateapproverstatus = WMSResource.updateapproverstatus.Replace("#requestforissueid", requestforissueid.ToString()).Replace("#materialid", materialid);
+                    int issuedqty = item.issuedquantity;
+                    DateTime itemissueddate = System.DateTime.Now;
+                    string updateapproverstatus = WMSResource.updateapproverstatus;
 
                     using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
                     {
@@ -848,8 +880,17 @@ namespace WMS.DAL
                         result = DB.Execute(updateapproverstatus, new
                         {
                             approverstatus,
-                            approveddate,
-                            issuedquantity
+                            requestforissueid,
+                            approvedon,
+                            issuedqty,
+                            materialid,
+                            item.pono,
+                            itemid,
+                            item.itemreturnable,
+                            item.approvedby,
+                            itemissueddate,
+                            item.itemreceiverid,
+                            
                         });
                     }
                 }
@@ -899,7 +940,7 @@ namespace WMS.DAL
             
                 if (dataobj.gatepassid == 0)
                 {
-                    dataobj.createddate = System.DateTime.Now;
+                    dataobj.requestedon = System.DateTime.Now;
                     string insertquery = WMSResource.insertgatepassdata;
                     dataobj.deleteflag = false;
                     using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
@@ -909,10 +950,10 @@ namespace WMS.DAL
 
                             dataobj.gatepasstype,
                             dataobj.status,
-                            dataobj.createddate,
+                            dataobj.requestedon,
                             dataobj.referenceno,
                             dataobj.vehicleno,
-                            dataobj.creatorid,
+                            dataobj.requestedby,
                             dataobj.deleteflag,
                             dataobj.vendorname,
                             dataobj.reasonforgatepass,
@@ -923,7 +964,7 @@ namespace WMS.DAL
                 }
                 else
                 {
-                    dataobj.createddate = System.DateTime.Now;
+                    dataobj.requestedon = System.DateTime.Now;
                     string insertquery = WMSResource.updategatepass.Replace("#gatepassid", Convert.ToString(dataobj.gatepassid));
 
                     using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
@@ -933,10 +974,10 @@ namespace WMS.DAL
 
                             dataobj.gatepasstype,
                             dataobj.status,
-                            dataobj.createddate,
+                            dataobj.requestedon,
                             dataobj.referenceno,
                             dataobj.vehicleno,
-                            dataobj.creatorid,
+                            dataobj.requestedby,
                             dataobj.vendorname,
                             dataobj.reasonforgatepass,
                         });

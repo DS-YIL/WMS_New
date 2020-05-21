@@ -52,13 +52,13 @@ namespace WMS.Controllers
         {
             return  this._poService.VerifythreeWay(pono, invoiceno,quantity,projectcode, material);
         }
-        [HttpPost("insertitems")]
+        [HttpPost("GRNposting")]
         public async Task<string> insertitemdata([FromBody] List<inwardModel> data)
         {
             return await this._poService.insertquantity(data);
         }
 
-        [HttpPost("insertitemsToStock")]
+        [HttpPost("updateitemlocation")]
         public string insertitemdataTostock(StockModel data)
         {
             return  this._poService.InsertStock(data);

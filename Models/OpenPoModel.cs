@@ -81,7 +81,10 @@ namespace WMS.Models
     }
 	public class StockModel
 	{
+		public string stockstatus { get; set; }
 		public int itemid { get; set; }
+		public string grnnumber { get; set; }
+		public int inwmasterid { get; set; }
 		public int paitemid { get; set; }
 		public string pono { get; set; }
 		public int binid { get; set; }
@@ -117,8 +120,10 @@ namespace WMS.Models
     public class IssueRequestModel
     {
         public int requestforissueid { get; set; }
-        public int paitemid { get; set; }
-        public int requestid { get; set; }
+        public int itemid { get; set; }
+		public Boolean itemreturnable { get;set; }
+
+		public int requestid { get; set; }
         public int inwardid { get; set; }
         public int quantity { get; set; }
         public int quotationqty { get; set; }
@@ -128,7 +133,9 @@ namespace WMS.Models
         public DateTime requesteddate { get; set; }
         public string approveremailid { get; set; }
         public string approverid { get; set; }
-        public DateTime approveddate { get; set; }
+		public string approvedby { get; set; }
+		public string itemreceiverid { get; set; }
+		public DateTime approvedon { get; set; }
         public string approvedstatus { get; set; }
         public bool status { get; set; }
         public bool deleteflag { get; set; }
@@ -157,8 +164,8 @@ namespace WMS.Models
         public string status { get; set; }
         public string referenceno { get; set; }
         public string vehicleno { get; set; }
-        public string creatorid { get; set; }
-        public DateTime createddate { get; set; }
+        public string requestedby{ get; set; }
+        public DateTime requestedon { get; set; }
         public int gatepassmaterialid { get; set; }
         public string    materialid { get; set; }
 		public string materialdescription { get; set; }
