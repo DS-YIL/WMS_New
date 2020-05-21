@@ -69,6 +69,7 @@ export class StockModel {
   itemid: number;
   paitemid: number;
   pono: string;
+  grnnumber: string;
   binid: number;
   rackid: number;
   vendorid: number;

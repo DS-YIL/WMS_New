@@ -15,7 +15,9 @@ import { HomeComponent } from './Home/Home.component';
 import { GatePassComponent } from './WMS/Gatepass.component';
 import { GatePassApproverComponent } from './WMS/GatepassApproverForm.component';
 import { GatePassPrintComponent } from './WMS/GatepassPrint.component';
-import { InventoryMovementComponent } from  './WMS/InventoryMovement.component';
+import { InventoryMovementComponent } from './WMS/InventoryMovement.component';
+import { ObsoleteInventoryMovementComponent } from './WMS/ObsoleteInventoryMovement.component';
+import { ExcessInventoryMovementComponent } from './WMS/ExcessInventoryMovement.component';
 
 const routes: Routes = [{
   path: '',
@@ -44,6 +46,8 @@ const routes: Routes = [{
     { path: "GatePassApprover/:gatepassid", component: GatePassApproverComponent, canActivate: [AuthGuard] },
     { path: "GatePassPrint/:gatepassid", component: GatePassPrintComponent, canActivate: [AuthGuard] },
     { path: "InventoryMovement", component: InventoryMovementComponent, canActivate: [AuthGuard] },
+    { path: "ObsoleteInventoryMovement", component: ObsoleteInventoryMovementComponent, canActivate: [AuthGuard] },
+    { path: "ExcessInventoryMovement", component: ExcessInventoryMovementComponent, canActivate: [AuthGuard] }
   ],
 }];
 

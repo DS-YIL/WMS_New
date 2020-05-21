@@ -1,5 +1,5 @@
 <h5 style="text-align:center">Gate Pass</h5>
-<button type="button" class="btn btn-primary" style="float:right" (click)="openGatepassDialog()">Create Gatepass</button>
+<button type="button" class="btn btn-primary" style="float:right" (click)="openGatepassDialog('','')">Create Gatepass</button>
 <br />
 <br />
 <br />
@@ -9,7 +9,7 @@
       <th style="text-align:center;width:70px">S.No</th>
       <th style="text-align:center">GatePass Id</th>
       <!--<th style="text-align:center">Material</th>
-  <th style="text-align:center">Qty</th>-->
+      <th style="text-align:center">Qty</th>-->
       <!--<th style="text-align:center">Status</th>-->
       <th style="text-align:center">Type</th>
       <th style="text-align:center">Supplier Name</th>
@@ -25,7 +25,7 @@
       <th></th>
       <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'gatepassid', 'contains')"></th>
       <!--<th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'material', 'contains')"></th>
-  <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'quantity', 'contains')"></th>-->
+      <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'quantity', 'contains')"></th>-->
       <!--<th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'status', 'contains')"></th>-->
       <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'gatepasstype', 'contains')"></th>
       <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'vendorname', 'contains')"></th>
@@ -57,7 +57,7 @@
   </ng-template>
 </p-table>
 <br />
-<p-dialog #dialog header="Gatepass :" [(visible)]="gatepassdialog" [responsive]="true" showEffect="fade" [modal]="true"  [style]="{'width':'70%','height':'70%','overflow':'auto'}">
+<p-dialog #dialog header="Gatepass :" [(visible)]="gatepassdialog" [responsive]="true" showEffect="fade" [modal]="true" [style]="{'width':'70%','height':'70%','overflow':'auto'}">
   <div class="row " style="margin-top:10px">
     <div class="col-lg-3 col-md-3 col-sm-3 form-group">
       <label for="itemlocation" class="form-label">Select Type</label>
@@ -166,8 +166,8 @@
             <td class="ptable-cell" style="text-align:center"> <button pButton type="button" icon="fa fa-trash" class="ui-button-info" style="margin-left: 1px;" (click)="removematerial(rowData.gatepassmaterialid,ri)"></button></td>
         </ng-template>
       </p-table>
-  </div>
     </div>
+  </div>
   <p-footer>
     <div class="ui-dialog-buttonpane ui-helper-clearfix">
       <button type="button" pButton icon="fa fa-close" (click)="onSubmitgatepassDetails()" label="Submit"></button>

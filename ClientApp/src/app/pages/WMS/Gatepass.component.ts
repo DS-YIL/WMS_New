@@ -99,7 +99,7 @@ export class GatePassComponent implements OnInit {
   }
 
   //open gate pass dialog
-  openGatepassDialog(gatepassobject: gatepassModel, gpIndx: number) {
+  openGatepassDialog(gatepassobject: any, gpIndx: any) {
     this.gatepassdialog = true;
     this.gatepassModel = new gatepassModel();
     if (gatepassobject) {

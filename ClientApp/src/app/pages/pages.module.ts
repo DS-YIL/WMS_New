@@ -21,7 +21,7 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import { PagesComponent } from './pages.component';
 import { LoginComponent } from './Home/Login.component';
 import { HomeComponent } from './Home/Home.component';
-import { DashboardComponent } from './Home/Dashboard.component'; 
+import { DashboardComponent } from './Home/Dashboard.component';
 import { POListComponent } from './WMS/POList.component';
 import { SecurityHomeComponent } from './WMS/SecurityHome.component';
 import { StoreClerkComponent } from './WMS/StoreClerk.component';
@@ -33,6 +33,8 @@ import { GatePassComponent } from './WMS/Gatepass.component';
 import { GatePassApproverComponent } from './WMS/GatepassApproverForm.component';
 import { GatePassPrintComponent } from './WMS/GatepassPrint.component';
 import { InventoryMovementComponent } from './WMS/InventoryMovement.component';
+import { ObsoleteInventoryMovementComponent } from './WMS/ObsoleteInventoryMovement.component';
+import { ExcessInventoryMovementComponent } from './WMS/ExcessInventoryMovement.component';
 
 @NgModule({
   imports: [
@@ -71,8 +73,11 @@ import { InventoryMovementComponent } from './WMS/InventoryMovement.component';
     MaterialIssueComponent,
     GatePassComponent,
     GatePassApproverComponent,
+    GatePassPrintComponent,
     InventoryMovementComponent,
-    GatePassPrintComponent
+    ObsoleteInventoryMovementComponent,
+    ExcessInventoryMovementComponent
+
   ],
   providers: [MessageService, ConfirmationService],
   entryComponents: [ConfirmationDialogComponent]
