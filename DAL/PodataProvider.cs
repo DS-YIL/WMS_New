@@ -331,12 +331,12 @@ namespace WMS.DAL
                 StockModel obj = new StockModel();
                 string loactiontext = string.Empty;
                 var result = 0;
-              int inwmasterid = 0;
+                int inwmasterid = 0;
                 using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
                 {
                     StockModel objs = new StockModel();
                     pgsql.Open();
-                    string query = WMSResource.getinwardmasterid.Replace("#grnnumber",data.grnnumber);
+                    string query = WMSResource.getinwardmasterid.Replace("#grnnumber", data.grnnumber);
                     objs = pgsql.QuerySingle<StockModel>(
                        query, null, commandType: CommandType.Text);
                     inwmasterid = objs.inwmasterid;
@@ -344,73 +344,88 @@ namespace WMS.DAL
                 //foreach (var item in data) { 
                 data.createddate = System.DateTime.Now;
                 string insertquery = WMSResource.insertstock;
-                using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
+                int itemid = 0;
+                if (data.itemid == 0)
                 {
-                    result = Convert.ToInt32(DB.ExecuteScalar(insertquery, new
+                    using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
                     {
-                        inwmasterid,
-                        data.pono,
-                        data.binid,
-                        data.vendorid,
-                        data.totalquantity,
-                        data.shelflife,
-                        data.availableqty,
-                        data.deleteflag,
-                        //data.itemreceivedfrom,
-                        data.itemlocation,
-                        data.createddate,
-                        data.createdby,
-                        data.stockstatus
-                    }));
-                    if (result != 0)
-                    {
-                        int itemid = Convert.ToInt32(result);
-                        string insertqueryforlocationhistory = WMSResource.insertqueryforlocationhistory;
-                        var results = DB.ExecuteScalar(insertqueryforlocationhistory, new
+                        result = Convert.ToInt32(DB.ExecuteScalar(insertquery, new
                         {
+                            inwmasterid,
+                            data.pono,
+                            data.binid,
+                            data.vendorid,
+                            data.totalquantity,
+                            data.shelflife,
+                            data.availableqty,
+                            data.deleteflag,
+                            //data.itemreceivedfrom,
                             data.itemlocation,
-                            itemid,
                             data.createddate,
                             data.createdby,
-
-                        });
-                        string insertqueryforstatuswarehouse = WMSResource.insertqueryforstatuswarehouse;
-
-                        var data1 = DB.ExecuteScalar(insertqueryforstatuswarehouse, new
+                            data.stockstatus
+                        }));
+                        if (result != 0)
                         {
-                            data.pono,
-
-                        });
-
-
-
-                        using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
-                        {
-
-
-                            pgsql.Open();
-
-                            string selectqueryforloaction = WMSResource.getlocationasresponse.Replace("#itemid", itemid.ToString());
-                            obj = pgsql.QuerySingle<StockModel>(
-                                   selectqueryforloaction, null, commandType: CommandType.Text);
-                            if (obj.binnumber != null)
+                            itemid = Convert.ToInt32(result);
+                            string insertqueryforlocationhistory = WMSResource.insertqueryforlocationhistory;
+                            var results = DB.ExecuteScalar(insertqueryforlocationhistory, new
                             {
-                                loactiontext = obj.binnumber;
-                            }
-                            else if (obj.racknumber != null)
+                                data.itemlocation,
+                                itemid,
+                                data.createddate,
+                                data.createdby,
+
+                            });
+                            string insertqueryforstatuswarehouse = WMSResource.insertqueryforstatuswarehouse;
+
+                            var data1 = DB.ExecuteScalar(insertqueryforstatuswarehouse, new
                             {
-                                loactiontext = obj.racknumber;
-                            }
-                            else
-                            {
-                                loactiontext = "no data";
-                            }
+                                data.pono,
+
+                            });
+
+
                         }
-
                     }
                 }
 
-                // }
+                else
+                {
+                    itemid = data.itemid;
+                    string updatequery = WMSResource.updatelocation.Replace("#itemlocation", data.itemlocation).Replace("#itemid", Convert.ToString(itemid));
+
+                    using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
+                    {
+                        result = DB.Execute(updatequery, new
+                        {
+
+
+                        });
+                    }
+                }
+                        using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
+                            {
+
+
+                                pgsql.Open();
+
+                                string selectqueryforloaction = WMSResource.getlocationasresponse.Replace("#itemid", itemid.ToString());
+                                obj = pgsql.QuerySingle<StockModel>(
+                                       selectqueryforloaction, null, commandType: CommandType.Text);
+                                if (obj.binnumber != null)
+                                {
+                                    loactiontext = obj.binnumber;
+                                }
+                                else if (obj.racknumber != null)
+                                {
+                                    loactiontext = obj.racknumber;
+                                }
+                                else
+                                {
+                                    loactiontext = "no data";
+                                }
+                            }
                 return (loactiontext);
             }
             catch (Exception Ex)

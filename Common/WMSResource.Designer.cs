@@ -410,7 +410,7 @@ namespace WMS.Common {
         /// <summary>
         ///   Looks up a localized string similar to select distinct * from wms.wms_storeinward inw 
         ///inner join wms.wms_securityinward inwa on inw.inwmasterid=inwa.inwmasterid 
-        ///inner join wms.wms_stock stocks on stocks.pono=inwa.pono
+        ///inner join wms.wms_stock stocks on on stocks.inwmasterid=inwa.inwmasterid
         ///inner join wms.openpolistview openpo on openpo.pono=inwa.pono 
         ///where inwa.grnnumber=&apos;#grnnumber&apos; limit 10.
         /// </summary>
@@ -490,6 +490,15 @@ namespace WMS.Common {
         public static string updategrnnumber {
             get {
                 return ResourceManager.GetString("updategrnnumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to update wms.wms_stock set itemlocation=&apos;#itemlocation&apos; where itemid=#itemid.
+        /// </summary>
+        public static string updatelocation {
+            get {
+                return ResourceManager.GetString("updatelocation", resourceCulture);
             }
         }
         
