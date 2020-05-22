@@ -7,7 +7,8 @@ export class PoFilterParams {
 
 export class PoDetails {
   pono: string = "";
-  invoiceno: string
+  departmentid: number;
+  invoiceno: string;
   Barcode: string = "";
   quotationqty: string;
   returnqty: string;
@@ -37,6 +38,7 @@ export class BarcodeModel {
   inwmasterid: number;
   pono: string;
   invoiceno: string;
+  departmentid: number;
   invoicedate: Date;
   receivedby: string;
 }

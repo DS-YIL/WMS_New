@@ -43,7 +43,8 @@ export class ObsoleteInventoryMovementComponent implements OnInit {
     this.cols = [
       { field: 'ponumber', header: 'PO No' },
       { field: 'materialid', header: 'Material' },
-      { field: 'materialdescription', header: 'Material Description' },
+      { field: 'materialdescription', header: 'Material Descr' },
+      { field: 'departmentname', header: 'Dep Name' },
       { field: 'itemlocation', header: 'Item Location' },
       { field: 'projectname', header: 'Project Name' },
       { field: 'vendorname', header: 'Vendor Name' },
@@ -52,6 +53,7 @@ export class ObsoleteInventoryMovementComponent implements OnInit {
       { field: 'issuedqty', header: 'Issued Qty' },
       { field: 'availableqty', header: 'Available Qty' },
       { field: 'unitprice', header: 'Unit Price' },
+      { field: 'category', header: 'Category' },
       { field: 'daysinstock', header: 'Days In Stock' },
       { field: 'reportdate', header: 'Report Date' },
     ];
