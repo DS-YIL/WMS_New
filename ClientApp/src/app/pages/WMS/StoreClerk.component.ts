@@ -75,7 +75,7 @@ export class StoreClerkComponent implements OnInit {
   }
   onsubmitGRN() {
     //if (this.inwardModel.quality != '0') {
-    //this.spinner.show();
+    this.spinner.show();
     this.inwardModel.pono = this.PoDetails.pono;
     this.inwardModel.receivedqty = this.PoDetails.quotationqty;
     this.inwardModel.receivedby = this.inwardModel.qcby = this.employee.employeeno;

@@ -23,7 +23,7 @@
         {{ri+1}}
       </td>
       <td class="ptable-cell" style="text-align:center"><a *ngIf="rowData.requestid" [routerLink]="['/WMS/MaterialIssue',rowData.requestid]" routerLinkActive="active">{{rowData.requestid}}</a></td>
-      <td class="ptable-cell" style="text-align:center">{{rowData.requesteddate}}</td>
+      <td class="ptable-cell" style="text-align:center">{{rowData.requesteddate  | date :  constants.dateFormat}}</td>
       <td class="ptable-cell" style="text-align:center">{{rowData.requesterid}}</td>
       <td class="ptable-cell"style="text-align:left">{{rowData.projectname}}</td>
     </tr>
