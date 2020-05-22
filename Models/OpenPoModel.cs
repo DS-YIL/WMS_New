@@ -63,7 +63,7 @@ namespace WMS.Models
         public int inwardid { get; set; }
         public string projectname { get; set; }
         public int inwmasterid { get; set; }
-		//public int poitemid { get; set; }
+		public string quotationqty { get; set; }
 		public int receivedqty { get; set; }
 		public DateTime receiveddate { get; set; }
 		public string receivedby { get; set; }
