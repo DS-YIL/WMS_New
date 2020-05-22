@@ -78,7 +78,8 @@ export class wmsService {
   }
 
   InsertStock(StockModel: StockModel): Observable<any> {
-    return this.http.post<any>(this.url + 'POData/updateitemlocation', StockModel, this.httpOptions);
+    const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }), responseType: 'text' as any };
+    return this.http.post<any>(this.url + 'POData/updateitemlocation', StockModel, httpOptions);
   }
 
   getMaterialRequestlist(loginid: string, pono: string): Observable<any> {
