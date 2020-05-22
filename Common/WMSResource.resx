@@ -268,7 +268,7 @@ where  inw.invoiceno='#invoiceno' and openpo.pono='#pono' and openpo.projectcode
     <value>select * from wms.wms_reprinthistory where </value>
   </data>
   <data name="getinwardmasterid" xml:space="preserve">
-    <value>select inwmasterid from wms.wms_securityinward where grnnumber='#grnnumber'</value>
+    <value>select inwmasterid from wms.wms_securityinward where grnnumber='#grnnumber' order by grndate desc limit 1</value>
   </data>
   <data name="getprintdetails" xml:space="preserve">
     <value>select * from wms.wms_gatepass where gatepassid=#gatepassid and deleteflag=false</value>

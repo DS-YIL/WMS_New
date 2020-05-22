@@ -169,7 +169,7 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to select inwmasterid from wms.wms_securityinward where grnnumber=&apos;#grnnumber&apos;.
+        ///   Looks up a localized string similar to select inwmasterid from wms.wms_securityinward where grnnumber=&apos;#grnnumber&apos; order by grndate desc limit 1.
         /// </summary>
         public static string getinwardmasterid {
             get {
