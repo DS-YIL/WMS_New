@@ -13,16 +13,19 @@
   </div>
 </div>
 
-<p-table #dt [value]="inventoryList">
-  <ng-template pTemplate="header">
+<p-table #dt  [columns]="cols" [value]="inventoryList" >
+  <!--<ng-template pTemplate="caption">
+    <div class="ui-helper-clearfix" style="text-align: left">
+      <button type="button" pButton icon="pi pi-file-excel" iconPos="left" label="EXCEL" (click)="exportExcel()" style="margin-right: 0.5em;" class="ui-button-success"></button>
+      <button type="button" pButton icon="pi pi-file-pdf" iconPos="left" label="PDF" (click)="exportPdf()" class="ui-button-warning"></button>
+    </div>
+  </ng-template>-->
+  <ng-template pTemplate="header" let-columns>
     <tr class="mprltbldata">
       <th style="text-align:center;width:70px">S.No</th>
-      <th style="text-align:center">Material</th>
-      <th style="text-align:center">Material Description</th>
-      <th style="text-align:center">Project Name</th>
-      <th style="text-align:center">Received</th>
-      <th style="text-align:center">Issued</th>
-      <th style="text-align:center">Available</th>
+      <th *ngFor="let col of columns">
+        {{col.header}}
+      </th>
     </tr>
     <tr>
       <th></th>

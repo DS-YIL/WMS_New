@@ -53,10 +53,10 @@ export class WarehouseInchargeComponent implements OnInit {
       shelflife: ['', [Validators.required]]
     });
 
-   // this.loadStores();
+    // this.loadStores();
   }
 
-  
+
 
   public bindSearchListData(e: any, formName?: string, name?: string, searchTxt?: string, callback?: () => any): void {
     this.formName = formName;
@@ -69,9 +69,9 @@ export class WarehouseInchargeComponent implements OnInit {
     this.dynamicData.searchCondition = "" + this.constants[name].condition + this.constants[name].fieldName + " like '" + searchTxt + "%'";
     this.wmsService.GetListItems(this.dynamicData).subscribe(data => {
       //if (data.length == 0)
-        //this.showList = false;
+      //this.showList = false;
       //else
-        //this.showList = true;
+      //this.showList = true;
       this.searchresult = data;
       this.searchItems = [];
       var fName = "";
@@ -135,13 +135,14 @@ export class WarehouseInchargeComponent implements OnInit {
     this.StockModel.paitemid = this.PoDetails.paitemid;
     this.StockModel.totalquantity = this.PoDetails.quotationqty;
     this.StockModel.createdby = this.employee.employeeno;
-    //this.StockModel.itemlocation = this.store.code;
-    //this.StockModel.rackid = this.rack.code;
-    //this.StockModel.binid = this.bin.code;
-    //this.StockModel.itemreceivedfrom = new Date();
+    this.StockModel.itemlocation = this.store.code;
+    this.StockModel.rackid = this.rack.code;
+    this.StockModel.binid = this.bin.code;
+    this.StockModel.itemreceivedfrom = new Date();
+    this.StockModel.itemlocation = this.store.name + "." + this.rack.name + '.' + this.bin.name;
     this.wmsService.InsertStock(this.StockModel).subscribe(data => {
       // if (data) {
-      //this.podetailsList[this.rowIndex].itemlocation = data;
+      this.podetailsList[this.rowIndex].itemlocation = data;
       this.podetailsList[this.rowIndex].itemlocation = this.store.name + "." + this.rack.name + '.' + this.bin.name;
       this.showLocationDialog = false;
       this.messageService.add({ severity: 'success', summary: 'success Message', detail: 'Data saved' });

@@ -5,14 +5,14 @@ import { wmsService } from '../../WmsServices/wms.service';
 import { constants } from '../../Models/WMSConstants';
 import { Employee, DynamicSearchResult } from '../../Models/Common.Model';
 import { NgxSpinnerService } from "ngx-spinner";
-import { parse } from 'url';
+import { commonComponent } from '../../WmsCommon/CommonCode';
 
 @Component({
   selector: 'app-Obsoleteinventory',
   templateUrl: './ObsoleteInventoryMovement.component.html'
 })
 export class ObsoleteInventoryMovementComponent implements OnInit {
-  constructor( private wmsService: wmsService, private route: ActivatedRoute, private router: Router, public constants: constants, private spinner: NgxSpinnerService) { }
+  constructor(private wmsService: wmsService, private commonComponent: commonComponent,  private route: ActivatedRoute, private router: Router, public constants: constants, private spinner: NgxSpinnerService) { }
 
   public employee: Employee;
   public fromDate: Date;
@@ -24,6 +24,8 @@ export class ObsoleteInventoryMovementComponent implements OnInit {
   public movingDays: number;
   public minDays: number;
   public maxDays: number;
+  cols: any[];
+  exportColumns: any[];
 
   ngOnInit() {
     if (localStorage.getItem("Employee"))
@@ -36,6 +38,25 @@ export class ObsoleteInventoryMovementComponent implements OnInit {
     this.daysSelection = "Weeks";
     this.movingDays = 1;
     this.getObsoleteInventoryList();
+
+
+    this.cols = [
+      { field: 'ponumber', header: 'PO No' },
+      { field: 'materialid', header: 'Material' },
+      { field: 'materialdescription', header: 'Material Description' },
+      { field: 'itemlocation', header: 'Item Location' },
+      { field: 'projectname', header: 'Project Name' },
+      { field: 'vendorname', header: 'Vendor Name' },
+      { field: 'receiveddate', header: 'Received Date' },
+      { field: 'receivedqty', header: 'Received Qty' },
+      { field: 'issuedqty', header: 'Issued Qty' },
+      { field: 'availableqty', header: 'Available Qty' },
+      { field: 'daysinstock', header: 'Days In Stock' },
+      { field: 'reportdate', header: 'Report Date' },
+    ];
+
+
+    this.exportColumns = this.cols.map(col => ({ title: col.header, dataKey: col.field }));
   }
 
   getObsoleteInventoryList() {
@@ -71,6 +92,17 @@ export class ObsoleteInventoryMovementComponent implements OnInit {
         this.minDays = this.movingDays * 365;
       this.maxDays = (this.movingDays + 1) * 365;
     }
+  }
+
+
+  //export to excel 
+  exportExcel() {
+    this.commonComponent.exportExcel(this.ObsoleteInventoryList, 'ObsoleteInventoryList');
+  }
+
+  //pdfexport
+  exportPdf() {
+    this.commonComponent.exportPdf(this.exportColumns, this.ObsoleteInventoryList, 'ObsoleteInventoryList');
 
   }
 }

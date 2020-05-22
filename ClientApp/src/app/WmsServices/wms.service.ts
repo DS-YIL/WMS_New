@@ -74,11 +74,11 @@ export class wmsService {
 
   insertitems(inwardModel: inwardModel[]): Observable<any> {
     const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }), responseType: 'text' as any };
-    return this.http.post<any>(this.url + 'POData/insertitems', inwardModel, httpOptions);
+    return this.http.post<any>(this.url + 'POData/GRNposting', inwardModel, httpOptions);
   }
 
   InsertStock(StockModel: StockModel): Observable<any> {
-    return this.http.post<any>(this.url + 'POData/insertitemsToStock', StockModel, this.httpOptions);
+    return this.http.post<any>(this.url + 'POData/updateitemlocation', StockModel, this.httpOptions);
   }
 
   getMaterialRequestlist(loginid: string, pono: string): Observable<any> {
