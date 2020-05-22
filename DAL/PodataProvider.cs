@@ -272,7 +272,7 @@ namespace WMS.DAL
                                 var results = DB.ExecuteScalar(insertforinvoicequery, new
                                 {
                                     obj.inwmasterid,
-                                    item.poitemid,
+                                    //item.poitemid,
                                     item.receiveddate,
                                     item.receivedby,
                                     item.returnqty,

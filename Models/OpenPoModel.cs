@@ -57,11 +57,13 @@ namespace WMS.Models
 	}
 	public class inwardModel
 	{
-        public int vendorid { get; set; }
+		public int itemid { get; set; }
+
+		public int vendorid { get; set; }
         public int inwardid { get; set; }
-        public int paitemid { get; set; }
+        public string projectname { get; set; }
         public int inwmasterid { get; set; }
-		public int poitemid { get; set; }
+		//public int poitemid { get; set; }
 		public int receivedqty { get; set; }
 		public DateTime receiveddate { get; set; }
 		public string receivedby { get; set; }
