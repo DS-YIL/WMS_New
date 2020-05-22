@@ -229,7 +229,7 @@ where  inw.invoiceno='#invoiceno' and openpo.pono='#pono' and openpo.projectcode
   <data name="getgatepasslist" xml:space="preserve">
     <value>select ygs.materialdescription,emp.name,* from wms.wms_gatepass gate
    left join wms.wms_gatepassmaterial mat on gate.gatepassid=mat.gatepassid 
-   left join wms.employee emp on emp.employeeno=gate.creatorid
+   left join wms.employee emp on emp.employeeno=gate.requestedby
    inner join wms."MaterialMasterYGS" ygs on ygs.material=mat.materialid
    where gate.deleteflag=false  and mat.deleteflag=false order by gate.gatepassid desc</value>
   </data>

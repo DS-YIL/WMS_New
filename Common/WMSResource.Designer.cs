@@ -138,7 +138,7 @@ namespace WMS.Common {
         /// <summary>
         ///   Looks up a localized string similar to select ygs.materialdescription,emp.name,* from wms.wms_gatepass gate
         ///   left join wms.wms_gatepassmaterial mat on gate.gatepassid=mat.gatepassid 
-        ///   left join wms.employee emp on emp.employeeno=gate.creatorid
+        ///   left join wms.employee emp on emp.employeeno=gate.requestedby
         ///   inner join wms.&quot;MaterialMasterYGS&quot; ygs on ygs.material=mat.materialid
         ///   where gate.deleteflag=false  and mat.deleteflag=false order by gate.gatepassid desc.
         /// </summary>
