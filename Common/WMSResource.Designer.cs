@@ -300,7 +300,7 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to INSERT INTO wms.wms_securityinward(inwmasterid,pono,invoiceno,invoicedate,receivedby,receiveddate,deleteflag)VALUES(default,@pono,@invoiceno,@invoicedate,@receivedby,@receiveddate,@deleteflag).
+        ///   Looks up a localized string similar to INSERT INTO wms.wms_securityinward(inwmasterid,pono,invoiceno,invoicedate,receivedby,receiveddate,deleteflag,departmentid)VALUES(default,@pono,@invoiceno,@invoicedate,@receivedby,@receiveddate,@deleteflag,@departmentid).
         /// </summary>
         public static string insertinvoicedata {
             get {

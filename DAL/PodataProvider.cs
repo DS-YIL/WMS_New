@@ -113,6 +113,7 @@ namespace WMS.DAL
                         {
 
                             dataobj.invoicedate,
+                           dataobj.departmentid,
                             dataobj.invoiceno,
                             dataobj.receiveddate,
                             dataobj.receivedby,

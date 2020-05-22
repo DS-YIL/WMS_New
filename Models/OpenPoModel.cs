@@ -9,6 +9,8 @@ namespace WMS.Models
 	public class OpenPoModel
 	{
 		public int rfqsplititemid { get; set; }
+		public string departmentname { get; set; }
+		public int departmentid { get; set; }
 		public string documentno { get; set; }
 		public int paid { get; set; }
 		public string pono { get; set; }
@@ -27,6 +29,7 @@ namespace WMS.Models
     }
 	public class BarcodeModel
 	{
+		public int departmentid { get; set; }
 		public int barcodeid { get; set; }
 		public int paitemid { get; set; }
 		public string barcode { get; set; }
