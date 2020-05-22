@@ -24,6 +24,7 @@ export class PoDetails {
   material: string;
   materialdescription: string;
   grnnumber: string;
+  itemid: number;
 }
 
 export class BarcodeModel {
@@ -67,6 +68,7 @@ export class inwardModel {
 
 export class StockModel {
   itemid: number;
+  inwmasterid: number;
   paitemid: number;
   pono: string;
   grnnumber: string;

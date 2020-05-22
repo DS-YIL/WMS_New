@@ -51,6 +51,7 @@ export class ExcessInventoryMovementComponent implements OnInit {
       { field: 'receivedqty', header: 'Received Qty' },
       { field: 'issuedqty', header: 'Issued Qty' },
       { field: 'availableqty', header: 'Available Qty' },
+      { field: 'unitprice', header: 'Unit Price' },
       { field: 'daysinstock', header: 'Days In Stock' },
       { field: 'reportdate', header: 'Report Date' },
     ];

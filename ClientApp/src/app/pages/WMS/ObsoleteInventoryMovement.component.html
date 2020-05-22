@@ -56,6 +56,7 @@
       <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'receivedqty', 'contains')"></th>
       <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'issuedqty', 'contains')"></th>
       <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'availableqty', 'contains')"></th>
+      <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'unitprice', 'contains')"></th>
       <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'daysinstock', 'contains')"></th>
       <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'reportdate', 'contains')"></th>
     </tr>
@@ -74,11 +75,12 @@
       <td class="ptable-cell" style="text-align:right">{{rowData.receiveddate  | date :  constants.dateFormat}}</td>
       <td class="ptable-cell" style="text-align:right">{{rowData.receivedqty}}</td>
       <td class="ptable-cell" style="text-align:right">{{rowData.issuedqty}}</td>
-      <td class="ptable-cell" style="text-align:center">{{rowData.availableqty}}</td>
-      <td class="ptable-cell" style="text-align:center">{{rowData.daysinstock}}</td>
-      <td class="ptable-cell" style="text-align:center">{{rowData.reportdate  | date :  constants.dateFormat}}</td>
+      <td class="ptable-cell" style="text-align:right">{{rowData.availableqty}}</td>
+      <td class="ptable-cell" style="text-align:left">{{rowData.unitprice}}</td>
+      <td class="ptable-cell" style="text-align:left">{{rowData.daysinstock}}</td>
+      <td class="ptable-cell" style="text-align:left">{{rowData.reportdate  | date :  constants.dateFormat}}</td>
       <!--<td class="ptable-cell" style="text-align:right">{{rowData.lastconsumed | date :  constants.dateFormat}}</td>
-      <td class="ptable-cell" style="text-align:right">{{rowData.lastconsumeddays}}</td>-->
+  <td class="ptable-cell" style="text-align:right">{{rowData.lastconsumeddays}}</td>-->
 
     </tr>
   </ng-template>

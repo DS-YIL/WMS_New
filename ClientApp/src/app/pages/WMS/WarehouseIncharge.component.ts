@@ -106,6 +106,7 @@ export class WarehouseInchargeComponent implements OnInit {
   SearchGRNNo() {
     if (this.PoDetails.grnnumber) {
       this.spinner.show();
+      this.podetailsList = [];
       this.wmsService.getitemdetailsbygrnno(this.PoDetails.grnnumber).subscribe(data => {
         this.spinner.hide();
         if (data) {
@@ -125,10 +126,14 @@ export class WarehouseInchargeComponent implements OnInit {
     this.showLocationDialog = true;
     this.PoDetails = details;
     this.rowIndex = index;
+    this.store = "";
+    this.rack = "";
+    this.bin = "";
   }
 
   onSubmitStockDetails() {
 
+    this.StockModel.itemid = this.PoDetails.itemid;
     this.StockModel.pono = this.PoDetails.pono;
     this.StockModel.grnnumber = this.PoDetails.grnnumber;
     this.StockModel.vendorid = this.PoDetails.vendorid;
@@ -142,7 +147,7 @@ export class WarehouseInchargeComponent implements OnInit {
     this.StockModel.itemlocation = this.store.name + "." + this.rack.name + '.' + this.bin.name;
     this.wmsService.InsertStock(this.StockModel).subscribe(data => {
       // if (data) {
-      this.podetailsList[this.rowIndex].itemlocation = data;
+      //this.podetailsList[this.rowIndex].itemlocation = data;
       this.podetailsList[this.rowIndex].itemlocation = this.store.name + "." + this.rack.name + '.' + this.bin.name;
       this.showLocationDialog = false;
       this.messageService.add({ severity: 'success', summary: 'success Message', detail: 'Data saved' });
