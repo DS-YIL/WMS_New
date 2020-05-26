@@ -18,6 +18,7 @@ import { GatePassPrintComponent } from './WMS/GatepassPrint.component';
 import { InventoryMovementComponent } from './WMS/InventoryMovement.component';
 import { ObsoleteInventoryMovementComponent } from './WMS/ObsoleteInventoryMovement.component';
 import { ExcessInventoryMovementComponent } from './WMS/ExcessInventoryMovement.component';
+import { ABCAnalysisComponent } from './WMS/ABCAnalysis.component';
 
 const routes: Routes = [{
   path: '',
@@ -47,7 +48,9 @@ const routes: Routes = [{
     { path: "GatePassPrint/:gatepassid", component: GatePassPrintComponent, canActivate: [AuthGuard] },
     { path: "InventoryMovement", component: InventoryMovementComponent, canActivate: [AuthGuard] },
     { path: "ObsoleteInventoryMovement", component: ObsoleteInventoryMovementComponent, canActivate: [AuthGuard] },
-    { path: "ExcessInventoryMovement", component: ExcessInventoryMovementComponent, canActivate: [AuthGuard] }
+    { path: "ExcessInventoryMovement", component: ExcessInventoryMovementComponent, canActivate: [AuthGuard] },
+    { path: "ABCAnalysis", component: ABCAnalysisComponent, canActivate: [AuthGuard] },
+    { path: "ABCAnalysis/:material", component: ABCAnalysisComponent, canActivate: [AuthGuard] }
   ],
 }];
 

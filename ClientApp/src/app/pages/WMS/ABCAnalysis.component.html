@@ -1,0 +1,128 @@
+<div *ngIf="showAbcAnalysisList">
+  <h5 style="text-align:center">ABC Analysis</h5>
+  <div class="row">
+    <div class="col-lg-3 col-md-3 col-sm-3 form-inline">
+      <label class="form-label">Category</label>&nbsp;&nbsp;
+      <div class="form-inline-list" style="width:92px">
+        <select class="form-control forms-input" [(ngModel)]="category">
+          <option value='All'>All</option>
+          <option value='A'>A</option>
+          <option value='B'>B</option>
+          <option value='C'>C</option>
+        </select>
+      </div>
+      <div class="col-lg-1 col-md-1 col-sm-1">
+        <button type="button" class="btn btn-primary" (click)="getABCAnalysisList()" label="Save">Submit</button>
+      </div>
+    </div>
+  </div>
+  <br />
+  <br />
+  <p-table #dt [columns]="cols" [value]="ABCAnalysisList" [style]="{'width':'100%','overflow':'auto!important'}"
+           [responsive]="true" [rows]="50"
+           [resizableColumns]="true"
+           columnResizeMode="expand"
+           [paginator]="true" [rowsPerPageOptions]="[25,50,75,100]"
+           appendTo="body">
+    <!--<ng-template pTemplate="caption">
+      <div class="ui-helper-clearfix" style="text-align: left">
+        <button type="button" pButton icon="pi pi-file-excel" iconPos="left" label="EXCEL" (click)="exportExcel()" style="margin-right: 0.5em;" class="ui-button-success"></button>
+        <button type="button" pButton icon="pi pi-file-pdf" iconPos="left" label="PDF" (click)="exportPdf()" class="ui-button-warning"></button>
+      </div>
+    </ng-template>-->
+    <ng-template pTemplate="header" let-columns>
+      <tr class="mprltbldata">
+        <th style="text-align:center;width:50px">S.No</th>
+        <th *ngFor="let col of columns" style="width:100px">
+          {{col.header}}
+        </th>
+        <!--<th style="text-align:center">Last Consumed Date</th>
+        <th style="text-align:center">Last Consumed Days</th>-->
+
+      </tr>
+      <tr>
+        <th></th>
+        <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'category', 'contains')"></th>
+        <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'material', 'contains')"></th>
+        <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'materialdescription', 'contains')"></th>
+        <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'availableqty', 'contains')"></th>
+
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-editing="editing" let-ri="rowIndex">
+      <tr>
+        <td class="ptable-cell" style="text-align:right">
+          {{ri+1}}
+        </td>
+        <td class="ptable-cell" style="text-align:center">{{rowData.category}}</td>
+        <td class="ptable-cell" style="text-align:center"><button type="button" class="btn btn-link" (click)="showMatdetails(rowData);">{{rowData.material}}</button></td>
+        <td class="ptable-cell" style="text-align:center">{{rowData.materialdescription}}</td>
+        <td class="ptable-cell" style="text-align:right">{{rowData.availableqty}}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+<div *ngIf="!showAbcAnalysisList">
+  <div class="row"><button class="btn btn-primary fa fa-arrow-left" (click)="showList();"></button></div><br />
+  <div class="row">
+    <div class="col-lg-4 col-md-4 col-sm-4 form-inline">
+      <label class="form-label"><b>Material:</b></label>&nbsp;&nbsp;
+      <div class="form-inline-list">
+        {{matDetails.material}}
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-4 form-inline">
+      <label class="form-label"><b>Material description:</b></label>&nbsp;&nbsp;
+      <div class="form-inline-list">
+        {{matDetails.materialdescription}}
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-4 form-inline">
+      <label class="form-label"><b>category:</b></label>&nbsp;&nbsp;
+      <div class="form-inline-list">
+        {{matDetails.category}}
+      </div>
+    </div>
+  </div><br /><br />
+  <p-table #dt [columns]="cols" [value]="ABCAnalysisMateDet" [style]="{'width':'100%','overflow':'auto!important'}"
+           [responsive]="true" [rows]="50"
+           [resizableColumns]="true"
+           columnResizeMode="expand"
+           [paginator]="true" [rowsPerPageOptions]="[25,50,75,100]"
+           appendTo="body">
+    <ng-template pTemplate="header" let-columns>
+      <tr class="mprltbldata">
+        <th style="text-align:center;width:50px">S.No</th>
+        <th style="width:100px">GRN No</th>
+        <th style="width:100px">Received Date</th>
+        <th style="width:100px">Confirmed qty</th>
+        <th style="width:100px">Location</th>
+        <th style="width:100px">Issued qty</th>
+        <th style="width:100px">Available qty</th>
+      </tr>
+      <tr>
+        <th></th>
+        <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'grnnumber', 'contains')"></th>
+        <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'receiveddate', 'contains')"></th>
+        <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'totalquantity', 'contains')"></th>
+        <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'itemlocation', 'contains')"></th>
+        <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'issuedqty', 'contains')"></th>
+        <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'availableqty', 'contains')"></th>
+
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-editing="editing" let-ri="rowIndex">
+      <tr>
+        <td class="ptable-cell" style="text-align:right">
+          {{ri+1}}
+        </td>
+        <td class="ptable-cell" style="text-align:center">{{rowData.grnnumber}}</td>
+        <td class="ptable-cell" style="text-align:center">{{rowData.receiveddate | date :  constants.dateFormat}}</td>
+        <td class="ptable-cell" style="text-align:center">{{rowData.totalquantity}}</td>
+        <td class="ptable-cell" style="text-align:center">{{rowData.itemlocation}}</td>
+        <td class="ptable-cell" style="text-align:center">{{rowData.issuedqty}}</td>
+        <td class="ptable-cell" style="text-align:right">{{rowData.availableqty}}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

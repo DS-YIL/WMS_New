@@ -35,6 +35,7 @@ import { GatePassPrintComponent } from './WMS/GatepassPrint.component';
 import { InventoryMovementComponent } from './WMS/InventoryMovement.component';
 import { ObsoleteInventoryMovementComponent } from './WMS/ObsoleteInventoryMovement.component';
 import { ExcessInventoryMovementComponent } from './WMS/ExcessInventoryMovement.component';
+import { ABCAnalysisComponent } from './WMS/ABCAnalysis.component';
 
 @NgModule({
   imports: [
@@ -76,7 +77,8 @@ import { ExcessInventoryMovementComponent } from './WMS/ExcessInventoryMovement.
     GatePassPrintComponent,
     InventoryMovementComponent,
     ObsoleteInventoryMovementComponent,
-    ExcessInventoryMovementComponent
+    ExcessInventoryMovementComponent,
+    ABCAnalysisComponent
 
   ],
   providers: [MessageService, ConfirmationService],

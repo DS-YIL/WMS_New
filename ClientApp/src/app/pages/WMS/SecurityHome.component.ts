@@ -56,7 +56,7 @@ export class SecurityHomeComponent implements OnInit {
       this.BarcodeModel.createdby = this.employee.employeeno;
       this.BarcodeModel.pono = this.PoDetails.pono;
       this.BarcodeModel.invoiceno = this.PoDetails.invoiceno;
-      this.BarcodeModel.departmentid = this.PoDetails.departmentid;
+      this.BarcodeModel.departmentid = this.PoDetails.departmentid
       this.BarcodeModel.receivedby = this.employee.employeeno;
       this.wmsService.insertbarcodeandinvoiceinfo(this.BarcodeModel).subscribe(data => {
         if (data)
