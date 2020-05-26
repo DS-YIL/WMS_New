@@ -67,11 +67,19 @@ export class ABCAnalysisComponent implements OnInit {
     this.matDetails = details;
     this.ABCAnalysisMateDet = [];
     this.dynamicData = new DynamicSearchResult();
-    this.dynamicData.query = "select itemid, sec.grnnumber , createddate as receiveddate, totalquantity,availableqty,totalquantity - availableqty AS issuedqty,itemlocation from wms.wms_stock ws inner join wms.wms_securityinward sec on sec.pono = ws.pono  where ws.materialid = '" + details.material + "'";
+    this.dynamicData.query = "select itemid, sec.grnnumber , createddate as receiveddate, totalquantity,availableqty,totalquantity - availableqty AS issuedqty,itemlocation from wms.wms_stock ws inner join wms.wms_securityinward sec on sec.pono = ws.pono  where ws.materialid = '" + details.material + "'  limit 10";
     this.wmsService.GetListItems(this.dynamicData).subscribe(data => {
       this.ABCAnalysisMateDet = data;
       this.spinner.hide();
     });
+  }
+  calculateTotalQty() {
+    var qty = 0;
+    this.ABCAnalysisMateDet.forEach(item => {
+      if (item.availableqty)
+        qty += item.availableqty;
+    })
+    return qty;
   }
 
 }

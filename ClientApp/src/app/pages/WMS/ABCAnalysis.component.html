@@ -124,5 +124,11 @@
         <td class="ptable-cell" style="text-align:right">{{rowData.availableqty}}</td>
       </tr>
     </ng-template>
+    <ng-template pTemplate="footer">
+      <tr>
+        <td [attr.colspan]="6" style="color: #17a2b8;">Total Qty</td>
+        <td style="color: #17a2b8;">{{calculateTotalQty()}}</td>
+      </tr>
+    </ng-template>
   </p-table>
 </div>
