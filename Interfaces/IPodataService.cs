@@ -36,5 +36,6 @@ namespace WMS.Interfaces
         int updatereprintstatus(reprintModel model);
         Task<IEnumerable<ReportModel>> GetreportBasedCategory(int categoryid);
         Task<IEnumerable<ReportModel>> GetreportBasedMaterial(string materailid);
+        int updateABCcategorydata(List<ABCCategoryModel> model);
     }
 }

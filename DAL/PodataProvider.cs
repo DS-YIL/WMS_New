@@ -1430,5 +1430,63 @@ namespace WMS.DAL
 
             }
         }
+
+        public int updateABCcategorydata(List<ABCCategoryModel> model)
+        {
+            int returndata = 0;
+            try
+            {
+
+                int data = 0;
+                if (model != null)
+                {
+                    foreach (var item in model)
+                    {
+                        string updatequery = WMSResource.updateABCrange;
+                        item.updatedon = System.DateTime.Now;
+                        using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
+                        {
+                            data = Convert.ToInt32(DB.Execute(updatequery, new
+
+                            {
+                                item.updatedby,
+                                item.updatedon,
+
+                            }));
+                            returndata = Convert.ToInt32(data);
+
+                        }
+                        break;
+                    }
+                    if (returndata != 0)
+                    {
+                        foreach (var item in model)
+                        {
+                            string insertquery = WMSResource.insertABCrange;
+                            //item.createdon = System.DateTime.Now;
+                            using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
+                            {
+                                data = Convert.ToInt32(DB.ExecuteScalar(insertquery, new
+
+                                {
+                                    item.categoryname,
+                                    item.minpricevalue,
+                                    item.maxpricevalue,
+                                    item.createdby,
+                                }));
+                                returndata = Convert.ToInt32(data);
+                            }
+                        }
+                    }
+                }
+                    return returndata;
+                }
+            
+            catch (Exception Ex)
+            {
+                log.ErrorMessage("PODataProvider", "updateABCcategorydata", Ex.StackTrace.ToString());
+                return 0;
+            }
+        }
     }
 }

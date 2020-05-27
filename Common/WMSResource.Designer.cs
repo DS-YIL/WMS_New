@@ -118,11 +118,10 @@ namespace WMS.Common {
         ///   Looks up a localized string similar to select ws.unitprice,ws.materialid,
         ///    sum(availableqty) as availableqty,( SELECT wrc.categoryname
         ///           FROM wms.wms_rd_category wrc
-        ///          WHERE ws.unitprice ::numeric &gt;= wrc.minpricevalue::numeric AND
-        ///          ws.unitprice ::numeric &lt;= wrc.maxpricevalue::numeric OR ws.unitprice ::numeric &gt;= wrc.minpricevalue::numeric
+        ///          WHERE ws.unitprice ::numeric &gt;= wrc.minpricevalue::numeric AND  wrc.deleteflag=true and  ws.unitprice ::numeric &lt;= wrc.maxpricevalue::numeric OR ws.unitprice ::numeric &gt;= wrc.minpricevalue::numeric
         ///         LIMIT 1) AS category from wms.wms_stock ws
-        /// --inner join wms.openpolistview op on  ws.materialid =op.material and ws.pono = op.pono 
-        /// WHERE ws.materialid IS NOT null [rest of string was truncated]&quot;;.
+        /// --inner join wms.openpolistview op on  ws.materialid =op.material and ws.pono = op.pono
+        /// WHERE ws.material [rest of string was truncated]&quot;;.
         /// </summary>
         public static string getcategorylist {
             get {
@@ -299,6 +298,15 @@ namespace WMS.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to insert into wms.wms_rd_category(categoryid,categoryname,minpricevalue,maxpricevalue,createdby,createdon,deleteflag)values(default,@categoryname,@minpricevalue,@maxpricevalue,@createdby,current_date,false).
+        /// </summary>
+        public static string insertABCrange {
+            get {
+                return ResourceManager.GetString("insertABCrange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to INSERT INTO wms.wms_barcode(barcodeid,barcode,createddate,createdby,deleteflag)VALUES(DEFAULT,@barcode,@createddate,@createdby,@deleteflag)returning barcodeid.
         /// </summary>
         public static string insertbarcodedata {
@@ -470,6 +478,15 @@ namespace WMS.Common {
         public static string statusupdatebySecurity {
             get {
                 return ResourceManager.GetString("statusupdatebySecurity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to update wms.wms_rd_category set deleteflag=true,updatedby=@updatedby,updatedon=@updatedon.
+        /// </summary>
+        public static string updateABCrange {
+            get {
+                return ResourceManager.GetString("updateABCrange", resourceCulture);
             }
         }
         

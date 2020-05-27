@@ -233,4 +233,16 @@ namespace WMS.Models
 		public string vendorname { get; set; }
 		public string ponumber { get; set; }
 	}
+	public class ABCCategoryModel
+	{
+		public int categoryid { get; set; }
+		public string categoryname { get; set; }
+		public int minpricevalue { get; set; }
+		public int maxpricevalue { get; set; }
+		public string createdby { get; set; }
+		public DateTime createdon { get; set; }
+		public string updatedby { get; set; }
+		public DateTime updatedon { get; set; }
+		public Boolean deleteflag { get; set; }
+	}
 }

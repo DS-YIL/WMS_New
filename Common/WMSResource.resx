@@ -290,10 +290,9 @@ where  inw.invoiceno='#invoiceno' and openpo.pono='#pono' and openpo.projectcode
     <value>select ws.unitprice,ws.materialid,
     sum(availableqty) as availableqty,( SELECT wrc.categoryname
            FROM wms.wms_rd_category wrc
-          WHERE ws.unitprice ::numeric &gt;= wrc.minpricevalue::numeric AND
-          ws.unitprice ::numeric &lt;= wrc.maxpricevalue::numeric OR ws.unitprice ::numeric &gt;= wrc.minpricevalue::numeric
+          WHERE ws.unitprice ::numeric &gt;= wrc.minpricevalue::numeric AND  wrc.deleteflag=true and  ws.unitprice ::numeric &lt;= wrc.maxpricevalue::numeric OR ws.unitprice ::numeric &gt;= wrc.minpricevalue::numeric
          LIMIT 1) AS category from wms.wms_stock ws
- --inner join wms.openpolistview op on  ws.materialid =op.material and ws.pono = op.pono 
+ --inner join wms.openpolistview op on  ws.materialid =op.material and ws.pono = op.pono
  WHERE ws.materialid IS NOT null and ws.unitprice is not null
 group by ws.materialid,ws.unitprice</value>
   </data>
@@ -312,5 +311,11 @@ wms.wms_stock ws inner join wms.wms_securityinward sec on sec.pono =ws.pono wher
   </data>
   <data name="updatelocation" xml:space="preserve">
     <value>update wms.wms_stock set itemlocation='#itemlocation' where itemid=#itemid</value>
+  </data>
+  <data name="insertABCrange" xml:space="preserve">
+    <value>insert into wms.wms_rd_category(categoryid,categoryname,minpricevalue,maxpricevalue,createdby,createdon,deleteflag)values(default,@categoryname,@minpricevalue,@maxpricevalue,@createdby,current_date,false)</value>
+  </data>
+  <data name="updateABCrange" xml:space="preserve">
+    <value>update wms.wms_rd_category set deleteflag=true,updatedby=@updatedby,updatedon=@updatedon</value>
   </data>
 </root>

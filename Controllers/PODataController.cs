@@ -176,5 +176,10 @@ namespace WMS.Controllers
         {
             return await this._poService.GetreportBasedMaterial(material);
         }
+        [HttpPost("updateABCRange")]
+        public int updateABCrange([FromBody] List<ABCCategoryModel> data)
+        {
+            return  this._poService.updateABCcategorydata(data);
+        }
     }
 }
