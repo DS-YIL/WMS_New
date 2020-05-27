@@ -167,19 +167,19 @@ namespace WMS.Controllers
             return this._poService.updatereprintstatus(model);
         }
         [HttpGet("GetreportBasedCategory")]
-        public async Task<IEnumerable<ReportModel>> getcategorylistById(int categoryid=0)
-        {
-            return await this._poService.GetreportBasedCategory(categoryid);
-        }
+        //public async Task<IEnumerable<ReportModel>> getcategorylistById(int categoryid=0)
+        //{
+        //    return await this._poService.GetreportBasedCategory(categoryid);
+        //}
         [HttpGet("GetreportBasedmaterailid")]
         public async Task<IEnumerable<ReportModel>> getcategorylistbymaterialid(string material)
         {
             return await this._poService.GetreportBasedMaterial(material);
         }
         [HttpPost("updateABCRange")]
-        public int updateABCrange([FromBody] List<ABCCategoryModel> data)
+        public async Task<IEnumerable<ReportModel>> updateABCrange([FromBody] List<ABCCategoryModel> data)
         {
-            return  this._poService.updateABCcategorydata(data);
+            return await this._poService.updateABCcategorydata(data);
         }
     }
 }

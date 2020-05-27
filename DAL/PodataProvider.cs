@@ -1372,35 +1372,35 @@ namespace WMS.DAL
             }
         }
 
-        public async Task<IEnumerable<ReportModel>> GetreportBasedCategory(int categoryid)
-        {
-            using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
-            {
+        //public async Task<IEnumerable<ReportModel>> GetreportBasedCategory(int categoryid)
+        //{
+        //    using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
+        //    {
 
-                try
-                {
-                   // string query = WMSResource.getcategorylist.Replace("#categoryid", Convert.ToString(categoryid));
-                    string query = WMSResource.getcategorylist;
+        //        try
+        //        {
+        //           // string query = WMSResource.getcategorylist.Replace("#categoryid", Convert.ToString(categoryid));
+        //            string query = WMSResource.getcategorylist;
 
-                    await pgsql.OpenAsync();
-                    return await pgsql.QueryAsync<ReportModel>(
-                       query, null, commandType: CommandType.Text);
+        //            await pgsql.OpenAsync();
+        //            return await pgsql.QueryAsync<ReportModel>(
+        //               query, null, commandType: CommandType.Text);
 
 
-                }
-                catch (Exception Ex)
-                {
-                    log.ErrorMessage("PODataProvider", "GetreportBasedCategory", Ex.StackTrace.ToString());
-                    return null;
-                }
-                finally
-                {
-                    pgsql.Close();
-                }
+        //        }
+        //        catch (Exception Ex)
+        //        {
+        //            log.ErrorMessage("PODataProvider", "GetreportBasedCategory", Ex.StackTrace.ToString());
+        //            return null;
+        //        }
+        //        finally
+        //        {
+        //            pgsql.Close();
+        //        }
 
-            }
+        //    }
 
-        }
+        //}
 
         public async Task<IEnumerable<ReportModel>> GetreportBasedMaterial(string materailid)
         {
@@ -1431,7 +1431,7 @@ namespace WMS.DAL
             }
         }
 
-        public int updateABCcategorydata(List<ABCCategoryModel> model)
+        public async Task<IEnumerable<ReportModel>> updateABCcategorydata(List<ABCCategoryModel> model)
         {
             int returndata = 0;
             try
@@ -1478,14 +1478,31 @@ namespace WMS.DAL
                             }
                         }
                     }
+
+
                 }
-                    return returndata;
+                List<ReportModel> obj = new List<ReportModel>();
+                using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
+                {
+
+                    
+                        // string query = WMSResource.getcategorylist.Replace("#categoryid", Convert.ToString(categoryid));
+                        string query = WMSResource.getcategorylist;
+
+                    await pgsql.OpenAsync();
+                    return await pgsql.QueryAsync<ReportModel>(
+                       query, null, commandType: CommandType.Text);
+
+
+
+                }
+                   
                 }
             
             catch (Exception Ex)
             {
                 log.ErrorMessage("PODataProvider", "updateABCcategorydata", Ex.StackTrace.ToString());
-                return 0;
+                return null;
             }
         }
     }
