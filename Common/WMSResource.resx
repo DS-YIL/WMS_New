@@ -287,14 +287,15 @@ where  inw.invoiceno='#invoiceno' and openpo.pono='#pono' and openpo.projectcode
           set reprintcount=@reprintcount where reprinthistoryid=#reprinthistoryid</value>
   </data>
   <data name="getcategorylist" xml:space="preserve">
-    <value>select ws.unitprice,ws.materialid,
+    <value>select ws.unitprice,ws.materialid,op.materialdescription,
     sum(availableqty) as availableqty,( SELECT wrc.categoryname
            FROM wms.wms_rd_category wrc
-          WHERE ws.unitprice ::numeric &gt;= wrc.minpricevalue::numeric AND  wrc.deleteflag=true and  ws.unitprice ::numeric &lt;= wrc.maxpricevalue::numeric OR ws.unitprice ::numeric &gt;= wrc.minpricevalue::numeric
+          WHERE ws.unitprice ::numeric &gt;= wrc.minpricevalue::numeric and wrc.deleteflag=false and
+          ws.unitprice ::numeric &lt;= wrc.maxpricevalue::numeric OR ws.unitprice ::numeric &gt;= wrc.minpricevalue::numeric
          LIMIT 1) AS category from wms.wms_stock ws
- --inner join wms.openpolistview op on  ws.materialid =op.material and ws.pono = op.pono
+ inner join wms."MaterialMasterYGS" op on  ws.materialid =op.material 
  WHERE ws.materialid IS NOT null and ws.unitprice is not null
-group by ws.materialid,ws.unitprice</value>
+group by ws.materialid,op.materialdescription,ws.unitprice</value>
   </data>
   <data name="getcategorylistbymaterailid" xml:space="preserve">
     <value>select itemid, sec.grnnumber , totalquantity,availableqty,totalquantity - availableqty AS issuedqty,itemlocation from

@@ -115,13 +115,14 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to select ws.unitprice,ws.materialid,
+        ///   Looks up a localized string similar to select ws.unitprice,ws.materialid,op.materialdescription,
         ///    sum(availableqty) as availableqty,( SELECT wrc.categoryname
         ///           FROM wms.wms_rd_category wrc
-        ///          WHERE ws.unitprice ::numeric &gt;= wrc.minpricevalue::numeric AND  wrc.deleteflag=true and  ws.unitprice ::numeric &lt;= wrc.maxpricevalue::numeric OR ws.unitprice ::numeric &gt;= wrc.minpricevalue::numeric
+        ///          WHERE ws.unitprice ::numeric &gt;= wrc.minpricevalue::numeric and wrc.deleteflag=false and
+        ///          ws.unitprice ::numeric &lt;= wrc.maxpricevalue::numeric OR ws.unitprice ::numeric &gt;= wrc.minpricevalue::numeric
         ///         LIMIT 1) AS category from wms.wms_stock ws
-        /// --inner join wms.openpolistview op on  ws.materialid =op.material and ws.pono = op.pono
-        /// WHERE ws.material [rest of string was truncated]&quot;;.
+        /// inner join wms.&quot;MaterialMasterYGS&quot; op on  ws.materialid =op.material 
+        /// WH [rest of string was truncated]&quot;;.
         /// </summary>
         public static string getcategorylist {
             get {

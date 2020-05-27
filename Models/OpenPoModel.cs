@@ -232,6 +232,7 @@ namespace WMS.Models
 		public string projectname { get; set; }
 		public string vendorname { get; set; }
 		public string ponumber { get; set; }
+		public string category { get; set; }
 	}
 	public class ABCCategoryModel
 	{
