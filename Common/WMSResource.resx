@@ -286,8 +286,26 @@ where  inw.invoiceno='#invoiceno' and openpo.pono='#pono' and openpo.projectcode
     <value>update wms.wms_reprinthistory
           set reprintcount=@reprintcount where reprinthistoryid=#reprinthistoryid</value>
   </data>
+  <data name="getcategorylist" xml:space="preserve">
+    <value>select ws.unitprice,ws.materialid,
+    sum(availableqty) as availableqty,( SELECT wrc.categoryname
+           FROM wms.wms_rd_category wrc
+          WHERE ws.unitprice ::numeric &gt;= wrc.minpricevalue::numeric AND
+          ws.unitprice ::numeric &lt;= wrc.maxpricevalue::numeric OR ws.unitprice ::numeric &gt;= wrc.minpricevalue::numeric
+         LIMIT 1) AS category from wms.wms_stock ws
+ --inner join wms.openpolistview op on  ws.materialid =op.material and ws.pono = op.pono 
+ WHERE ws.materialid IS NOT null and ws.unitprice is not null
+group by ws.materialid,ws.unitprice</value>
+  </data>
+  <data name="getcategorylistbymaterailid" xml:space="preserve">
+    <value>select itemid, sec.grnnumber , totalquantity,availableqty,totalquantity - availableqty AS issuedqty,itemlocation from
+wms.wms_stock ws inner join wms.wms_securityinward sec on sec.pono =ws.pono where ws.materialid='#materialid'</value>
+  </data>
   <data name="getitemid" xml:space="preserve">
     <value>select itemid from wms.wms_stock where materialid='#materialid' and pono='#pono' limit 1</value>
+  </data>
+  <data name="getreportforcategory" xml:space="preserve">
+    <value />
   </data>
   <data name="getrequestforissueid" xml:space="preserve">
     <value>select requestforissueid  from wms.wms_materialrequest where materialid='materialid' and pono='#pono' limit 1</value>

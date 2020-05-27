@@ -115,6 +115,32 @@ namespace WMS.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to select ws.unitprice,ws.materialid,
+        ///    sum(availableqty) as availableqty,( SELECT wrc.categoryname
+        ///           FROM wms.wms_rd_category wrc
+        ///          WHERE ws.unitprice ::numeric &gt;= wrc.minpricevalue::numeric AND
+        ///          ws.unitprice ::numeric &lt;= wrc.maxpricevalue::numeric OR ws.unitprice ::numeric &gt;= wrc.minpricevalue::numeric
+        ///         LIMIT 1) AS category from wms.wms_stock ws
+        /// --inner join wms.openpolistview op on  ws.materialid =op.material and ws.pono = op.pono 
+        /// WHERE ws.materialid IS NOT null [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string getcategorylist {
+            get {
+                return ResourceManager.GetString("getcategorylist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to select itemid, sec.grnnumber , totalquantity,availableqty,totalquantity - availableqty AS issuedqty,itemlocation from
+        ///wms.wms_stock ws inner join wms.wms_securityinward sec on sec.pono =ws.pono where ws.materialid=&apos;#materialid&apos;.
+        /// </summary>
+        public static string getcategorylistbymaterailid {
+            get {
+                return ResourceManager.GetString("getcategorylistbymaterailid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to select * from wms.wms_materialrequest where requestid=#requestid.
         /// </summary>
         public static string GetdetailsByrequestid {
@@ -251,6 +277,15 @@ namespace WMS.Common {
         public static string getprintdetails {
             get {
                 return ResourceManager.GetString("getprintdetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string getreportforcategory {
+            get {
+                return ResourceManager.GetString("getreportforcategory", resourceCulture);
             }
         }
         

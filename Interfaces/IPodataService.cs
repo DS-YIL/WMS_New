@@ -34,5 +34,7 @@ namespace WMS.Interfaces
         Task<IEnumerable<gatepassModel>> GetmaterialList(int gatepassid);
         int updateprintstatus(gatepassModel model);
         int updatereprintstatus(reprintModel model);
+        Task<IEnumerable<ReportModel>> GetreportBasedCategory(int categoryid);
+        Task<IEnumerable<ReportModel>> GetreportBasedMaterial(string materailid);
     }
 }

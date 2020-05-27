@@ -215,4 +215,22 @@ namespace WMS.Models
 		public string reprintedby { get; set; }
 		public int reprintcount { get; set; }
 	}
+	public class ReportModel
+	{
+		public int itemid { get; set; }
+		public string materialid { get; set; }
+		public string materialdescription { get; set; }
+		public string departmentname { get; set; }
+		public string itemlocation { get; set; }
+		public DateTime receiveddate { get; set; }
+		public int receivedqty { get; set; }
+		public int issuedqty { get; set; }
+		public int availableqty { get; set; }
+		public double unitprice { get; set; }
+		public int daysinstock { get; set; }
+		public DateTime reportdate { get; set; }
+		public string projectname { get; set; }
+		public string vendorname { get; set; }
+		public string ponumber { get; set; }
+	}
 }

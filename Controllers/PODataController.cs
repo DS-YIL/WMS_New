@@ -156,6 +156,7 @@ namespace WMS.Controllers
             return await this._poService.GetmaterialList(gatepassid);
         }
         [HttpPost("updateprintstatus")]
+        [HttpPost("updateprintstatus")]
         public int updateprintstatus(gatepassModel model)
         {
             return  this._poService.updateprintstatus(model);
@@ -164,6 +165,16 @@ namespace WMS.Controllers
         public int updatereprintstatus(reprintModel model)
         {
             return this._poService.updatereprintstatus(model);
+        }
+        [HttpGet("GetreportBasedCategory")]
+        public async Task<IEnumerable<ReportModel>> getcategorylistById(int categoryid=0)
+        {
+            return await this._poService.GetreportBasedCategory(categoryid);
+        }
+        [HttpGet("GetreportBasedmaterailid")]
+        public async Task<IEnumerable<ReportModel>> getcategorylistbymaterialid(string material)
+        {
+            return await this._poService.GetreportBasedMaterial(material);
         }
     }
 }

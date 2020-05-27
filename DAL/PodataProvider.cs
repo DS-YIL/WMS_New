@@ -26,7 +26,7 @@ namespace WMS.DAL
                 {
                     pgsql.OpenAsync();
                     string query = WMSResource.checkponoexists.Replace("#pono", PONO);
-                    return pgsql.QuerySingle<OpenPoModel>(
+                    return pgsql.QueryFirstOrDefault<OpenPoModel>(
                        query, null, commandType: CommandType.Text);
                 }
                 catch (Exception Ex)
@@ -1369,6 +1369,65 @@ namespace WMS.DAL
             {
                 log.ErrorMessage("PODataProvider", "updategatepassapproverstatus", Ex.StackTrace.ToString());
                 return 0;
+            }
+        }
+
+        public async Task<IEnumerable<ReportModel>> GetreportBasedCategory(int categoryid)
+        {
+            using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
+            {
+
+                try
+                {
+                   // string query = WMSResource.getcategorylist.Replace("#categoryid", Convert.ToString(categoryid));
+                    string query = WMSResource.getcategorylist;
+
+                    await pgsql.OpenAsync();
+                    return await pgsql.QueryAsync<ReportModel>(
+                       query, null, commandType: CommandType.Text);
+
+
+                }
+                catch (Exception Ex)
+                {
+                    log.ErrorMessage("PODataProvider", "GetreportBasedCategory", Ex.StackTrace.ToString());
+                    return null;
+                }
+                finally
+                {
+                    pgsql.Close();
+                }
+
+            }
+
+        }
+
+        public async Task<IEnumerable<ReportModel>> GetreportBasedMaterial(string materailid)
+        {
+            using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
+            {
+
+                try
+                {
+                    // string query = WMSResource.getcategorylist.Replace("#categoryid", Convert.ToString(categoryid));
+                    string query = WMSResource.getcategorylistbymaterailid.Replace("#materialid", Convert.ToString(materailid));
+
+                    await pgsql.OpenAsync();
+                    return await pgsql.QueryAsync<ReportModel>(
+                       query, null, commandType: CommandType.Text);
+
+
+                }
+                catch (Exception Ex)
+                {
+                    log.ErrorMessage("PODataProvider", "GetreportBasedMaterial", Ex.StackTrace.ToString());
+                    return null;
+                }
+                finally
+                {
+                    pgsql.Close();
+                }
+
             }
         }
     }
