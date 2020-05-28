@@ -126,3 +126,12 @@ export class materialistModel {
   returneddate: Date;
   materialcost: string;
 }
+
+export class categoryValues {
+  categoryid: number;
+  categoryname: string;
+  minpricevalue: string;
+  maxpricevalue: string;
+  createdby: string;
+  updatedby: string;
+}

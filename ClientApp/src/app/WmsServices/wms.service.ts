@@ -135,6 +135,10 @@ export class wmsService {
     return this.http.get<any>(this.url + 'POData/getInventoryList/', this.httpOptions);
   }
 
+  updateABCRange(catList: any): Observable<any> {
+    return this.http.post<any>(this.url + 'POData/updateABCRange/', catList, this.httpOptions);
+  }
+
   logout() {
     //localStorage.removeItem('Employee');
     this.currentUserSubject.next(null);
