@@ -159,7 +159,7 @@ namespace WMS.Controllers
         {
             return await this._poService.GetmaterialList(gatepassid);
         }
-        [HttpPost("updateprintstatus")]
+     
         [HttpPost("updateprintstatus")]
         public int updateprintstatus(gatepassModel model)
         {
@@ -185,7 +185,7 @@ namespace WMS.Controllers
         {
             return  this._poService.updateABCcategorydata(data);
         }
-        [HttpGet("getcategorydata")]
+        [HttpGet("getcategorymasterdata")]
         public async Task<IEnumerable<ABCCategoryModel>> getcategorydata()
         {
             return await this._poService.GetABCCategorydata();
