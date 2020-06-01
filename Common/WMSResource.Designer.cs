@@ -115,6 +115,15 @@ namespace WMS.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to select * from wms.wms_rd_category where deleteflag=false.
+        /// </summary>
+        public static string getabccategorydata {
+            get {
+                return ResourceManager.GetString("getabccategorydata", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to select ws.unitprice,ws.materialid,op.materialdescription,
         ///    sum(availableqty) as availableqty,( SELECT wrc.categoryname
         ///           FROM wms.wms_rd_category wrc

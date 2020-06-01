@@ -319,4 +319,7 @@ wms.wms_stock ws inner join wms.wms_securityinward sec on sec.pono =ws.pono wher
   <data name="updateABCrange" xml:space="preserve">
     <value>update wms.wms_rd_category set deleteflag=true,updatedby=@updatedby,updatedon=@updatedon</value>
   </data>
+  <data name="getabccategorydata" xml:space="preserve">
+    <value>select * from wms.wms_rd_category where deleteflag=false</value>
+  </data>
 </root>

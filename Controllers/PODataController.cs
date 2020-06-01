@@ -43,9 +43,13 @@ namespace WMS.Controllers
         //}
         //need list of items
         [HttpGet("Getthreewaymatchingdetails")]
-        public async Task<IEnumerable<OpenPoModel>> Getdetailsforthreewaymatching(string invoiceno,string pono)
+        public async Task<IEnumerable<OpenPoModel>> Getdetailsforthreewaymatching(string pono)
         {
-            return await this._poService.GetDeatilsForthreeWaymatching(invoiceno,pono);
+
+            string[] ponoandinvoice = pono.Split('-');
+            string ponodata = ponoandinvoice[0];
+            string invoiceno = ponoandinvoice[1];
+            return await this._poService.GetDeatilsForthreeWaymatching(invoiceno, ponodata);
         }
         [HttpGet("verifythreewaymatch")]
         public bool verifythreewaymatching(string pono, string invoiceno, int quantity, string projectcode,string material)
@@ -167,19 +171,24 @@ namespace WMS.Controllers
             return this._poService.updatereprintstatus(model);
         }
         [HttpGet("GetreportBasedCategory")]
-        //public async Task<IEnumerable<ReportModel>> getcategorylistById(int categoryid=0)
-        //{
-        //    return await this._poService.GetreportBasedCategory(categoryid);
-        //}
+        public async Task<IEnumerable<ReportModel>> getcategorylistById(int categoryid = 0)
+        {
+            return await this._poService.GetreportBasedCategory(categoryid);
+        }
         [HttpGet("GetreportBasedmaterailid")]
         public async Task<IEnumerable<ReportModel>> getcategorylistbymaterialid(string material)
         {
             return await this._poService.GetreportBasedMaterial(material);
         }
         [HttpPost("updateABCRange")]
-        public async Task<IEnumerable<ReportModel>> updateABCrange([FromBody] List<ABCCategoryModel> data)
+        public int updateABCrange([FromBody] List<ABCCategoryModel> data)
         {
-            return await this._poService.updateABCcategorydata(data);
+            return  this._poService.updateABCcategorydata(data);
+        }
+        [HttpGet("getcategorydata")]
+        public async Task<IEnumerable<ABCCategoryModel>> getcategorydata()
+        {
+            return await this._poService.GetABCCategorydata();
         }
     }
 }
