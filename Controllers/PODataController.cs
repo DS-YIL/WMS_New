@@ -43,9 +43,9 @@ namespace WMS.Controllers
         //}
         //need list of items
         [HttpGet("Getthreewaymatchingdetails")]
-        public async Task<IEnumerable<OpenPoModel>> Getdetailsforthreewaymatching(string pono)
+        public async Task<IEnumerable<OpenPoModel>> Getdetailsforthreewaymatching(string invoiceno,string pono)
         {
-            return await this._poService.GetDeatilsForthreeWaymatching(pono);
+            return await this._poService.GetDeatilsForthreeWaymatching(invoiceno,pono);
         }
         [HttpGet("verifythreewaymatch")]
         public bool verifythreewaymatching(string pono, string invoiceno, int quantity, string projectcode,string material)

@@ -40,8 +40,10 @@ export class StoreClerkComponent implements OnInit {
   scanBarcode() {
     var barcodeId = 3;
     var pono = "228738234";
+    this.PoDetails.pono;
+    this.PoDetails.invoiceno;
     this.spinner.show();
-    this.wmsService.Getthreewaymatchingdetails(barcodeId, pono).subscribe(data => {
+    this.wmsService.Getthreewaymatchingdetails(this.PoDetails.invoiceno, this.PoDetails.pono).subscribe(data => {
       this.spinner.hide();
       if (data) {
         // this.PoDetails = data[0];

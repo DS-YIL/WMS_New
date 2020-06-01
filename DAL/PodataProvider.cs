@@ -135,7 +135,7 @@ namespace WMS.DAL
 
         }
 
-        public async Task<IEnumerable<OpenPoModel>> GetDeatilsForthreeWaymatching(string pono)
+        public async Task<IEnumerable<OpenPoModel>> GetDeatilsForthreeWaymatching(string invoiceno, string pono)
         {
             using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
             {
@@ -143,7 +143,7 @@ namespace WMS.DAL
                 try
                 {
                     await pgsql.OpenAsync();
-                    string query = WMSResource.Getdetailsforthreewaymatching.Replace("#pono", pono);// + pono+"'";//li
+                    string query = WMSResource.Getdetailsforthreewaymatching.Replace("#pono", pono).Replace("#invoiceno", invoiceno);// + pono+"'";//li
                     return await pgsql.QueryAsync<OpenPoModel>(
                        query, null, commandType: CommandType.Text);
                 }

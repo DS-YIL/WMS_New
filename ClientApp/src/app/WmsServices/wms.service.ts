@@ -64,8 +64,8 @@ export class wmsService {
     return this.http.post<any>(this.url + 'POData/insertbarcodeandinvoiceinfo', BarcodeModel, this.httpOptions);
   }
 
-  Getthreewaymatchingdetails(barcodeId: number, PoNo: string): Observable<inwardModel[]> {
-    return this.http.get<inwardModel[]>(this.url + 'POData/Getthreewaymatchingdetails?barcodeid=' + barcodeId + '&PONO=' + PoNo + '', this.httpOptions);
+  Getthreewaymatchingdetails(invoiceno: string, PoNo: string): Observable<inwardModel[]> {
+    return this.http.get<inwardModel[]>(this.url + 'POData/Getthreewaymatchingdetails?invoiceno=' + invoiceno + '&PONO=' + PoNo + '', this.httpOptions);
   }
 
   verifythreewaymatch(invoiceno: string, PoNo: string, quantity: string, projectCode: string, material: string): Observable<any> {

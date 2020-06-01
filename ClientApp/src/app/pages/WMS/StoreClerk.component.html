@@ -1,8 +1,24 @@
 <h5>GRN Posting</h5>
+
+<div class="col-md-12 col-sm-12 col-xs-12">
+  <div class="row">
+  <div class="col-md-2 col-sm-2 col-xs-2">
+    PONO
+  </div>
+  <div class="col-md-3 col-sm-3 col-xs-3">
+    <input type="text" [(ngModel)]="PoDetails.pono" />
+  </div>
+  <div class="col-md-2 col-sm-2 col-xs-2">
+    Invoice No
+  </div>
+  <div class="col-md-3 col-sm-3 col-xs-3">
+    <input type="text" [(ngModel)]="PoDetails.invoiceno" />
+  </div>
+    </div>
+</div>
 <div style="text-align: center;">
   <button type="button" class="btn btn-primary" (click)="scanBarcode()" label="Save">Scan Barcode</button>
 </div>
-
 <div *ngIf="podetailsList.length>0">
   <div class="row " style="margin-top:10px">
     <div class="col-md-3 pt-2">
