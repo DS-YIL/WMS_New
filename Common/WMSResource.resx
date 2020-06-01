@@ -290,8 +290,8 @@ where  inw.invoiceno='#invoiceno' and openpo.pono='#pono' and openpo.projectcode
     <value>select ws.unitprice,ws.materialid,op.materialdescription,
     sum(availableqty) as availableqty,( SELECT wrc.categoryname
            FROM wms.wms_rd_category wrc
-          WHERE ws.unitprice ::numeric &gt;= wrc.minpricevalue::numeric and wrc.deleteflag=false and
-          ws.unitprice ::numeric &lt;= wrc.maxpricevalue::numeric OR ws.unitprice ::numeric &gt;= wrc.minpricevalue::numeric
+          WHERE ws.unitprice ::numeric &gt;= wrc.minpricevalue::numeric and 
+          ws.unitprice ::numeric &lt;= wrc.maxpricevalue::numeric  and wrc.deleteflag=false 
          LIMIT 1) AS category from wms.wms_stock ws
  inner join wms."MaterialMasterYGS" op on  ws.materialid =op.material 
  WHERE ws.materialid IS NOT null and ws.unitprice is not null
