@@ -190,5 +190,15 @@ namespace WMS.Controllers
         {
             return await this._poService.GetABCCategorydata();
         }
+        [HttpGet("getABCavailableqtyList")]
+        public async Task<IEnumerable<ReportModel>> getabcavailableqtylist()
+        {
+            return await this._poService.GetABCavailableqtyList();
+        }
+        [HttpGet("GetABCListBycategory")]
+        public async Task<IEnumerable<ReportModel>> getabclist(string category)
+        {
+            return await this._poService.GetABCListBycategory(category);
+        }
     }
 }

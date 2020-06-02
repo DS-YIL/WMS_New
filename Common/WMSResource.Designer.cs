@@ -124,6 +124,31 @@ namespace WMS.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to select * from wms.v_getdeailsbycategory  where category like &apos;%abcname&apos;.
+        /// </summary>
+        public static string GetABCdetailsBycategory {
+            get {
+                return ResourceManager.GetString("GetABCdetailsBycategory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to select Sum(ws.unitprice*ws.availableqty) as totalcost,
+        ///    sum(availableqty) as availableqty,( SELECT wrc.categoryname
+        ///           FROM wms.wms_rd_category wrc
+        ///          WHERE ws.unitprice ::numeric &gt;= wrc.minpricevalue::numeric and
+        ///          ws.unitprice ::numeric &lt;= wrc.maxpricevalue::numeric  and wrc.deleteflag=false
+        ///         LIMIT 1) AS category from wms.wms_stock ws
+        /// inner join wms.&quot;MaterialMasterYGS&quot; op on  ws.materialid =op.material
+        /// WHERE ws.materialid IS NOT null and ws.unitprice is not null        /// [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string GetallavlqtyABCList {
+            get {
+                return ResourceManager.GetString("GetallavlqtyABCList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to select ws.unitprice,ws.materialid,op.materialdescription,
         ///    sum(availableqty) as availableqty,( SELECT wrc.categoryname
         ///           FROM wms.wms_rd_category wrc

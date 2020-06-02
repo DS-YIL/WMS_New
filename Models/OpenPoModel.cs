@@ -233,6 +233,7 @@ namespace WMS.Models
 		public string vendorname { get; set; }
 		public string ponumber { get; set; }
 		public string category { get; set; }
+		public int totalcost { get; set; }
 	}
 	public class ABCCategoryModel
 	{

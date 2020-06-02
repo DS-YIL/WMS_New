@@ -38,5 +38,9 @@ namespace WMS.Interfaces
         Task<IEnumerable<ReportModel>> GetreportBasedMaterial(string materailid);
         int updateABCcategorydata(List<ABCCategoryModel> model);
         Task<IEnumerable<ABCCategoryModel>> GetABCCategorydata();
+        Task<IEnumerable<ReportModel>> GetABCavailableqtyList();
+        Task<IEnumerable<ReportModel>> GetABCListBycategory(string category);
+
+
     }
 }

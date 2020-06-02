@@ -1524,7 +1524,63 @@ namespace WMS.DAL
                 }
                 catch (Exception Ex)
                 {
-                    log.ErrorMessage("PODataProvider", "ABCCategoryModel", Ex.StackTrace.ToString());
+                    log.ErrorMessage("PODataProvider", "GetABCCategorydata", Ex.StackTrace.ToString());
+                    return null;
+                }
+                finally
+                {
+                    pgsql.Close();
+                }
+
+            }
+        }
+
+        public async Task<IEnumerable<ReportModel>> GetABCavailableqtyList()
+        {
+            using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
+            {
+
+                try
+                {
+                    string query = WMSResource.GetallavlqtyABCList;
+
+                    await pgsql.OpenAsync();
+                    return await pgsql.QueryAsync<ReportModel>(
+                       query, null, commandType: CommandType.Text);
+
+
+                }
+                catch (Exception Ex)
+                {
+                    log.ErrorMessage("PODataProvider", "GetABCavailableqtyList", Ex.StackTrace.ToString());
+                    return null;
+                }
+                finally
+                {
+                    pgsql.Close();
+                }
+
+            }
+        }
+
+        public async Task<IEnumerable<ReportModel>> GetABCListBycategory(string category)
+        {
+            using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
+            {
+
+                try
+                {
+                    string query = WMSResource.GetABCdetailsBycategory.Replace("abcname", category);
+
+                    await pgsql.OpenAsync();
+                    return await pgsql.QueryAsync<ReportModel>(
+                       query, null, commandType: CommandType.Text);
+
+
+                }
+                catch (Exception Ex)
+                {
+                    log.ErrorMessage("PODataProvider", "GetABCListBycategory", Ex.StackTrace.ToString());
                     return null;
                 }
                 finally

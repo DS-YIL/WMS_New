@@ -322,4 +322,18 @@ wms.wms_stock ws inner join wms.wms_securityinward sec on sec.pono =ws.pono wher
   <data name="getabccategorydata" xml:space="preserve">
     <value>select * from wms.wms_rd_category where deleteflag=false</value>
   </data>
+  <data name="GetABCdetailsBycategory" xml:space="preserve">
+    <value>select * from wms.v_getdeailsbycategory  where category like '%abcname'</value>
+  </data>
+  <data name="GetallavlqtyABCList" xml:space="preserve">
+    <value>select Sum(ws.unitprice*ws.availableqty) as totalcost,
+    sum(availableqty) as availableqty,( SELECT wrc.categoryname
+           FROM wms.wms_rd_category wrc
+          WHERE ws.unitprice ::numeric &gt;= wrc.minpricevalue::numeric and
+          ws.unitprice ::numeric &lt;= wrc.maxpricevalue::numeric  and wrc.deleteflag=false
+         LIMIT 1) AS category from wms.wms_stock ws
+ inner join wms."MaterialMasterYGS" op on  ws.materialid =op.material
+ WHERE ws.materialid IS NOT null and ws.unitprice is not null
+group by category</value>
+  </data>
 </root>

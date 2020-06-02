@@ -43,7 +43,7 @@ export class StoreClerkComponent implements OnInit {
     this.PoDetails.pono;
     this.PoDetails.invoiceno;
     this.spinner.show();
-    this.wmsService.Getthreewaymatchingdetails(this.PoDetails.invoiceno, this.PoDetails.pono).subscribe(data => {
+    this.wmsService.Getthreewaymatchingdetails( this.PoDetails.pono).subscribe(data => {
       this.spinner.hide();
       if (data) {
         // this.PoDetails = data[0];
