@@ -19,6 +19,7 @@ import { InventoryMovementComponent } from './WMS/InventoryMovement.component';
 import { ObsoleteInventoryMovementComponent } from './WMS/ObsoleteInventoryMovement.component';
 import { ExcessInventoryMovementComponent } from './WMS/ExcessInventoryMovement.component';
 import { ABCAnalysisComponent } from './WMS/ABCAnalysis.component';
+import { ABCCategoryComponent } from './WMS/ABCCategory.component';
 
 const routes: Routes = [{
   path: '',
@@ -49,6 +50,7 @@ const routes: Routes = [{
     { path: "InventoryMovement", component: InventoryMovementComponent, canActivate: [AuthGuard] },
     { path: "ObsoleteInventoryMovement", component: ObsoleteInventoryMovementComponent, canActivate: [AuthGuard] },
     { path: "ExcessInventoryMovement", component: ExcessInventoryMovementComponent, canActivate: [AuthGuard] },
+    { path: "ABCCategory", component: ABCCategoryComponent, canActivate: [AuthGuard] },
     { path: "ABCAnalysis", component: ABCAnalysisComponent, canActivate: [AuthGuard] },
     { path: "ABCAnalysis/:material", component: ABCAnalysisComponent, canActivate: [AuthGuard] }
   ],

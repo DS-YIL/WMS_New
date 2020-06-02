@@ -52,6 +52,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: '/WMS/ExcessInventoryMovement'
   },
   {
+    title: 'ABC Category',
+    icon: 'list-outline',
+    link: '/WMS/ABCCategory'
+  },
+  {
     title: 'ABC Analysis',
     icon: 'list-outline',
     link: '/WMS/ABCAnalysis'

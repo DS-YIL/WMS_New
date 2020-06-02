@@ -1,0 +1,59 @@
+<h5 style="text-align:center;margin-left:-100px">ABC Classification</h5><br />
+<div class="row">
+  <div class="col-lg-3 col-md-3 col-sm-3"></div>
+  <div class="col-lg-1 col-md-1 col-sm-1 form-inline">
+    <label class="form-label"><b>Class</b></label>
+  </div>
+  <div class="col-lg-2 col-md-2 col-sm-2 form-inline" style="margin-left:40px">
+    <label class="form-label"><b>Min</b></label>
+  </div>
+  <div class="col-lg-2 col-md-2 col-sm-2 form-inline" style="margin-left:40px">
+    <label class="form-label"><b>Max</b></label>
+  </div>
+</div>
+<br />
+<div class="row">
+  <div class="col-lg-3 col-md-3 col-sm-3"></div>
+  <div class="col-lg-1 col-md-1 col-sm-1 form-inline">
+    <label class="form-label"><b>A</b></label>
+  </div>
+  <div class="col-lg-2 col-md-2 col-sm-2 form-inline">
+    <input type="number" class="form-control" [(ngModel)]="classA.minpricevalue" />
+  </div>
+  <div class="col-lg-2 col-md-2 col-sm-2 form-inline">
+    <input type="number" class="form-control" [(ngModel)]="classA.maxpricevalue" />
+  </div>
+</div>
+<br />
+<div class="row">
+  <div class="col-lg-3 col-md-3 col-sm-3"></div>
+  <div class="col-lg-1 col-md-1 col-sm-1 form-inline">
+    <label class="form-label"><b>B</b></label>
+  </div>
+  <div class="col-lg-2 col-md-2 col-sm-2 form-inline">
+    <input type="number" class="form-control" [(ngModel)]="classB.minpricevalue" />
+  </div>
+  <div class="col-lg-2 col-md-2 col-sm-2 form-inline">
+    <input type="number" class="form-control" [(ngModel)]="classB.maxpricevalue" />
+  </div>
+</div>
+<br />
+<div class="row">
+  <div class="col-lg-3 col-md-3 col-sm-3"></div>
+  <div class="col-lg-1 col-md-1 col-sm-1 form-inline">
+    <label class="form-label"><b>C</b></label>
+  </div>
+  <div class="col-lg-2 col-md-2 col-sm-2 form-inline">
+    <input type="number" class="form-control" [(ngModel)]="classC.minpricevalue" />
+  </div>
+  <div class="col-lg-2 col-md-2 col-sm-2 form-inline">
+    <input type="number" class="form-control" [(ngModel)]="classC.maxpricevalue" />
+  </div>
+</div>
+<br>
+<div class="row">
+  <div class="col-lg-4 col-md-4 col-sm-4"></div>
+  <div class="col-lg-1 col-md-1 col-sm-1">
+    <button type="button" class="btn btn-primary" (click)="updateABCRange()" label="Save">Classify</button>
+  </div>
+</div>

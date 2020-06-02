@@ -12,23 +12,23 @@ import { categoryValues } from '../../Models/WMS.Model';
   templateUrl: './ABCAnalysis.component.html'
 })
 export class ABCAnalysisComponent implements OnInit {
-  constructor(private wmsService: wmsService, private commonComponent: commonComponent, private route: ActivatedRoute, private router: Router, public constants: constants, private spinner: NgxSpinnerService) { }
+  constructor(private wmsService: wmsService, private route: ActivatedRoute, private router: Router, public constants: constants, private spinner: NgxSpinnerService) { }
 
   public employee: Employee;
   public dynamicData: DynamicSearchResult;
 
-  public ABCAnalysisList: Array<any> = [];
+  public ABCavailableqtyList: Array<any> = [];
+  public ABCListBycategory: Array<any> = [];
   public category: string;
-  public showAbcAnalysisList: boolean = true;
+  public showABCavailableqtyList: boolean = true;
+  public showAbcListByCategory; showAbcMatList: boolean = false;
+  public totalunitprice; totalQty: number = 0;
+
   cols: any[];
   exportColumns: any[];
 
   public ABCAnalysisMateDet: Array<any> = [];
   public matDetails: any;
-  public catList: Array<any> = [];
-  public classA: categoryValues;
-  public classB: categoryValues;
-  public classC: categoryValues;
 
   ngOnInit() {
     if (localStorage.getItem("Employee"))
@@ -36,59 +36,53 @@ export class ABCAnalysisComponent implements OnInit {
     else
       this.router.navigateByUrl("Login");
 
-
-    this.classA = new categoryValues();
-    this.classB = new categoryValues();
-    this.classC = new categoryValues();
-    this.classA.categoryname = "A";
-    this.classA.minpricevalue = '20000';
-    this.classA.maxpricevalue = '100000';
-    this.classB.maxpricevalue = '20000';
-    this.classB.minpricevalue = '10000';
-    this.classC.maxpricevalue = '10000';
-    this.classC.minpricevalue = '0';
-    this.classB.categoryname = "B";
-    this.classC.categoryname = "C";
-    this.classA.createdby = this.classB.createdby = this.classC.createdby = this.classA.updatedby = this.classB.updatedby = this.classC.updatedby = this.employee.employeeno;
-
     this.cols = [
       { field: 'Category', header: 'Category' },
       { field: 'materialid', header: 'Material' },
       { field: 'materialdescription', header: 'Material Descr' },
       { field: 'availableqty', header: 'Available Qty' },
-       { field: 'unitprice', header: 'Unit Price' }
+      { field: 'unitprice', header: 'Unit Price' }
     ];
-
     this.exportColumns = this.cols.map(col => ({ title: col.header, dataKey: col.field }));
-
+    this.getABCavailableqtyList();
   }
 
-  getABCAnalysisList() {
+  getABCavailableqtyList() {
     this.spinner.show();
-    this.catList = [];
-    this.catList.push(this.classA);
-    this.catList.push(this.classB);
-    this.catList.push(this.classC);
-    this.ABCAnalysisList = [];
-    this.wmsService.updateABCRange(this.catList).subscribe(data => {
-      this.ABCAnalysisList = data;
+    this.ABCavailableqtyList = [];
+    this.wmsService.getABCavailableqtyList().subscribe(data => {
+      this.ABCavailableqtyList = data;
+      this.calculateTotalQty();
+      this.calculateTotalPrice();
+      this.spinner.hide();
+    });
+    
+  }
+
+ 
+  showAbcListByCat(details: any) {
+    this.showABCavailableqtyList = false;
+    this.showAbcListByCategory = true;
+    this.spinner.show();
+    this.ABCListBycategory = [];
+    this.wmsService.GetABCListBycategory(details.category).subscribe(data => {
+      this.ABCListBycategory = data;
       this.spinner.hide();
     });
   }
 
-  getCategory(details: any) {
-    if (details.unitprice >= this.classC.minpricevalue && details.unitprice <= this.classC.maxpricevalue)
-      return 'C';
-    else if (details.unitprice >= this.classB.minpricevalue && details.unitprice <= this.classB.maxpricevalue)
-      return 'B';
-    else if (details.unitprice >= this.classA.minpricevalue && details.unitprice <= this.classA.maxpricevalue)
-      return 'A';
-  }
-  showList() {
-    this.showAbcAnalysisList = true;
-  }
+  //getABCAnalysisList() {
+  //  this.spinner.show();
+  //  this.ABCAnalysisList = [];
+  //  this.wmsService.GetreportBasedCategory().subscribe(data => {
+  //    this.ABCAnalysisList = data;
+  //    this.spinner.hide();
+  //  });
+  //}
+
   showMatdetails(details: any) {
-    this.showAbcAnalysisList = false;
+    this.showAbcListByCategory = false;
+    this.showAbcMatList = true;
     this.spinner.show();
     this.matDetails = details;
     this.ABCAnalysisMateDet = [];
@@ -99,14 +93,37 @@ export class ABCAnalysisComponent implements OnInit {
       this.spinner.hide();
     });
   }
+
   calculateTotalQty() {
-    var qty = 0;
-    this.ABCAnalysisMateDet.forEach(item => {
-      if (item.availableqty)
-        qty += item.availableqty;
-    })
-    return qty;
+    this.totalQty = 0;
+    if (this.ABCavailableqtyList) {
+      this.ABCavailableqtyList.forEach(item => {
+        if (item.availableqty)
+          this.totalQty += item.availableqty;
+      })
+    }
+    return this.totalQty;
   }
 
+  calculateTotalPrice() {
+    this.totalunitprice = 0;
+    if (this.ABCavailableqtyList) {
+      this.ABCavailableqtyList.forEach(item => {
+        if (item.totalcost)
+          this.totalunitprice += item.totalcost;
+      })
+    }
+    return this.totalunitprice;
+  }
+
+
+  showabcavailableqtyList() {
+    this.showABCavailableqtyList = true;
+    this.showAbcListByCategory = false;
+  }
+  showCatList() {
+    this.showAbcListByCategory = true;
+    this.showAbcMatList = false;
+  }
 }
 
