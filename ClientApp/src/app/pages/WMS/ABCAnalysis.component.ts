@@ -47,6 +47,7 @@ export class ABCAnalysisComponent implements OnInit {
     this.getABCavailableqtyList();
   }
 
+  //get ABC available list
   getABCavailableqtyList() {
     this.spinner.show();
     this.ABCavailableqtyList = [];
@@ -59,7 +60,7 @@ export class ABCAnalysisComponent implements OnInit {
     
   }
 
- 
+ //get ABCList by categories
   showAbcListByCat(details: any) {
     this.showABCavailableqtyList = false;
     this.showAbcListByCategory = true;
@@ -71,15 +72,7 @@ export class ABCAnalysisComponent implements OnInit {
     });
   }
 
-  //getABCAnalysisList() {
-  //  this.spinner.show();
-  //  this.ABCAnalysisList = [];
-  //  this.wmsService.GetreportBasedCategory().subscribe(data => {
-  //    this.ABCAnalysisList = data;
-  //    this.spinner.hide();
-  //  });
-  //}
-
+  //get material details by materialid
   showMatdetails(details: any) {
     this.showAbcListByCategory = false;
     this.showAbcMatList = true;
@@ -94,6 +87,7 @@ export class ABCAnalysisComponent implements OnInit {
     });
   }
 
+  //sum of total quantity
   calculateTotalQty() {
     this.totalQty = 0;
     if (this.ABCavailableqtyList) {
@@ -105,6 +99,7 @@ export class ABCAnalysisComponent implements OnInit {
     return this.totalQty;
   }
 
+  //sum of total price
   calculateTotalPrice() {
     this.totalunitprice = 0;
     if (this.ABCavailableqtyList) {
@@ -116,11 +111,13 @@ export class ABCAnalysisComponent implements OnInit {
     return this.totalunitprice;
   }
 
-
+  //showing available qunatity list when click on back button
   showabcavailableqtyList() {
     this.showABCavailableqtyList = true;
     this.showAbcListByCategory = false;
   }
+
+  //showing abclist by category when click on back button
   showCatList() {
     this.showAbcListByCategory = true;
     this.showAbcMatList = false;

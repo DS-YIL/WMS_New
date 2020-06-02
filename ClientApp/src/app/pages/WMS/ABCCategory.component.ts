@@ -40,6 +40,8 @@ export class ABCCategoryComponent implements OnInit {
   }
   getcategorydata() {
     this.wmsService.getcategorymasterdata().subscribe(data => {
+      this.classA.startdate = new Date(data[0].startdate);
+      this.classA.enddate = new Date(data[0].enddate);
       this.classA.minpricevalue = data[0].minpricevalue;
       this.classA.maxpricevalue = data[0].maxpricevalue
       this.classB.maxpricevalue = data[1].maxpricevalue
@@ -53,8 +55,11 @@ export class ABCCategoryComponent implements OnInit {
     this.spinner.show();
     this.catList = [];
     this.catList.push(this.classA);
+    this.classB.startdate = this.classC.startdate = this.classA.startdate;
+    this.classB.enddate = this.classC.enddate = this.classA.enddate;
     this.catList.push(this.classB);
     this.catList.push(this.classC);
+    this.classA.createdby = this.classB.createdby = this.classC.createdby = this.employee.employeeno;
      this.classA.updatedby = this.classB.updatedby = this.classC.updatedby = this.employee.employeeno;
     this.wmsService.updateABCRange(this.catList).subscribe(data => {
       this.spinner.hide();

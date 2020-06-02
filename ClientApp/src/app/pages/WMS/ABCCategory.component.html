@@ -1,4 +1,20 @@
-<h5 style="text-align:center;margin-left:-100px">ABC Classification</h5><br />
+<h5 style="text-align:center;margin-left:-100px">ABC Classification</h5>
+<br />
+<div class="row">
+  <div class="col-lg-3 col-md-3 col-sm-3"></div>
+  <div class="col-lg-3 col-md-3 col-sm-3 form-inline">
+    <label class="form-label">Start Date: </label>&nbsp;&nbsp;
+    <div class="form-inline-list">
+      <p-calendar class="mprldatepick" [(ngModel)]="classA.startdate" [monthNavigator]="true" [yearNavigator]="true" yearRange="1900:2050"></p-calendar>
+    </div>
+  </div>
+  <div class="col-lg-3 col-md-3 col-sm-3 form-inline">
+    <label class="form-label">End Date: </label>&nbsp;&nbsp;
+    <div class="form-inline-list">
+      <p-calendar class="mprldatepick" [(ngModel)]="classA.enddate" [monthNavigator]="true" [yearNavigator]="true" yearRange="1900:2050"></p-calendar>
+    </div>
+  </div>
+</div><br />
 <div class="row">
   <div class="col-lg-3 col-md-3 col-sm-3"></div>
   <div class="col-lg-1 col-md-1 col-sm-1 form-inline">
@@ -52,7 +68,7 @@
 </div>
 <br>
 <div class="row">
-  <div class="col-lg-4 col-md-4 col-sm-4"></div>
+  <div class="col-lg-5 col-md-5 col-sm-5"></div>
   <div class="col-lg-1 col-md-1 col-sm-1">
     <button type="button" class="btn btn-primary" (click)="updateABCRange()" label="Save">Classify</button>
   </div>
