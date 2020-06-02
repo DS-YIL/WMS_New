@@ -1473,6 +1473,8 @@ namespace WMS.DAL
                                     item.minpricevalue,
                                     item.maxpricevalue,
                                     item.createdby,
+                                    item.startdate,
+                                    item.enddate
                                 }));
                                 returndata = Convert.ToInt32(data);
                             }

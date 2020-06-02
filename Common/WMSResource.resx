@@ -314,7 +314,7 @@ wms.wms_stock ws inner join wms.wms_securityinward sec on sec.pono =ws.pono wher
     <value>update wms.wms_stock set itemlocation='#itemlocation' where itemid=#itemid</value>
   </data>
   <data name="insertABCrange" xml:space="preserve">
-    <value>insert into wms.wms_rd_category(categoryid,categoryname,minpricevalue,maxpricevalue,createdby,createdon,deleteflag)values(default,@categoryname,@minpricevalue,@maxpricevalue,@createdby,current_date,false)</value>
+    <value>insert into wms.wms_rd_category(categoryid,categoryname,minpricevalue,maxpricevalue,createdby,createdon,deleteflag,startdate,enddate)values(default,@categoryname,@minpricevalue,@maxpricevalue,@createdby,current_date,false,@startdate,@enddate)</value>
   </data>
   <data name="updateABCrange" xml:space="preserve">
     <value>update wms.wms_rd_category set deleteflag=true,updatedby=@updatedby,updatedon=@updatedon</value>

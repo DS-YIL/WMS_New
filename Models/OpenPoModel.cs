@@ -246,5 +246,7 @@ namespace WMS.Models
 		public string updatedby { get; set; }
 		public DateTime updatedon { get; set; }
 		public Boolean deleteflag { get; set; }
+		public DateTime enddate { get; set; }
+		public DateTime startdate { get; set; }
 	}
 }

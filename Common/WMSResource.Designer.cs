@@ -333,7 +333,7 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to insert into wms.wms_rd_category(categoryid,categoryname,minpricevalue,maxpricevalue,createdby,createdon,deleteflag)values(default,@categoryname,@minpricevalue,@maxpricevalue,@createdby,current_date,false).
+        ///   Looks up a localized string similar to insert into wms.wms_rd_category(categoryid,categoryname,minpricevalue,maxpricevalue,createdby,createdon,deleteflag,startdate,enddate)values(default,@categoryname,@minpricevalue,@maxpricevalue,@createdby,current_date,false,@startdate,@enddate).
         /// </summary>
         public static string insertABCrange {
             get {
