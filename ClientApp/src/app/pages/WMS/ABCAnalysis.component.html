@@ -74,7 +74,7 @@
 
 <div *ngIf="showAbcListByCategory">
   <div class="row"><button class="btn btn-primary fa fa-arrow-left" (click)="showabcavailableqtyList();"></button></div><br />
-  <h5 style="text-align:center">ABC Analysis</h5>
+  <h5 style="text-align:center">Category {{category}} Materials</h5>
   <br />
   <p-table #dt [columns]="cols" [value]="ABCListBycategory" [style]="{'width':'100%','overflow':'auto!important'}"
            [responsive]="true" [rows]="50"

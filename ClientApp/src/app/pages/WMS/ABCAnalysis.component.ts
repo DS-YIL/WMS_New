@@ -64,6 +64,7 @@ export class ABCAnalysisComponent implements OnInit {
   showAbcListByCat(details: any) {
     this.showABCavailableqtyList = false;
     this.showAbcListByCategory = true;
+    this.category = details.category;
     this.spinner.show();
     this.ABCListBycategory = [];
     this.wmsService.GetABCListBycategory(details.category).subscribe(data => {
