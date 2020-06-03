@@ -36,26 +36,47 @@ export class StoreClerkComponent implements OnInit {
     this.inwardModel.receiveddate = new Date();
     this.inwardModel.qcdate = new Date();
   }
-
+   AdjustKeyPress1(entredvalue,maxvalue) {
+     if (entredvalue > maxvalue) {
+       this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Please enter received quantity less than PONo quantity' });
+       (<HTMLInputElement>document.getElementById("receivedqty")).value = "";
+  }
+  }
+  AdjustKeyPress2(entredvalue, maxvalue) {
+    if (entredvalue > maxvalue) {
+      this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Please enter confirm quantity less than PONo quantity' });
+      (<HTMLInputElement>document.getElementById("confirmqty")).value = "";
+    }
+  }
+  AdjustKeyPress3(entredvalue, maxvalue) {
+    if (entredvalue > maxvalue) {
+      this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Please enter return quantity less than PONo quantity' });
+      (<HTMLInputElement>document.getElementById("returnqty")).value = "";
+    }
+  }
   scanBarcode() {
-    var barcodeId = 3;
-    var pono = "228738234";
-    this.PoDetails.pono;
-    this.PoDetails.invoiceno;
-    this.spinner.show();
-    this.wmsService.Getthreewaymatchingdetails( this.PoDetails.pono).subscribe(data => {
-      this.spinner.hide();
-      if (data) {
-        // this.PoDetails = data[0];
-        this.podetailsList = data;
-        this.grnnumber = this.podetailsList[0].grnnumber;
-        this.showDetails = true;
-      }
-      else
-        this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'No data' });
-    })
+    if (this.PoDetails.pono) {
+      var barcodeId = 3;
+      var pono = "228738234";
+      this.PoDetails.pono;
+      this.PoDetails.invoiceno;
+      this.spinner.show();
+      this.wmsService.Getthreewaymatchingdetails(this.PoDetails.pono).subscribe(data => {
+        this.spinner.hide();
+        if (data) {
+          // this.PoDetails = data[0];
+          this.podetailsList = data;
+          this.grnnumber = this.podetailsList[0].grnnumber;
+          this.showDetails = true;
+        }
+        else
+          this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'No data' });
+      })
+    }
+   
 
   }
+
 
   onVerifyDetails(details: any) {
     this.spinner.show();

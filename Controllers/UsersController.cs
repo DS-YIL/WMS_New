@@ -24,10 +24,11 @@ namespace WMS.Controllers
 		[HttpPost("authenticate")]
 		public IActionResult Authenticate([FromBody]AuthenticateModel model)
 		{
+			
 			var user = _userService.Authenticate(model.Username, model.Password);
 			// var data = _userService.validatelogincredentials((model.Username, model.Password);
 			if (user == null)
-				return BadRequest(new { message = "Username or password is incorrect" });
+				return Ok(new { message = "Username or password is incorrect" });
 
 			return Ok(user);
 		}

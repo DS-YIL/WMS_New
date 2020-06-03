@@ -74,7 +74,7 @@ namespace WMS.DAL
                     {
                         pgsql.Open();
                         string query = "select  * from wms.employee where domainid like " + "'%" + id + "'";
-                        data = pgsql.QuerySingle<User>(
+                        data = pgsql.QueryFirstOrDefault<User>(
                            query, null, commandType: CommandType.Text);
                         userdata.Add(data);
                     }
@@ -111,7 +111,7 @@ namespace WMS.DAL
             //PrincipalContext ctx = new PrincipalContext(ContextType.Domain);
            //var user = _users.SingleOrDefault(x => x.Username == username && x.Password == password);
           var userss = validatelogincredentials(username,password);
-            if (userss.Count != 0 || userss != null)
+            if (userss[0] != null)
             {
                 var user = userss.SingleOrDefault(x => x.domainid == username && x.pwd == password);
                 User use = new User();

@@ -1,35 +1,40 @@
 <h5 style="text-align: center">Security Check</h5>
-  <div class="form-control" style="height:100%;border-radius:0px;">
+<div class="form-control" style="height:100%;border-radius:0px;">
+  <div style="display:none" id="valdatediv">
+    <label class="form-label">Please enter PONO </label>&nbsp;&nbsp;
+  </div>
+  <div class="row " style="margin-top:10px">
+
+    <div class="col-lg-6 col-md-6 col-sm-6 form-inline">
+      <label class="form-label">PO No: </label>&nbsp;&nbsp;
+      <input class="form-control" type="text" [(ngModel)]="PoDetails.pono" id="ponoid">&nbsp;&nbsp;
+      <button type="button" class="btn btn-primary" label="Save" (click)="SearchPoNo()">Search</button>
+    </div>
+  </div>
+  <div *ngIf="showDetails">
     <div class="row " style="margin-top:10px">
-      <div class="col-lg-6 col-md-6 col-sm-6 form-inline">
-        <label class="form-label">PO No: </label>&nbsp;&nbsp;
-        <input class="form-control" type="text" [(ngModel)]="PoDetails.pono">&nbsp;&nbsp;
-        <button type="button" class="btn btn-primary" label="Save" (click)="SearchPoNo()">Search</button>
+      <div class="col-lg-4 col-md-4 col-sm-4 form-group">
+        <label class="form-label">Supplier: </label>
+        <input class="form-control" type="text" readonly [(ngModel)]="PoDetails.vendorname">
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-4 form-group">
+        <label class="form-label">Quanity: </label>
+        <input class="form-control" type="text" readonly [(ngModel)]="PoDetails.quotationqty">
       </div>
     </div>
-    <div *ngIf="showDetails">
-      <div class="row " style="margin-top:10px">
-        <div class="col-lg-4 col-md-4 col-sm-4 form-group">
-          <label class="form-label">Supplier: </label>
-          <input class="form-control" type="text" readonly [(ngModel)]="PoDetails.vendorname">
-        </div>
-        <div class="col-lg-4 col-md-4 col-sm-4 form-group">
-          <label class="form-label">Quanity: </label>
-          <input class="form-control" type="text" readonly [(ngModel)]="PoDetails.quotationqty">
-        </div>
-      </div>
-      <div class="row " style="margin-top:10px">
-        <div class="col-lg-4 col-md-4 col-sm-4 form-group">
-          <label class="form-label">Invoice No: </label>
-          <input class="form-control" type="text" [(ngModel)]="PoDetails.invoiceno">
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-4 col-md-4 col-sm-4"></div>
-        <div class="col-lg-4 col-md-4 col-sm-4">
-          <button type="button" [disabled]="disSaveBtn" class="btn btn-success" (click)="onsaveSecDetails()" label="Save">Save</button>&nbsp;&nbsp;&nbsp;
-          <button type="button" class="btn btn-success" (click)="onsaveSecDetails()" label="Save">Print</button>
-        </div>
-        </div>
+    <div class="row " style="margin-top:10px">
+      <div class="col-lg-4 col-md-4 col-sm-4 form-group">
+        <label class="form-label">Invoice No: </label>
+        <input class="form-control" type="text" [disabled]="disSaveBtn" [(ngModel)]="Poinvoicedetails.invoiceno">
+        <!--<input class="form-control" type="text" [(ngModel)]="PoDetails.invoiceno">-->
       </div>
     </div>
+    <div class="row">
+      <div class="col-lg-4 col-md-4 col-sm-4"></div>
+      <div class="col-lg-4 col-md-4 col-sm-4">
+        <button type="button" [disabled]="disSaveBtn" class="btn btn-success" (click)="onsaveSecDetails()" label="Save">Save</button>&nbsp;&nbsp;&nbsp;
+        <button type="button" class="btn btn-success" (click)="onsaveSecDetails()" label="Save">Print Barcode</button>
+      </div>
+    </div>
+  </div>
+</div>

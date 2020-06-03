@@ -16,6 +16,7 @@ export class SecurityHomeComponent implements OnInit {
   constructor(private messageService: MessageService, private wmsService: wmsService, private route: ActivatedRoute, private router: Router, public constants: constants, private spinner: NgxSpinnerService) { }
 
   public PoDetails: PoDetails;
+  public Poinvoicedetails: PoDetails;
   public employee: Employee;
   public showDetails; disSaveBtn: boolean = false;
   public BarcodeModel: BarcodeModel;
@@ -27,6 +28,7 @@ export class SecurityHomeComponent implements OnInit {
       this.router.navigateByUrl("Login");
 
     this.PoDetails = new PoDetails();
+    this.Poinvoicedetails = new PoDetails();
   }
 
 
@@ -38,13 +40,20 @@ export class SecurityHomeComponent implements OnInit {
         if (data) {
           this.PoDetails = data;
           this.showDetails = true;
+          
+          document.getElementById('valdatediv').style.display = "none";
+          document.getElementById('ponoid').style.border = "1px solid grey";
         }
         else
+         
           this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'No data for this PoNo' });
       })
     }
     else
-      this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Enter PoNo' });
+      document.getElementById('valdatediv').style.color = "red";
+      document.getElementById('valdatediv').style.display = "block";
+    document.getElementById('ponoid').style.border = "1px solid #dc5d5d";
+      //this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Enter PoNo' });
   }
   onsaveSecDetails() {
     //need to generate barcode
@@ -55,13 +64,13 @@ export class SecurityHomeComponent implements OnInit {
       this.BarcodeModel.barcode = "testbarcodetext";
       this.BarcodeModel.createdby = this.employee.employeeno;
       this.BarcodeModel.pono = this.PoDetails.pono;
-      this.BarcodeModel.invoiceno = this.PoDetails.invoiceno;
+      this.BarcodeModel.invoiceno = this.Poinvoicedetails.invoiceno;
       this.BarcodeModel.departmentid = this.PoDetails.departmentid
       this.BarcodeModel.receivedby = this.employee.employeeno;
       this.wmsService.insertbarcodeandinvoiceinfo(this.BarcodeModel).subscribe(data => {
         if (data)
           this.disSaveBtn = true;
-          this.messageService.add({ severity: 'success', summary: 'Success Message', detail: 'Saved Sucessfully' });
+          this.messageService.add({ severity: 'success', summary: 'Success Message', detail: 'Printed Sucessfully' });
         this.spinner.hide();
       });
     }

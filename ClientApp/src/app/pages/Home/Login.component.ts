@@ -7,14 +7,14 @@ import { constants } from '../../Models/WMSConstants';
 import { Employee, Login } from '../../Models/Common.Model';
 import { NgxSpinnerService } from "ngx-spinner";
 import { MENU_ITEMS } from '../pages-menu';
-
+import { MessageService } from 'primeng/api';
 @Component({
   selector: 'app-Login',
   templateUrl: './Login.component.html'
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private wmsService: wmsService, private route: ActivatedRoute, private router: Router, public constants: constants, private spinner: NgxSpinnerService) { }
+  constructor(private messageService: MessageService,private formBuilder: FormBuilder, private wmsService: wmsService, private route: ActivatedRoute, private router: Router, public constants: constants, private spinner: NgxSpinnerService) { }
 
   public LoginForm: FormGroup;
   public employee: Employee;
@@ -44,9 +44,12 @@ export class LoginComponent implements OnInit {
     else {
       this.spinner.show();
       this.wmsService.ValidateLoginCredentials(this.LoginForm.value.DomainId, this.LoginForm.value.Password)
-        .pipe(first())
+       
         .subscribe(data1 => {
           this.spinner.hide();
+          if (data1.message != null) {
+            this.messageService.add({ severity: 'error', summary: 'error Message', detail: 'Username or password is incorrect' });
+          }
           if (data1.employeeno != null) {
             this.employee = data1;
             this.employee.RoleId = this.LoginForm.value.RoleId;
@@ -74,7 +77,8 @@ export class LoginComponent implements OnInit {
               this.router.navigateByUrl('/WMS/Dashboard');
             }
           }
-        });
+        }
+        );
     }
   }
 

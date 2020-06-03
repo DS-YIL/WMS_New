@@ -60,15 +60,15 @@
       <td class="ptable-cell" style="text-align:right">{{rowData.quotationqty}}</td>
       <td class="ptable-cell"  style="text-align:right">
         <span *ngIf="grnnumber">{{rowData.receivedqty}}</span>
-        <input *ngIf="!grnnumber" pInputText type="number" class="form-control" [(ngModel)]="rowData.receivedqty">
+        <input *ngIf="!grnnumber" pInputText type="number" (change)="AdjustKeyPress1(rowData.receivedqty,rowData.quotationqty);" id="receivedqty" class="form-control" [(ngModel)]="rowData.receivedqty">
       </td>
       <td class="ptable-cell" style="text-align:right">
         <span *ngIf="grnnumber">{{rowData.confirmqty}}</span>
-        <input *ngIf="!grnnumber" pInputText type="number" class="form-control" [(ngModel)]="rowData.confirmqty">
+        <input *ngIf="!grnnumber" pInputText type="number" class="form-control" (change)="AdjustKeyPress2(rowData.confirmqty,rowData.quotationqty);" id="confirmqty" [(ngModel)]="rowData.confirmqty">
       </td>
       <td class="ptable-cell" style="text-align:right">
         <span *ngIf="grnnumber">{{rowData.returnqty}}</span>
-        <input *ngIf="!grnnumber" style="text-align:right" pInputText type="number" class="form-control" [(ngModel)]="rowData.returnqty">
+        <input *ngIf="!grnnumber" style="text-align:right" pInputText type="number"  (change)="AdjustKeyPress3(rowData.returnqty,rowData.quotationqty);" id="returnqty"  class="form-control" [(ngModel)]="rowData.returnqty">
       </td>
       <!--<td class="ptable-cell">
         <div style="text-align: center;">
