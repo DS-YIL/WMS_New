@@ -132,6 +132,8 @@ export class categoryValues {
   categoryname: string;
   minpricevalue: string;
   maxpricevalue: string;
+  startdate: Date;
+  enddate: Date;
   createdby: string;
   updatedby: string;
 }

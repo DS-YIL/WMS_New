@@ -36,6 +36,7 @@ import { InventoryMovementComponent } from './WMS/InventoryMovement.component';
 import { ObsoleteInventoryMovementComponent } from './WMS/ObsoleteInventoryMovement.component';
 import { ExcessInventoryMovementComponent } from './WMS/ExcessInventoryMovement.component';
 import { ABCAnalysisComponent } from './WMS/ABCAnalysis.component';
+import { ABCCategoryComponent } from './WMS/ABCCategory.component';
 
 @NgModule({
   imports: [
@@ -78,6 +79,7 @@ import { ABCAnalysisComponent } from './WMS/ABCAnalysis.component';
     InventoryMovementComponent,
     ObsoleteInventoryMovementComponent,
     ExcessInventoryMovementComponent,
+    ABCCategoryComponent,
     ABCAnalysisComponent
 
   ],

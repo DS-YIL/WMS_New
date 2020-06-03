@@ -135,10 +135,23 @@ export class wmsService {
     return this.http.get<any>(this.url + 'POData/getInventoryList/', this.httpOptions);
   }
 
+  getABCavailableqtyList(): Observable<any> {
+    return this.http.get<any>(this.url + 'POData/getABCavailableqtyList/', this.httpOptions);
+  }
+
+  GetABCListBycategory(category: string): Observable<any> {
+    return this.http.get<any>(this.url + 'POData/GetABCListBycategory/?category=' + category + '', this.httpOptions);
+  }
+  getcategorymasterdata(): Observable<any> {
+    return this.http.get<any>(this.url + 'POData/getcategorymasterdata/', this.httpOptions);
+  }
   updateABCRange(catList: any): Observable<any> {
     return this.http.post<any>(this.url + 'POData/updateABCRange/', catList, this.httpOptions);
   }
 
+  GetreportBasedCategory(): Observable<any> {
+    return this.http.get<any>(this.url + 'POData/GetreportBasedCategory/', this.httpOptions);
+  }
   logout() {
     //localStorage.removeItem('Employee');
     this.currentUserSubject.next(null);
