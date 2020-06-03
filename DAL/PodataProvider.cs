@@ -24,7 +24,7 @@ namespace WMS.DAL
 
                 try
                 {
-                    pgsql.OpenAsync();
+                    pgsql.Open();
                     string query = WMSResource.checkponoexists.Replace("#pono", PONO);
                     return pgsql.QueryFirstOrDefault<OpenPoModel>(
                        query, null, commandType: CommandType.Text);
@@ -108,7 +108,7 @@ namespace WMS.DAL
                     dataobj.receiveddate = System.DateTime.Now;
                     //if (barcodeid != 0)
                     //{
-
+                    dataobj.invoicedate = System.DateTime.Now;
                         var results = DB.Execute(insertqueryforinvoice, new
                         {
 
@@ -1462,6 +1462,8 @@ namespace WMS.DAL
                     {
                         foreach (var item in model)
                         {
+                            item.startdate = item.startdate.AddDays(1);
+                            item.enddate= item.enddate.AddDays(1);
                             string insertquery = WMSResource.insertABCrange;
                             //item.createdon = System.DateTime.Now;
                             using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
