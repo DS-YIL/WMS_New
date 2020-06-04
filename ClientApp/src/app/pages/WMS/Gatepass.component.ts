@@ -170,7 +170,7 @@ export class GatePassComponent implements OnInit {
   //saving gatepass details
   onSubmitgatepassDetails() {
     if (this.gatepassModel.gatepasstype != "0") {
-      this.gatepassModel.creatorid = this.employee.employeeno;
+      this.gatepassModel.requestedby = this.employee.employeeno;
       this.wmsService.saveoreditgatepassmaterial(this.gatepassModel).subscribe(data => {
         this.gatepassdialog = false;
         this.getGatePassList();
