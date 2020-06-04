@@ -37,6 +37,7 @@ import { ObsoleteInventoryMovementComponent } from './WMS/ObsoleteInventoryMovem
 import { ExcessInventoryMovementComponent } from './WMS/ExcessInventoryMovement.component';
 import { ABCAnalysisComponent } from './WMS/ABCAnalysis.component';
 import { ABCCategoryComponent } from './WMS/ABCCategory.component';
+import { FIFOComponent } from './WMS/FIFO.component';
 
 @NgModule({
   imports: [
@@ -80,7 +81,8 @@ import { ABCCategoryComponent } from './WMS/ABCCategory.component';
     ObsoleteInventoryMovementComponent,
     ExcessInventoryMovementComponent,
     ABCCategoryComponent,
-    ABCAnalysisComponent
+    ABCAnalysisComponent,
+    FIFOComponent
 
   ],
   providers: [MessageService, ConfirmationService],

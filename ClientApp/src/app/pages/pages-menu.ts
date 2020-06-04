@@ -60,6 +60,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
     title: 'ABC Analysis',
     icon: 'list-outline',
     link: '/WMS/ABCAnalysis'
+  },
+  {
+    title: 'FIFO LIst',
+    icon: 'list-outline',
+    link: '/WMS/FIFOList'
   }
   
 ];

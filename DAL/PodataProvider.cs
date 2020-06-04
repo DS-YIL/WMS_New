@@ -1594,5 +1594,33 @@ namespace WMS.DAL
 
             }
         }
+
+        public async Task<IEnumerable<FIFOModel>> GetFIFOList()
+        {
+            using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
+            {
+
+                try
+                {
+                    string query = WMSResource.getFIFOList;
+
+                    await pgsql.OpenAsync();
+                    return await pgsql.QueryAsync<FIFOModel>(
+                       query, null, commandType: CommandType.Text);
+
+
+                }
+                catch (Exception Ex)
+                {
+                    log.ErrorMessage("PODataProvider", "GetFIFOList", Ex.StackTrace.ToString());
+                    return null;
+                }
+                finally
+                {
+                    pgsql.Close();
+                }
+
+            }
+        }
     }
 }

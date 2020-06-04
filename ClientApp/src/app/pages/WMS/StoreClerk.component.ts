@@ -36,19 +36,19 @@ export class StoreClerkComponent implements OnInit {
     this.inwardModel.receiveddate = new Date();
     this.inwardModel.qcdate = new Date();
   }
-   AdjustKeyPress1(entredvalue,maxvalue) {
+  checkreceivedqty(entredvalue,maxvalue) {
      if (entredvalue > maxvalue) {
        this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Please enter received quantity less than PONo quantity' });
        (<HTMLInputElement>document.getElementById("receivedqty")).value = "";
   }
   }
-  AdjustKeyPress2(entredvalue, maxvalue) {
+  checkconfirmqty(entredvalue, maxvalue) {
     if (entredvalue > maxvalue) {
       this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Please enter confirm quantity less than PONo quantity' });
       (<HTMLInputElement>document.getElementById("confirmqty")).value = "";
     }
   }
-  AdjustKeyPress3(entredvalue, maxvalue) {
+  checkreturnqty(entredvalue, maxvalue) {
     if (entredvalue > maxvalue) {
       this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Please enter return quantity less than PONo quantity' });
       (<HTMLInputElement>document.getElementById("returnqty")).value = "";

@@ -152,6 +152,9 @@ export class wmsService {
   GetreportBasedCategory(): Observable<any> {
     return this.http.get<any>(this.url + 'POData/GetreportBasedCategory/', this.httpOptions);
   }
+  getFIFOList(): Observable<any> {
+    return this.http.get<any>(this.url + 'POData/GetFIFOList/', this.httpOptions);
+  }
   logout() {
     //localStorage.removeItem('Employee');
     this.currentUserSubject.next(null);

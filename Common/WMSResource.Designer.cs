@@ -194,6 +194,16 @@ namespace WMS.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to select createddate,materialid,mat.materialdescription,itemlocation,shelflife from wms.wms_stock sk inner join  wms.&quot;MaterialMasterYGS&quot; mat on mat.material=sk.materialid
+        ///where stockstatus=&apos;active&apos; and sk.deleteflag=false order by createddate asc,shelflife asc.
+        /// </summary>
+        public static string getFIFOList {
+            get {
+                return ResourceManager.GetString("getFIFOList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to select ygs.materialdescription,emp.name,* from wms.wms_gatepass gate
         ///   left join wms.wms_gatepassmaterial mat on gate.gatepassid=mat.gatepassid 
         ///   left join wms.employee emp on emp.employeeno=gate.requestedby

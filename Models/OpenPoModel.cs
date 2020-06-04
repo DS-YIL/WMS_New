@@ -239,8 +239,8 @@ namespace WMS.Models
 	{
 		public int categoryid { get; set; }
 		public string categoryname { get; set; }
-		public int minpricevalue { get; set; }
-		public int maxpricevalue { get; set; }
+		public int? minpricevalue { get; set; }
+		public int? maxpricevalue { get; set; }
 		public string createdby { get; set; }
 		public DateTime createdon { get; set; }
 		public string updatedby { get; set; }
@@ -248,5 +248,13 @@ namespace WMS.Models
 		public Boolean deleteflag { get; set; }
 		public DateTime enddate { get; set; }
 		public DateTime startdate { get; set; }
+	}
+	public class FIFOModel
+	{
+		public string materialid { get; set; }
+		public string Materialdescription { get; set; }
+		public string itemlocation { get; set; }
+		public DateTime shelflife { get; set; }
+		public DateTime createddate { get; set; }
 	}
 }

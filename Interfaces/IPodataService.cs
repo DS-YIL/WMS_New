@@ -41,6 +41,6 @@ namespace WMS.Interfaces
         Task<IEnumerable<ReportModel>> GetABCavailableqtyList();
         Task<IEnumerable<ReportModel>> GetABCListBycategory(string category);
 
-
+        Task<IEnumerable<FIFOModel>> GetFIFOList();
     }
 }

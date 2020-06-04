@@ -334,4 +334,8 @@ wms.wms_stock ws inner join wms.wms_securityinward sec on sec.pono =ws.pono wher
  WHERE ws.materialid IS NOT null and ws.unitprice is not null
 group by category</value>
   </data>
+  <data name="getFIFOList" xml:space="preserve">
+    <value>select createddate,materialid,mat.materialdescription,itemlocation,shelflife from wms.wms_stock sk inner join  wms."MaterialMasterYGS" mat on mat.material=sk.materialid
+where stockstatus='active' and sk.deleteflag=false order by createddate asc,shelflife asc</value>
+  </data>
 </root>

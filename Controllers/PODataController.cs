@@ -200,5 +200,10 @@ namespace WMS.Controllers
         {
             return await this._poService.GetABCListBycategory(category);
         }
+        [HttpGet("GetFIFOList")]
+        public async Task<IEnumerable<FIFOModel>> getFIFOlist()
+        {
+            return await this._poService.GetFIFOList();
+        }
     }
 }
