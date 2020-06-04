@@ -137,10 +137,9 @@ namespace WMS.Common {
         ///    sum(availableqty) as availableqty,( SELECT wrc.categoryname
         ///           FROM wms.wms_rd_category wrc
         ///          WHERE ws.unitprice ::numeric &gt;= wrc.minpricevalue::numeric and
-        ///          ws.unitprice ::numeric &lt;= wrc.maxpricevalue::numeric  and wrc.deleteflag=false
+        ///          (ws.unitprice ::numeric &lt;= wrc.maxpricevalue::numeric or ws.unitprice ::numeric = wrc.maxpricevalue::numeric is null) and wrc.deleteflag=false
         ///         LIMIT 1) AS category from wms.wms_stock ws
-        /// inner join wms.&quot;MaterialMasterYGS&quot; op on  ws.materialid =op.material
-        /// WHERE ws.materialid IS NOT null and ws.unitprice is not null        /// [rest of string was truncated]&quot;;.
+        /// inner join wms.&quot;MaterialMasterYGS&quot; op on  ws.materialid =op.material [rest of string was truncated]&quot;;.
         /// </summary>
         public static string GetallavlqtyABCList {
             get {
@@ -194,7 +193,7 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to select createddate,materialid,mat.materialdescription,itemlocation,shelflife from wms.wms_stock sk inner join  wms.&quot;MaterialMasterYGS&quot; mat on mat.material=sk.materialid
+        ///   Looks up a localized string similar to select createddate,materialid,mat.materialdescription,itemlocation,shelflife,sk.availableqty from wms.wms_stock sk inner join  wms.&quot;MaterialMasterYGS&quot; mat on mat.material=sk.materialid
         ///where stockstatus=&apos;active&apos; and sk.deleteflag=false order by createddate asc,shelflife asc.
         /// </summary>
         public static string getFIFOList {

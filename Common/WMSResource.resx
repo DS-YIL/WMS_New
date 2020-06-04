@@ -328,14 +328,14 @@ wms.wms_stock ws inner join wms.wms_securityinward sec on sec.pono =ws.pono wher
     sum(availableqty) as availableqty,( SELECT wrc.categoryname
            FROM wms.wms_rd_category wrc
           WHERE ws.unitprice ::numeric &gt;= wrc.minpricevalue::numeric and
-          ws.unitprice ::numeric &lt;= wrc.maxpricevalue::numeric  and wrc.deleteflag=false
+          (ws.unitprice ::numeric &lt;= wrc.maxpricevalue::numeric or ws.unitprice ::numeric = wrc.maxpricevalue::numeric is null) and wrc.deleteflag=false
          LIMIT 1) AS category from wms.wms_stock ws
  inner join wms."MaterialMasterYGS" op on  ws.materialid =op.material
  WHERE ws.materialid IS NOT null and ws.unitprice is not null
 group by category</value>
   </data>
   <data name="getFIFOList" xml:space="preserve">
-    <value>select createddate,materialid,mat.materialdescription,itemlocation,shelflife from wms.wms_stock sk inner join  wms."MaterialMasterYGS" mat on mat.material=sk.materialid
+    <value>select createddate,materialid,mat.materialdescription,itemlocation,shelflife,sk.availableqty from wms.wms_stock sk inner join  wms."MaterialMasterYGS" mat on mat.material=sk.materialid
 where stockstatus='active' and sk.deleteflag=false order by createddate asc,shelflife asc</value>
   </data>
 </root>
