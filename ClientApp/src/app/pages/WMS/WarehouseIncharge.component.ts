@@ -132,27 +132,36 @@ export class WarehouseInchargeComponent implements OnInit {
   }
 
   onSubmitStockDetails() {
-
-    this.StockModel.itemid = this.PoDetails.itemid;
-    this.StockModel.pono = this.PoDetails.pono;
-    this.StockModel.grnnumber = this.PoDetails.grnnumber;
-    this.StockModel.vendorid = this.PoDetails.vendorid;
-    this.StockModel.paitemid = this.PoDetails.paitemid;
-    this.StockModel.totalquantity = this.PoDetails.quotationqty;
-    this.StockModel.createdby = this.employee.employeeno;
-    this.StockModel.itemlocation = this.store.code;
-    this.StockModel.rackid = this.rack.code;
-    this.StockModel.binid = this.bin.code;
-    this.StockModel.itemreceivedfrom = new Date();
-    this.StockModel.itemlocation = this.store.name + "." + this.rack.name + '.' + this.bin.name;
-    this.wmsService.InsertStock(this.StockModel).subscribe(data => {
-      // if (data) {
-      //this.podetailsList[this.rowIndex].itemlocation = data;
-      this.podetailsList[this.rowIndex].itemlocation = this.store.name + "." + this.rack.name + '.' + this.bin.name;
-      this.showLocationDialog = false;
-      this.messageService.add({ severity: 'success', summary: 'success Message', detail: 'Data saved' });
-      // }
-    });
+    if (this.store.name && this.rack.name && this.bin.name) {
+      this.StockModel.itemid = this.PoDetails.itemid;
+      this.StockModel.pono = this.PoDetails.pono;
+      this.StockModel.grnnumber = this.PoDetails.grnnumber;
+      this.StockModel.vendorid = this.PoDetails.vendorid;
+      this.StockModel.paitemid = this.PoDetails.paitemid;
+      this.StockModel.totalquantity = this.PoDetails.quotationqty;
+      this.StockModel.createdby = this.employee.employeeno;
+      this.StockModel.itemlocation = this.store.code;
+      this.StockModel.rackid = this.rack.code;
+      this.StockModel.binid = this.bin.code;
+      this.StockModel.itemreceivedfrom = new Date();
+      this.StockModel.itemlocation = this.store.name + "." + this.rack.name + '.' + this.bin.name;
+      this.wmsService.InsertStock(this.StockModel).subscribe(data => {
+        // if (data) {
+        //this.podetailsList[this.rowIndex].itemlocation = data;
+        this.podetailsList[this.rowIndex].itemlocation = this.store.name + "." + this.rack.name + '.' + this.bin.name;
+        this.showLocationDialog = false;
+        this.messageService.add({ severity: 'success', summary: 'Success Message', detail: 'Data saved' });
+        // }
+      });
+    }
+    else {
+      if (!this.store.name)
+        this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Select Location' });
+      else if (!this.rack.name)
+        this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Select Rack'});
+     else if (!this.bin.name)
+        this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Select Bin' });
+    }
   }
 
 

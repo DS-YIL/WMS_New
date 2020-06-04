@@ -68,7 +68,7 @@
     </ng-template>
   </p-table><br />
 </div>
-<p-dialog #dialog header="List View :" [(visible)]="showList" [contentStyle]="{'overflow':'visible'}">
+<p-dialog #dialog header="List View" [(visible)]="showList" [contentStyle]="{'overflow':'visible'}">
   <div class="ui-g ui-fluid">
     <p-listbox [options]="searchItems" [(ngModel)]="selectedItem" optionLabel="name" (onChange)="onSelectedOptionsChange(selectedItem,null)"></p-listbox>
   </div>

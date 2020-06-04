@@ -217,7 +217,7 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to select * from wms.wms_gatepassmaterial material inner join wms.wms_gatepass pass on pass.gatepassid=material.gatepassid  inner join wms.employee emp on pass.creatorid=emp.employeeno
+        ///   Looks up a localized string similar to select * from wms.wms_gatepassmaterial material inner join wms.wms_gatepass pass on pass.gatepassid=material.gatepassid  inner join wms.employee emp on pass.requestedby=emp.employeeno
         ///      where pass.gatepassid=#gatepassid and pass.deleteflag=false and material.deleteflag=false.
         /// </summary>
         public static string getgatepassmaterialdetailList {
