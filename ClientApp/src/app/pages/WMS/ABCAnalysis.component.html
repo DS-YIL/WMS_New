@@ -50,23 +50,23 @@
   </p-table>
   <br />
   <div>
-    <h5 style="text-align:center">Inventory classification</h5>
+    <h5 style="text-align:center">Inventory Classification</h5>
     <div class="row">
       <div class="col-lg-5 col-md-5 col-sm-5 form-inline"></div>
       <div class="col-lg-6 col-md-6 col-sm-6 form-inline">
-        <b> A </b>&nbsp;&nbsp;&nbsp;&nbsp;<span *ngIf="ABCavailableqtyList[0]">{{((ABCavailableqtyList[0].availableqty/totalQty)*100).toFixed(2)}}% if inventory with {{((ABCavailableqtyList[0].totalcost/totalunitprice)*100).toFixed(2)}}% valuation</span>
+        <span *ngIf="ABCavailableqtyList[0]"><b> {{ABCavailableqtyList[0].category}} </b>&nbsp;&nbsp;&nbsp;&nbsp;{{((ABCavailableqtyList[0].availableqty/totalQty)*100).toFixed(2)}}% if inventory with {{((ABCavailableqtyList[0].totalcost/totalunitprice)*100).toFixed(2)}}% valuation</span>
       </div>
     </div>
     <div class="row">
       <div class="col-lg-5 col-md-5 col-sm-5 form-inline"></div>
       <div class="col-lg-6 col-md-6 col-sm-6 form-inline">
-        <b> B</b> &nbsp;&nbsp;&nbsp;&nbsp;<span *ngIf="ABCavailableqtyList[1]">{{((ABCavailableqtyList[1].availableqty/totalQty)*100).toFixed(2)}}% if inventory with {{((ABCavailableqtyList[1].totalcost/totalunitprice)*100).toFixed(2)}}% valuation</span>
+     <span *ngIf="ABCavailableqtyList[1]"><b> {{ABCavailableqtyList[1].category}} </b>&nbsp;&nbsp;&nbsp;&nbsp;{{((ABCavailableqtyList[1].availableqty/totalQty)*100).toFixed(2)}}% if inventory with {{((ABCavailableqtyList[1].totalcost/totalunitprice)*100).toFixed(2)}}% valuation</span>
       </div>
     </div>
     <div class="row">
       <div class="col-lg-5 col-md-5 col-sm-5 form-inline"></div>
       <div class="col-lg-6 col-md-6 col-sm-6 form-inline">
-        <b>C </b>&nbsp;&nbsp;&nbsp;&nbsp;<span *ngIf="ABCavailableqtyList[2]">{{((ABCavailableqtyList[2].availableqty/totalQty)*100).toFixed(2)}}% if inventory with {{((ABCavailableqtyList[2].totalcost/totalunitprice)*100).toFixed(2)}}% valuation</span>
+        <span *ngIf="ABCavailableqtyList[2]"><b> {{ABCavailableqtyList[2].category}} </b>&nbsp;&nbsp;&nbsp;&nbsp;{{((ABCavailableqtyList[2].availableqty/totalQty)*100).toFixed(2)}}% if inventory with {{((ABCavailableqtyList[2].totalcost/totalunitprice)*100).toFixed(2)}}% valuation</span>
       </div>
     </div>
   </div>

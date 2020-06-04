@@ -53,17 +53,18 @@ export class GatePassComponent implements OnInit {
     this.dynamicData.tableName = this.constants[name].tableName;
     this.dynamicData.searchCondition = "" + this.constants[name].condition + this.constants[name].fieldName + " like '" + searchTxt + "%'";
     this.dynamicData.searchCondition += " OR materialid" + " like '" + searchTxt + "%'" + "";
-
     this.wmsService.GetListItems(this.dynamicData).subscribe(data => {
       this.searchresult = data;
       this.searchItems = [];
       var fName = "";
       this.searchresult.forEach(item => {
         fName = item[this.constants[name].fieldName];
+           if (name == "ItemId") 
+          fName = item[this.constants[name].fieldName] + " - " + item[this.constants[name].fieldId];
+       
         var value = { listName: name, name: fName, code: item[this.constants[name].fieldId] };
         this.searchItems.push(value);
       });
-
     });
   }
 
@@ -113,6 +114,10 @@ export class GatePassComponent implements OnInit {
 
   //add materials for gate pass
   addMaterial() {
+    if (!this.material) {
+      this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Add Material' });
+      return false;
+    }
     if (this.gatepassModel.materialList.filter(li => li.materialid == this.material.code).length > 0) {
       this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Material already exist' });
       return false;

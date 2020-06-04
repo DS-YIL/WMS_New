@@ -388,7 +388,9 @@ a.disabled {
   bottom: 0;
   right: 0;
 }
-
+body .ui-dialog .ui-dialog-titlebar {
+  text-align: center;
+}
 .printheader {
   /*position: fixed;*/
   top: 0;

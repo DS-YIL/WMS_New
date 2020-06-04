@@ -70,7 +70,7 @@
     </ng-template>
   </p-table><br /><br />
 </div>
-<p-dialog #dialog header="Put Away Location :" [(visible)]="showLocationDialog" [contentStyle]="{'overflow':'visible'}">
+<p-dialog #dialog header="Put Away Location" [(visible)]="showLocationDialog" [contentStyle]="{'overflow':'visible'}">
   <form [formGroup]="StockModelForm">
     <div class="row " style="margin-top:10px">
       <div class="col-lg-4 col-md-4 col-sm-4 form-group">
@@ -116,7 +116,7 @@
   </p-footer>
 </p-dialog>
 
-<p-dialog header="List View :" [(visible)]="showList" [contentStyle]="{'overflow':'visible'}">
+<p-dialog header="List View" [(visible)]="showList" [contentStyle]="{'overflow':'visible'}">
   <div class="ui-g ui-fluid">
     <p-listbox [options]="searchItems" [(ngModel)]="selectedItem" optionLabel="name" (onChange)="onSelectedOptionsChange(selectedItem)"></p-listbox>
   </div>
