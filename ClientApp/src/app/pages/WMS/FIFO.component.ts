@@ -5,53 +5,97 @@ import { constants } from '../../Models/WMSConstants';
 import { Employee, DynamicSearchResult } from '../../Models/Common.Model';
 import { NgxSpinnerService } from "ngx-spinner";
 import { commonComponent } from '../../WmsCommon/CommonCode';
-import { categoryValues } from '../../Models/WMS.Model';
-
+import { categoryValues,FIFOValues } from '../../Models/WMS.Model';
+import { MessageService, Message } from 'primeng/api';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService } from 'primeng/api';
 @Component({
   selector: 'app-ABCAnalysis',
   templateUrl: './FIFO.component.html'
 })
 export class FIFOComponent implements OnInit {
-  constructor(private wmsService: wmsService, private route: ActivatedRoute, private router: Router, public constants: constants, private spinner: NgxSpinnerService) { }
+  constructor(private ConfirmationService: ConfirmationService, private messageService: MessageService, private wmsService: wmsService, private route: ActivatedRoute, private router: Router, public constants: constants, private spinner: NgxSpinnerService) { }
 
   public employee: Employee;
   public dynamicData: DynamicSearchResult;
-
+  public FIFOValues: FIFOValues;
+  public Oldestdata: FIFOValues;
   public FIFOList: Array<any> = [];
-  public ABCListBycategory: Array<any> = [];
+  public podetailsList: Array<FIFOValues> = [];
   public category: string;
   public showABCavailableqtyList: boolean = true;
   public showAbcListByCategory; showAbcMatList: boolean = false;
   public totalunitprice; totalQty: number = 0;
-
+  public material: string;
   cols: any[];
   exportColumns: any[];
 
   public ABCAnalysisMateDet: Array<any> = [];
   public matDetails: any;
-
+  msgs: Message[] = [];
   ngOnInit() {
+    this.FIFOValues = new FIFOValues();
+ 
     if (localStorage.getItem("Employee"))
       this.employee = JSON.parse(localStorage.getItem("Employee"));
     else
       this.router.navigateByUrl("Login");
 
-    //this.cols = [
-    //  { field: 'materialid', header: 'Material' },
-    //  { field: 'materialdescription', header: 'Material Descr' },
-    //  { field: 'materialdescription', header: 'Material Descr' },
-    //  { field: 'createddate', header: 'createddate' },
-    //  { field: 'unitprice', header: 'Unit Price' }
-    //];
-    //this.exportColumns = this.cols.map(col => ({ title: col.header, dataKey: col.field }));
-    this.getABCavailableqtyList();
+   
+    this.getFIFOList();
   }
-
-  //get ABC available list
-  getABCavailableqtyList() {
+  confirm1(data) {
+    var info = data;
+    this.ConfirmationService.confirm({
+      message: 'Same Material received on ' +  data.createddate + ' and placed in ' + data.itemlocation + '  location, Would you like to continue?',
+      header: 'Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        
+        this.messageService.add({ severity: 'info', summary: 'Accepted', detail: 'You have accepted' });
+      },
+      reject: () => {
+        
+        this.messageService.add({ severity: 'info', summary: 'Ignored', detail: 'You have ignored' });
+      }
+    });
+  }
+  checkissueqty($event, entredvalue, maxvalue, material,createddate) {
+    var id = $event.target.id;
+    if (entredvalue > maxvalue) {
+      this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Please enter issue quantity less than Available quantity' });
+     
+      (<HTMLInputElement>document.getElementById(id)).value = "";
+    }
+    else {
+      
+      this.wmsService.checkoldestmaterial(material, createddate).subscribe(data => {
+        this.Oldestdata = data;
+        if (data != null) {
+          this.confirm1(this.Oldestdata);
+        }
+        //this.calculateTotalQty();
+        //this.calculateTotalPrice();
+        this.spinner.hide();
+      });
+    }
+  }
+  getenquiryList(material) {
     this.spinner.show();
     this.FIFOList = [];
-    this.wmsService.getFIFOList().subscribe(data => {
+    this.wmsService.getFIFOList(material).subscribe(data => {
+      this.FIFOList = data;
+      //this.calculateTotalQty();
+      //this.calculateTotalPrice();
+      this.spinner.hide();
+    });
+
+  }
+  getFIFOList() {
+    this.spinner.show();
+    this.FIFOList = [];
+    var material = null;
+    this.wmsService.getFIFOList(material).subscribe(data => {
       this.FIFOList = data;
       //this.calculateTotalQty();
       //this.calculateTotalPrice();
@@ -59,21 +103,17 @@ export class FIFOComponent implements OnInit {
     });
     
   }
-
- //get ABCList by categories
-  showAbcListByCat(details: any) {
-    this.showABCavailableqtyList = false;
-    this.showAbcListByCategory = true;
-    this.category = details.category;
-    this.spinner.show();
-    this.ABCListBycategory = [];
-    this.wmsService.GetABCListBycategory(details.category).subscribe(data => {
-      this.ABCListBycategory = data;
+  InsertIssuedata() {
+    this.FIFOList;
+    this.wmsService.insertFIFOdata(this.FIFOList).subscribe(data => {
       this.spinner.hide();
+      if (data)
+        this.messageService.add({ severity: 'sucess', summary: 'sucee Message', detail: 'Status updated' });
+      else
+        this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Update Failed' });
+
     });
   }
-
-  //get material details by materialid
   showMatdetails(details: any) {
     this.showAbcListByCategory = false;
     this.showAbcMatList = true;

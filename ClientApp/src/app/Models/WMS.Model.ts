@@ -137,3 +137,8 @@ export class categoryValues {
   createdby: string;
   updatedby: string;
 }
+
+export class FIFOValues {
+  materialid: string;
+  issueqty: number;
+}

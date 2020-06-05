@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using WMS.Interfaces;
 using WMS.Models;
+using System.Globalization;
+
 namespace WMS.Controllers
 {
     // [Authorize]
@@ -199,11 +201,25 @@ namespace WMS.Controllers
         public async Task<IEnumerable<ReportModel>> getabclist(string category)
         {
             return await this._poService.GetABCListBycategory(category);
+            
         }
         [HttpGet("GetFIFOList")]
-        public async Task<IEnumerable<FIFOModel>> getFIFOlist()
+        public async Task<IEnumerable<FIFOModel>> getFIFOlist(string material = null)
         {
-            return await this._poService.GetFIFOList();
+            return await this._poService.GetFIFOList(material);
         }
+        [HttpGet("Checkoldestmaterial")]
+        public ReportModel Oldestmaterial(string material,string createddate)
+        {
+           
+            return  this._poService.checkloldestmaterial(material, createddate);
+        }
+        [HttpPost("updateFIFOIssueddata")]
+        public int Oldestmaterial([FromBody] List<FIFOModel> model)
+        {
+
+            return this._poService.FIFOitemsupdate(model);
+        }
+
     }
 }

@@ -40,6 +40,7 @@ export class StoreClerkComponent implements OnInit {
      if (entredvalue > maxvalue) {
        this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Please enter received quantity less than PONo quantity' });
        (<HTMLInputElement>document.getElementById("receivedqty")).value = "";
+       
   }
   }
   checkconfirmqty(entredvalue, maxvalue) {

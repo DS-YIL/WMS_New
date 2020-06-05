@@ -152,9 +152,16 @@ export class wmsService {
   GetreportBasedCategory(): Observable<any> {
     return this.http.get<any>(this.url + 'POData/GetreportBasedCategory/', this.httpOptions);
   }
-  getFIFOList(): Observable<any> {
-    return this.http.get<any>(this.url + 'POData/GetFIFOList/', this.httpOptions);
+  getFIFOList(material:any): Observable<any> {
+    return this.http.get<any>(this.url + 'POData/GetFIFOList?material=' + material, this.httpOptions);
   }
+  checkoldestmaterial(material: any, createddate:any): Observable<any> {
+    return this.http.get<any>(this.url + 'POData/Checkoldestmaterial?material=' + material + '&createddate=' + createddate, this.httpOptions);
+  }
+  insertFIFOdata(materialIssueList: any): Observable<any> {
+    return this.http.post<any>(this.url + 'POData/updateFIFOIssueddata/', materialIssueList, this.httpOptions);
+  }
+  
   logout() {
     //localStorage.removeItem('Employee');
     this.currentUserSubject.next(null);

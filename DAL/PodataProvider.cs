@@ -873,7 +873,7 @@ namespace WMS.DAL
                         string getitemidqry = WMSResource.getitemid.Replace("#materialid",item.materialid).Replace("#pono",item.pono) ;
                        // string getmaterialidqry = WMSResource.getrequestforissueid.Replace("#materialid", item.materialid).Replace("#pono", item.pono);
 
-                        obj = pgsql.QuerySingle<IssueRequestModel>(
+                        obj = pgsql.QueryFirstOrDefault<IssueRequestModel>(
                            getitemidqry, null, commandType: CommandType.Text);
                         itemid = obj.itemid;
                         //objs = pgsql.QuerySingle<IssueRequestModel>(
@@ -1595,7 +1595,7 @@ namespace WMS.DAL
             }
         }
 
-        public async Task<IEnumerable<FIFOModel>> GetFIFOList()
+        public async Task<IEnumerable<FIFOModel>> GetFIFOList(string material)
         {
             using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
             {
@@ -1603,6 +1603,15 @@ namespace WMS.DAL
                 try
                 {
                     string query = WMSResource.getFIFOList;
+                    if (material=="null")
+                    {
+                        query = query+" order by createddate asc";
+                    }
+                    else
+                    {
+                        query = query + " and sk.materialid like'%" + material+ "' order by createddate asc";
+                    }
+                   
 
                     await pgsql.OpenAsync();
                     return await pgsql.QueryAsync<FIFOModel>(
@@ -1620,6 +1629,83 @@ namespace WMS.DAL
                     pgsql.Close();
                 }
 
+            }
+        }
+
+        public ReportModel checkloldestmaterial(string materialid,string createddate)
+        {
+            using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
+            {
+
+                try
+                {
+                string query = WMSResource.checkoldestmaterial.Replace("#materialid",materialid).Replace("#createddate", Convert.ToString(createddate));
+
+
+                 pgsql.Open();
+                return  pgsql.QuerySingle<ReportModel>(
+                   query, null, commandType: CommandType.Text);
+
+
+            }
+            catch (Exception Ex)
+            {
+                log.ErrorMessage("PODataProvider", "checkloldestmaterial", Ex.StackTrace.ToString());
+                return null;
+            }
+            finally
+            {
+                pgsql.Close();
+            }
+
+        }
+    }
+
+        public int FIFOitemsupdate(List<FIFOModel> model)
+        {
+            using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
+            {
+
+                try
+                {
+                        foreach (var item in model)
+                        {
+                        
+                            string insertforinvoicequery = WMSResource.insertFIFOdata;
+                            using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
+                            {
+                                var results = DB.ExecuteScalar(insertforinvoicequery, new
+                                {
+                                 item.itemid,
+                                 item.materialid,
+                                 item.pono
+
+                                });
+                                int availableqty = item.availableqty-item.issueqty;
+                               
+                                string insertqueryforstatusforqty = WMSResource.updateqtyafterissue.Replace("#itemid", Convert.ToString(item.itemid)).Replace("#availableqty", Convert.ToString(availableqty));
+
+                                var data1 = DB.ExecuteScalar(insertqueryforstatusforqty, new
+                                {
+                                   
+                                });
+
+                            }
+                        }
+                    
+
+                    //}
+                    return (1);
+                }
+                catch (Exception Ex)
+                {
+                    log.ErrorMessage("PODataProvider", "FIFOitemsupdate", Ex.StackTrace.ToString());
+                    return 0;
+                }
+                finally
+                {
+                    pgsql.Close();
+                }
             }
         }
     }

@@ -12,6 +12,8 @@ import { Employee } from '../Models/Common.Model';
       <router-outlet></router-outlet>
     </ngx-one-column-layout>
     <p-toast [style]="{marginTop: '60px'}"  [showTransitionOptions]="'1000ms'" [hideTransitionOptions]="'1000ms'"></p-toast>
+<p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
+
   `,
 })
 export class PagesComponent {

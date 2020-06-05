@@ -79,6 +79,15 @@ namespace WMS.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to select * from wms.wms_stock where materialid=&apos;#materialid&apos; and createddate&lt;&apos;#createddate&apos;  order by createddate asc limit 1.
+        /// </summary>
+        public static string checkoldestmaterial {
+            get {
+                return ResourceManager.GetString("checkoldestmaterial", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to select distinct* from wms.openpolistview openpo inner join wms.wms_securityinward inw on openpo.pono=inw.pono where openpo.pono=&apos;#pono&apos;  order by receiveddate desc limit 1.
         /// </summary>
         public static string checkponoexists {
@@ -193,8 +202,8 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to select createddate,materialid,mat.materialdescription,itemlocation,shelflife,sk.availableqty from wms.wms_stock sk inner join  wms.&quot;MaterialMasterYGS&quot; mat on mat.material=sk.materialid
-        ///where stockstatus=&apos;active&apos; and sk.deleteflag=false order by createddate asc,shelflife asc.
+        ///   Looks up a localized string similar to select itemid,createddate::date,materialid,mat.materialdescription,itemlocation,shelflife,sk.availableqty ,pono from wms.wms_stock sk inner join  wms.&quot;MaterialMasterYGS&quot; mat on mat.material=sk.materialid
+        ///where stockstatus=&apos;active&apos; and sk.deleteflag=false and availableqty!=0.
         /// </summary>
         public static string getFIFOList {
             get {
@@ -354,6 +363,15 @@ namespace WMS.Common {
         public static string insertbarcodedata {
             get {
                 return ResourceManager.GetString("insertbarcodedata", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to insert into wms.wms_fifoitemdistribution(fifoid,itemid,materialid,enteredon,pono)values(default,@itemid,@materialid,current_date,@pono).
+        /// </summary>
+        public static string insertFIFOdata {
+            get {
+                return ResourceManager.GetString("insertFIFOdata", resourceCulture);
             }
         }
         
@@ -593,6 +611,15 @@ namespace WMS.Common {
         public static string updatelocation {
             get {
                 return ResourceManager.GetString("updatelocation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to update wms.wms_stock set availableqty=#availableqty where itemid=#itemid.
+        /// </summary>
+        public static string updateqtyafterissue {
+            get {
+                return ResourceManager.GetString("updateqtyafterissue", resourceCulture);
             }
         }
         

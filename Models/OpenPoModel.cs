@@ -234,6 +234,7 @@ namespace WMS.Models
 		public string ponumber { get; set; }
 		public string category { get; set; }
 		public int totalcost { get; set; }
+		public DateTime createddate { get; set; }
 	}
 	public class ABCCategoryModel
 	{
@@ -256,5 +257,9 @@ namespace WMS.Models
 		public string itemlocation { get; set; }
 		public DateTime shelflife { get; set; }
 		public DateTime createddate { get; set; }
+		public int availableqty { get; set; }
+		public string pono { get; set; }
+		public int itemid { get; set; }
+		public int issueqty { get;set; }
 	}
 }

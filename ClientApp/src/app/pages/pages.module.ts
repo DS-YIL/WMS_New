@@ -38,6 +38,7 @@ import { ExcessInventoryMovementComponent } from './WMS/ExcessInventoryMovement.
 import { ABCAnalysisComponent } from './WMS/ABCAnalysis.component';
 import { ABCCategoryComponent } from './WMS/ABCCategory.component';
 import { FIFOComponent } from './WMS/FIFO.component';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @NgModule({
   imports: [
@@ -58,7 +59,8 @@ import { FIFOComponent } from './WMS/FIFO.component';
     CalendarModule,
     CheckboxModule,
     TooltipModule,
-    AutoCompleteModule
+    AutoCompleteModule,
+    ConfirmDialogModule
   ],
   declarations: [
     SelectfilterPipe,
