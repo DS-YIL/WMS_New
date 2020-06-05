@@ -290,8 +290,8 @@ a.disabled {
   /*padding-left: 200px;*/
   color: white;
   font-size: 14px;
-  margin-left:-35px;
-  padding:8px
+  margin-left: -35px;
+  padding: 8px
 }
 
 .check-color {
@@ -388,20 +388,30 @@ a.disabled {
   bottom: 0;
   right: 0;
 }
+
 body .ui-dialog .ui-dialog-titlebar {
   text-align: center;
 }
-.printheader {
-  /*position: fixed;*/
-  top: 0;
-}
+
+
 
 .printfooter {
   position: fixed;
-  display: table-footer-group;
-  bottom: 40px;
+  height: 100px;
+  bottom: 70px;
+  width: 90%;
 }
 
+@page {
+  size: auto;
+  margin: 0 1cm 0 1cm;
+}
+
+@media print {
+  .no-print, .main-sidebar, .left-side, .main-header, .content-header {
+    display: none !important;
+  }
+}
 
 @-moz-keyframes blinker {
   0% {

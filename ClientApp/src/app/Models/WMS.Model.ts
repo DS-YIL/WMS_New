@@ -100,7 +100,7 @@ export class gatepassModel {
   status: string;
   referenceno: string;
   vehicleno: string;
-  creatorid: string;
+  requestedby: string;
   createddate: Date
   gatepassmaterialid: number;
   materialid: string;
