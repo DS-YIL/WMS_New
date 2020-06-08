@@ -532,7 +532,9 @@ fieldset.scheduler-border {
   width: 100%;
   border-color: #6c757d !important;
 }
-
+.ui-calendar .ui-datepicker {
+  min-width: 350px !important;
+}
 .mprltbldata > th {
   background: #428bca !important;
   color: #fff !important;

@@ -26,7 +26,7 @@ export class GatePassComponent implements OnInit {
   public gatepasslist: Array<any> = [];
   public gatepassModelList: Array<gatepassModel> = [];
   public employee: Employee;
-  public gatepassdialog: boolean = false;
+  public gatepassdialog; updateReturnedDateDialog: boolean = false;
   public gatepassModel: gatepassModel;
   public materialistModel: materialistModel;
   public material: any;
@@ -91,6 +91,7 @@ export class GatePassComponent implements OnInit {
           material.materialdescription = result[i].materialdescription;
           material.quantity = result[i].quantity;
           material.remarks = result[i].remarks;
+          material.returneddate = new Date(result[i].returneddate);
           item.materialList.push(material);
         }
 
@@ -100,8 +101,8 @@ export class GatePassComponent implements OnInit {
   }
 
   //open gate pass dialog
-  openGatepassDialog(gatepassobject: any, gpIndx: any) {
-    this.gatepassdialog = true;
+  openGatepassDialog(gatepassobject: any, gpIndx: any,dialog) {
+    this[dialog] = true;
     this.gatepassModel = new gatepassModel();
     if (gatepassobject) {
       this.gpIndx = gpIndx;
@@ -167,12 +168,23 @@ export class GatePassComponent implements OnInit {
 
   }
 
+  //update return dated based on role
+  updateReturnedDate(gatepassobject: any) {
+    this.gatepassModel = new gatepassModel();
+    if (gatepassobject) {
+      this.gatepassModel = gatepassobject;
+      this.onSubmitgatepassDetails();
+    }
+  }
+
+
   //saving gatepass details
   onSubmitgatepassDetails() {
     if (this.gatepassModel.gatepasstype != "0") {
       this.gatepassModel.requestedby = this.employee.employeeno;
       this.wmsService.saveoreditgatepassmaterial(this.gatepassModel).subscribe(data => {
         this.gatepassdialog = false;
+        this.updateReturnedDateDialog = false;
         this.getGatePassList();
         if (data)
           this.messageService.add({ severity: 'success', summary: 'success Message', detail: 'Data saved' });

@@ -115,6 +115,7 @@ export class gatepassModel {
   printedby: string;
   print: boolean;
   reasonforgatepass: string;
+  returneddate: Date;
 }
 export class materialistModel {
   gatepassmaterialid: string;

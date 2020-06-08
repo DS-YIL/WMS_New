@@ -9,7 +9,7 @@
       <th style="text-align:center;width:70px">S.No</th>
       <th style="text-align:center">GatePass Id</th>
       <!--<th style="text-align:center">Material</th>
-      <th style="text-align:center">Qty</th>-->
+  <th style="text-align:center">Qty</th>-->
       <!--<th style="text-align:center">Status</th>-->
       <th style="text-align:center">Type</th>
       <th style="text-align:center">Supplier Name</th>
@@ -20,12 +20,13 @@
       <th style="text-align:center">Created Date</th>
       <th style="text-align:center">Edit</th>
       <th style="text-align:center">Print</th>
+      <th *ngIf="employee.RoleId=='5'" style="text-align:center">Update Return Date</th>
     </tr>
     <tr>
       <th></th>
       <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'gatepassid', 'contains')"></th>
       <!--<th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'material', 'contains')"></th>
-      <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'quantity', 'contains')"></th>-->
+  <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'quantity', 'contains')"></th>-->
       <!--<th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'status', 'contains')"></th>-->
       <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'gatepasstype', 'contains')"></th>
       <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'vendorname', 'contains')"></th>
@@ -36,6 +37,7 @@
       <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'createddate', 'contains')"></th>
       <th> <input pInputText type="text" class="form-control"></th>
       <th> <input pInputText type="text" class="form-control"></th>
+      <th *ngIf="employee.RoleId=='5'"> <input pInputText type="text" class="form-control"></th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-rowData let-editing="editing" let-ri="rowIndex">
@@ -51,13 +53,14 @@
       <td class="ptable-cell" style="text-align:right">{{rowData.approverstatus}}</td>
       <td class="ptable-cell" style="text-align:center">{{rowData.name}}</td>
       <td class="ptable-cell" style="text-align:center">{{rowData.createddate | date :  constants.dateFormat}}</td>
-      <td class="ptable-cell" style="text-align:center"><button *ngIf="rowData.approverstatus!='Approved'" type="button" icon="fa fa-edit" pButton aria-hidden="true" (click)="openGatepassDialog(rowData,ri)"></button></td>
+      <td class="ptable-cell" style="text-align:center"><button *ngIf="rowData.approverstatus!='Approved'" type="button" icon="fa fa-edit" pButton aria-hidden="true" (click)="openGatepassDialog(rowData,ri,'gatepassdialog')"></button></td>
       <td class="ptable-cell" style="text-align:center"><button *ngIf="rowData.approverstatus=='Approved'" type="button" icon="fa fa-print" pButton aria-hidden="true" (click)="showprint(rowData)"></button></td>
+      <td *ngIf="employee.RoleId=='5'" class="ptable-cell" style="text-align:center"><button  *ngIf="employee.RoleId=='5' && rowData.approverstatus=='Approved' && rowData.print==false"  type="button" icon="fa fa-pencil" pButton aria-hidden="true" (click)="openGatepassDialog(rowData,ri,'updateReturnedDateDialog')"></button></td>
     </tr>
   </ng-template>
 </p-table>
 <br />
-<p-dialog #dialog header="Gatepass" [(visible)]="gatepassdialog" [responsive]="true" showEffect="fade" [modal]="true" [style]="{'width':'70%','overflow':'auto'}">
+<p-dialog  header="Gatepass" [(visible)]="gatepassdialog" [responsive]="true" showEffect="fade" [modal]="true" [style]="{'width':'70%','overflow':'auto'}">
   <div class="row " style="margin-top:10px">
     <div class="col-lg-3 col-md-3 col-sm-3 form-group">
       <label for="itemlocation" class="form-label">Select Type</label>
@@ -130,13 +133,13 @@
     <div class="col-lg-3 col-md-3 col-sm-3 form-group">
       <label class="form-label">Expected  Date</label>
       <div class="form-inline-list">
-        <p-calendar class="mprldatepick" [(ngModel)]="materialistModel.expecteddate" [monthNavigator]="true" [yearNavigator]="true" yearRange="1900:2050"></p-calendar>
+        <p-calendar class="mprldatepick" [(ngModel)]="materialistModel.expecteddate" dateFormat="dd/mm/yy" [monthNavigator]="true" [yearNavigator]="true" yearRange="1900:2050"></p-calendar>
       </div>
     </div>
     <div *ngIf="gatepassModel.gatepasstype=='Returnable'" class="col-lg-3 col-md-3 col-sm-3 form-group">
       <label class="form-label">Returned  Date</label>
       <div class="form-inline-list">
-        <p-calendar class="mprldatepick" [(ngModel)]="materialistModel.returneddate" [monthNavigator]="true" [yearNavigator]="true" yearRange="1900:2050"></p-calendar>
+        <p-calendar class="mprldatepick" [(ngModel)]="materialistModel.returneddate" dateFormat="dd/mm/yy" [monthNavigator]="true" [yearNavigator]="true" yearRange="1900:2050"></p-calendar>
       </div>
     </div>
     <div class="col-lg-3 col-md-3 col-sm-3 form-group mt-4">
@@ -155,7 +158,7 @@
             <th class="ptable-cell">Price</th>
             <th class="ptable-cell">Remarks</th>
             <th class="ptable-cell">Expected Date</th>
-            <th *ngIf="gatepassModel.gatepasstype=='Returnable'" class="ptable-cell">Returned Date</th>
+            <th *ngIf="gatepassModel.gatepasstype=='Returnable'" class="ptable-cell" style="width:200px">Returned Date</th>
             <th class="ptable-cell"></th>
           </tr>
         </ng-template>
@@ -168,7 +171,7 @@
             <td class="ptable-cell" style="text-align:right">{{rowData.materialcost}}</td>
             <td class="ptable-cell" style="text-align:right"> {{rowData.remarks}} </td>
             <td class="ptable-cell" style="text-align:right">{{rowData.expecteddate | date :  constants.dateFormat}}</td>
-            <td *ngIf="gatepassModel.gatepasstype=='Returnable'" class="ptable-cell" style="text-align:right">{{rowData.returneddate | date :  constants.dateFormat}}</td>
+            <td *ngIf="gatepassModel.gatepasstype=='Returnable'" class="ptable-cell" style="text-align:center">{{rowData.returneddate | date :  constants.dateFormat}}
             <td class="ptable-cell" style="text-align:center"> <button pButton type="button" icon="fa fa-trash" class="ui-button-info" style="margin-left: 1px;" (click)="removematerial(rowData.gatepassmaterialid,ri)"></button></td>
         </ng-template>
       </p-table>
@@ -180,6 +183,60 @@
     </div>
   </p-footer>
 </p-dialog>
+
+<p-dialog  header="Gatepass" [(visible)]="updateReturnedDateDialog" [responsive]="true" showEffect="fade" [modal]="true" [style]="{'width':'70%','overflow':'auto!important'}">
+  <div class="row " style="margin-top:10px">
+    <div class="col-lg-3 col-md-3 col-sm-3 form-inline">
+      <label for="itemlocation" class="form-label"><b>GatePass Id: </b> </label>&nbsp;{{gatepassModel.gatepassid}}
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-3 form-inline">
+      <label for="itemlocation" class="form-label"><b>Type: </b> </label>&nbsp;{{gatepassModel.gatepasstype}}
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-3 form-inline">
+      <label class="form-label"><b>Reason: </b></label>&nbsp;{{gatepassModel.reasonforgatepass}}
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-3 form-inline">
+      <label class="form-label"><b>Supplier: </b></label>&nbsp;{{gatepassModel.vendorname}}
+    </div>
+  </div>
+  <br />
+  <b>List of Materials:</b>
+  <div class="row " style="margin-top:10px">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <p-table *ngIf="gatepassModel.materialList.length>0" [value]="gatepassModel.materialList" [style]="{'width':'80%','height':'80%','overflow':'auto!important'}">
+          <ng-template pTemplate="header">
+            <tr class="mprltbldata">
+              <th class="ptable-cell">S No</th>
+              <th class="ptable-cell">Material</th>
+              <th class="ptable-cell">Materia Description</th>
+              <th class="ptable-cell">Quantity</th>
+              <th class="ptable-cell">Price</th>
+              <th class="ptable-cell">Remarks</th>
+              <th class="ptable-cell">Expected Date</th>
+              <th *ngIf="gatepassModel.gatepasstype=='Returnable'" class="ptable-cell" style="width:200px">Returned Date</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-rowData let-editing="editing" let-ri="rowIndex" let-rindex=0>
+            <tr>
+              <td class="ptable-cell" style="text-align:right"> {{ri+1}} </td>
+              <td class="ptable-cell" style="text-align:right"> {{rowData.materialid}} </td>
+              <td class="ptable-cell" style="text-align:right"> {{rowData.materialdescription}} </td>
+              <td class="ptable-cell" style="text-align:right">{{rowData.quantity}}</td>
+              <td class="ptable-cell" style="text-align:right">{{rowData.materialcost}}</td>
+              <td class="ptable-cell" style="text-align:right"> {{rowData.remarks}} </td>
+              <td class="ptable-cell" style="text-align:right">{{rowData.expecteddate | date :  constants.dateFormat}}</td>
+              <td *ngIf="gatepassModel.gatepasstype=='Returnable'" class="ptable-cell" style="text-align:center"> <p-calendar class="mprldatepick" *ngIf="employee.RoleId=='5'" dateFormat="dd/mm/yy" [(ngModel)]="rowData.returneddate" [monthNavigator]="true" [yearNavigator]="true" yearRange="1900:2050"></p-calendar></td>
+          </ng-template>
+        </p-table>
+      </div>/
+    </div><br /><br /><br />
+    <p-footer>
+      <div class="ui-dialog-buttonpane ui-helper-clearfix">
+        <button type="button" pButton icon="fa fa-close" (click)="onSubmitgatepassDetails()" label="Submit"></button>
+      </div>
+    </p-footer>
+</p-dialog>
+
 
 
 
