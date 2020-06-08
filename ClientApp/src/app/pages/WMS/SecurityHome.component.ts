@@ -57,20 +57,17 @@ export class SecurityHomeComponent implements OnInit {
         if (data) {
           this.PoDetails = data;
           this.showDetails = true;
-
-          document.getElementById('valdatediv').style.display = "none";
-          document.getElementById('ponoid').style.border = "1px solid grey";
+          //document.getElementById('valdatediv').style.display = "none";
+          // document.getElementById('ponoid').style.border = "1px solid grey";
         }
-        else
-
+        else {
+          this.PoDetails = new PoDetails();
           this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'No data for this PoNo' });
+        }
       })
     }
     else
-      document.getElementById('valdatediv').style.color = "red";
-    document.getElementById('valdatediv').style.display = "block";
-    document.getElementById('ponoid').style.border = "1px solid #dc5d5d";
-    //this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Enter PoNo' });
+    this.messageService.add({ severity: 'error', summary: 'Validation', detail: 'Enter PoNo' });
   }
 
   //update invoice no
@@ -89,11 +86,11 @@ export class SecurityHomeComponent implements OnInit {
       this.wmsService.insertbarcodeandinvoiceinfo(this.BarcodeModel).subscribe(data => {
         if (data)
           this.disSaveBtn = true;
-        this.messageService.add({ severity: 'success', summary: 'Success Message', detail: 'Printed Sucessfully' });
+        this.messageService.add({ severity: 'success', summary: 'Success Message', detail: 'Saved Sucessfully' });
         this.spinner.hide();
       });
     }
     else
-      this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Invoice number mandatory' });
+      this.messageService.add({ severity: 'error', summary: 'Validation', detail: 'Invoice number mandatory' });
   }
 }

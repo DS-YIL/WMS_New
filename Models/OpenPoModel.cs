@@ -83,7 +83,8 @@ namespace WMS.Models
         public string grnnumber { get; set; }
         public string Materialdescription { get; set; }
         public string itemlocation { get; set; }
-    }
+		public string invoiceno { get; set; }
+	}
 	public class StockModel
 	{
 		public string stockstatus { get; set; }

@@ -1,10 +1,12 @@
-<h5>GRN Posting</h5>
-
-
-  <div style="text-align: center;padding-bottom:2%;">
-    <input type="text" [(ngModel)]="PoDetails.pono" placeholder="Enter PONO" />
+<h5></h5>
+<h5 style="text-align: center">GRN Posting</h5>
+<div class="row">
+  <div class="col-xs-4 col-md-4 col-sm-4"></div>
+  <div class="col-xs-4 col-md-4 col-sm-4">
+    <input type="text" [(ngModel)]="PoDetails.pono" class="form-control" />
   </div>
-  
+</div>
+<br />
 <div style="text-align: center;">
   <button type="button" class="btn btn-primary" (click)="scanBarcode()" label="Save">Scan Barcode</button>
 </div>
@@ -25,7 +27,7 @@
 <p-table #dt [value]="podetailsList">
   <ng-template pTemplate="header">
     <tr class="mprltbldata">
-      <th style="text-align:center;width:70px">S.No</th>
+      <th style="text-align:center;width:70px">Sl.No</th>
       <!--<th>PO No</th>
       <th>Invoice No</th>-->
       <th style="text-align:center">Project Name</th>
@@ -39,7 +41,7 @@
     <tr>
       <th></th>
       <!--<th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'pono', 'contains')"></th>
-      <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'invoiceno', 'contains')"></th>-->
+  <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'invoiceno', 'contains')"></th>-->
       <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'projectcode', 'contains')"></th>
       <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'material', 'contains')"></th>
       <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'materialdescription', 'contains')"></th>
@@ -58,7 +60,7 @@
       <td class="ptable-cell" style="text-align:center">{{rowData.material}}</td>
       <td class="ptable-cell" style="text-align:left">{{rowData.materialdescription}}</td>
       <td class="ptable-cell" style="text-align:right">{{rowData.quotationqty}}</td>
-      <td class="ptable-cell"  style="text-align:right">
+      <td class="ptable-cell" style="text-align:right">
         <span *ngIf="grnnumber">{{rowData.receivedqty}}</span>
         <input *ngIf="!grnnumber" pInputText type="number" (change)="checkreceivedqty(rowData.receivedqty,rowData.quotationqty);" id="receivedqty" class="form-control" [(ngModel)]="rowData.receivedqty">
       </td>
@@ -68,7 +70,7 @@
       </td>
       <td class="ptable-cell" style="text-align:right">
         <span *ngIf="grnnumber">{{rowData.returnqty}}</span>
-        <input *ngIf="!grnnumber" style="text-align:right" pInputText type="number"  (change)="checkreturnqty(rowData.returnqty,rowData.quotationqty);" id="returnqty"  class="form-control" [(ngModel)]="rowData.returnqty">
+        <input *ngIf="!grnnumber" style="text-align:right" pInputText type="number" (change)="checkreturnqty(rowData.returnqty,rowData.quotationqty);" id="returnqty" class="form-control" [(ngModel)]="rowData.returnqty">
       </td>
       <!--<td class="ptable-cell">
         <div style="text-align: center;">

@@ -36,12 +36,12 @@ export class StoreClerkComponent implements OnInit {
     this.inwardModel.receiveddate = new Date();
     this.inwardModel.qcdate = new Date();
   }
-  checkreceivedqty(entredvalue,maxvalue) {
-     if (entredvalue > maxvalue) {
-       this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Please enter received quantity less than PONo quantity' });
-       (<HTMLInputElement>document.getElementById("receivedqty")).value = "";
-       
-  }
+  checkreceivedqty(entredvalue, maxvalue) {
+    if (entredvalue > maxvalue) {
+      this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Please enter received quantity less than PONo quantity' });
+      (<HTMLInputElement>document.getElementById("receivedqty")).value = "";
+
+    }
   }
   checkconfirmqty(entredvalue, maxvalue) {
     if (entredvalue > maxvalue) {
@@ -74,7 +74,7 @@ export class StoreClerkComponent implements OnInit {
           this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'No data' });
       })
     }
-   
+
 
   }
 
@@ -98,15 +98,15 @@ export class StoreClerkComponent implements OnInit {
     this.inwardModel.pendingqty = parseInt(this.PoDetails.quotationqty) - this.inwardModel.confirmqty;
   }
   onsubmitGRN() {
-    //if (this.inwardModel.quality != '0') {
-    this.spinner.show();
-    this.inwardModel.pono = this.PoDetails.pono;
-    this.inwardModel.receivedqty = this.PoDetails.quotationqty;
-    this.inwardModel.receivedby = this.inwardModel.qcby = this.employee.employeeno;
-    this.podetailsList.forEach(item => {   
-      item.receivedby = this.employee.employeeno;
-    });
-    this.wmsService.insertitems(this.podetailsList).subscribe(data => {
+    if (this.podetailsList.length > 0) {
+      this.spinner.show();
+      this.inwardModel.pono = this.PoDetails.pono;
+      this.inwardModel.receivedqty = this.PoDetails.quotationqty;
+      this.inwardModel.receivedby = this.inwardModel.qcby = this.employee.employeeno;
+      this.podetailsList.forEach(item => {
+        item.receivedby = this.employee.employeeno;
+      });
+      this.wmsService.insertitems(this.podetailsList).subscribe(data => {
         this.spinner.hide();
         this.grnnumber = data;
         //  if (data) {
@@ -114,9 +114,9 @@ export class StoreClerkComponent implements OnInit {
         this.showQtyUpdateDialog = false;
         //}
       });
-    //}
-    //else
-    //  this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'select quality type' });
+    }
+    else
+      this.messageService.add({ severity: 'error', summary: 'Validation', detail: 'Enter Quantity' });
   }
 
 

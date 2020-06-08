@@ -29,7 +29,7 @@
     </div>
   </div><br />
 </form>-->
-<div class="row form-control" style="height:100%;border-radius:0px;">
+<div class="row" style="height:100%;border-radius:0px;">
   <p-table #dt [value]="POList" [style]="{'width':'100%','overflow':'auto!important'}"
            [responsive]="true" [rows]="50"
            [resizableColumns]="true"
@@ -38,16 +38,16 @@
            appendTo="body">
     <ng-template pTemplate="header">
       <tr class="mprltbldata">
-        <th style="text-align:center;width:70px">S.No</th>
+        <th style="text-align:center;width:70px">Sl.No</th>
         <th style="text-align:center">Project</th>
         <th style="text-align:center">PO No</th>
-        <th style="text-align:center">Current State</th>
+        <th style="text-align:center">Status</th>
         <th style="text-align:center">Vendor Name</th>
         <th style="text-align:center">Job Name</th>
         <th style="text-align:center">Quotation Qty</th>
-        <th style="text-align:center">MPR Document No</th>
+        <!--<th style="text-align:center">MPR Document No</th>-->
         <!--<th>Material Description</th>-->
-        <th style="text-align:center">Invoice No</th>
+        <!--<th style="text-align:center">Invoice No</th>-->
       </tr>
       <tr>
         <th></th>
@@ -57,8 +57,8 @@
         <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'vendorname', 'contains')"></th>
         <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'jobName', 'contains')"></th>
         <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'quotationqty', 'contains')"></th>
-        <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'documentno', 'contains')"></th>
-        <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'invoiceno', 'contains')"></th>
+        <!--<th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'documentno', 'contains')"></th>
+        <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'invoiceno', 'contains')"></th>-->
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-rowData let-editing="editing" let-ri="rowIndex" let-rindex=0>
@@ -69,12 +69,12 @@
         <td class="ptable-cell" style="text-align:left">{{rowData.projectcode}}</td>
         <td class="ptable-cell" style="font-size:11px; text-align:center" ><a *ngIf="rowData.pono" [routerLink]="['/WMS/MaterialRequest',rowData.pono]" routerLinkActive="active">{{rowData.pono}}</a></td>
         <td class="ptable-cell" style="text-align:center">{{rowData.status}}</td>
-        <td class="ptable-cell" style="text-align:left">{{rowData.vendorname}}</td>
-        <td class="ptable-cell" style="text-align:left">{{rowData.jobName}}</td>
+        <td class="ptable-cell" style="text-align:center">{{rowData.vendorname}}</td>
+        <td class="ptable-cell" style="text-align:center">{{rowData.jobName}}</td>
         <td class="ptable-cell" style="text-align:right">{{rowData.quotationqty}}</td>
-        <td class="ptable-cell" style="text-align:center">{{rowData.documentno}}</td>
+        <!--<td class="ptable-cell" style="text-align:center">{{rowData.documentno}}</td>-->
         <!--<td class="ptable-cell">{{rowData.materialdescription}}</td>-->
-        <td class="ptable-cell" style="text-align:center">{{rowData.invoiceno}}</td>
+        <!--<td class="ptable-cell" style="text-align:center">{{rowData.invoiceno}}</td>-->
       </tr>
     </ng-template>
   </p-table><br />

@@ -30,17 +30,17 @@
   </div>
   <br />
   <h5 style="text-align: center">Security Check</h5>
-  <div class="row" style="margin-left:20px">
+  <!--<div class="row" style="margin-left:20px">
     <div class="col-lg-12 col-md-12 col-sm-12">
       <div style="display:none" id="valdatediv">
         <label class="form-label">Please enter PONO </label>&nbsp;&nbsp;
       </div>
       </div>
-    </div>
+    </div>-->
       <div class="row " style="margin-top:10px; margin-left:20px">
         <div class="col-lg-6 col-md-6 col-sm-6 form-inline">
           <label class="form-label">PO No: </label>&nbsp;&nbsp;
-          <input class="form-control" type="text" [(ngModel)]="PoDetails.pono" id="ponoid">&nbsp;&nbsp;
+          <input class="form-control" type="text" [(ngModel)]="PoDetails.pono" id="ponoid" maxlength="10">&nbsp;&nbsp;
           <button type="button" class="btn btn-primary" label="Save" (click)="SearchPoNo()">Search</button>
         </div>
       </div>

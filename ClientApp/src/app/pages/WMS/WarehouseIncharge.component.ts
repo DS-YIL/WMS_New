@@ -119,7 +119,7 @@ export class WarehouseInchargeComponent implements OnInit {
       })
     }
     else
-      this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Enter GRNNo' });
+      this.messageService.add({ severity: 'error', summary: 'Validation', detail: 'Enter GRNNo' });
   }
 
   showDialog(details: any, index: number) {
@@ -156,11 +156,11 @@ export class WarehouseInchargeComponent implements OnInit {
     }
     else {
       if (!this.store.name)
-        this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Select Location' });
+        this.messageService.add({ severity: 'error', summary: 'Validation', detail: 'Select Location' });
       else if (!this.rack.name)
-        this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Select Rack'});
+        this.messageService.add({ severity: 'error', summary: 'Validation', detail: 'Select Rack'});
      else if (!this.bin.name)
-        this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Select Bin' });
+        this.messageService.add({ severity: 'error', summary: 'Validation', detail: 'Select Bin' });
     }
   }
 
