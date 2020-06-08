@@ -157,7 +157,7 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to select pono,vendorname,vendorname ,deliverydate  from wms.openpolistview.
+        ///   Looks up a localized string similar to select pono,vendorname,quotationqty ,deliverydate  from wms.openpolistview.
         /// </summary>
         public static string getASNList {
             get {

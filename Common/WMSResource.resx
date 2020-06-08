@@ -348,6 +348,6 @@ where stockstatus='active' and sk.deleteflag=false and availableqty!=0</value>
     <value>update wms.wms_stock set availableqty=#availableqty where itemid=#itemid</value>
   </data>
   <data name="getASNList" xml:space="preserve">
-    <value>select pono,vendorname,vendorname ,deliverydate  from wms.openpolistview</value>
+    <value>select pono,vendorname,quotationqty ,deliverydate  from wms.openpolistview</value>
   </data>
 </root>
