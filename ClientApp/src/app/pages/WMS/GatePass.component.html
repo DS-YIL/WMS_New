@@ -1,5 +1,5 @@
 <h5 style="text-align:center">Gate Pass</h5>
-<button type="button" class="btn btn-primary" style="float:right" (click)="openGatepassDialog('','')">Create Gatepass</button>
+<button type="button" class="btn btn-primary" style="float:right" (click)="openGatepassDialog('','','gatepassdialog')">Create Gatepass</button>
 <br />
 <br />
 <br />
@@ -48,7 +48,7 @@
       <td class="ptable-cell" style="text-align:center"><a *ngIf="rowData.gatepassid" [routerLink]="['/WMS/GatePassApprover',rowData.gatepassid]" routerLinkActive="active">{{rowData.gatepassid}}</a></td>
       <td class="ptable-cell" style="text-align:center">{{rowData.gatepasstype}}</td>
       <td class="ptable-cell" style="text-align:center">{{rowData.vendorname}}</td>
-      <td class="ptable-cell" style="text-align:right">{{rowData.vehicleno}}</td>
+      <td class="ptable-cell" style="text-align:center">{{rowData.vehicleno}}</td>
       <td class="ptable-cell" style="text-align:center">{{rowData.reasonforgatepass}}</td>
       <td class="ptable-cell" style="text-align:right">{{rowData.approverstatus}}</td>
       <td class="ptable-cell" style="text-align:center">{{rowData.name}}</td>
@@ -151,14 +151,14 @@
       <p-table *ngIf="gatepassModel.materialList.length>0" [value]="gatepassModel.materialList" [style]="{'width':'97%','height':'80%','overflow':'auto!important'}">
         <ng-template pTemplate="header">
           <tr class="mprltbldata">
-            <th class="ptable-cell">S No</th>
-            <th class="ptable-cell">Material</th>
-            <th class="ptable-cell">Materia Description</th>
-            <th class="ptable-cell">Quantity</th>
-            <th class="ptable-cell">Price</th>
-            <th class="ptable-cell">Remarks</th>
-            <th class="ptable-cell">Expected Date</th>
-            <th *ngIf="gatepassModel.gatepasstype=='Returnable'" class="ptable-cell" style="width:200px">Returned Date</th>
+            <th class="ptable-cell" style="text-align:center">S No</th>
+            <th class="ptable-cell" style="text-align:center">Material</th>
+            <th class="ptable-cell" style="text-align:center">Materia Description</th>
+            <th class="ptable-cell" style="text-align:center">Quantity</th>
+            <th class="ptable-cell" style="text-align:center">Price</th>
+            <th class="ptable-cell" style="text-align:center">Remarks</th>
+            <th class="ptable-cell" style="text-align:center">Expected Date</th>
+            <th *ngIf="gatepassModel.gatepasstype=='Returnable'" class="ptable-cell" style="width:200px;text-align:center">Returned Date</th>
             <th class="ptable-cell"></th>
           </tr>
         </ng-template>
@@ -206,13 +206,13 @@
         <p-table *ngIf="gatepassModel.materialList.length>0" [value]="gatepassModel.materialList" [style]="{'width':'80%','height':'80%','overflow':'auto!important'}">
           <ng-template pTemplate="header">
             <tr class="mprltbldata">
-              <th class="ptable-cell">S No</th>
-              <th class="ptable-cell">Material</th>
-              <th class="ptable-cell">Materia Description</th>
-              <th class="ptable-cell">Quantity</th>
-              <th class="ptable-cell">Price</th>
-              <th class="ptable-cell">Remarks</th>
-              <th class="ptable-cell">Expected Date</th>
+              <th class="ptable-cell" style="text-align:center">S No</th>
+              <th class="ptable-cell" style="text-align:center">Material</th>
+              <th class="ptable-cell" style="text-align:center">Materia Description</th>
+              <th class="ptable-cell" style="text-align:center">Quantity</th>
+              <th class="ptable-cell" style="text-align:center">Price</th>
+              <th class="ptable-cell" style="text-align:center">Remarks</th>
+              <th class="ptable-cell" style="text-align:center">Expected Date</th>
               <th *ngIf="gatepassModel.gatepasstype=='Returnable'" class="ptable-cell" style="width:200px">Returned Date</th>
             </tr>
           </ng-template>
@@ -225,7 +225,7 @@
               <td class="ptable-cell" style="text-align:right">{{rowData.materialcost}}</td>
               <td class="ptable-cell" style="text-align:right"> {{rowData.remarks}} </td>
               <td class="ptable-cell" style="text-align:right">{{rowData.expecteddate | date :  constants.dateFormat}}</td>
-              <td *ngIf="gatepassModel.gatepasstype=='Returnable'" class="ptable-cell" style="text-align:center"> <p-calendar class="mprldatepick" *ngIf="employee.RoleId=='5'" dateFormat="dd/mm/yy" [(ngModel)]="rowData.returneddate" [monthNavigator]="true" [yearNavigator]="true" yearRange="1900:2050"></p-calendar></td>
+              <td *ngIf="gatepassModel.gatepasstype=='Returnable'" class="ptable-cell" style="text-align:center;text-align:center"> <p-calendar class="mprldatepick" *ngIf="employee.RoleId=='5'" dateFormat="dd/mm/yy" [(ngModel)]="rowData.returneddate" [monthNavigator]="true" [yearNavigator]="true" yearRange="1900:2050"></p-calendar></td>
           </ng-template>
         </p-table>
       </div>/

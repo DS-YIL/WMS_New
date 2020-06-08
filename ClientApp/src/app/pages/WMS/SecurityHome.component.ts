@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { wmsService } from '../../WmsServices/wms.service';
 import { constants } from '../../Models/WMSConstants';
-import { Employee } from '../../Models/Common.Model';
+import { Employee, DynamicSearchResult } from '../../Models/Common.Model';
 import { NgxSpinnerService } from "ngx-spinner";
 import { PoDetails, BarcodeModel } from 'src/app/Models/WMS.Model';
 import { MessageService } from 'primeng/api';
+import { parse } from 'url';
 
 @Component({
   selector: 'app-SecurityHome',
@@ -18,8 +19,10 @@ export class SecurityHomeComponent implements OnInit {
   public PoDetails: PoDetails;
   public Poinvoicedetails: PoDetails;
   public employee: Employee;
-  public showDetails; disSaveBtn: boolean = false;
+  public showDetails; disSaveBtn; showPoList: boolean = false;
   public BarcodeModel: BarcodeModel;
+  public currentDatePoList: Array<any> = [];
+  public dynamicData: DynamicSearchResult;
 
   ngOnInit() {
     if (localStorage.getItem("Employee"))
@@ -29,9 +32,26 @@ export class SecurityHomeComponent implements OnInit {
 
     this.PoDetails = new PoDetails();
     this.Poinvoicedetails = new PoDetails();
+    this.getcurrentDatePolist();
   }
 
+  //get open po's based on current date
+  getcurrentDatePolist() {
+    this.spinner.show();
+    this.dynamicData = new DynamicSearchResult();
+    var date = new Date();
+    var month = parseInt(date.getMonth().toString()) + 1;
+    var currentDate = date.getFullYear() + '-' + month + '-' + date.getDate();
+    //this.dynamicData.query = "select * from wms.openpolistview";
+    this.dynamicData.query = "select * from wms.openpolistview where deliverydate =" + currentDate + "";
+    this.wmsService.GetListItems(this.dynamicData).subscribe(data => {
+      this.showPoList = true;
+      this.currentDatePoList = data;
+      this.spinner.hide();
+    });
+  }
 
+  //get details based on po no
   SearchPoNo() {
     if (this.PoDetails.pono) {
       this.spinner.show();
@@ -40,27 +60,29 @@ export class SecurityHomeComponent implements OnInit {
         if (data) {
           this.PoDetails = data;
           this.showDetails = true;
-          
+
           document.getElementById('valdatediv').style.display = "none";
           document.getElementById('ponoid').style.border = "1px solid grey";
         }
         else
-         
+
           this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'No data for this PoNo' });
       })
     }
     else
       document.getElementById('valdatediv').style.color = "red";
-      document.getElementById('valdatediv').style.display = "block";
+    document.getElementById('valdatediv').style.display = "block";
     document.getElementById('ponoid').style.border = "1px solid #dc5d5d";
-      //this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Enter PoNo' });
+    //this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Enter PoNo' });
   }
+
+  //update invoice no
   onsaveSecDetails() {
     //need to generate barcode
     if (this.PoDetails.invoiceno) {
       this.spinner.show();
       this.BarcodeModel = new BarcodeModel();
-      this.BarcodeModel.paitemid =1;;
+      this.BarcodeModel.paitemid = 1;;
       this.BarcodeModel.barcode = "testbarcodetext";
       this.BarcodeModel.createdby = this.employee.employeeno;
       this.BarcodeModel.pono = this.PoDetails.pono;
@@ -70,7 +92,7 @@ export class SecurityHomeComponent implements OnInit {
       this.wmsService.insertbarcodeandinvoiceinfo(this.BarcodeModel).subscribe(data => {
         if (data)
           this.disSaveBtn = true;
-          this.messageService.add({ severity: 'success', summary: 'Success Message', detail: 'Printed Sucessfully' });
+        this.messageService.add({ severity: 'success', summary: 'Success Message', detail: 'Printed Sucessfully' });
         this.spinner.hide();
       });
     }

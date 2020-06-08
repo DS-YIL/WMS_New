@@ -194,6 +194,7 @@ export class GatePassComponent implements OnInit {
       this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Select Type' });
   }
 
+  //showing print page
   showprint(gatepassobject: gatepassModel) {
     this.router.navigate(['/WMS/GatePassPrint', gatepassobject.gatepassid]);
   }
