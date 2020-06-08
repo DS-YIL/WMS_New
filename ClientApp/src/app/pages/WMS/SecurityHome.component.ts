@@ -35,16 +35,13 @@ export class SecurityHomeComponent implements OnInit {
     this.getcurrentDatePolist();
   }
 
-  //get open po's based on current date
+  //get open po's based on current date(advance shipping notification list)
   getcurrentDatePolist() {
     this.spinner.show();
-    this.dynamicData = new DynamicSearchResult();
     var date = new Date();
     var month = parseInt(date.getMonth().toString()) + 1;
     var currentDate = date.getFullYear() + '-' + month + '-' + date.getDate();
-    //this.dynamicData.query = "select * from wms.openpolistview";
-    this.dynamicData.query = "select * from wms.openpolistview where deliverydate =" + currentDate + "";
-    this.wmsService.GetListItems(this.dynamicData).subscribe(data => {
+    this.wmsService.getASNList(currentDate).subscribe(data => {
       this.showPoList = true;
       this.currentDatePoList = data;
       this.spinner.hide();

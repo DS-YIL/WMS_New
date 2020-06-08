@@ -42,7 +42,7 @@
   <ng-template pTemplate="header" let-columns>
     <tr class="mprltbldata">
       <th style="text-align:center;width:50px">S.No</th>
-      <th *ngFor="let col of columns" style="width:100px">
+      <th *ngFor="let col of columns" style="width:100px;text-align:center;">
         {{col.header}}
       </th>
       <!--<th style="text-align:center">Last Consumed Date</th>
@@ -78,16 +78,16 @@
       <td class="ptable-cell" style="text-align:center">{{rowData.materialdescription}}</td>
       <td class="ptable-cell" style="text-align:center">{{rowData.departmentname}}</td>
       <td class="ptable-cell" style="text-align:center">{{rowData.itemlocation}}</td>
-      <td class="ptable-cell" style="text-align:left">{{rowData.projectname}}</td>
-      <td class="ptable-cell" style="text-align:right">{{rowData.vendorname}}</td>
-      <td class="ptable-cell" style="text-align:right">{{rowData.receiveddate  | date :  constants.dateFormat}}</td>
+      <td class="ptable-cell" style="text-align:center">{{rowData.projectname}}</td>
+      <td class="ptable-cell" style="text-align:center">{{rowData.vendorname}}</td>
+      <td class="ptable-cell" style="text-align:center">{{rowData.receiveddate  | date :  constants.dateFormat}}</td>
       <td class="ptable-cell" style="text-align:right">{{rowData.receivedqty}}</td>
       <td class="ptable-cell" style="text-align:right">{{rowData.issuedqty}}</td>
       <td class="ptable-cell" style="text-align:right">{{rowData.availableqty}}</td>
-      <td class="ptable-cell" style="text-align:left">{{rowData.unitprice}}</td>
-      <td class="ptable-cell" style="text-align:left">{{rowData.category}}</td>
-      <td class="ptable-cell" style="text-align:left">{{rowData.daysinstock}}</td>
-      <td class="ptable-cell" style="text-align:left">{{rowData.reportdate  | date :  constants.dateFormat}}</td>
+      <td class="ptable-cell" style="text-align:right">{{rowData.unitprice}}</td>
+      <td class="ptable-cell" style="text-align:center">{{rowData.category}}</td>
+      <td class="ptable-cell" style="text-align:right">{{rowData.daysinstock}}</td>
+      <td class="ptable-cell" style="text-align:center">{{rowData.reportdate  | date :  constants.dateFormat}}</td>
       <!--<td class="ptable-cell" style="text-align:right">{{rowData.lastconsumed | date :  constants.dateFormat}}</td>
       <td class="ptable-cell" style="text-align:right">{{rowData.lastconsumeddays}}</td>-->
 

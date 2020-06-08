@@ -220,6 +220,12 @@ namespace WMS.Controllers
 
             return this._poService.FIFOitemsupdate(model);
         }
+        [HttpGet("getASNList")]
+        public  Task<IEnumerable<OpenPoModel>> getASNList(string deliverydate)
+        {
+
+            return this._poService.getASNList(deliverydate);
+        }
 
     }
 }

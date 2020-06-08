@@ -161,7 +161,10 @@ export class wmsService {
   insertFIFOdata(materialIssueList: any): Observable<any> {
     return this.http.post<any>(this.url + 'POData/updateFIFOIssueddata/', materialIssueList, this.httpOptions);
   }
-  
+  getASNList(currentDate: string): Observable<any> {
+    return this.http.get<any>(this.url + 'POData/getASNList?deliverydate=' + currentDate,this.httpOptions);
+  }
+
   logout() {
     //localStorage.removeItem('Employee');
     this.currentUserSubject.next(null);

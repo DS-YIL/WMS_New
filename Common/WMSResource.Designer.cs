@@ -157,6 +157,15 @@ namespace WMS.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to select pono,vendorname,vendorname ,deliverydate  from wms.openpolistview.
+        /// </summary>
+        public static string getASNList {
+            get {
+                return ResourceManager.GetString("getASNList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to select ws.unitprice,ws.materialid,op.materialdescription,
         ///    sum(availableqty) as availableqty,( SELECT wrc.categoryname
         ///           FROM wms.wms_rd_category wrc
