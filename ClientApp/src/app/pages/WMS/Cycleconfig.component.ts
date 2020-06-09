@@ -81,6 +81,7 @@ export class CycleconfigComponent implements OnInit {
 
 
   updateCycleCountConfig() {
+    this.configmodel.notificationon = [];
     var persum = this.configmodel.apercentage + this.configmodel.bpercentage + this.configmodel.cpercentage;
 
     if (persum > 100) {
