@@ -89,41 +89,51 @@ namespace WMS.DAL
 		{
 			try
 			{
-				dataobj.createddate = System.DateTime.Now;
-				string insertquery = WMSResource.insertbarcodedata;
 				using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
 				{
-					var result = 0;
-					//var result = DB.ExecuteScalar(insertquery, new
-					//{
+					var q1 = "select count(*) from wms.wms_securityinward  where pono ='" + dataobj.pono + "'  and invoiceno ='" + dataobj.invoiceno + "'";
+					int count = int.Parse(DB.ExecuteScalar(q1, null).ToString());
 
-					//    dataobj.paitemid,
-					//    dataobj.barcode,
-					//    dataobj.createddate,
-					//    dataobj.createdby,
-					//    dataobj.deleteflag,
-					//});
-					string insertqueryforinvoice = WMSResource.insertinvoicedata;
-					//int barcodeid = Convert.ToInt32(result);
-					dataobj.receiveddate = System.DateTime.Now;
-					//if (barcodeid != 0)
-					//{
-					dataobj.invoicedate = System.DateTime.Now;
-					var results = DB.Execute(insertqueryforinvoice, new
+					if (count >= 1)
 					{
+						return 2; //for onvoice already exist
+					}
+					else
+					{
+						dataobj.createddate = System.DateTime.Now;
+						string insertquery = WMSResource.insertbarcodedata;
 
-						dataobj.invoicedate,
-						dataobj.departmentid,
-						dataobj.invoiceno,
-						dataobj.receiveddate,
-						dataobj.receivedby,
-						dataobj.pono,
-						dataobj.deleteflag,
-						//barcodeid,
-					});
-					//}
-					return (Convert.ToInt32(results));
+						var result = 0;
+						//var result = DB.ExecuteScalar(insertquery, new
+						//{
 
+						//    dataobj.paitemid,
+						//    dataobj.barcode,
+						//    dataobj.createddate,
+						//    dataobj.createdby,
+						//    dataobj.deleteflag,
+						//});
+						string insertqueryforinvoice = WMSResource.insertinvoicedata;
+						//int barcodeid = Convert.ToInt32(result);
+						dataobj.receiveddate = System.DateTime.Now;
+						//if (barcodeid != 0)
+						//{
+						dataobj.invoicedate = System.DateTime.Now;
+						var results = DB.Execute(insertqueryforinvoice, new
+						{
+
+							dataobj.invoicedate,
+							dataobj.departmentid,
+							dataobj.invoiceno,
+							dataobj.receiveddate,
+							dataobj.receivedby,
+							dataobj.pono,
+							dataobj.deleteflag,
+							//barcodeid,
+						});
+						//}
+						return (Convert.ToInt32(results));
+					}
 
 				}
 			}

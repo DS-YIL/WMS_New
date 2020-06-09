@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, RouterEvent, NavigationEnd } from '@angular/router';
 import { wmsService } from '../../WmsServices/wms.service';
 import { constants } from '../../Models/WMSConstants';
 import { Employee, DynamicSearchResult } from '../../Models/Common.Model';
 import { NgxSpinnerService } from "ngx-spinner";
 import { PoDetails, BarcodeModel } from 'src/app/Models/WMS.Model';
 import { MessageService } from 'primeng/api';
-import { parse } from 'url';
+import { filter } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-SecurityHome',
@@ -25,6 +26,12 @@ export class SecurityHomeComponent implements OnInit {
   public dynamicData: DynamicSearchResult;
 
   ngOnInit() {
+    this.router.events.pipe(
+      filter((event: RouterEvent) => event instanceof NavigationEnd)
+    ).subscribe(() => {
+      this.refresh();
+    });
+
     if (localStorage.getItem("Employee"))
       this.employee = JSON.parse(localStorage.getItem("Employee"));
     else
@@ -34,7 +41,12 @@ export class SecurityHomeComponent implements OnInit {
     this.Poinvoicedetails = new PoDetails();
     this.getcurrentDatePolist();
   }
-
+  refresh() {
+    this.PoDetails = new PoDetails();
+    this.Poinvoicedetails = new PoDetails();
+    this.disSaveBtn = false;
+    this.showDetails = false;
+  }
   //get open po's based on current date(advance shipping notification list)
   getcurrentDatePolist() {
     this.spinner.show();
@@ -67,7 +79,7 @@ export class SecurityHomeComponent implements OnInit {
       })
     }
     else
-    this.messageService.add({ severity: 'error', summary: 'Validation', detail: 'Enter PoNo' });
+      this.messageService.add({ severity: 'error', summary: 'Validation', detail: 'Enter PoNo' });
   }
 
   //update invoice no
@@ -84,10 +96,17 @@ export class SecurityHomeComponent implements OnInit {
       this.BarcodeModel.departmentid = this.PoDetails.departmentid
       this.BarcodeModel.receivedby = this.employee.employeeno;
       this.wmsService.insertbarcodeandinvoiceinfo(this.BarcodeModel).subscribe(data => {
-        if (data)
-          this.disSaveBtn = true;
-        this.messageService.add({ severity: 'success', summary: 'Success Message', detail: 'Saved Sucessfully' });
         this.spinner.hide();
+        if (data == 0) {
+          this.messageService.add({ severity: 'error', summary: 'Response', detail: 'Something went wrong' });
+        }
+        else if (data == 2) {
+          this.messageService.add({ severity: 'error', summary: 'Response', detail: 'Invoice for this PO already received' });
+        }
+        else { //data>=1
+          this.disSaveBtn = true;
+          this.messageService.add({ severity: 'success', summary: 'Success Message', detail: 'Saved Sucessfully' });
+        }
       });
     }
     else
