@@ -47,9 +47,10 @@ namespace WMS.DAL
                         try
                         {
                              pgsql.Open();
-                            string query = "select  * from wms.employee where domainid like "+"'%"+ id +"'";
+                            string query = "select  * from wms.employee where domainid='"+ id +"'";
                             data= pgsql.QuerySingle<User>(
                                query, null, commandType: CommandType.Text);
+                            data.Password = pwd;
                             userdata.Add(data);
                         }
                         catch (Exception Ex)
@@ -73,9 +74,10 @@ namespace WMS.DAL
                     try
                     {
                         pgsql.Open();
-                        string query = "select  * from wms.employee where domainid like " + "'%" + id + "'";
+                        string query = "select  * from wms.employee where domainid='" + id + "'";
                         data = pgsql.QueryFirstOrDefault<User>(
                            query, null, commandType: CommandType.Text);
+                        data.Password = pwd;
                         userdata.Add(data);
                     }
                     catch (Exception Ex)
@@ -111,9 +113,9 @@ namespace WMS.DAL
             //PrincipalContext ctx = new PrincipalContext(ContextType.Domain);
            //var user = _users.SingleOrDefault(x => x.Username == username && x.Password == password);
           var userss = validatelogincredentials(username,password);
-            if (userss[0] != null)
+            if (userss.Count != 0)
             {
-                var user = userss.SingleOrDefault(x => x.domainid == username && x.pwd == password);
+                var user = userss.SingleOrDefault(x => x.domainid == username && x.Password == password);
                 User use = new User();
                 // return null if user not found
                 if (user == null)
