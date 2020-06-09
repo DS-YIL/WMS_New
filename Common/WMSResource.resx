@@ -228,8 +228,8 @@ where  inw.invoiceno='#invoiceno' and openpo.pono='#pono' and openpo.projectcode
     <value>select ygs.materialdescription,emp.name,* from wms.wms_gatepass gate
    left join wms.wms_gatepassmaterial mat on gate.gatepassid=mat.gatepassid 
    left join wms.employee emp on emp.employeeno=gate.requestedby
-   inner join wms."MaterialMasterYGS" ygs on ygs.material=mat.materialid
-   where gate.deleteflag=false  and mat.deleteflag=false order by gate.gatepassid desc</value>
+   left join wms."MaterialMasterYGS" ygs on ygs.material=mat.materialid and mat.deleteflag=false 
+   where gate.deleteflag=false  order by gate.gatepassid desc</value>
   </data>
   <data name="insertgatepassdata" xml:space="preserve">
     <value>insert into wms.wms_gatepass(gatepassid, gatepasstype, status, referenceno, vehicleno, requestedby, requestedon,deleteflag,vendorname,print,reasonforgatepass)values(default,@gatepasstype,@status,@referenceno,@vehicleno, @requestedby,@requestedon,@deleteflag,@vendorname,'true',@reasonforgatepass)returning gatepassid</value>
@@ -241,7 +241,7 @@ where  inw.invoiceno='#invoiceno' and openpo.pono='#pono' and openpo.projectcode
     <value>select * from wms.wms_stock where materialid='#materialid' and availableqty=#availableqty limit 1</value>
   </data>
   <data name="checkqty" xml:space="preserve">
-    <value>select * from wms.wms_stock where availableqty=#availableqty limit 1</value>
+    <value>select * from wms.wms_stock where availableqty &gt;=#availableqty limit 1</value>
   </data>
   <data name="insertgatepassmaterial" xml:space="preserve">
     <value>insert into wms.wms_gatepassmaterial(gatepassmaterialid,gatepassid,materialid,quantity,deleteflag,remarks,materialcost,expecteddate,returneddate)values(default,@gatepassid,@materialid,@quantity,@deleteflag,@remarks,@materialcost,@expecteddate,@returneddate)</value>

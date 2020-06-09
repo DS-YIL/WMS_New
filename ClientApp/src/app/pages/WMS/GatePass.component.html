@@ -60,7 +60,7 @@
   </ng-template>
 </p-table>
 <br />
-<p-dialog  header="Gatepass" [(visible)]="gatepassdialog" [responsive]="true" showEffect="fade" [modal]="true" [style]="{'width':'70%','overflow':'auto'}">
+<p-dialog  header="Gatepass" [(visible)]="gatepassdialog" [responsive]="true" showEffect="fade" [modal]="true" [style]="{'width':'85%','height':'70%','overflow':'auto'}">
   <div class="row " style="margin-top:10px">
     <div class="col-lg-3 col-md-3 col-sm-3 form-group">
       <label for="itemlocation" class="form-label">Select Type</label>
@@ -148,7 +148,7 @@
   </div>
   <div class="row " style="margin-top:10px">
     <div class="col-lg-12 col-md-12 col-sm-12">
-      <p-table *ngIf="gatepassModel.materialList.length>0" [value]="gatepassModel.materialList" [style]="{'width':'97%','height':'80%','overflow':'auto!important'}">
+      <p-table *ngIf="gatepassModel.materialList.length>0" [value]="gatepassModel.materialList" [style]="{'width':'87%','height':'80%','overflow':'auto!important'}">
         <ng-template pTemplate="header">
           <tr class="mprltbldata">
             <th class="ptable-cell" style="text-align:center">S No</th>

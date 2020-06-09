@@ -137,9 +137,9 @@ export class GatePassComponent implements OnInit {
       });
     }
     else {
-      if (this.materialistModel.materialid)
-        this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'select material' });
-      else if (this.materialistModel.quantity)
+      if (!this.materialistModel.materialid)
+        this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'select material from list' });
+      else if (!this.materialistModel.quantity)
         this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Enter Quantity' });
     }
 
