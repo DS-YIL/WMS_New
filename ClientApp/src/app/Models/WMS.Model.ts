@@ -43,6 +43,20 @@ export class BarcodeModel {
   receivedby: string;
 }
 
+export class Cyclecountconfig {
+  id: number;
+  apercentage: number;
+  bpercentage: number;
+  cpercentage: number;
+  cyclecount: number;
+  frequency: string;
+  enddate: Date;
+  startdate: Date;
+  countall: number;
+  notificationtype: string;
+  notificationon: any[];
+}
+
 
 
 export class inwardModel {
@@ -92,6 +106,12 @@ export class materialRequestDetails {
   quantity: string;
   projectcode: string;
   pono: string = "";
+}
+
+export class daylist {
+  description: string;
+  showdate: Date;
+  showday: string;
 }
 
 export class gatepassModel {

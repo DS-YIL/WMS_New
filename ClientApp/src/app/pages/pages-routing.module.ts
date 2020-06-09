@@ -21,6 +21,8 @@ import { ExcessInventoryMovementComponent } from './WMS/ExcessInventoryMovement.
 import { ABCAnalysisComponent } from './WMS/ABCAnalysis.component';
 import { ABCCategoryComponent } from './WMS/ABCCategory.component';
 import { FIFOComponent } from './WMS/FIFO.component';
+import { CyclecountComponent } from './WMS/Cyclecount.component';
+import { CycleconfigComponent } from './WMS/Cycleconfig.component';
 const routes: Routes = [{
   path: '',
   component: PagesComponent,
@@ -53,7 +55,9 @@ const routes: Routes = [{
     { path: "ABCCategory", component: ABCCategoryComponent, canActivate: [AuthGuard] },
     { path: "ABCAnalysis", component: ABCAnalysisComponent, canActivate: [AuthGuard] },
     { path: "ABCAnalysis/:material", component: ABCAnalysisComponent, canActivate: [AuthGuard] },
-     { path: "FIFOList", component: FIFOComponent, canActivate: [AuthGuard] }
+    { path: "FIFOList", component: FIFOComponent, canActivate: [AuthGuard] },
+    { path: "Cyclecount", component: CyclecountComponent, canActivate: [AuthGuard] },
+    { path: "Cycleconfig", component: CycleconfigComponent, canActivate: [AuthGuard] }
   ],
 }];
 

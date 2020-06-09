@@ -197,6 +197,37 @@ namespace WMS.Controllers
         {
             return await this._poService.GetABCavailableqtyList();
         }
+		  [HttpGet("getCyclecountList")]
+        public async Task<IEnumerable<CycleCountList>> getCyclecountList(int limita,int limitb,int limitc)
+        {
+            return await this._poService.GetCyclecountList(limita, limitb, limitc);
+        }
+
+        [HttpGet("getCyclecountPendingList")]
+        public async Task<IEnumerable<CycleCountList>> getCyclecountPendingList()
+        {
+            return await this._poService.GetCyclecountPendingList();
+        }
+
+        [HttpGet("getCyclecountconfig")]
+        public async Task<Cyclecountconfig> getCyclecountconfig()
+        {
+            return await this._poService.GetCyclecountConfig();
+        }
+
+        [HttpPost("updateCyclecountconfig")]
+        public int updateCyclecountconfig(Cyclecountconfig dataobj)
+        {
+            return  this._poService.UpdateCycleCountconfig(dataobj);
+        }
+
+
+        [HttpPost("updateinsertCyclecount")]
+        public int updateinsertCyclecount([FromBody] List<CycleCountList> data)
+        {
+            return this._poService.UpdateinsertCycleCount(data);
+        }
+		
         [HttpGet("GetABCListBycategory")]
         public async Task<IEnumerable<ReportModel>> getabclist(string category)
         {

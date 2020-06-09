@@ -350,4 +350,7 @@ where stockstatus='active' and sk.deleteflag=false and availableqty!=0</value>
   <data name="getASNList" xml:space="preserve">
     <value>select pono,vendorname,quotationqty ,deliverydate  from wms.openpolistview</value>
   </data>
+  <data name="updatecyclecountconfig" xml:space="preserve">
+    <value>update wms.cyclecountconfig set apercentage=@apercentage,bpercentage=@bpercentage,cpercentage=@cpercentage,cyclecount=@cyclecount,frequency=@frequency where id = #cid</value>
+  </data>
 </root>

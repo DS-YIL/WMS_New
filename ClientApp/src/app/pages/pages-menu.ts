@@ -65,6 +65,17 @@ export const MENU_ITEMS: NbMenuItem[] = [
     title: 'FIFO LIst',
     icon: 'list-outline',
     link: '/WMS/FIFOList'
+  },
+   {
+    title: 'Cycle Count',
+    icon: 'list-outline',
+    link: '/WMS/Cyclecount'
+  },
+  {
+    title: 'Cycle Config',
+    icon: 'list-outline',
+    link: '/WMS/Cycleconfig'
   }
+  
   
 ];

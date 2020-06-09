@@ -39,6 +39,8 @@ import { ABCAnalysisComponent } from './WMS/ABCAnalysis.component';
 import { ABCCategoryComponent } from './WMS/ABCCategory.component';
 import { FIFOComponent } from './WMS/FIFO.component';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { CyclecountComponent } from './WMS/Cyclecount.component';
+import { CycleconfigComponent } from './WMS/Cycleconfig.component';
 
 @NgModule({
   imports: [
@@ -84,7 +86,9 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     ExcessInventoryMovementComponent,
     ABCCategoryComponent,
     ABCAnalysisComponent,
-    FIFOComponent
+    FIFOComponent,
+    CyclecountComponent,
+    CycleconfigComponent
 
   ],
   providers: [MessageService, ConfirmationService],

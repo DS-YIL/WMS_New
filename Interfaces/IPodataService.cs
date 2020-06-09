@@ -39,6 +39,15 @@ namespace WMS.Interfaces
         int updateABCcategorydata(List<ABCCategoryModel> model);
         Task<IEnumerable<ABCCategoryModel>> GetABCCategorydata();
         Task<IEnumerable<ReportModel>> GetABCavailableqtyList();
+
+        Task<IEnumerable<CycleCountList>> GetCyclecountList(int limita, int limitb, int limitc);
+        Task<IEnumerable<CycleCountList>> GetCyclecountPendingList();
+
+        Task<Cyclecountconfig> GetCyclecountConfig();
+
+        int UpdateCycleCountconfig(Cyclecountconfig dataobj);
+
+        int UpdateinsertCycleCount(List<CycleCountList> dataobj);
         Task<IEnumerable<ReportModel>> GetABCListBycategory(string category);
 
         Task<IEnumerable<FIFOModel>> GetFIFOList(string material);

@@ -216,6 +216,35 @@ namespace WMS.Models
 		public string reprintedby { get; set; }
 		public int reprintcount { get; set; }
 	}
+
+	public class CycleCountList
+    {
+		public int id { get; set; }
+		public string category { get; set; }
+		public string materialid { get; set; }
+		public string materialdescription { get; set; }
+		public int availableqty { get; set; }
+		public int physicalqty { get; set; }
+		public int difference { get; set; }
+		public bool iscountprocess { get; set; }
+		public bool iscounted  { get; set; }
+		public bool isapprovalprocess { get; set; }
+		public bool isapproved { get; set; }
+
+		public string remarks { get; set; }
+
+		public string status { get; set; }
+
+		public DateTime? counted_on { get; set; }
+
+		public string counted_by { get; set; }
+		public DateTime? verified_on { get; set; }
+
+		public string verified_by { get; set; }
+		
+
+
+	}
 	public class ReportModel
 	{
 		public int itemid { get; set; }
@@ -250,6 +279,35 @@ namespace WMS.Models
 		public Boolean deleteflag { get; set; }
 		public DateTime enddate { get; set; }
 		public DateTime startdate { get; set; }
+	}
+    	public class Cyclecountconfigmodel
+	{
+		public int amin { get; set; }
+		public int amax { get; set; }
+		public int bmin { get; set; }
+		public int bmax { get; set; }
+		public int cmin { get; set; }
+		public int cmax { get; set; }
+		public DateTime enddate { get; set; }
+		public DateTime startdate { get; set; }
+	}
+
+	public class Cyclecountconfig
+	{
+		public int id { get; set; }
+		public int apercentage { get; set; }
+		public int bpercentage { get; set; }
+		public int cpercentage { get; set; }
+		public int cyclecount { get; set; }
+		public string frequency { get; set; }
+		public DateTime enddate { get; set; }
+		public DateTime startdate { get; set; }
+		public string notificationtype { get; set; }
+
+		public object[] notificatioon { get; set; }
+
+		public int countall { get; set; }
+
 	}
 	public class FIFOModel
 	{

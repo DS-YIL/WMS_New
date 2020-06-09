@@ -138,6 +138,7 @@ export class wmsService {
   getABCavailableqtyList(): Observable<any> {
     return this.http.get<any>(this.url + 'POData/getABCavailableqtyList/', this.httpOptions);
   }
+  
 
   GetABCListBycategory(category: string): Observable<any> {
     return this.http.get<any>(this.url + 'POData/GetABCListBycategory/?category=' + category + '', this.httpOptions);
@@ -151,6 +152,22 @@ export class wmsService {
 
   GetreportBasedCategory(): Observable<any> {
     return this.http.get<any>(this.url + 'POData/GetreportBasedCategory/', this.httpOptions);
+  }
+  
+  getCyclecountList(limita: number, limitb:number, limitc : number): Observable<any> {
+    return this.http.get<any>(this.url + 'POData/getCyclecountList/?limita=' + limita + '&limitb=' + limitb + '&limitc=' + limitc, this.httpOptions);
+  }
+  getCyclecountPendingList(): Observable<any> {
+    return this.http.get<any>(this.url + 'POData/getCyclecountPendingList/', this.httpOptions);
+  }
+  getCyclecountConfig(): Observable<any> {
+    return this.http.get<any>(this.url + 'POData/getCyclecountconfig/', this.httpOptions);
+  }
+  updateCyclecountconfig(configlist: any): Observable<any> {
+    return this.http.post<any>(this.url + 'POData/updateCyclecountconfig/', configlist, this.httpOptions);
+  }
+  updateinsertCyclecount(catList: any): Observable<any> {
+    return this.http.post<any>(this.url + 'POData/updateinsertCyclecount/', catList, this.httpOptions);
   }
   getFIFOList(material:any): Observable<any> {
     return this.http.get<any>(this.url + 'POData/GetFIFOList?material=' + material, this.httpOptions);
