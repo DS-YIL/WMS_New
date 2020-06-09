@@ -1749,26 +1749,31 @@ namespace WMS.DAL
         {
             try
             {
-                //foreach(var item in dataobj._list)
-                //{
+				//foreach(var item in dataobj._list)
+				//{
 
 
-                    string insertquery = WMSResource.updatecyclecountconfig.Replace("#cid", "1");
 
-                    using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
-                    {
-                        var result = DB.ExecuteScalar(insertquery, new
-                        {
 
-                            dataobj.apercentage,
-                            dataobj.bpercentage,
-                            dataobj.cpercentage,
-                            dataobj.cyclecount,
-                            dataobj.frequency
-                        });
-                    
-                    }
-                return 1;
+				string insertquery = "update wms.cyclecountconfig set apercentage = " + dataobj.apercentage + ",bpercentage = " + dataobj.bpercentage + ",cpercentage = " + dataobj.cpercentage + ",cyclecount = " + dataobj.cyclecount + ",frequency = '" + dataobj.frequency + "',notificationtype='" + dataobj.notificationtype + "',notificationon='" + dataobj.notificationon + "' where id = 1";
+
+				//string insertquery = WMSResource.updatecyclecountconfig.Replace("#cid", "1");
+
+				using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
+				{
+					var result = DB.ExecuteScalar(insertquery);
+					//var result = DB.ExecuteScalar(insertquery, new
+					//{
+
+					//    dataobj.apercentage,
+					//    dataobj.bpercentage,
+					//    dataobj.cpercentage,
+					//    dataobj.cyclecount,
+					//    dataobj.frequency
+					//});
+
+				}
+				return 1;
                
             }
             catch (Exception Ex)

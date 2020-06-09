@@ -9,13 +9,16 @@ import { categoryValues, Cyclecountconfig } from '../../Models/WMS.Model';
 import { isNullOrUndefined } from 'util';
 import { MessageService } from 'primeng/api';
 import { getLocaleExtraDayPeriodRules } from '@angular/common';
+import { DatePipe } from "@angular/common";
 
 @Component({
   selector: 'app-Cyclecount',
-  templateUrl: './Cyclecount.component.html'
+  templateUrl: './Cyclecount.component.html',
+  providers: [DatePipe]
+
 })
 export class CyclecountComponent implements OnInit {
-  constructor(private wmsService: wmsService, private messageService: MessageService, private route: ActivatedRoute, private router: Router, public constants: constants, private spinner: NgxSpinnerService) { }
+  constructor(private wmsService: wmsService, private datePipe: DatePipe, private messageService: MessageService, private route: ActivatedRoute, private router: Router, public constants: constants, private spinner: NgxSpinnerService) { }
 
   public employee: Employee;
   name: string = "Ramesh";
@@ -28,7 +31,10 @@ export class CyclecountComponent implements OnInit {
   isapprover: boolean = true;
   status: string = "Pending";
   showApprovecolumn: boolean = true;
-  showsubmitbutton: boolean = true;
+  showsubmitbutton: boolean = false;
+  showsubmitbuttonuser: boolean = false;
+  showdays: any[] = [];
+  showtouser: boolean = false;
  
 
   ngOnInit() {
@@ -40,9 +46,12 @@ export class CyclecountComponent implements OnInit {
 
     if (this.employee.RoleId == "3") {
       this.isapprover = true;
+      this.showsubmitbuttonuser = false;
+      this.showsubmitbutton = true;
     }
     else {
       this.isapprover = false;
+      this.showsubmitbutton = false;
     }
 
     this.cols = [
@@ -61,6 +70,8 @@ export class CyclecountComponent implements OnInit {
    
   }
 
+  
+
   filterbystatus() {
     var st = this.status;
     if (st == "Approved" || st == "Rejected") {
@@ -71,6 +82,9 @@ export class CyclecountComponent implements OnInit {
       this.showApprovecolumn = true;
       this.showsubmitbutton = true;
     }
+    if (!this.isapprover) {
+      this.showsubmitbutton = false;
+    }
     var countlist = this.allCyclecountMaterialList.filter(function (element, index) {
       return (element.status == st);
     });
@@ -79,7 +93,7 @@ export class CyclecountComponent implements OnInit {
   }
 
   setapproval(e: any, data: any) {
-    debugger;
+    
     var data1 = e.target.value;
     if (data1 == 1) {
       data.isapprovalprocess = true;
@@ -97,7 +111,7 @@ export class CyclecountComponent implements OnInit {
 
 
   calculatedifference(data: any) {
-    debugger;
+   
     data.difference = Math.abs(data.physicalqty - data.availableqty);
     if (!isNullOrUndefined(data.physicalqty) && data.physicalqty > 0) {
       data.iscountprocess = true;
@@ -106,7 +120,7 @@ export class CyclecountComponent implements OnInit {
   }
 
   submit() {
-    debugger;
+   
     var countlist = this.CyclecountMaterialList.filter(function (element, index) {
       return (element.iscountprocess);
     });
@@ -127,7 +141,7 @@ export class CyclecountComponent implements OnInit {
 
   }
   approve() {
-    debugger;
+  
     var countlist = this.CyclecountPendingMaterialList.filter(function (element, index) {
       return (element.isapprovalprocess);
     });
@@ -143,7 +157,7 @@ export class CyclecountComponent implements OnInit {
   }
 
   getCyclecountPendingMaterialList() {
-    debugger;
+   
     this.CyclecountPendingMaterialList = [];
     this.spinner.show();
     this.wmsService.getCyclecountPendingList().subscribe(data => {
@@ -156,7 +170,7 @@ export class CyclecountComponent implements OnInit {
 
 
   getCyclecountMaterialList() {
-    debugger;
+  
     var limita = 0;
     var limitb = 0;
     var limitc = 0;
@@ -194,6 +208,50 @@ export class CyclecountComponent implements OnInit {
 
   }
 
+  showonDate() {
+    debugger;
+    var jsondata = JSON.parse(this.configmodel.notificationon);
+    var stdate = new Date(this.configmodel.startdate);
+    var enddt = new Date(this.configmodel.enddate);
+    var today = new Date();
+    var datestr = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
+    var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    var day = days[ new Date().getDay()];
+    var type = this.configmodel.notificationtype;
+    if (!isNullOrUndefined(jsondata) && jsondata.length > 0) {
+      for (var i = 0; i < jsondata.length; i++) {
+        if (type == "Day") {
+          if (jsondata[i].showday == day && today >= stdate && today <= enddt) {
+            this.showtouser = true;
+            this.showsubmitbuttonuser = true;
+            if (this.isapprover) {
+              this.showsubmitbuttonuser = false;
+            }
+            this.getCyclecountMaterialList();
+            
+            this.spinner.hide();
+            break;
+          }  
+        }
+        else if (type == "Date") {
+          var datetocompare = this.datePipe.transform(new Date(jsondata[i].showdate), 'yyyy-MM-dd'); 
+          if (datetocompare == datestr && today >= stdate && today <= enddt) {
+            this.showtouser = true;
+            this.showsubmitbuttonuser = true;
+            if (this.isapprover) {
+              this.showsubmitbuttonuser = false;
+            }
+            this.getCyclecountMaterialList();
+            this.spinner.hide();
+            break;
+          }  
+           
+        }
+      }
+    }
+  }
+  
+
 
  
   getCyclecountConfig() {
@@ -201,7 +259,7 @@ export class CyclecountComponent implements OnInit {
     this.CyclecountMaterialList = [];
     this.wmsService.getCyclecountConfig().subscribe(data => {
       this.configmodel = data;
-      this.getCyclecountMaterialList();
+      this.showonDate();
       this.spinner.hide();
     });
 

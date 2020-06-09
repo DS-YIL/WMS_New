@@ -54,7 +54,7 @@ export class Cyclecountconfig {
   startdate: Date;
   countall: number;
   notificationtype: string;
-  notificationon: any[];
+  notificationon: string;
 }
 
 
@@ -111,7 +111,7 @@ export class materialRequestDetails {
 export class daylist {
   description: string;
   showdate: Date;
-  showday: string;
+  showday: string = "";
 }
 
 export class gatepassModel {

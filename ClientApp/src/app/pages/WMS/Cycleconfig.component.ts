@@ -34,6 +34,8 @@ export class CycleconfigComponent implements OnInit {
   weekday1: string = "";
   weekday2: string = "";
   weekday3: string = "";
+  ShowDayList: daylist[] = [];
+
  
 
   ngOnInit() {
@@ -53,27 +55,53 @@ export class CycleconfigComponent implements OnInit {
   }
 
   setnotifydate() {
+    debugger;
+    
     this.showweekly = false;
     this.showbiweekly = false;
     this.showmonthly = false;
     this.showquarterly = false;
     this.showyearly = false;
+    var jsondata = JSON.parse(this.configmodel.notificationon);
+   
     var freq = this.configmodel.frequency;
     if (freq == "Weekly") {
       this.showweekly = true;
+      this.weekday1 = jsondata[0].showday;
     }
     else if (freq == "Twice in a week") {
       this.showbiweekly = true;
+      this.weekday2 = jsondata[0].showday;
+      this.weekday3 = jsondata[1].showday;
     }
     else if (freq == "Monthly") {
+      this.DayList = [];
       this.showmonthly = true;
+      for (var i = 0; i < jsondata.length; i++) {
+        var dl = new daylist();
+        dl.description = jsondata[i].description;
+        dl.showdate = new Date(jsondata[i].showdate);
+        dl.showday = ""
+        this.DayList.push(dl);
+      }
+
     }
     else if (freq == "Quarterly") {
+      this.DayList = [];
       this.showquarterly = true;
+      for (var i = 0; i < jsondata.length; i++) {
+        var dl = new daylist();
+        dl.description = jsondata[i].description;
+        dl.showdate = new Date(jsondata[i].showdate);
+        dl.showday = ""
+        this.DayList.push(dl);
+      }
+      
 
     }
     else if (freq == "Yearly") {
       this.showyearly = true;
+      this.yearlynotifdate = new Date(jsondata[0].showdate);
 
     }
 
@@ -81,7 +109,8 @@ export class CycleconfigComponent implements OnInit {
 
 
   updateCycleCountConfig() {
-    this.configmodel.notificationon = [];
+    debugger;
+   var notificationdata = [];
     var persum = this.configmodel.apercentage + this.configmodel.bpercentage + this.configmodel.cpercentage;
 
     if (persum > 100) {
@@ -99,40 +128,77 @@ export class CycleconfigComponent implements OnInit {
     if (this.configmodel.frequency == "Weekly" || this.configmodel.frequency == "Twice in a week") {
       this.configmodel.notificationtype = "Day";
       if (this.configmodel.frequency == "Weekly") {
+        if (isNullOrUndefined(this.weekday1) || this.weekday1 == "") {
+          this.messageService.add({ severity: 'error', summary: 'Validation Message', detail: 'Please select day.' });
+          return;
+        }
         var data = {
           "description": "Weekly",
-          "showday": this.weekday1
+          "showday": this.weekday1,
+          "showdate": ""
         }
-        this.configmodel.notificationon.push(data);
+        notificationdata.push(data);
 
       }
       else {
+        if (isNullOrUndefined(this.weekday2) || this.weekday2 == "") {
+          this.messageService.add({ severity: 'error', summary: 'Validation Message', detail: 'Please select day1.' });
+          return;
+        }
+        if (isNullOrUndefined(this.weekday3) || this.weekday3 == "") {
+          this.messageService.add({ severity: 'error', summary: 'Validation Message', detail: 'Please select day2.' });
+          return;
+        }
         var data = {
           "description": "Weekly",
-          "showday": this.weekday2
+          "showday": this.weekday2,
+          "showdate": ""
         }
         var data1 = {
           "description": "Weekly",
-          "showday": this.weekday3
+          "showday": this.weekday3,
+          "showdate": ""
         }
-        this.configmodel.notificationon.push(data);
-        this.configmodel.notificationon.push(data1);
+        notificationdata.push(data);
+        notificationdata.push(data1);
 
       }
     }
-    else if (this.configmodel.frequency == "Monthly" || this.configmodel.frequency == "Quarterly" || this.configmodel.frequency == "Yearly") {
+    else if (this.configmodel.frequency == "Monthly" || this.configmodel.frequency == "Quarterly") {
+      var countlist = this.DayList.filter(function (element, index) {
+        return (isNullOrUndefined(element.showdate));
+      });
+      if (countlist.length > 0) {
+        this.messageService.add({ severity: 'error', summary: 'validation Message', detail: 'Please select date for all.' });
+        return;
+
+      }
       this.configmodel.notificationtype = "Date";
       this.DayList.forEach(element => {
-        this.configmodel.notificationon.push(element);
+         notificationdata.push(element);
 
       });
 
     }
-    else {
-      this.configmodel.notificationtype = "Daily";
-      this.configmodel.notificationon = null;
+    else if (this.configmodel.frequency == "Yearly") {
+      this.configmodel.notificationtype = "Date";
+      if (isNullOrUndefined(this.yearlynotifdate)) {
+        this.messageService.add({ severity: 'error', summary: 'validation Message', detail: 'Please select date' });
+        return;
+      }
+      var data = {
+        "description": "Yearly",
+        "showdate": this.yearlynotifdate.toDateString(),
+        "showday": ""
+      }
+      notificationdata.push(data);
 
     }
+    else {
+      this.configmodel.notificationtype = "Daily";
+    }
+    this.configmodel.notificationon = JSON.stringify(notificationdata);
+
     this.spinner.show();
     this.wmsService.updateCyclecountconfig(this.configmodel).subscribe(data => {
       console.log(data);
@@ -266,11 +332,22 @@ export class CycleconfigComponent implements OnInit {
 
   setDaylist(stdate: Date, edate: Date, freq: string) {
     this.DayList = [];
+    var desc = "";
+    var jsondata = JSON.parse(this.configmodel.notificationon);
+    if (!isNullOrUndefined(jsondata) && jsondata.length > 0) {
+       desc = jsondata[0].description;
+    }
     debugger;
     var months = ["January","February","March","April","May","June","July","August","September","October","November","December"]
     if (freq == "Monthly") {
+      var desca = desc.split('(')[0];
+      if (months.includes(desca)) {
+        this.setnotifydate();
+        return;
+      }
       var date2year = edate.getFullYear();
       var date1year = stdate.getFullYear();
+      
       var startmonth = stdate.getMonth();
       var endmonth = edate.getMonth();
       var loopend = endmonth;
@@ -293,6 +370,10 @@ export class CycleconfigComponent implements OnInit {
 
     }
     if (freq == "Quarterly") {
+      if (desc.includes("Quarter")) {
+        this.setnotifydate();
+        return;
+      }
       var startmonth = stdate.getMonth();
       var endmonth = edate.getMonth();
       var loopend = endmonth;
@@ -306,6 +387,7 @@ export class CycleconfigComponent implements OnInit {
         this.DayList.push(day);
 
       }
+      
 
     }
 
