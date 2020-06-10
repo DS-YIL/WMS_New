@@ -23,6 +23,8 @@ import { ABCCategoryComponent } from './WMS/ABCCategory.component';
 import { FIFOComponent } from './WMS/FIFO.component';
 import { CyclecountComponent } from './WMS/Cyclecount.component';
 import { CycleconfigComponent } from './WMS/Cycleconfig.component';
+import { AssignRoleComponent } from './WMS/AssignRole.component';
+
 const routes: Routes = [{
   path: '',
   component: PagesComponent,
@@ -57,7 +59,8 @@ const routes: Routes = [{
     { path: "ABCAnalysis/:material", component: ABCAnalysisComponent, canActivate: [AuthGuard] },
     { path: "FIFOList", component: FIFOComponent, canActivate: [AuthGuard] },
     { path: "Cyclecount", component: CyclecountComponent, canActivate: [AuthGuard] },
-    { path: "Cycleconfig", component: CycleconfigComponent, canActivate: [AuthGuard] }
+    { path: "Cycleconfig", component: CycleconfigComponent, canActivate: [AuthGuard] },
+    { path: "AssignRole", component: AssignRoleComponent, canActivate: [AuthGuard] }
   ],
 }];
 

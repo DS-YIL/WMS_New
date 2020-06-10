@@ -56,5 +56,6 @@ namespace WMS.Interfaces
         Task<IEnumerable<OpenPoModel>> getASNList(string deliverdate);
         Task<IEnumerable<IssueRequestModel>> GetItemlocationListBymterial(string material);
         int updateissuedmaterial(List<IssueRequestModel> obj);
+        int assignRole(authUser authuser);
     }
 }

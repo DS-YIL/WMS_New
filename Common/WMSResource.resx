@@ -366,4 +366,7 @@ LINK:&lt;/p&gt;
   <data name="getitemlocationList" xml:space="preserve">
     <value>select distinct ygs.materialdescription,ygs.material,itemlocation,createddate,sk.itemid,availableqty from wms.wms_stock sk inner join wms."MaterialMasterYGS" ygs on ygs.material=sk.materialid where materialid='#materialid' and availableqty!=0 and sk.deleteflag=false</value>
   </data>
+  <data name="insertAuthUserData" xml:space="preserve">
+    <value>insert into wms.auth_users(authid,employeeid,roleid,createddate,createdby,deleteflag)values(default,@employeeid,@roleid,@createddate,@createdby,@deleteflag)returning authid</value>
+  </data>
 </root>

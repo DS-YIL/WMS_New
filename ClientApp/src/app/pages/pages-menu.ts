@@ -66,7 +66,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'list-outline',
     link: '/WMS/FIFOList'
   },
-   {
+  {
     title: 'Cycle Count',
     icon: 'list-outline',
     link: '/WMS/Cyclecount'
@@ -75,7 +75,18 @@ export const MENU_ITEMS: NbMenuItem[] = [
     title: 'Cycle Config',
     icon: 'list-outline',
     link: '/WMS/Cycleconfig'
-  }
-  
-  
+  },
+  {
+    title: 'Auth',
+    icon: 'lock-outline',
+    expanded: false,
+    children: [
+      {
+        title: 'Assign Role',
+        link: '/WMS/AssignRole',
+        icon: 'layers-outline'
+      },
+    ],
+  },
+
 ];

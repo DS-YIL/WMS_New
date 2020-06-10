@@ -41,6 +41,8 @@ import { FIFOComponent } from './WMS/FIFO.component';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { CyclecountComponent } from './WMS/Cyclecount.component';
 import { CycleconfigComponent } from './WMS/Cycleconfig.component';
+import { AssignRoleComponent } from './WMS/AssignRole.component';
+
 
 @NgModule({
   imports: [
@@ -88,7 +90,8 @@ import { CycleconfigComponent } from './WMS/Cycleconfig.component';
     ABCAnalysisComponent,
     FIFOComponent,
     CyclecountComponent,
-    CycleconfigComponent
+    CycleconfigComponent,
+    AssignRoleComponent
 
   ],
   providers: [MessageService, ConfirmationService],

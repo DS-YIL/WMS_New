@@ -188,6 +188,10 @@ export class wmsService {
     return this.http.post<any>(this.url + 'POData/updateMaterialavailabality', materialList, this.httpOptions);
   }
 
+  assignRole(authuser: any): Observable<any> {
+    return this.http.post<any>(this.url + 'POData/assignRole/', authuser, this.httpOptions);
+  }
+
   logout() {
     //localStorage.removeItem('Employee');
     this.currentUserSubject.next(null);

@@ -163,3 +163,10 @@ export class FIFOValues {
   materialid: string;
   issueqty: number;
 }
+
+export class authUser {
+  authid: number;
+  employeeid: number;
+  roleid: number;
+  createdby: string;
+}

@@ -2088,5 +2088,40 @@ namespace WMS.DAL
 				}
 			}
 		}
+
+		public int assignRole(authUser model)
+		{
+			using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
+			{
+
+				try
+				{
+					model.createddate = System.DateTime.Now;
+					string insertquery = WMSResource.insertAuthUserData;
+					model.deleteflag = false;
+					using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
+					{
+						var results = DB.ExecuteScalar(insertquery, new
+						{
+							model.employeeid,
+							model.roleid,
+							model.createddate,
+							model.createdby,
+							model.deleteflag
+						});
+						return (Convert.ToInt32(results));
+					}
+				}
+				catch (Exception Ex)
+				{
+					log.ErrorMessage("PODataProvider", "assignRole", Ex.StackTrace.ToString());
+					return 0;
+				}
+				finally
+				{
+					pgsql.Close();
+				}
+			}
+		}
 	}
 }

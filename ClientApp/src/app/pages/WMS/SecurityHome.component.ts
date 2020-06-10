@@ -26,6 +26,7 @@ export class SecurityHomeComponent implements OnInit {
   public dynamicData: DynamicSearchResult;
 
   ngOnInit() {
+
     this.router.events.pipe(
       filter((event: RouterEvent) => event instanceof NavigationEnd)
     ).subscribe(() => {
@@ -41,12 +42,15 @@ export class SecurityHomeComponent implements OnInit {
     this.Poinvoicedetails = new PoDetails();
     this.getcurrentDatePolist();
   }
+
+  //page refresh functionality
   refresh() {
     this.PoDetails = new PoDetails();
     this.Poinvoicedetails = new PoDetails();
     this.disSaveBtn = false;
     this.showDetails = false;
   }
+
   //get open po's based on current date(advance shipping notification list)
   getcurrentDatePolist() {
     this.spinner.show();
@@ -85,7 +89,7 @@ export class SecurityHomeComponent implements OnInit {
   //update invoice no
   onsaveSecDetails() {
     //need to generate barcode
-    if (this.PoDetails.invoiceno) {
+    if (this.Poinvoicedetails.invoiceno) {
       this.spinner.show();
       this.BarcodeModel = new BarcodeModel();
       this.BarcodeModel.paitemid = 1;;
