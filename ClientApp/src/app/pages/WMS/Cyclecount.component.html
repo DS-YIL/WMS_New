@@ -4,12 +4,17 @@
       <div class="card-header text-center" style="padding-top: 3px; font-size: medium;">
         <span style="color: white;padding-top: 20px;">Cycle count </span>
         <button type="button" *ngIf="showsubmitbutton" style="border-radius: 10em!important;background-color: rgb(18, 88, 121)!important;color: #fff;float:right;margin-left: 5px;" rounded="true" size="lg" class="my-0" (click)="submit()">Submit</button>
+        <button type="button" *ngIf="showsubmitbuttonuser" style="border-radius: 10em!important;background-color: rgb(18, 88, 121)!important;color: #fff;float:right;margin-left: 5px;" rounded="true" size="lg" class="my-0" (click)="submit()">Submit</button>
       </div>
 
     </div>
   </div>
+  <div class="row" style="margin-top:10px" *ngIf="!isapprover && !showtouser">
+    <h4 style="color:brown">&nbsp;&nbsp;Today's day/date is not specified for cycle count.</h4>
 
-  <div class="row" style="margin-top:10px" *ngIf="!isapprover">
+  </div>
+
+  <div class="row" style="margin-top:10px" *ngIf="!isapprover && showtouser">
   
 
     <div style="margin-top:5px;">

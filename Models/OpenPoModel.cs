@@ -304,11 +304,12 @@ namespace WMS.Models
 		public DateTime startdate { get; set; }
 		public string notificationtype { get; set; }
 
-		public object[] notificatioon { get; set; }
+		public string notificationon { get; set; }
 
 		public int countall { get; set; }
 
 	}
+
 	public class FIFOModel
 	{
 		public string materialid { get; set; }

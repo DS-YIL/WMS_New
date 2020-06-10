@@ -97,7 +97,7 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to select * from wms.wms_stock where availableqty=#availableqty limit 1.
+        ///   Looks up a localized string similar to select * from wms.wms_stock where availableqty &gt;=#availableqty limit 1.
         /// </summary>
         public static string checkqty {
             get {
@@ -240,8 +240,8 @@ namespace WMS.Common {
         ///   Looks up a localized string similar to select ygs.materialdescription,emp.name,* from wms.wms_gatepass gate
         ///   left join wms.wms_gatepassmaterial mat on gate.gatepassid=mat.gatepassid 
         ///   left join wms.employee emp on emp.employeeno=gate.requestedby
-        ///   inner join wms.&quot;MaterialMasterYGS&quot; ygs on ygs.material=mat.materialid
-        ///   where gate.deleteflag=false  and mat.deleteflag=false order by gate.gatepassid desc.
+        ///   left join wms.&quot;MaterialMasterYGS&quot; ygs on ygs.material=mat.materialid and mat.deleteflag=false 
+        ///   where gate.deleteflag=false  order by gate.gatepassid desc.
         /// </summary>
         public static string getgatepasslist {
             get {
