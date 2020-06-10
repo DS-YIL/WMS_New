@@ -75,27 +75,27 @@ export class CycleconfigComponent implements OnInit {
       this.weekday3 = jsondata[1].showday;
     }
     else if (freq == "Monthly") {
-      this.DayList = [];
-      this.showmonthly = true;
-      for (var i = 0; i < jsondata.length; i++) {
-        var dl = new daylist();
-        dl.description = jsondata[i].description;
-        dl.showdate = new Date(jsondata[i].showdate);
-        dl.showday = ""
-        this.DayList.push(dl);
-      }
+      //this.DayList = [];
+      //this.showmonthly = true;
+      //for (var i = 0; i < jsondata.length; i++) {
+      //  var dl = new daylist();
+      //  dl.description = jsondata[i].description;
+      //  dl.showdate = new Date(jsondata[i].showdate);
+      //  dl.showday = ""
+      //  this.DayList.push(dl);
+      //}
 
     }
     else if (freq == "Quarterly") {
-      this.DayList = [];
-      this.showquarterly = true;
-      for (var i = 0; i < jsondata.length; i++) {
-        var dl = new daylist();
-        dl.description = jsondata[i].description;
-        dl.showdate = new Date(jsondata[i].showdate);
-        dl.showday = ""
-        this.DayList.push(dl);
-      }
+      //this.DayList = [];
+      //this.showquarterly = true;
+      //for (var i = 0; i < jsondata.length; i++) {
+      //  var dl = new daylist();
+      //  dl.description = jsondata[i].description;
+      //  dl.showdate = new Date(jsondata[i].showdate);
+      //  dl.showday = ""
+      //  this.DayList.push(dl);
+      //}
       
 
     }
@@ -164,22 +164,22 @@ export class CycleconfigComponent implements OnInit {
 
       }
     }
-    else if (this.configmodel.frequency == "Monthly" || this.configmodel.frequency == "Quarterly") {
-      var countlist = this.DayList.filter(function (element, index) {
-        return (isNullOrUndefined(element.showdate));
-      });
-      if (countlist.length > 0) {
-        this.messageService.add({ severity: 'error', summary: 'validation Message', detail: 'Please select date for all.' });
-        return;
+    //else if (this.configmodel.frequency == "Monthly" || this.configmodel.frequency == "Quarterly") {
+    //  var countlist = this.DayList.filter(function (element, index) {
+    //    return (isNullOrUndefined(element.showdate));
+    //  });
+    //  if (countlist.length > 0) {
+    //    this.messageService.add({ severity: 'error', summary: 'validation Message', detail: 'Please select date for all.' });
+    //    return;
 
-      }
-      this.configmodel.notificationtype = "Date";
-      this.DayList.forEach(element => {
-         notificationdata.push(element);
+    //  }
+    //  this.configmodel.notificationtype = "Date";
+    //  this.DayList.forEach(element => {
+    //     notificationdata.push(element);
 
-      });
+    //  });
 
-    }
+    //}
     else if (this.configmodel.frequency == "Yearly") {
       this.configmodel.notificationtype = "Date";
       if (isNullOrUndefined(this.yearlynotifdate)) {
@@ -284,7 +284,7 @@ export class CycleconfigComponent implements OnInit {
         this.showmonthly = true;
         var date2 = new Date(edate);
         var date1 = new Date(stdate);
-        this.setDaylist(date1, date2, freq);
+       // this.setDaylist(date1, date2, freq);
         var months = 0;
         months = (date2.getFullYear() - date1.getFullYear()) * 12;
         months -= date1.getMonth();
@@ -303,7 +303,7 @@ export class CycleconfigComponent implements OnInit {
         this.showquarterly = true;
         var date2 = new Date(edate);
         var date1 = new Date(stdate);
-        this.setDaylist(date1, date2, freq);
+        //this.setDaylist(date1, date2, freq);
         var months = 0;
         months = (date2.getFullYear() - date1.getFullYear()) * 12;
         months -= date1.getMonth();
@@ -340,11 +340,11 @@ export class CycleconfigComponent implements OnInit {
     debugger;
     var months = ["January","February","March","April","May","June","July","August","September","October","November","December"]
     if (freq == "Monthly") {
-      var desca = desc.split('(')[0];
-      if (months.includes(desca)) {
-        this.setnotifydate();
-        return;
-      }
+      //var desca = desc.split('(')[0];
+      //if (months.includes(desca)) {
+      //  this.setnotifydate();
+      //  return;
+      //}
       var date2year = edate.getFullYear();
       var date1year = stdate.getFullYear();
       
@@ -370,10 +370,10 @@ export class CycleconfigComponent implements OnInit {
 
     }
     if (freq == "Quarterly") {
-      if (desc.includes("Quarter")) {
-        this.setnotifydate();
-        return;
-      }
+      //if (desc.includes("Quarter")) {
+      //  this.setnotifydate();
+      //  return;
+      //}
       var startmonth = stdate.getMonth();
       var endmonth = edate.getMonth();
       var loopend = endmonth;

@@ -259,7 +259,12 @@ export class CyclecountComponent implements OnInit {
     this.CyclecountMaterialList = [];
     this.wmsService.getCyclecountConfig().subscribe(data => {
       this.configmodel = data;
-      this.showonDate();
+      this.showsubmitbuttonuser = true;
+      if (this.isapprover) {
+        this.showsubmitbuttonuser = false;
+      }
+      this.getCyclecountMaterialList();
+      //this.showonDate();
       this.spinner.hide();
     });
 
