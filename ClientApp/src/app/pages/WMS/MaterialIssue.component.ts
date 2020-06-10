@@ -24,7 +24,8 @@ export class MaterialIssueComponent implements OnInit {
   public selectedlist: Array<searchList> = [];
   public selectedItem: searchList;
   public searchresult: Array<object> = [];
-
+  public AddDialog: boolean;
+  public id: number;
   public MaterialRequestForm: FormGroup
   public materialissueList: Array<any> = [];
   public employee: Employee;
@@ -32,6 +33,10 @@ export class MaterialIssueComponent implements OnInit {
   public materialRequestDetails: materialRequestDetails;
   public requestId: string;
   public Oldestdata: FIFOValues;
+  public itemlocationData: Array<any> = [];
+  public showavailableqtyList: boolean = false;
+  public showdialog: boolean = false;
+  public txtDisable: boolean = true;
   ngOnInit() {
     if (localStorage.getItem("Employee"))
       this.employee = JSON.parse(localStorage.getItem("Employee"));
@@ -47,6 +52,30 @@ export class MaterialIssueComponent implements OnInit {
 
     this.getmaterialIssueListbyrequestid();
 
+  }
+  issuematerial(itemlocationData, id) {
+    var totalissuedqty = 0;
+    this.itemlocationData.forEach(item => {
+      if (item.issuedquantity!=0)
+        totalissuedqty = totalissuedqty + (item.issuedquantity);
+    });
+    (<HTMLInputElement>document.getElementById("totalissuedqtyid")).value = totalissuedqty.toString();
+    this.txtDisable = true;
+    this.AddDialog = false;
+  }
+  Cancel() {
+    this.AddDialog = false;
+  }
+  showmateriallocationList(material, $event) {
+    this.id = $event.target.id;
+    this.AddDialog = true;
+    this.wmsService.getItemlocationListByMaterial(material).subscribe(data => {
+      this.itemlocationData = data;
+      this.showdialog = true;
+      if (data != null) {
+       
+      }
+    });
   }
   alertconfirm(data) {
     var info = data;
@@ -87,6 +116,8 @@ export class MaterialIssueComponent implements OnInit {
   getmaterialIssueListbyrequestid() {
     this.wmsService.getmaterialIssueListbyrequestid(this.requestId).subscribe(data => {
       this.materialissueList = data;
+      if (this.materialissueList.length != 0)
+        this.showavailableqtyList = true;
       this.materialissueList.forEach(item => {
         if (!item.issuedquantity)
           item.issuedquantity = item.requestedquantity;
@@ -106,14 +137,20 @@ export class MaterialIssueComponent implements OnInit {
   //requested quantity update
   onMaterialIssueDeatilsSubmit() {
     this.spinner.show();
-    this.wmsService.approvematerialrequest(this.materialissueList).subscribe(data => {
-      this.spinner.hide();
-      if (data)
-        this.messageService.add({ severity: 'sucess', summary: 'sucee Message', detail: 'Status updated' });
-      else
-        this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Update Failed' });
+    this.wmsService.UpdateMaterialqty(this.itemlocationData).subscribe(data => {
+      if (data ==1) {
+        this.wmsService.approvematerialrequest(this.materialissueList).subscribe(data => {
+          this.spinner.hide();
+          if (data)
+            this.messageService.add({ severity: 'sucess', summary: 'sucee Message', detail: 'Status updated' });
+          else
+            this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Update Failed' });
 
-    });
+        });
+      }
+
+    })
+    
 
   }
 }

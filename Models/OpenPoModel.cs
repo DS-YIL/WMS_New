@@ -154,6 +154,11 @@ namespace WMS.Models
         public string Materialdescription { get; set; }
 		public DateTime createddate { get; set; }
 		public int availableqty { get; set; }
+		public string itemlocation { get; set; }
+		public int issuedqty { get; set; }
+
+
+
 	}
     public class sequencModel
     {

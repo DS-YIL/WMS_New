@@ -181,6 +181,12 @@ export class wmsService {
   getASNList(currentDate: string): Observable<any> {
     return this.http.get<any>(this.url + 'POData/getASNList?deliverydate=' + currentDate,this.httpOptions);
   }
+  getItemlocationListByMaterial(material: string): Observable<any> {
+    return this.http.get<any>(this.url + 'POData/GetItemLocationListByMaterial?material=' + material, this.httpOptions);
+  }
+  UpdateMaterialqty(materialList: any): Observable<any> {
+    return this.http.post<any>(this.url + 'POData/updateMaterialavailabality', materialList, this.httpOptions);
+  }
 
   logout() {
     //localStorage.removeItem('Employee');

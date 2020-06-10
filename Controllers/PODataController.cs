@@ -258,6 +258,19 @@ namespace WMS.Controllers
 
             return this._poService.getASNList(deliverydate);
         }
+
+        [HttpGet("GetItemLocationListByMaterial")]
+        public async Task<IEnumerable<IssueRequestModel>> getitemlocationBymaterial(string material)
+        {
+
+            return await this._poService.GetItemlocationListBymterial(material);
+        }
+        [HttpPost("updateMaterialavailabality")]
+        public int updateMaterialavailabality([FromBody]List<IssueRequestModel> model)
+        {
+
+            return  this._poService.updateissuedmaterial(model);
+        }
         //[HttpPost("securitysendemail")]
         //public EmailModel sendemail(EmailModel obj)
         //{

@@ -2011,5 +2011,82 @@ namespace WMS.DAL
 
 			}
 		}
+
+		public async Task<IEnumerable<IssueRequestModel>> GetItemlocationListBymterial(string material)
+		{
+			using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
+			{
+
+				try
+				{
+					string query = WMSResource.getitemlocationList.Replace("#materialid", material);
+
+
+					 await pgsql.OpenAsync();
+					 return await pgsql.QueryAsync<IssueRequestModel>(
+					   query, null, commandType: CommandType.Text);
+
+
+				}
+				catch (Exception Ex)
+				{
+					log.ErrorMessage("PODataProvider", "GetItemlocationListBymterial", Ex.StackTrace.ToString());
+					return null;
+				}
+				finally
+				{
+					pgsql.Close();
+				}
+
+			}
+		}
+
+		public int updateissuedmaterial(List<IssueRequestModel> obj)
+		{
+			using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
+			{
+
+				try
+				{
+					foreach (var item in obj)
+					{
+
+						string insertforinvoicequery = WMSResource.insertFIFOdata;
+						using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
+						{
+							//var results = DB.ExecuteScalar(insertforinvoicequery, new
+							//{
+							//	item.itemid,
+							//	item.materialid,
+							//	item.pono
+
+							//});
+							int availableqty = item.availableqty - item.issuedquantity;
+
+							string insertqueryforstatusforqty = WMSResource.updateqtyafterissue.Replace("#itemid", Convert.ToString(item.itemid)).Replace("#availableqty", Convert.ToString(availableqty));
+
+							var data1 = DB.ExecuteScalar(insertqueryforstatusforqty, new
+							{
+
+							});
+
+						}
+					}
+
+
+					//}
+					return (1);
+				}
+				catch (Exception Ex)
+				{
+					log.ErrorMessage("PODataProvider", "FIFOitemsupdate", Ex.StackTrace.ToString());
+					return 0;
+				}
+				finally
+				{
+					pgsql.Close();
+				}
+			}
+		}
 	}
 }
