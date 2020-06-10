@@ -124,6 +124,22 @@ namespace WMS.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;html&gt;&lt;meta charset=\&quot;ISO-8859-1\&quot;&gt;&lt;head&gt;&lt;link rel =&apos;stylesheet&apos; href =&apos;https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css&apos;&gt;&lt;/head&gt;
+        ///&lt;body&gt;&lt;div class=&apos;container&apos;&gt;
+        ///&lt;p&gt;Dear #user,&lt;/p&gt;
+        ///&lt;p&gt;#subbody&lt;/p&gt;
+        ///&lt;p&gt;
+        ///LINK:&lt;/p&gt;
+        ///&lt;a href=&quot;http://10.29.15.183:100/WMS/Login&quot;&gt;http://10.29.15.183:100/WMS/Login&lt;/a&gt;
+        ///&lt;p style=&apos;margin-bottom:0px;&apos;&gt;Regards,&lt;/p&gt;&lt;p&gt; #sender.&lt;/p&gt;&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;.
+        /// </summary>
+        public static string emailbody {
+            get {
+                return ResourceManager.GetString("emailbody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to select * from wms.wms_rd_category where deleteflag=false.
         /// </summary>
         public static string getabccategorydata {
@@ -192,7 +208,7 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to select * from wms.wms_materialrequest where requestid=#requestid.
+        ///   Looks up a localized string similar to select * from wms.wms_materialrequest req inner join wms.wms_stock sk on req.requestid=sk.itemid where requestid=#requestid and req.deleteflag=false.
         /// </summary>
         public static string GetdetailsByrequestid {
             get {
@@ -484,7 +500,7 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to INSERT INTO wms.wms_materialrequest(requestforissueid,quantity,approveremailid,approverid,pono,materialid,requesterid,requestid,requestedquantity)VALUES(default,@quantity,@approveremailid,@approverid,@pono,@materialid,@requesterid,@requestid,@requestedquantity).
+        ///   Looks up a localized string similar to INSERT INTO wms.wms_materialrequest(requestforissueid,quantity,approveremailid,approverid,pono,materialid,requesterid,requestid,requestedquantity,requesteddate,deleteflag)VALUES(default,@quantity,@approveremailid,@approverid,@pono,@materialid,@requesterid,@requestid,@requestedquantity,current_date,false).
         /// </summary>
         public static string materialquest {
             get {
@@ -493,7 +509,7 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to select distinct * from   wms.wms_storeinward inw inner join  wms.wms_securityinward inwmaster on inw.inwmasterid = inwmaster.inwmasterid inner join wms.openpolistview openpo on openpo.pono = inwmaster.pono left join wms.wms_materialrequest req on req.pono = openpo.pono where req.ackstatus is not null.
+        ///   Looks up a localized string similar to select distinct * from   wms.wms_stock  sk inner join wms.openpolistview openpo on openpo.material = sk.materialid left join wms.wms_materialrequest req on req.pono = openpo.pono where req.ackstatus is not null and req.deleteflag=false.
         /// </summary>
         public static string materialrequestquery {
             get {

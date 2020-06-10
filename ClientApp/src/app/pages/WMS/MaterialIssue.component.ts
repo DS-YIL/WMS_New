@@ -5,16 +5,16 @@ import { wmsService } from '../../WmsServices/wms.service';
 import { constants } from '../../Models/WMSConstants';
 import { Employee, DynamicSearchResult, searchList } from '../../Models/Common.Model';
 import { NgxSpinnerService } from "ngx-spinner";
-import { materialRequestDetails } from 'src/app/Models/WMS.Model';
+import { materialRequestDetails, FIFOValues } from 'src/app/Models/WMS.Model';
 import { MessageService } from 'primeng/api';
-
+import { ConfirmationService } from 'primeng/api';
 @Component({
   selector: 'app-MaterialIsuue',
   templateUrl: './MaterialIssue.component.html'
 })
 export class MaterialIssueComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private messageService: MessageService, private wmsService: wmsService, private route: ActivatedRoute, private router: Router, public constants: constants, private spinner: NgxSpinnerService) { }
+  constructor(private ConfirmationService: ConfirmationService, private formBuilder: FormBuilder, private messageService: MessageService, private wmsService: wmsService, private route: ActivatedRoute, private router: Router, public constants: constants, private spinner: NgxSpinnerService) { }
 
   public formName: string;
   public txtName: string;
@@ -31,7 +31,7 @@ export class MaterialIssueComponent implements OnInit {
   public displayItemRequestDialog; RequestDetailsSubmitted: boolean = false;
   public materialRequestDetails: materialRequestDetails;
   public requestId: string;
-
+  public Oldestdata: FIFOValues;
   ngOnInit() {
     if (localStorage.getItem("Employee"))
       this.employee = JSON.parse(localStorage.getItem("Employee"));
@@ -48,7 +48,42 @@ export class MaterialIssueComponent implements OnInit {
     this.getmaterialIssueListbyrequestid();
 
   }
+  alertconfirm(data) {
+    var info = data;
+    this.ConfirmationService.confirm({
+      message: 'Same Material received on ' + data.createddate + ' and placed in ' + data.itemlocation + '  location, Would you like to continue?',
+      header: 'Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
 
+        this.messageService.add({ severity: 'info', summary: 'Accepted', detail: 'You have accepted' });
+      },
+      reject: () => {
+
+        this.messageService.add({ severity: 'info', summary: 'Ignored', detail: 'You have ignored' });
+      }
+    });
+  }
+  checkissueqty($event, entredvalue, maxvalue, material, createddate) {
+    var id = $event.target.id;
+    if (entredvalue > maxvalue) {
+      this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Please enter issue quantity less than Available quantity' });
+
+      (<HTMLInputElement>document.getElementById(id)).value = "";
+    }
+    else {
+
+      this.wmsService.checkoldestmaterial(material, createddate).subscribe(data => {
+        this.Oldestdata = data;
+        if (data != null) {
+          this.alertconfirm(this.Oldestdata);
+        }
+        //this.calculateTotalQty();
+        //this.calculateTotalPrice();
+        this.spinner.hide();
+      });
+    }
+  }
   getmaterialIssueListbyrequestid() {
     this.wmsService.getmaterialIssueListbyrequestid(this.requestId).subscribe(data => {
       this.materialissueList = data;
@@ -60,12 +95,12 @@ export class MaterialIssueComponent implements OnInit {
   }
 
   //check validations for issuer quantity
-reqQtyChange(data: any) {
-  if (data.issuedquantity > data.quantity) {
-    this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'issued Quantity should be lessthan or equal to available quantity' });
-    data.issuedquantity = data.quantity;
+  reqQtyChange(data: any) {
+    if (data.issuedquantity > data.quantity) {
+      this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'issued Quantity should be lessthan or equal to available quantity' });
+      data.issuedquantity = data.quantity;
+    }
   }
-}
 
 
   //requested quantity update
