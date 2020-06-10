@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using WMS.Interfaces;
 using WMS.Models;
 using System.Globalization;
+using WMS.Common;
 
 namespace WMS.Controllers
 {
@@ -17,7 +18,7 @@ namespace WMS.Controllers
     public class PODataController : ControllerBase
     {
         private IPodataService<OpenPoModel> _poService;
-
+        EmailUtilities emailobj = new EmailUtilities();
         public PODataController(IPodataService<OpenPoModel> poService)
         {
             _poService = poService;
@@ -257,6 +258,11 @@ namespace WMS.Controllers
 
             return this._poService.getASNList(deliverydate);
         }
+        //[HttpPost("securitysendemail")]
+        //public EmailModel sendemail(EmailModel obj)
+        //{
+        //    return this.emailobj.sendEmail(obj,1);
+        //}
 
     }
 }

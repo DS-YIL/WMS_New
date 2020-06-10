@@ -152,7 +152,9 @@ namespace WMS.Models
         public string Material { get; set; }
         public string ackremarks { get; set; }
         public string Materialdescription { get; set; }
-    }
+		public DateTime createddate { get; set; }
+		public int availableqty { get; set; }
+	}
     public class sequencModel
     {
         public int id { get; set; }
@@ -321,5 +323,22 @@ namespace WMS.Models
 		public string pono { get; set; }
 		public int itemid { get; set; }
 		public int issueqty { get;set; }
+	}
+	public class EmailModel
+	{
+		public string FrmEmailId { get; set; }
+		public string ToEmailId { get; set; }
+		public string CC { get; set; }
+		public string Subjecttype { get; set; }
+		public string pono { get; set; }
+		public string jobcode { get; set; }
+		public string invoiceno { get; set; }
+		public string ToEmpName { get; set; }
+		public string sendername { get; set; }
+
+	}
+	public class employeeModel
+	{
+		public string name { get; set; }
 	}
 }
