@@ -35,6 +35,7 @@ export class MaterialIssueComponent implements OnInit {
   public Oldestdata: FIFOValues;
   public itemlocationData: Array<any> = [];
   public showavailableqtyList: boolean = false;
+  public showissueqtyOKorCancel: boolean = true;
   public showdialog: boolean = false;
   public txtDisable: boolean = true;
   ngOnInit() {
@@ -53,10 +54,10 @@ export class MaterialIssueComponent implements OnInit {
     this.getmaterialIssueListbyrequestid();
 
   }
-  issuematerial(itemlocationData, id) {
+  issuematerial(itemlocationData) {
     var totalissuedqty = 0;
     this.itemlocationData.forEach(item => {
-      if (item.issuedquantity!=0)
+      if (item.issuedquantity != 0)
         totalissuedqty = totalissuedqty + (item.issuedquantity);
     });
     (<HTMLInputElement>document.getElementById("totalissuedqtyid")).value = totalissuedqty.toString();
@@ -66,6 +67,7 @@ export class MaterialIssueComponent implements OnInit {
   Cancel() {
     this.AddDialog = false;
   }
+  //shows list of items for particular material
   showmateriallocationList(material, $event) {
     this.id = $event.target.id;
     this.AddDialog = true;
@@ -73,10 +75,11 @@ export class MaterialIssueComponent implements OnInit {
       this.itemlocationData = data;
       this.showdialog = true;
       if (data != null) {
-       
+
       }
     });
   }
+  //show alert about oldest item location
   alertconfirm(data) {
     var info = data;
     this.ConfirmationService.confirm({
@@ -93,6 +96,7 @@ export class MaterialIssueComponent implements OnInit {
       }
     });
   }
+  //check issued quantity
   checkissueqty($event, entredvalue, maxvalue, material, createddate) {
     var id = $event.target.id;
     if (entredvalue > maxvalue) {
@@ -119,8 +123,11 @@ export class MaterialIssueComponent implements OnInit {
       if (this.materialissueList.length != 0)
         this.showavailableqtyList = true;
       this.materialissueList.forEach(item => {
-        if (!item.issuedquantity)
-          item.issuedquantity = item.requestedquantity;
+        //if (!item.issuedquantity)
+        //  item.issuedquantity = item.requestedquantity;
+        if (item.requestedquantity == item.issuedquantity)
+          this.showissueqtyOKorCancel = false;
+        //(<HTMLInputElement>document.getElementById('footerdiv')).style.display = "none";
       });
     });
   }
@@ -137,20 +144,22 @@ export class MaterialIssueComponent implements OnInit {
   //requested quantity update
   onMaterialIssueDeatilsSubmit() {
     this.spinner.show();
+
     this.wmsService.UpdateMaterialqty(this.itemlocationData).subscribe(data => {
-      if (data ==1) {
+      if (data == 1) {
+        this.materialissueList.forEach(item => {
+          item.issuedqty = (<HTMLInputElement>document.getElementById('totalissuedqtyid')).value;
+        });
+
         this.wmsService.approvematerialrequest(this.materialissueList).subscribe(data => {
           this.spinner.hide();
           if (data)
-            this.messageService.add({ severity: 'sucess', summary: 'sucee Message', detail: 'Status updated' });
+            this.messageService.add({ severity: 'success', summary: 'sucee Message', detail: 'Status updated' });
           else
             this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Update Failed' });
 
         });
       }
-
     })
-    
-
   }
 }
