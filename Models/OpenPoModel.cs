@@ -346,13 +346,4 @@ namespace WMS.Models
 	{
 		public string name { get; set; }
 	}
-	public class authUser
-	{
-		public int authid { get; set; }
-		public int employeeid { get; set; }
-		public int roleid { get; set; }
-		public DateTime createddate { get; set; }
-		public string createdby { get; set; }
-		public bool deleteflag { get; set; }
-	}
 }
