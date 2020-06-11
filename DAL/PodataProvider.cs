@@ -2142,8 +2142,6 @@ namespace WMS.DAL
 				{
 					string query = WMSResource.getUserAcessNames.Replace("#employeeid", employeeid);
 					query = query.Replace("#roleid", roleid);
-
-					 await pgsql.OpenAsync();
 					 await pgsql.OpenAsync();
 					return await pgsql.QueryAsync<userAcessNamesModel>(
 					  query, null, commandType: CommandType.Text);

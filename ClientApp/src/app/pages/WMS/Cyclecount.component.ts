@@ -44,7 +44,7 @@ export class CyclecountComponent implements OnInit {
       this.router.navigateByUrl("Login");
 
 
-    if (this.employee.RoleId == "3") {
+    if (this.employee.roleid == "3") {
       this.isapprover = true;
       this.showsubmitbuttonuser = false;
       this.showsubmitbutton = true;

@@ -3,9 +3,17 @@ import { Injectable, Inject } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-export class commonComponent{
+export class commonComponent {
   constructor() { }
 
+  //animattion
+  public animateCSS(formId, animatepostion) {
+    const element = document.getElementById(formId);
+    element.classList.add('animated', animatepostion);
+    element.addEventListener('animationend', function () {
+      element.classList.remove('animated', animatepostion);
+    })
+  }
 
   //export pdf
   exportPdf(exportColumns: any, List: any, fileName: any) {
@@ -37,7 +45,7 @@ export class commonComponent{
       FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
     });
   }
-  }
+}
 
 
 

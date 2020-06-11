@@ -4,8 +4,6 @@ import { wmsService } from '../../WmsServices/wms.service';
 import { constants } from '../../Models/WMSConstants';
 import { Employee, DynamicSearchResult } from '../../Models/Common.Model';
 import { NgxSpinnerService } from "ngx-spinner";
-import { commonComponent } from '../../WmsCommon/CommonCode';
-import { categoryValues } from '../../Models/WMS.Model';
 
 @Component({
   selector: 'app-ABCAnalysis',

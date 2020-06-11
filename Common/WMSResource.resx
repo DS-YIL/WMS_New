@@ -197,11 +197,11 @@ where itemid=#itemid</value>
     <value>select distinct * from   wms.wms_stock  sk inner join wms.openpolistview openpo on openpo.material = sk.materialid left join wms.wms_materialrequest req on req.pono = openpo.pono where req.ackstatus is not null and req.deleteflag=false</value>
   </data>
   <data name="queryforitemdetails" xml:space="preserve">
-    <value>select distinct * from wms.wms_storeinward inw 
-inner join wms.wms_securityinward inwa on inw.inwmasterid=inwa.inwmasterid 
+    <value>select distinct * from wms.wms_securityinward inw
+left join wms.wms_securityinward inwa on inw.inwmasterid=inwa.inwmasterid
 inner join wms.wms_stock stocks on  stocks.inwmasterid=inwa.inwmasterid
-inner join wms.openpolistview openpo on openpo.pono=inwa.pono 
-where inwa.grnnumber='#grnnumber' limit 10</value>
+inner join wms.openpolistview openpo on openpo.pono=inwa.pono
+where inwa.grnnumber='#grnnumber'</value>
   </data>
   <data name="statusupdatebySecurity" xml:space="preserve">
     <value>INSERT INTO wms.wms_trackstatus(pono,status,enteredon)VALUES(@pono,'Security Check Done',current_date)</value>
@@ -370,6 +370,6 @@ LINK:&lt;/p&gt;
     <value>insert into wms.auth_users(authid,employeeid,roleid,createddate,createdby,deleteflag)values(default,@employeeid,@roleid,@createddate,@createdby,@deleteflag)returning authid</value>
   </data>
   <data name="getUserAcessNames" xml:space="preserve">
-    <value>select * from v_getAccessList where employeeid='#employeeid' and roleid =roleid</value>
+    <value>select * from v_getAccessList where employeeid='#employeeid' and roleid =#roleid</value>
   </data>
 </root>

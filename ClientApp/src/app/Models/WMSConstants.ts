@@ -9,14 +9,6 @@ export class constants {
   public url = 'http://localhost:44318/';
   //public url = 'http://10.29.15.183:100/';
 
-  public animateCSS(formId, animatepostion) {
-    const element = document.getElementById(formId);
-    element.classList.add('animated', animatepostion);
-    element.addEventListener('animationend', function () {
-      element.classList.remove('animated', animatepostion);
-    })
-  }
-
 
   public dateFormat = "dd/MM/yyyy";
   public venderid: searchParams = { tableName: 'wms.VendorMaster', fieldId: 'vendorid', fieldName: 'vendorname', condition: " where  deleteflag=true and ", fieldAliasName: "", updateColumns: "Emailid" };

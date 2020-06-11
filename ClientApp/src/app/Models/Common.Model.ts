@@ -9,14 +9,14 @@ export class Employee {
   name: string;
   pwd: string;
   domainid: string;
-  RoleId: string;
+  roleid: string;
 }
 
 export class Login {
   Username: string;
   DomainId: string;
   Password: string;
-  RoleId: string;
+  roleid: string;
 }
 
 export class DynamicSearchResult {

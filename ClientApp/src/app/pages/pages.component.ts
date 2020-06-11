@@ -28,16 +28,16 @@ export class PagesComponent {
       MENU_ITEMS[3].hidden = true;
       MENU_ITEMS[4].hidden = true;
       MENU_ITEMS[5].hidden = true;
-      if (this.employee.RoleId == "1") {
+      if (this.employee.roleid == "1") {
         MENU_ITEMS[1].hidden = false;
         this.router.navigateByUrl('/WMS/Home');
       }
-      else if (this.employee.RoleId == "2") {
+      else if (this.employee.roleid == "2") {
         MENU_ITEMS[2].hidden = false;
         MENU_ITEMS[3].hidden = false;
         this.router.navigateByUrl('/WMS/GRNPosting');
       }
-      else if (this.employee.RoleId == "3") {
+      else if (this.employee.roleid == "3") {
         MENU_ITEMS[4].hidden = false;
         this.router.navigateByUrl('/WMS/WarehouseIncharge');
       }

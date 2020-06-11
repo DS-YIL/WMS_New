@@ -383,7 +383,7 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to select * from v_getAccessList where employeeid=&apos;#employeeid&apos; and roleid =roleid.
+        ///   Looks up a localized string similar to select * from v_getAccessList where employeeid=&apos;#employeeid&apos; and roleid =#roleid.
         /// </summary>
         public static string getUserAcessNames {
             get {
@@ -563,11 +563,11 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to select distinct * from wms.wms_storeinward inw 
-        ///inner join wms.wms_securityinward inwa on inw.inwmasterid=inwa.inwmasterid 
+        ///   Looks up a localized string similar to select distinct * from wms.wms_securityinward inw
+        ///left join wms.wms_securityinward inwa on inw.inwmasterid=inwa.inwmasterid
         ///inner join wms.wms_stock stocks on  stocks.inwmasterid=inwa.inwmasterid
-        ///inner join wms.openpolistview openpo on openpo.pono=inwa.pono 
-        ///where inwa.grnnumber=&apos;#grnnumber&apos; limit 10.
+        ///inner join wms.openpolistview openpo on openpo.pono=inwa.pono
+        ///where inwa.grnnumber=&apos;#grnnumber&apos;.
         /// </summary>
         public static string queryforitemdetails {
             get {

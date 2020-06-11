@@ -192,6 +192,10 @@ export class wmsService {
     return this.http.post<any>(this.url + 'POData/assignRole/', authuser, this.httpOptions);
   }
 
+  getuserAcessList(employeeId: any, roleid: any): Observable<any> {
+    return this.http.get<any>(this.url + 'POData/getuserAcessList?employeeid=' + employeeId + '&roleid=' + roleid, this.httpOptions);
+  }
+
   logout() {
     //localStorage.removeItem('Employee');
     this.currentUserSubject.next(null);
