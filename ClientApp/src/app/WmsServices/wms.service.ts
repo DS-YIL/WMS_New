@@ -68,8 +68,8 @@ export class wmsService {
     return this.http.get<inwardModel[]>(this.url + 'POData/Getthreewaymatchingdetails?PONO=' + PoNo + '', this.httpOptions);
   }
 
-  verifythreewaymatch(invoiceno: string, PoNo: string, quantity: string, projectCode: string, material: string): Observable<any> {
-    return this.http.get<any>(this.url + 'POData/verifythreewaymatch?PONO=' + PoNo + '&invoiceno=' + invoiceno + '&quantity=' + quantity + '&projectcode=' + projectCode + '&material=' + material + '', this.httpOptions);
+  verifythreewaymatch(PoNo: string): Observable<any> {
+    return this.http.get<any>(this.url + 'POData/verifythreewaymatch?pono=' + PoNo, this.httpOptions);
   }
 
   insertitems(inwardModel: inwardModel[]): Observable<any> {

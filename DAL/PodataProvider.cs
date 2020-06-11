@@ -170,7 +170,7 @@ namespace WMS.DAL
 			}
 		}
 
-		public bool VerifythreeWay(string pono, string invoiceno, int quantity, string projectcode, string material)
+		public bool VerifythreeWay(string pono, string invoiceno)
 		{
 			Boolean verify = false;
 			sequencModel obj = new sequencModel();
@@ -182,55 +182,67 @@ namespace WMS.DAL
 					pgsql.Open();
 					string lastinsertedgrn = WMSResource.lastinsertedgrn;
 
-					string query = WMSResource.Verifythreewaymatch.Replace("#pono", pono).Replace("#invoiceno", invoiceno).Replace("#quantity", quantity.ToString()).Replace("#projectcode", projectcode).Replace("#material", material);
+					string query = WMSResource.Verifythreewaymatch.Replace("#pono", pono).Replace("#invoiceno", invoiceno);
 					var info = pgsql.QuerySingle(
 					   query, null, commandType: CommandType.Text);
 					if (info != null)
 					{
-						verify = true;
-						int grnnextsequence = 0;
-						string grnnumber = string.Empty;
-						obj = pgsql.QuerySingle<sequencModel>(
-					   lastinsertedgrn, null, commandType: CommandType.Text);
-						if (obj.id != 0)
+						iwardmasterModel infos = new iwardmasterModel();
+						string queryforgrn = WMSResource.verifyGRNgenerated.Replace("#pono", pono).Replace("#invoiceno", invoiceno);
+						 infos = pgsql.QuerySingle<iwardmasterModel>(
+						   queryforgrn, null, commandType: CommandType.Text);
+						if (infos.grnnumber == null)
 						{
-							grnnextsequence = (Convert.ToInt32(obj.sequencenumber) + 1);
-							grnnumber = obj.sequenceid + "-" + obj.year + "-" + grnnextsequence.ToString().PadLeft(6, '0');
-							string updategrnnumber = WMSResource.updategrnnumber.Replace("#invoiceno", invoiceno).Replace("#pono", pono);
+							verify = true;
+							int grnnextsequence = 0;
+							string grnnumber = string.Empty;
+							obj = pgsql.QuerySingle<sequencModel>(
+						   lastinsertedgrn, null, commandType: CommandType.Text);
+							if (obj.id != 0)
+							{
+								grnnextsequence = (Convert.ToInt32(obj.sequencenumber) + 1);
+								grnnumber = obj.sequenceid + "-" + obj.year + "-" + grnnextsequence.ToString().PadLeft(6, '0');
+								string updategrnnumber = WMSResource.updategrnnumber.Replace("#invoiceno", invoiceno).Replace("#pono", pono);
+								using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
+								{
+									var results = DB.ExecuteScalar(updategrnnumber, new
+									{
+										grnnumber,
+
+									});
+								}
+								int id = obj.id;
+								string updateseqnumber = WMSResource.updateseqnumber;
+								using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
+								{
+									var results = DB.ExecuteScalar(updateseqnumber, new
+									{
+										grnnextsequence,
+										id,
+
+									});
+								}
+							}
+
+
+
+
+							else
+							{
+
+							}
+							string insertqueryforstatus = WMSResource.statusupdatebySecurity;
 							using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
 							{
-								var results = DB.ExecuteScalar(updategrnnumber, new
+								var results = DB.ExecuteScalar(insertqueryforstatus, new
 								{
-									grnnumber,
+									pono,
 
 								});
 							}
-							int id = obj.id;
-							string updateseqnumber = WMSResource.updateseqnumber;
-							using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
-							{
-								var results = DB.ExecuteScalar(updateseqnumber, new
-								{
-									grnnextsequence,
-									id,
-
-								});
-							}
-						}
-						else
-						{
-
-						}
-						string insertqueryforstatus = WMSResource.statusupdatebySecurity;
-						using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
-						{
-							var results = DB.ExecuteScalar(insertqueryforstatus, new
-							{
-								pono,
-
-							});
 						}
 					}
+
 					else
 					{
 						verify = false;

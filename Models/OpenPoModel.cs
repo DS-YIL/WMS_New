@@ -26,7 +26,8 @@ namespace WMS.Models
 		public string status { get; set; }
 		public int returnqty { get; set; }
         public int vendorid { get; set; }
-    }
+		public string grnnumber { get; set; }
+	}
 	public class BarcodeModel
 	{
 		public int departmentid { get; set; }

@@ -62,28 +62,42 @@ export class StoreClerkComponent implements OnInit {
       this.PoDetails.pono;
       this.PoDetails.invoiceno;
       this.spinner.show();
-      this.wmsService.Getthreewaymatchingdetails(this.PoDetails.pono).subscribe(data => {
+      this.wmsService.verifythreewaymatch(this.PoDetails.pono).subscribe(data => {
+        //this.wmsService.verifythreewaymatch("123", "228738234", "1", "SK19VASP8781").subscribe(data => {
         this.spinner.hide();
-        if (data) {
-          // this.PoDetails = data[0];
-          this.podetailsList = data;
-          this.grnnumber = this.podetailsList[0].grnnumber;
-          this.showDetails = true;
+        if (data == true) {
+          this.showQtyUpdateDialog = true;
+          this.getponodetails(this.PoDetails.pono);
+          this.messageService.add({ severity: 'success', summary: 'Success Message', detail: 'GRN Posted  Sucessfully' });
         }
         else
-          this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'No data' });
+          this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Already verified' });
+        this.getponodetails(this.PoDetails.pono);
       })
+     
     }
 
 
   }
-
+  getponodetails(data) {
+    this.wmsService.Getthreewaymatchingdetails(data).subscribe(data => {
+      this.spinner.hide();
+      if (data) {
+        // this.PoDetails = data[0];
+        this.podetailsList = data;
+        this.grnnumber = this.podetailsList[0].grnnumber;
+        this.showDetails = true;
+      }
+      else
+        this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'No data' });
+    })
+  }
 
   onVerifyDetails(details: any) {
     this.spinner.show();
     this.PoDetails = details;
     this.inwardModel.grndate = new Date();
-    this.wmsService.verifythreewaymatch(this.PoDetails.invoiceno, this.PoDetails.pono, this.PoDetails.quotationqty, this.PoDetails.projectcode, this.PoDetails.material).subscribe(data => {
+    this.wmsService.verifythreewaymatch(details).subscribe(data => {
       //this.wmsService.verifythreewaymatch("123", "228738234", "1", "SK19VASP8781").subscribe(data => {
       this.spinner.hide();
       if (data == true) {
@@ -100,6 +114,7 @@ export class StoreClerkComponent implements OnInit {
   onsubmitGRN() {
     if (this.podetailsList.length > 0) {
       this.spinner.show();
+     // this.onVerifyDetails(this.podetailsList);
       this.inwardModel.pono = this.PoDetails.pono;
       this.inwardModel.receivedqty = this.PoDetails.quotationqty;
       this.inwardModel.receivedby = this.inwardModel.qcby = this.employee.employeeno;
