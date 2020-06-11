@@ -1,3 +1,11 @@
+/*
+    Name of File : <<AssignRole>>  Author :<<prasanna>>
+    Date of Creation <<11-06-2020>>
+    Purpose : <<master page to Assign Roles for each employee>>
+    Review Date :<<>>   Reviewed By :<<>>
+    Version : 0.1 <change version only if there is major change - new release etc>
+    Sourcecode Copyright : Yokogawa India Limited
+*/
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { wmsService } from '../../WmsServices/wms.service';
@@ -38,7 +46,7 @@ export class AssignRoleComponent implements OnInit {
   //get EmployeeList
   getEmployees() {
     this.dynamicData = new DynamicSearchResult();
-    this.dynamicData.query = "select * from wms.employee e where dol  is null and orgdepartmentid in(1,14,35,9) order by name";
+    this.dynamicData.query = "select * from v_getAssignRoleEmployees";
     this.wmsService.GetListItems(this.dynamicData).subscribe(data => {
       this.employeeModel = data;
       //alert();
@@ -54,6 +62,7 @@ export class AssignRoleComponent implements OnInit {
     })
   }
 
+  //get autherization userslist
   getauthUserList() {
     this.dynamicData = new DynamicSearchResult();
     this.dynamicData.query = "select * from wms.auth_users";

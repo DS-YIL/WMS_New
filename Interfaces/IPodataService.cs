@@ -57,5 +57,6 @@ namespace WMS.Interfaces
         Task<IEnumerable<IssueRequestModel>> GetItemlocationListBymterial(string material);
         int updateissuedmaterial(List<IssueRequestModel> obj);
         int assignRole(authUser authuser);
+        Task<IEnumerable<userAcessNamesModel>> getuserAcessList(string employeeid, string roleid);
     }
 }

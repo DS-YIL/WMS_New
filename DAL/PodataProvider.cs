@@ -2088,7 +2088,11 @@ namespace WMS.DAL
 				}
 			}
 		}
-
+		
+		//Name of Function : <<AssignRoles>>  Author :<<prasanna>>  
+		//Date of Creation <<10-06-2020>>
+		//Purpose : <<insert method to Asssign roles for employee >>
+		//Review Date :<<>>   Reviewed By :<<>>
 		public int assignRole(authUser model)
 		{
 			using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
@@ -2121,6 +2125,40 @@ namespace WMS.DAL
 				{
 					pgsql.Close();
 				}
+			}
+		}
+
+
+		//Name of Function : <<getuserAcessList>>  Author :<<prasanna>>  
+		//Date of Creation <<11-06-2020>>
+		//Purpose : <<function used to get Acessnames list based on employeeid,roleid >>
+		//Review Date :<<>>   Reviewed By :<<>>
+		public async Task<IEnumerable<userAcessNamesModel>> getuserAcessList(string employeeid, string roleid)
+		{
+			using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
+			{
+
+				try
+				{
+					string query = WMSResource.getUserAcessNames.Replace("#employeeid", employeeid);
+					query = query.Replace("#roleid", roleid);
+
+					 await pgsql.OpenAsync();
+					 await pgsql.OpenAsync();
+					return await pgsql.QueryAsync<userAcessNamesModel>(
+					  query, null, commandType: CommandType.Text);
+
+				}
+				catch (Exception Ex)
+				{
+					log.ErrorMessage("PODataProvider", "getuserAcessList", Ex.StackTrace.ToString());
+					return null;
+				}
+				finally
+				{
+					pgsql.Close();
+				}
+
 			}
 		}
 	}

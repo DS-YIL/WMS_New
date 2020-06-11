@@ -279,6 +279,13 @@ namespace WMS.Controllers
 			return this._poService.assignRole(authuser);
 		}
 
+		[HttpGet("getuserAcessList")]
+		public async Task<IEnumerable<userAcessNamesModel>> getuserAcessList(string employeeid,string roleid)
+		{
+
+			return await this._poService.getuserAcessList(employeeid,roleid);
+		}
+
 		//[HttpPost("securitysendemail")]
 		//public EmailModel sendemail(EmailModel obj)
 		//{

@@ -369,4 +369,7 @@ LINK:&lt;/p&gt;
   <data name="insertAuthUserData" xml:space="preserve">
     <value>insert into wms.auth_users(authid,employeeid,roleid,createddate,createdby,deleteflag)values(default,@employeeid,@roleid,@createddate,@createdby,@deleteflag)returning authid</value>
   </data>
+  <data name="getUserAcessNames" xml:space="preserve">
+    <value>select * from v_getAccessList where employeeid='#employeeid' and roleid =roleid</value>
+  </data>
 </root>

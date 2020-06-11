@@ -355,4 +355,12 @@ namespace WMS.Models
 		public string createdby { get; set; }
 		public bool deleteflag { get; set; }
 	}
+	public class userAcessNamesModel
+	{
+		public int authid { get; set; }
+		public int employeeid { get; set; }
+		public int roleid { get; set; }
+		public int userid { get; set; }
+		public string accessname { get; set; }
+	}
 }
