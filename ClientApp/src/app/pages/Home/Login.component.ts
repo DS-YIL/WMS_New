@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
       roleid: ['', [Validators.required]],
     });
     this.commonComponent.animateCSS('login', 'zoomInDown');
-    if (localStorage.getItem("Roles"))
+    if (localStorage.getItem("Roles") && JSON.parse(localStorage.getItem("Roles")))
       this.roleNameModel = JSON.parse(localStorage.getItem("Roles"));
     else
       this.getRoles();
