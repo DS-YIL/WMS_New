@@ -47,7 +47,7 @@ namespace WMS.DAL
                         try
                         {
                              pgsql.Open();
-                            string query = "select  * from wms.employee where domainid='"+ id +"'";
+                            string query = "select  * from wms.employee where domainid='"+ id.ToUpper() +"'";
                             data= pgsql.QuerySingle<User>(
                                query, null, commandType: CommandType.Text);
                             data.Password = pwd;
@@ -74,7 +74,7 @@ namespace WMS.DAL
                     try
                     {
                         pgsql.Open();
-                        string query = "select  * from wms.employee where domainid='" + id + "'";
+                        string query = "select  * from wms.employee where domainid='" + id.ToUpper() + "'";
                         data = pgsql.QueryFirstOrDefault<User>(
                            query, null, commandType: CommandType.Text);
                         data.Password = pwd;
@@ -115,7 +115,7 @@ namespace WMS.DAL
           var userss = validatelogincredentials(username,password);
             if (userss.Count != 0)
             {
-                var user = userss.SingleOrDefault(x => x.domainid == username && x.Password == password);
+                var user = userss.SingleOrDefault(x => x.domainid == username.ToUpper() && x.Password == password);
                 User use = new User();
                 // return null if user not found
                 if (user == null)
