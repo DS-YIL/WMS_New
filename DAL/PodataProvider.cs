@@ -208,7 +208,7 @@ namespace WMS.DAL
 					string lastinsertedgrn = WMSResource.lastinsertedgrn;
 					iwardmasterModel info = new iwardmasterModel();
 					string query = WMSResource.Verifythreewaymatch.Replace("#pono", pono).Replace("#invoiceno", invoiceno);
-					 info = pgsql.QuerySingle(
+					 info = pgsql.QuerySingle< iwardmasterModel>(
 					   query, null, commandType: CommandType.Text);
 					if (info != null && info.grnnumber==null )
 					{
