@@ -45,8 +45,8 @@
 
             <td class="ptable-cell" style="text-align:center">{{rowData.availableqty}}</td>
             <td class="ptable-cell" style="text-align:center">
-              <input type="number" *ngIf="rowData.status !== 'Pending'" style="width:100px" [(ngModel)]="rowData.physicalqty" (change)="calculatedifference(rowData)" class="form-control" />
-              <label *ngIf="rowData.status === 'Pending' ">{{rowData.physicalqty}}</label>
+              <input type="number" *ngIf="!rowData.iscounted" style="width:100px" [(ngModel)]="rowData.physicalqty" (change)="calculatedifference(rowData)" class="form-control" />
+              <label *ngIf="rowData.iscounted">{{rowData.physicalqty}}</label>
             </td>
             <td class="ptable-cell" style="text-align:center">
               {{rowData.difference}}

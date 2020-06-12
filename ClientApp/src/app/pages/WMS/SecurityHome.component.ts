@@ -89,7 +89,7 @@ export class SecurityHomeComponent implements OnInit {
   //update invoice no
   onsaveSecDetails() {
     //need to generate barcode
-    if (this.Poinvoicedetails.invoiceno) {
+    if (this.Poinvoicedetails.invoiceno && this.Poinvoicedetails.invoiceno.trim() != "") {
       this.spinner.show();
       this.BarcodeModel = new BarcodeModel();
       this.BarcodeModel.paitemid = 1;;

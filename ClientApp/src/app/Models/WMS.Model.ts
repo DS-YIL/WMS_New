@@ -79,6 +79,7 @@ export class inwardModel {
   grndate: Date;
   itemlocation: string;
   invoiceno: string;
+  projectname: string;
 }
 
 
