@@ -704,17 +704,6 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to select grnnumber from wms.wms_securityinward inw 
-        ///inner join wms.openpolistview openpo on inw.pono=openpo.pono 
-        ///where  inw.invoiceno=&apos;#invoiceno&apos; and openpo.pono=&apos;#pono&apos;.
-        /// </summary>
-        public static string verifyGRNgenerated {
-            get {
-                return ResourceManager.GetString("verifyGRNgenerated", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to select Count(*) from wms.wms_securityinward inw 
         ///inner join wms.openpolistview openpo on inw.pono=openpo.pono 
         ///where  inw.invoiceno=&apos;#invoiceno&apos; and openpo.pono=&apos;#pono&apos;.

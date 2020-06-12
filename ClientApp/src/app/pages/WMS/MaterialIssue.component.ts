@@ -125,7 +125,7 @@ export class MaterialIssueComponent implements OnInit {
       this.materialissueList.forEach(item => {
         //if (!item.issuedquantity)
         //  item.issuedquantity = item.requestedquantity;
-        if (item.requestedquantity == item.issuedquantity)
+        if (item.issuedqty >= item.requestedquantity)
           this.showissueqtyOKorCancel = false;
         //(<HTMLInputElement>document.getElementById('footerdiv')).style.display = "none";
       });

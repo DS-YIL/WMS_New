@@ -33,7 +33,7 @@
       <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'material', 'contains')"></th>
       <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'requestedquantity', 'contains')"></th>
       <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'quantity', 'contains')"></th>
-      <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'issuedquantity', 'contains')"></th>
+      <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'issuedqty', 'contains')"></th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-rowData let-editing="editing" let-ri="rowIndex">
@@ -46,7 +46,7 @@
       <td class="ptable-cell" style="text-align:right">{{rowData.requestedquantity}}</td>
       <td class="ptable-cell" style="text-align:right">{{rowData.availableqty}}</td>
       <td class="ptable-cell">
-        <input id="totalissuedqtyid" pInputText type="number" style="text-align:center" class="form-control" [disabled]="txtDisable" [(ngModel)]="rowData.issuedquantity">
+        <input id="totalissuedqtyid" pInputText type="number" style="text-align:center" class="form-control" [disabled]="txtDisable" [(ngModel)]="rowData.issuedqty">
       </td>
     </tr>
   </ng-template>

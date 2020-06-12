@@ -157,7 +157,7 @@ namespace WMS.Models
 		public int availableqty { get; set; }
 		public string itemlocation { get; set; }
 		public int issuedqty { get; set; }
-
+		public string jobname { get; set; }
 
 
 	}

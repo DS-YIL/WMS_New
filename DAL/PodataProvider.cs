@@ -910,6 +910,7 @@ namespace WMS.DAL
 					string materialid = item.Material;
 					int issuedqty = item.issuedquantity;
 					DateTime itemissueddate = System.DateTime.Now;
+
 					string updateapproverstatus = WMSResource.updateapproverstatus;
 
 					using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))

@@ -372,9 +372,4 @@ LINK:&lt;/p&gt;
   <data name="getUserAcessNames" xml:space="preserve">
     <value>select * from v_getAccessList where employeeid='#employeeid' and roleid =#roleid</value>
   </data>
-  <data name="verifyGRNgenerated" xml:space="preserve">
-    <value>select grnnumber from wms.wms_securityinward inw 
-inner join wms.openpolistview openpo on inw.pono=openpo.pono 
-where  inw.invoiceno='#invoiceno' and openpo.pono='#pono'</value>
-  </data>
 </root>
