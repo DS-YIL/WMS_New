@@ -47,6 +47,7 @@ export class PagesComponent {
     if (this.employee.roleid == "4") {//inventory manager
       MENU_ITEMS[3].hidden = false;
       MENU_ITEMS[4].hidden = false;
+      MENU_ITEMS[13].hidden = false;
       this.router.navigateByUrl('/WMS/MaterialIssueDashboard');
     }
     if (this.employee.roleid == "5") {//project manager
