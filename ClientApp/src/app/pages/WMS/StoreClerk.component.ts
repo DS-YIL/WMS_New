@@ -20,6 +20,7 @@ export class StoreClerkComponent implements OnInit {
   public podetailsList: Array<inwardModel> = [];
   public employee: Employee;
   public showDetails; showQtyUpdateDialog: boolean = false;
+  public disGrnBtn: boolean = true;
   public BarcodeModel: BarcodeModel;
   public inwardModel: inwardModel;
   public grnnumber: string = "";
@@ -68,10 +69,10 @@ export class StoreClerkComponent implements OnInit {
         if (data == true) {
           this.showQtyUpdateDialog = true;
           this.getponodetails(this.PoDetails.pono);
-          this.messageService.add({ severity: 'success', summary: 'Success Message', detail: 'GRN Posted  Sucessfully' });
+         // this.messageService.add({ severity: 'success', summary: 'Success Message', detail: 'GRN Posted  Sucessfully' });
         }
-        else
-          this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Already verified' });
+        //else
+          //this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Already verified' });
         this.getponodetails(this.PoDetails.pono);
       })
      
@@ -83,6 +84,7 @@ export class StoreClerkComponent implements OnInit {
     this.wmsService.Getthreewaymatchingdetails(data).subscribe(data => {
       this.spinner.hide();
       if (data) {
+        this.disGrnBtn = false;
         // this.PoDetails = data[0];
         this.podetailsList = data;
         this.grnnumber = this.podetailsList[0].grnnumber;
@@ -127,6 +129,7 @@ export class StoreClerkComponent implements OnInit {
         //  if (data) {
         this.messageService.add({ severity: 'success', summary: 'Success Message', detail: 'Saved Sucessfully' });
         this.showQtyUpdateDialog = false;
+        this.disGrnBtn = true;
         //}
       });
     }

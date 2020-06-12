@@ -16,7 +16,7 @@ export class GatePassComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, private messageService: MessageService, private wmsService: wmsService, private route: ActivatedRoute, private router: Router, public constants: constants, private spinner: NgxSpinnerService) { }
 
   public formName: string;
-  public txtName: string;
+  public txtName; GatepassTxt: string;
   public dynamicData = new DynamicSearchResult();
   public showList: boolean = false;
   public searchItems: Array<searchList> = [];
@@ -40,7 +40,7 @@ export class GatePassComponent implements OnInit {
     this.gatepassModel = new gatepassModel();
     this.materialistModel = new materialistModel();
     this.getGatePassList();
-
+    this.GatepassTxt = "GatePass"
   }
 
   //bind materials based search
@@ -100,6 +100,11 @@ export class GatePassComponent implements OnInit {
     });
   }
 
+  //gatepass change
+  gatePassChange() {
+    if (this.gatepassModel.gatepasstype!="0")
+    this.GatepassTxt = this.gatepassModel.gatepasstype + " - " + "Request Materials";
+  }
   //open gate pass dialog
   openGatepassDialog(gatepassobject: any, gpIndx: any,dialog) {
     this[dialog] = true;
@@ -111,6 +116,7 @@ export class GatePassComponent implements OnInit {
       this.gatepassModel.gatepasstype = "0";
       this.gatepassModel.reasonforgatepass = "0";
     }
+    this.gatePassChange();
   }
 
   //add materials for gate pass
@@ -123,6 +129,7 @@ export class GatePassComponent implements OnInit {
       this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Material already exist' });
       return false;
     }
+    this.gatePassChange();
     this.materialistModel.materialid = this.material.code;
     this.materialistModel.materialdescription = this.material.name;
     if (this.materialistModel.materialid && this.materialistModel.quantity) {
