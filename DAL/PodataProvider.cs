@@ -586,7 +586,11 @@ namespace WMS.DAL
 				return 0;
 			}
 		}
-
+		/// <summary>
+		/// based on grnnumber will get lst of items
+		/// </summary>
+		/// <param name="grnnumber"></param>
+		/// <returns></returns>
 		public async Task<IEnumerable<inwardModel>> getitemdeatils(string grnnumber)
 		{
 			using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
@@ -612,7 +616,12 @@ namespace WMS.DAL
 			}
 
 		}
-
+		/// <summary>
+		/// requesting for material
+		/// </summary>
+		/// <param name="pono"></param>
+		/// <param name="approverid"></param>
+		/// <returns></returns>
 		public async Task<IEnumerable<IssueRequestModel>> MaterialRequest(string pono, string approverid)
 		{
 			using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
@@ -645,7 +654,11 @@ namespace WMS.DAL
 
 			}
 		}
-
+		/// <summary>
+		/// acknowledge fro received item from Project manager
+		/// </summary>
+		/// <param name="dataobj"></param>
+		/// <returns></returns>
 		public int acknowledgeMaterialReceived(List<IssueRequestModel> dataobj)
 		{
 
@@ -717,7 +730,12 @@ namespace WMS.DAL
 			//}
 
 		}
-
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="requesterid"></param>
+		/// <returns></returns>
+		
 		public async Task<IEnumerable<IssueRequestModel>> GetMaterialissueList(string requesterid)
 		{
 			using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
