@@ -181,18 +181,18 @@ namespace WMS.DAL
 				{
 					pgsql.Open();
 					string lastinsertedgrn = WMSResource.lastinsertedgrn;
-
+					iwardmasterModel info = new iwardmasterModel();
 					string query = WMSResource.Verifythreewaymatch.Replace("#pono", pono).Replace("#invoiceno", invoiceno);
-					var info = pgsql.QuerySingle(
+					 info = pgsql.QuerySingle(
 					   query, null, commandType: CommandType.Text);
-					if (info != null)
+					if (info != null && info.grnnumber==null )
 					{
-						iwardmasterModel infos = new iwardmasterModel();
-						string queryforgrn = WMSResource.verifyGRNgenerated.Replace("#pono", pono).Replace("#invoiceno", invoiceno);
-						 infos = pgsql.QuerySingle<iwardmasterModel>(
-						   queryforgrn, null, commandType: CommandType.Text);
-						if (infos.grnnumber == null)
-						{
+						//iwardmasterModel infos = new iwardmasterModel();
+						//string queryforgrn = WMSResource.verifyGRNgenerated.Replace("#pono", pono).Replace("#invoiceno", invoiceno);
+						// infos = pgsql.QuerySingle<iwardmasterModel>(
+						//   queryforgrn, null, commandType: CommandType.Text);
+						//if (infos.grnnumber == null)
+						//{
 							verify = true;
 							int grnnextsequence = 0;
 							string grnnumber = string.Empty;
@@ -240,7 +240,7 @@ namespace WMS.DAL
 
 								});
 							}
-						}
+						//}
 					}
 
 					else

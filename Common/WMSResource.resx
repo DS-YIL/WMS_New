@@ -220,9 +220,9 @@ values(default,@pono,@itemid,@requestforissueid,@itemissueddate,@itemreceiverid,
     <value>update wms.wms_sequencemaster set sequencenumber=@grnnextsequence where id=@id</value>
   </data>
   <data name="Verifythreewaymatch" xml:space="preserve">
-    <value>select Count(*) from wms.wms_securityinward inw 
+    <value>select Count(*),grnnumber from wms.wms_securityinward inw 
 inner join wms.openpolistview openpo on inw.pono=openpo.pono 
-where  inw.invoiceno='#invoiceno' and openpo.pono='#pono'</value>
+where  inw.invoiceno='#invoiceno' and openpo.pono='#pono' group by grnnumber</value>
   </data>
   <data name="getgatepasslist" xml:space="preserve">
     <value>select ygs.materialdescription,emp.name,* from wms.wms_gatepass gate

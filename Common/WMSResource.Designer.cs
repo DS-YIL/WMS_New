@@ -715,9 +715,9 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to select Count(*) from wms.wms_securityinward inw 
+        ///   Looks up a localized string similar to select Count(*),grnnumber from wms.wms_securityinward inw 
         ///inner join wms.openpolistview openpo on inw.pono=openpo.pono 
-        ///where  inw.invoiceno=&apos;#invoiceno&apos; and openpo.pono=&apos;#pono&apos;.
+        ///where  inw.invoiceno=&apos;#invoiceno&apos; and openpo.pono=&apos;#pono&apos; group by grnnumber.
         /// </summary>
         public static string Verifythreewaymatch {
             get {
