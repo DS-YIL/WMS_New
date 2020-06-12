@@ -51,8 +51,8 @@ export class GatePassComponent implements OnInit {
     searchTxt = searchTxt.replace('*', '%');
     this.dynamicData = new DynamicSearchResult();
     this.dynamicData.tableName = this.constants[name].tableName;
-    this.dynamicData.searchCondition = "" + this.constants[name].condition + this.constants[name].fieldName + " like '" + searchTxt + "%'";
-    this.dynamicData.searchCondition += " OR materialid" + " like '" + searchTxt + "%'" + "";
+    this.dynamicData.searchCondition = "" + this.constants[name].condition + this.constants[name].fieldName + " ilike '" + searchTxt + "%'";
+    this.dynamicData.searchCondition += " OR materialid" + " ilike '" + searchTxt + "%'" + "";
     this.wmsService.GetListItems(this.dynamicData).subscribe(data => {
       this.searchresult = data;
       this.searchItems = [];

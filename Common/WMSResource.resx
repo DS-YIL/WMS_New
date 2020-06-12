@@ -157,7 +157,7 @@ where  inwmaster.pono='#pono'</value>
   </data>
   <data name="Getdetailsforthreewaymatching" xml:space="preserve">
     <value>select * from wms.wms_securityinward inwa  inner join wms.openpolistview openpo on openpo.pono=inwa.pono
- where  inwa.pono='#pono'  and inwa.invoiceno like '%#invoiceno' limit 50</value>
+ where  inwa.pono='#pono'  and inwa.invoiceno ilike '%#invoiceno' limit 50</value>
   </data>
   <data name="getGRNNo" xml:space="preserve">
     <value>select grnnumber from wms.wms_securityinward   where pono='#pono' and grnnumber is not null 

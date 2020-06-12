@@ -15,7 +15,11 @@ namespace WMS.DAL
 	{
 		Configurations config = new Configurations();
 		ErrorLogTrace log = new ErrorLogTrace();
-
+		/// <summary>
+		/// check pono exists or not 
+		/// </summary>
+		/// <param name="PONO"></param>
+		/// <returns></returns>
 		public OpenPoModel CheckPoexists(string PONO)
 		{
 
@@ -44,7 +48,14 @@ namespace WMS.DAL
 		}
 
 
-
+		/// <summary>
+		/// get lst of open pono list
+		/// </summary>
+		/// <param name="loginid"></param>
+		/// <param name="pono"></param>
+		/// <param name="docno"></param>
+		/// <param name="vendorid"></param>
+		/// <returns></returns>
 		public async Task<IEnumerable<OpenPoModel>> getOpenPoList(string loginid, string pono = null, string docno = null, string vendorid = null)
 		{
 			using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
@@ -84,7 +95,11 @@ namespace WMS.DAL
 				//throw new NotImplementedException();
 			}
 		}
-
+		/// <summary>
+		/// inserting barcode info
+		/// </summary>
+		/// <param name="dataobj"></param>
+		/// <returns></returns>
 		public int InsertBarcodeInfo(BarcodeModel dataobj)
 		{
 			try
@@ -144,7 +159,12 @@ namespace WMS.DAL
 			}
 
 		}
-
+		/// <summary>
+		/// get list of info for three way matching
+		/// </summary>
+		/// <param name="invoiceno"></param>
+		/// <param name="pono"></param>
+		/// <returns></returns>
 		public async Task<IEnumerable<OpenPoModel>> GetDeatilsForthreeWaymatching(string invoiceno, string pono)
 		{
 			using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
@@ -169,7 +189,12 @@ namespace WMS.DAL
 				//throw new NotImplementedException();
 			}
 		}
-
+		/// <summary>
+		/// to verify three way match and generate GRN No
+		/// </summary>
+		/// <param name="pono"></param>
+		/// <param name="invoiceno"></param>
+		/// <returns></returns>
 		public bool VerifythreeWay(string pono, string invoiceno)
 		{
 			Boolean verify = false;
@@ -263,7 +288,11 @@ namespace WMS.DAL
 		}
 
 
-
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="datamodel"></param>
+		/// <returns></returns>
 		public async Task<string> insertquantity(List<inwardModel> datamodel)
 		{
 
@@ -346,7 +375,11 @@ namespace WMS.DAL
 				}
 			}
 		}
-
+		/// <summary>
+		/// inserting material details to warehouse
+		/// </summary>
+		/// <param name="data"></param>
+		/// <returns></returns>
 		public string InsertStock(StockModel data)
 		{
 			try
@@ -458,6 +491,11 @@ namespace WMS.DAL
 			}
 
 		}
+		/// <summary>
+		/// to get search data and pass  query dynamically
+		/// </summary>
+		/// <param name="Result"></param>
+		/// <returns></returns>
 		public DataTable GetListItems(DynamicSearchResult Result)
 		{
 			using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
@@ -494,7 +532,11 @@ namespace WMS.DAL
 			}
 
 		}
-
+		/// <summary>
+		/// material request by Project manager
+		/// </summary>
+		/// <param name="reqdata"></param>
+		/// <returns></returns>
 		public int IssueRequest(List<IssueRequestModel> reqdata)
 		{
 			int requestid = 0;
