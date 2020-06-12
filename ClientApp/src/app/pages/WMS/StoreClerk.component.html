@@ -30,7 +30,7 @@
       <th style="text-align:center;width:70px">Sl.No</th>
       <!--<th>PO No</th>
       <th>Invoice No</th>-->
-      <th style="text-align:center">Project Code</th>
+      <th style="text-align:center">Project Name</th>
       <th style="text-align:center">Material</th>
       <th style="text-align:center">Material Description</th>
       <th style="text-align:center">PO Quantity</th>
@@ -42,7 +42,7 @@
       <th></th>
       <!--<th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'pono', 'contains')"></th>
       <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'invoiceno', 'contains')"></th>-->
-      <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'projectcode', 'contains')"></th>
+      <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'projectname', 'contains')"></th>
       <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'material', 'contains')"></th>
       <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'materialdescription', 'contains')"></th>
       <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'quotationqty', 'contains')"></th>
@@ -57,7 +57,7 @@
 
       <!--<td class="ptable-cell">{{rowData.pono}}</td>
       <td class="ptable-cell">{{rowData.invoiceno}}</td>-->
-      <td class="ptable-cell" style="text-align:center">{{rowData.projectcode}}</td>
+    <td class="ptable-cell" style="text-align:center">{{rowData.projectname}}</td>
       <td class="ptable-cell" style="text-align:center">{{rowData.material}}</td>
       <td class="ptable-cell" style="text-align:left">{{rowData.materialdescription}}</td>
       <td class="ptable-cell" style="text-align:right">{{rowData.quotationqty}}</td>

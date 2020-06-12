@@ -20,6 +20,7 @@ namespace WMS.Models
 		public float quotationqty { get; set; }
 		public string invoiceno { get; set; }
 		public string projectcode { get; set; }
+		public string projectname { get; set; }
 		public int paitemid { get; set; }
 		public string Material { get; set; }
 		public string Materialdescription { get; set; }
