@@ -45,20 +45,24 @@ export class AssignRoleComponent implements OnInit {
 
   //get EmployeeList
   getEmployees() {
+    this.spinner.show();
     this.dynamicData = new DynamicSearchResult();
-    this.dynamicData.query = "select * from v_getAssignRoleEmployees";
+    this.dynamicData.query = "select * from wms.v_getAssignRoleEmployees";
     this.wmsService.GetListItems(this.dynamicData).subscribe(data => {
       this.employeeModel = data;
+      this.spinner.hide();
       //alert();
     })
   }
 
   //get Role list
   getRoles() {
+    this.spinner.show();
     this.dynamicData = new DynamicSearchResult();
     this.dynamicData.query = "select * from wms.rolemaster";
     this.wmsService.GetListItems(this.dynamicData).subscribe(data => {
       this.roleNameModel = data;
+      this.spinner.hide();
     })
   }
 
@@ -77,11 +81,13 @@ export class AssignRoleComponent implements OnInit {
   //Assign Roles
   assignRole() {
     if (this.authUser.employeeid && this.authUser.roleid) {
-      if (this.authUsersList.length > 0 && (this.authUsersList.filter(li => li.employeeid == this.authUser.employeeid && li.roleid == this.authUser.roleid).length > 0)) {
+      if (this.authUsersList&&this.authUsersList.length > 0 && (this.authUsersList.filter(li => li.employeeid == this.authUser.employeeid && li.roleid == this.authUser.roleid).length > 0)) {
         this.messageService.add({ severity: 'error', summary: 'Validation', detail: 'Selected Role already added for this Employee' });
         return false;
       }
+      this.spinner.show();
       this.wmsService.assignRole(this.authUser).subscribe(data => {
+        this.spinner.hide();
         if (data) {
           this.authUser.authid = data;
           var object = { authid: data, employeeid: this.authUser.employeeid, roleid: this.authUser.roleid };

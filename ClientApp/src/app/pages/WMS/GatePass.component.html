@@ -20,7 +20,7 @@
       <th style="text-align:center">Created Date</th>
       <th style="text-align:center">Edit</th>
       <th style="text-align:center">Print</th>
-      <th *ngIf="employee.roleid=='5'" style="text-align:center">Update Return Date</th>
+      <th *ngIf="employee.roleid=='7'" style="text-align:center">Update Return Date</th>
     </tr>
     <tr>
       <th></th>
@@ -37,7 +37,7 @@
       <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'createddate', 'contains')"></th>
       <th> <input pInputText type="text" class="form-control"></th>
       <th> <input pInputText type="text" class="form-control"></th>
-      <th *ngIf="employee.roleid=='5'"> <input pInputText type="text" class="form-control"></th>
+      <th *ngIf="employee.roleid=='7'"> <input pInputText type="text" class="form-control"></th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-rowData let-editing="editing" let-ri="rowIndex">
@@ -55,7 +55,7 @@
       <td class="ptable-cell" style="text-align:center">{{rowData.createddate | date :  constants.dateFormat}}</td>
       <td class="ptable-cell" style="text-align:center"><button *ngIf="rowData.approverstatus!='Approved'" type="button" icon="fa fa-edit" pButton aria-hidden="true" (click)="openGatepassDialog(rowData,ri,'gatepassdialog')"></button></td>
       <td class="ptable-cell" style="text-align:center"><button *ngIf="rowData.approverstatus=='Approved'" type="button" icon="fa fa-print" pButton aria-hidden="true" (click)="showprint(rowData)"></button></td>
-      <td *ngIf="employee.roleid=='5'" class="ptable-cell" style="text-align:center"><button  *ngIf="employee.roleid=='5' && rowData.approverstatus=='Approved' && rowData.print==false"  type="button" icon="fa fa-pencil" pButton aria-hidden="true" (click)="openGatepassDialog(rowData,ri,'updateReturnedDateDialog')"></button></td>
+      <td *ngIf="employee.roleid=='7'" class="ptable-cell" style="text-align:center"><button  *ngIf="employee.roleid=='7' && rowData.approverstatus=='Approved' && rowData.print==false"  type="button" icon="fa fa-pencil" pButton aria-hidden="true" (click)="openGatepassDialog(rowData,ri,'updateReturnedDateDialog')"></button></td>
     </tr>
   </ng-template>
 </p-table>
@@ -225,7 +225,7 @@
               <td class="ptable-cell" style="text-align:right">{{rowData.materialcost}}</td>
               <td class="ptable-cell" style="text-align:right"> {{rowData.remarks}} </td>
               <td class="ptable-cell" style="text-align:right">{{rowData.expecteddate | date :  constants.dateFormat}}</td>
-              <td *ngIf="gatepassModel.gatepasstype=='Returnable'" class="ptable-cell" style="text-align:center;text-align:center"> <p-calendar class="mprldatepick" *ngIf="employee.roleid=='5'" dateFormat="dd/mm/yy" [(ngModel)]="rowData.returneddate" [monthNavigator]="true" [yearNavigator]="true" yearRange="1900:2050"></p-calendar></td>
+              <td *ngIf="gatepassModel.gatepasstype=='Returnable'" class="ptable-cell" style="text-align:center;text-align:center"> <p-calendar class="mprldatepick" *ngIf="employee.roleid=='7'" dateFormat="dd/mm/yy" [(ngModel)]="rowData.returneddate" [monthNavigator]="true" [yearNavigator]="true" yearRange="1900:2050"></p-calendar></td>
           </ng-template>
         </p-table>
       </div>/

@@ -383,7 +383,7 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to select * from v_getAccessList where employeeid=&apos;#employeeid&apos; and roleid =#roleid.
+        ///   Looks up a localized string similar to select * from wms.v_getAccessList where employeeid=&apos;#employeeid&apos; and roleid =#roleid.
         /// </summary>
         public static string getUserAcessNames {
             get {

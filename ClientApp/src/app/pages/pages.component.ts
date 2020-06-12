@@ -23,28 +23,43 @@ export class PagesComponent {
   ngOnInit() {
     if (localStorage.getItem("Employee")) {
       this.employee = JSON.parse(localStorage.getItem("Employee"));
-      MENU_ITEMS[1].hidden = true;
-      MENU_ITEMS[2].hidden = true;
-      MENU_ITEMS[3].hidden = true;
-      MENU_ITEMS[4].hidden = true;
-      MENU_ITEMS[5].hidden = true;
-      if (this.employee.roleid == "1") {
-        MENU_ITEMS[1].hidden = false;
-        this.router.navigateByUrl('/WMS/Home');
-      }
-      else if (this.employee.roleid == "2") {
-        MENU_ITEMS[2].hidden = false;
-        MENU_ITEMS[3].hidden = false;
-        this.router.navigateByUrl('/WMS/GRNPosting');
-      }
-      else if (this.employee.roleid == "3") {
-        MENU_ITEMS[4].hidden = false;
-        this.router.navigateByUrl('/WMS/WarehouseIncharge');
-      }
-      else {
-        MENU_ITEMS[5].hidden = false;
-        this.router.navigateByUrl('/WMS/Dashboard');
-      }
+      this.bindMenu();
+    }
+  }
+  //bindMenu
+  //1-security operator 2-inventoryenquiry, 3-inventoryclerk, 4-inventory manager, 5-project manager,6-dashboard user,7-admin
+  bindMenu() {
+    MENU_ITEMS[1].hidden = MENU_ITEMS[2].hidden = MENU_ITEMS[3].hidden = MENU_ITEMS[4].hidden = MENU_ITEMS[5].hidden = MENU_ITEMS[5].hidden = MENU_ITEMS[6].hidden = MENU_ITEMS[7].hidden = MENU_ITEMS[8].hidden = MENU_ITEMS[9].hidden = MENU_ITEMS[10].hidden = true;
+    MENU_ITEMS[11].hidden = MENU_ITEMS[12].hidden = MENU_ITEMS[13].hidden = MENU_ITEMS[14].hidden = MENU_ITEMS[15].hidden = true;
+    if (this.employee.roleid == "1") {//security perator
+      MENU_ITEMS[1].hidden = false;
+      this.router.navigateByUrl('/WMS/Home');
+    }
+    if (this.employee.roleid == "2") {//inventory enquiry
+      MENU_ITEMS[2].hidden = false;
+      this.router.navigateByUrl('/WMS/GRNPosting');
+    }
+    if (this.employee.roleid == "3") {//inventory clerk
+      MENU_ITEMS[3].hidden = false;
+      MENU_ITEMS[4].hidden = false;
+      this.router.navigateByUrl('/WMS/WarehouseIncharge');
+    }
+    if (this.employee.roleid == "4") {//inventory manager
+      MENU_ITEMS[3].hidden = false;
+      MENU_ITEMS[4].hidden = false;
+      this.router.navigateByUrl('/WMS/MaterialIssueDashboard');
+    }
+    if (this.employee.roleid == "5") {//project manager
+      MENU_ITEMS[5].hidden = false;
+      this.router.navigateByUrl('/WMS/Dashboard');
+    }
+    if (this.employee.roleid == "6") {//dashboard
+      MENU_ITEMS[5].hidden = false;
+      this.router.navigateByUrl('/WMS/Dashboard');
+    }
+    if (this.employee.roleid == "7") {//admin
+      MENU_ITEMS[8].hidden = MENU_ITEMS[9].hidden = MENU_ITEMS[10].hidden = MENU_ITEMS[11].hidden = MENU_ITEMS[12].hidden = MENU_ITEMS[13].hidden = MENU_ITEMS[14].hidden = MENU_ITEMS[15].hidden = false;
+      this.router.navigateByUrl('/WMS/Dashboard');
     }
   }
 }

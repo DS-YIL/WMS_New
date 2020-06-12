@@ -16,7 +16,7 @@ import { commonComponent } from '../../WmsCommon/CommonCode'
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private messageService: MessageService, private commonComponent: commonComponent,private formBuilder: FormBuilder, private wmsService: wmsService, private route: ActivatedRoute, private router: Router, public constants: constants, private spinner: NgxSpinnerService) { }
+  constructor(private messageService: MessageService, private commonComponent: commonComponent, private formBuilder: FormBuilder, private wmsService: wmsService, private route: ActivatedRoute, private router: Router, public constants: constants, private spinner: NgxSpinnerService) { }
 
   public LoginForm: FormGroup;
   public employee: Employee;
@@ -36,7 +36,10 @@ export class LoginComponent implements OnInit {
       roleid: ['', [Validators.required]],
     });
     this.commonComponent.animateCSS('login', 'zoomInDown');
-    this.getRoles();
+    if (localStorage.getItem("Roles"))
+      this.roleNameModel = JSON.parse(localStorage.getItem("Roles"));
+    else
+      this.getRoles();
   }
 
   //get Role list
@@ -45,6 +48,7 @@ export class LoginComponent implements OnInit {
     this.dynamicData.query = "select * from wms.rolemaster";
     this.wmsService.GetListItems(this.dynamicData).subscribe(data => {
       this.roleNameModel = data;
+      localStorage.setItem('Roles', JSON.stringify(this.roleNameModel));
     })
   }
 
@@ -56,7 +60,7 @@ export class LoginComponent implements OnInit {
     }
     else {
       this.spinner.show();
-      this.wmsService.ValidateLoginCredentials(this.LoginForm.value.DomainId, this.LoginForm.value.Password)      
+      this.wmsService.ValidateLoginCredentials(this.LoginForm.value.DomainId, this.LoginForm.value.Password)
         .subscribe(data1 => {
           this.spinner.hide();
           if (data1.message != null) {
@@ -65,7 +69,7 @@ export class LoginComponent implements OnInit {
           if (data1.employeeno != null) {
             this.employee = data1;
             this.wmsService.getuserAcessList(this.employee.employeeno, this.LoginForm.value.roleid).subscribe(data => {
-              if (data.length>0) {
+              if (data.length > 0) {
                 this.AcessNameList = data;
                 this.employee.roleid = this.LoginForm.value.roleid;
                 localStorage.setItem('Employee', JSON.stringify(this.employee));
@@ -81,27 +85,38 @@ export class LoginComponent implements OnInit {
     }
   }
   //bindMenu
+  //1-security operator 2-inventoryenquiry, 3-inventoryclerk, 4-inventory manager, 5-project manager,6-dashboard user,7-admin
   bindMenu() {
-    MENU_ITEMS[1].hidden = true;
-    MENU_ITEMS[2].hidden = true;
-    MENU_ITEMS[3].hidden = true;
-    MENU_ITEMS[4].hidden = true;
-    MENU_ITEMS[5].hidden = true;
-    if (this.employee.roleid == "1") {
+    MENU_ITEMS[1].hidden = MENU_ITEMS[2].hidden = MENU_ITEMS[3].hidden = MENU_ITEMS[4].hidden = MENU_ITEMS[5].hidden = MENU_ITEMS[5].hidden = MENU_ITEMS[6].hidden = MENU_ITEMS[7].hidden = MENU_ITEMS[8].hidden = MENU_ITEMS[9].hidden = MENU_ITEMS[10].hidden = true;
+    MENU_ITEMS[11].hidden = MENU_ITEMS[12].hidden = MENU_ITEMS[13].hidden = MENU_ITEMS[14].hidden = MENU_ITEMS[15].hidden = true;
+    if (this.employee.roleid == "1") {//security perator
       MENU_ITEMS[1].hidden = false;
       this.router.navigateByUrl('/WMS/Home');
     }
-    else if (this.employee.roleid == "2") {
+    if (this.employee.roleid == "2") {//inventory enquiry
       MENU_ITEMS[2].hidden = false;
-      MENU_ITEMS[3].hidden = false;
       this.router.navigateByUrl('/WMS/GRNPosting');
     }
-    else if (this.employee.roleid == "3") {
+    if (this.employee.roleid == "3") {//inventory clerk
+      MENU_ITEMS[3].hidden = false;
       MENU_ITEMS[4].hidden = false;
       this.router.navigateByUrl('/WMS/WarehouseIncharge');
     }
-    else {
+    if (this.employee.roleid == "4") {//inventory manager
+      MENU_ITEMS[3].hidden = false;
+      MENU_ITEMS[4].hidden = false;
+      this.router.navigateByUrl('/WMS/MaterialIssueDashboard');
+    }
+    if (this.employee.roleid == "5") {//project manager
       MENU_ITEMS[5].hidden = false;
+      this.router.navigateByUrl('/WMS/Dashboard');
+    }
+    if (this.employee.roleid == "6") {//dashboard
+      MENU_ITEMS[5].hidden = false;
+      this.router.navigateByUrl('/WMS/Dashboard');
+    }
+    if (this.employee.roleid == "7") {//admin
+      MENU_ITEMS[8].hidden = MENU_ITEMS[9].hidden = MENU_ITEMS[10].hidden = MENU_ITEMS[11].hidden = MENU_ITEMS[12].hidden = MENU_ITEMS[13].hidden = MENU_ITEMS[14].hidden = MENU_ITEMS[15].hidden = false;
       this.router.navigateByUrl('/WMS/Dashboard');
     }
   }

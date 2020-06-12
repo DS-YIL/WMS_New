@@ -49,6 +49,7 @@ export class AppComponent implements OnInit {
 
   onContecxtItemSelection(title) {
     if (title == "Logout") {
+      localStorage.removeItem('Employee');
       this._usermanage.logout();
       this.router.navigate(['/SCM/Login']);
     }
