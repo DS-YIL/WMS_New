@@ -122,7 +122,7 @@
     <comment>checkpono</comment>
   </data>
   <data name="GetdetailsByrequestid" xml:space="preserve">
-    <value>select requestforissueid,emp."name",req.requesteddate,sk.materialid,sk.pono,req.requestedquantity,sk.availableqty,req.requestid from wms.wms_materialrequest req inner join wms.wms_stock sk on req.requestid=sk.itemid inner join wms.employee emp on emp.employeeno=req.requesterid where requestid=#requestid and req.deleteflag=false group by requestforissueid,sk.materialid,sk.pono,req.requestedquantity,sk.availableqty,req.requestid,emp."name",req.requesteddate limit 1</value>
+    <value>select sum(mi.issuedqty) as issuedqty,op."JobName",requestforissueid,emp."name",req.requesteddate,sk.materialid,sk.pono,req.requestedquantity,sk.availableqty,req.requestid from wms.wms_materialrequest req inner join wms.wms_stock sk on req.requestid=sk.itemid inner join wms.employee emp on emp.employeeno=req.requesterid where requestid=#requestid and req.deleteflag=false group by requestforissueid,sk.materialid,sk.pono,req.requestedquantity,sk.availableqty,req.requestid,emp."name",req.requesteddate limit 1</value>
   </data>
   <data name="GetListForMaterialRequestByapproverid" xml:space="preserve">
     <value>select req.requestid,req.requesteddate,req.requesterid,po.projectname from wms.wms_materialrequest req inner join wms.openpolistview po on po.pono=req.pono 
@@ -371,5 +371,10 @@ LINK:&lt;/p&gt;
   </data>
   <data name="getUserAcessNames" xml:space="preserve">
     <value>select * from wms.v_getAccessList where employeeid='#employeeid' and roleid =#roleid</value>
+  </data>
+  <data name="verifyGRNgenerated" xml:space="preserve">
+    <value>select grnnumber from wms.wms_securityinward inw 
+inner join wms.openpolistview openpo on inw.pono=openpo.pono 
+where  inw.invoiceno='#invoiceno' and openpo.pono='#pono'</value>
   </data>
 </root>

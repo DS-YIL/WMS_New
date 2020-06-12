@@ -208,7 +208,7 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to select requestforissueid,emp.&quot;name&quot;,req.requesteddate,sk.materialid,sk.pono,req.requestedquantity,sk.availableqty,req.requestid from wms.wms_materialrequest req inner join wms.wms_stock sk on req.requestid=sk.itemid inner join wms.employee emp on emp.employeeno=req.requesterid where requestid=#requestid and req.deleteflag=false group by requestforissueid,sk.materialid,sk.pono,req.requestedquantity,sk.availableqty,req.requestid,emp.&quot;name&quot;,req.requesteddate limit 1.
+        ///   Looks up a localized string similar to select sum(mi.issuedqty) as issuedqty,op.&quot;JobName&quot;,requestforissueid,emp.&quot;name&quot;,req.requesteddate,sk.materialid,sk.pono,req.requestedquantity,sk.availableqty,req.requestid from wms.wms_materialrequest req inner join wms.wms_stock sk on req.requestid=sk.itemid inner join wms.employee emp on emp.employeeno=req.requesterid where requestid=#requestid and req.deleteflag=false group by requestforissueid,sk.materialid,sk.pono,req.requestedquantity,sk.availableqty,req.requestid,emp.&quot;name&quot;,req.requesteddate limit 1.
         /// </summary>
         public static string GetdetailsByrequestid {
             get {
@@ -700,6 +700,17 @@ namespace WMS.Common {
         public static string updateseqnumber {
             get {
                 return ResourceManager.GetString("updateseqnumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to select grnnumber from wms.wms_securityinward inw 
+        ///inner join wms.openpolistview openpo on inw.pono=openpo.pono 
+        ///where  inw.invoiceno=&apos;#invoiceno&apos; and openpo.pono=&apos;#pono&apos;.
+        /// </summary>
+        public static string verifyGRNgenerated {
+            get {
+                return ResourceManager.GetString("verifyGRNgenerated", resourceCulture);
             }
         }
         
