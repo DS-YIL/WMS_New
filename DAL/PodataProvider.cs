@@ -1688,6 +1688,7 @@ namespace WMS.DAL
                             cc.status = dt.status;
                             cc.physicalqty = dt.physicalqty;
                             cc.difference = dt.difference;
+							cc.iscounted = true;
                         }
                     }
 
