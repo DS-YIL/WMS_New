@@ -55,12 +55,12 @@ namespace WMS.Controllers
 			return await this._poService.GetDeatilsForthreeWaymatching(invoiceno, ponodata);
 		}
 		[HttpGet("verifythreewaymatch")]
-		public bool verifythreewaymatching(string pono)
+		public async Task<OpenPoModel> verifythreewaymatching(string pono)
 		{
 			string[] ponoandinvoice = pono.Split('-');
 			string ponodata = ponoandinvoice[0];
 			string invoiceno = ponoandinvoice[1];
-			return this._poService.VerifythreeWay(ponodata, invoiceno);
+			return await this._poService.VerifythreeWay(ponodata, invoiceno);
 		}
 		[HttpPost("GRNposting")]
 		public async Task<string> insertitemdata([FromBody] List<inwardModel> data)

@@ -164,7 +164,7 @@ where  inwmaster.pono='#pono'</value>
 and deleteflag=false order by grndate desc limit 1</value>
   </data>
   <data name="getinwmasterid" xml:space="preserve">
-    <value>select inwmasterid from wms.wms_securityinward where pono='#pono' limit 1</value>
+    <value>select inwmasterid from wms.wms_securityinward where pono='#pono' and invoiceno='#invoiceno' limit 1</value>
   </data>
   <data name="getlocationasresponse" xml:space="preserve">
     <value>select * from wms.wms_stock  stock 

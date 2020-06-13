@@ -63,18 +63,18 @@ export class StoreClerkComponent implements OnInit {
       this.PoDetails.pono;
       this.PoDetails.invoiceno;
       this.spinner.show();
-      this.wmsService.verifythreewaymatch(this.PoDetails.pono).subscribe(data => {
-        //this.wmsService.verifythreewaymatch("123", "228738234", "1", "SK19VASP8781").subscribe(data => {
-        this.spinner.hide();
-        if (data == true) {
+      //this.wmsService.verifythreewaymatch(this.PoDetails.pono).subscribe(data => {
+      //  //this.wmsService.verifythreewaymatch("123", "228738234", "1", "SK19VASP8781").subscribe(data => {
+        //this.spinner.hide();
+      //  if (data == true) {
           this.showQtyUpdateDialog = true;
           this.getponodetails(this.PoDetails.pono);
          // this.messageService.add({ severity: 'success', summary: 'Success Message', detail: 'GRN Posted  Sucessfully' });
-        }
+       // }
         //else
           //this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Already verified' });
-        this.getponodetails(this.PoDetails.pono);
-      })
+        //this.getponodetails(this.PoDetails.pono);
+     // })
      
     }
 
@@ -87,7 +87,7 @@ export class StoreClerkComponent implements OnInit {
         this.disGrnBtn = false;
         // this.PoDetails = data[0];
         this.podetailsList = data;
-        this.grnnumber = this.podetailsList[0].grnnumber;
+       
         this.showDetails = true;
       }
       else
@@ -115,6 +115,7 @@ export class StoreClerkComponent implements OnInit {
   }
   onsubmitGRN() {
     if (this.podetailsList.length > 0) {
+     
       this.spinner.show();
      // this.onVerifyDetails(this.podetailsList);
       this.inwardModel.pono = this.PoDetails.pono;
@@ -124,8 +125,15 @@ export class StoreClerkComponent implements OnInit {
         item.receivedby = this.employee.employeeno;
       });
       this.wmsService.insertitems(this.podetailsList).subscribe(data => {
+        if (data != null) {
+          this.wmsService.verifythreewaymatch(this.PoDetails.pono).subscribe(info => {
+            if (info != null)
+              this.grnnumber = info.grnnumber;
+            //this.grnnumber = data;
+          })
+        }
         this.spinner.hide();
-        this.grnnumber = data;
+        
         //  if (data) {
         this.messageService.add({ severity: 'success', summary: 'Success Message', detail: 'Saved Sucessfully' });
         this.showQtyUpdateDialog = false;

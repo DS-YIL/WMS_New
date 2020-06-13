@@ -279,7 +279,7 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to select inwmasterid from wms.wms_securityinward where pono=&apos;#pono&apos; limit 1.
+        ///   Looks up a localized string similar to select inwmasterid from wms.wms_securityinward where pono=&apos;#pono&apos; and invoiceno=&apos;#invoiceno&apos; limit 1.
         /// </summary>
         public static string getinwmasterid {
             get {

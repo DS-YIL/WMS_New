@@ -195,20 +195,20 @@ namespace WMS.DAL
 		/// <param name="pono"></param>
 		/// <param name="invoiceno"></param>
 		/// <returns></returns>
-		public bool VerifythreeWay(string pono, string invoiceno)
+		public async Task<OpenPoModel> VerifythreeWay(string pono, string invoiceno)
 		{
-			Boolean verify = false;
+			OpenPoModel verify = new OpenPoModel();
 			sequencModel obj = new sequencModel();
 			using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
 			{
 
 				try
 				{
-					pgsql.Open();
+					await pgsql.OpenAsync();
 					string lastinsertedgrn = WMSResource.lastinsertedgrn;
 					iwardmasterModel info = new iwardmasterModel();
 					string query = WMSResource.Verifythreewaymatch.Replace("#pono", pono).Replace("#invoiceno", invoiceno);
-					 info = pgsql.QuerySingle< iwardmasterModel>(
+					 info = pgsql.QuerySingle<iwardmasterModel>(
 					   query, null, commandType: CommandType.Text);
 					if (info != null && info.grnnumber==null )
 					{
@@ -218,7 +218,7 @@ namespace WMS.DAL
 						//   queryforgrn, null, commandType: CommandType.Text);
 						//if (infos.grnnumber == null)
 						//{
-							verify = true;
+							//verify = s;
 							int grnnextsequence = 0;
 							string grnnumber = string.Empty;
 							obj = pgsql.QuerySingle<sequencModel>(
@@ -236,6 +236,7 @@ namespace WMS.DAL
 
 									});
 								}
+							verify.grnnumber = grnnumber;
 								int id = obj.id;
 								string updateseqnumber = WMSResource.updateseqnumber;
 								using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
@@ -270,14 +271,14 @@ namespace WMS.DAL
 
 					else
 					{
-						verify = false;
+						verify.grnnumber = info.grnnumber;
 					}
 					return verify;
 				}
 				catch (Exception Ex)
 				{
 					log.ErrorMessage("PODataProvider", "VerifythreeWay", Ex.StackTrace.ToString());
-					return false;
+					return null;
 				}
 				finally
 				{
@@ -306,7 +307,7 @@ namespace WMS.DAL
 					datamodel[0].receiveddate = System.DateTime.Now;
 					await pgsql.OpenAsync();
 
-					string query = WMSResource.getinwmasterid.Replace("#pono", datamodel[0].pono);
+					string query = WMSResource.getinwmasterid.Replace("#pono", datamodel[0].pono).Replace("#invoiceno",datamodel[0].invoiceno);
 					obj = pgsql.QuerySingle<inwardModel>(
 					   query, null, commandType: CommandType.Text);
 					string getGRNno = WMSResource.getGRNNo.Replace("#pono", datamodel[0].pono);
@@ -763,7 +764,11 @@ namespace WMS.DAL
 
 			}
 		}
-
+		/// <summary>
+		/// get list of material details based on approver id
+		/// </summary>
+		/// <param name="approverid"></param>
+		/// <returns></returns>
 		public async Task<IEnumerable<IssueRequestModel>> GetMaterialissueListforapprover(string approverid)
 		{
 			using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
@@ -791,7 +796,11 @@ namespace WMS.DAL
 
 			}
 		}
-
+/// <summary>
+/// get list of materail details based on particlular requestid
+/// </summary>
+/// <param name="requestid"></param>
+/// <returns></returns>
 		public async Task<IEnumerable<IssueRequestModel>> GetmaterialdetailsByrequestid(string requestid)
 		{
 
@@ -820,7 +829,11 @@ namespace WMS.DAL
 
 			}
 		}
-
+		/// <summary>
+		/// get list of pono data
+		/// </summary>
+		/// <param name="pono"></param>
+		/// <returns></returns>
 		public async Task<IEnumerable<IssueRequestModel>> GetPonodetails(string pono)
 		{
 			using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
@@ -848,7 +861,11 @@ namespace WMS.DAL
 
 			}
 		}
-
+		/// <summary>
+		/// inserting or updating requested qty by PM
+		/// </summary>
+		/// <param name="dataobj"></param>
+		/// <returns></returns>
 		public int updaterequestedqty(List<IssueRequestModel> dataobj)
 		{
 
@@ -927,7 +944,11 @@ namespace WMS.DAL
 			//    return 0;
 			//}
 		}
-
+		/// <summary>
+		/// issued matreial list 
+		/// </summary>
+		/// <param name="dataobj"></param>
+		/// <returns></returns>
 		public int ApproveMaterialissue(List<IssueRequestModel> dataobj)
 		{
 			try
@@ -1001,7 +1022,10 @@ namespace WMS.DAL
 				return 0;
 			}
 		}
-
+		/// <summary>
+		/// get list of gatepass data
+		/// </summary>
+		/// <returns></returns>
 		public async Task<IEnumerable<gatepassModel>> GetgatepassList()
 		{
 			using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
@@ -1029,7 +1053,11 @@ namespace WMS.DAL
 
 			}
 		}
-
+		/// <summary>
+		/// insert or update gatepass info
+		/// </summary>
+		/// <param name="dataobj"></param>
+		/// <returns></returns>
 		public int SaveOrUpdateGatepassDetails(gatepassModel dataobj)
 		{
 			try
@@ -1131,7 +1159,12 @@ namespace WMS.DAL
 				return 0;
 			}
 		}
-
+		/// <summary>
+		/// check material in stock
+		/// </summary>
+		/// <param name="material"></param>
+		/// <param name="qty"></param>
+		/// <returns></returns>
 		public string checkmaterialandqty(string material = null, int qty = 0)
 		{
 			using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
@@ -1199,7 +1232,11 @@ namespace WMS.DAL
 
 			}
 		}
-
+		/// <summary>
+		/// delete gatepass
+		/// </summary>
+		/// <param name="gatepassmaterialid"></param>
+		/// <returns></returns>
 		public int deletegatepassmaterial(int gatepassmaterialid)
 		{
 			int returndata = 0;
@@ -1225,7 +1262,11 @@ namespace WMS.DAL
 				return 0;
 			}
 		}
-
+		/// <summary>
+		/// update gatepass approver info
+		/// </summary>
+		/// <param name="model"></param>
+		/// <returns></returns>
 		public int updategatepassapproverstatus(gatepassModel model)
 		{
 			int returndata = 0;
@@ -1254,7 +1295,11 @@ namespace WMS.DAL
 				return 0;
 			}
 		}
-
+		/// <summary>
+		/// get list of material based on gatepassid
+		/// </summary>
+		/// <param name="gatepassid"></param>
+		/// <returns></returns>
 		public async Task<IEnumerable<gatepassModel>> GetmaterialList(int gatepassid)
 		{
 			using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
@@ -1282,7 +1327,11 @@ namespace WMS.DAL
 
 			}
 		}
-
+		/// <summary>
+		/// updating print status
+		/// </summary>
+		/// <param name="model"></param>
+		/// <returns></returns>
 		public int updateprintstatus(gatepassModel model)
 		{
 			{
@@ -1394,7 +1443,11 @@ namespace WMS.DAL
 		//    return 0;
 		//}
 		//}
-
+		/// <summary>
+		/// updating reprint status 
+		/// </summary>
+		/// <param name="model"></param>
+		/// <returns></returns>
 		public int updatereprintstatus(reprintModel model)
 		{
 			reprintModel obj = new reprintModel();
@@ -1454,7 +1507,11 @@ namespace WMS.DAL
 				return 0;
 			}
 		}
-
+		/// <summary>
+		/// get list based on ABC category
+		/// </summary>
+		/// <param name="categoryid"></param>
+		/// <returns></returns>
 		public async Task<IEnumerable<ReportModel>> GetreportBasedCategory(int categoryid)
 		{
 			using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
@@ -1484,7 +1541,11 @@ namespace WMS.DAL
 			}
 
 		}
-
+		/// <summary>
+		/// get list based on materail in category
+		/// </summary>
+		/// <param name="materailid"></param>
+		/// <returns></returns>
 		public async Task<IEnumerable<ReportModel>> GetreportBasedMaterial(string materailid)
 		{
 			using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
@@ -2233,5 +2294,6 @@ namespace WMS.DAL
 
 			}
 		}
+
 	}
 }
