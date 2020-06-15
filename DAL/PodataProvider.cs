@@ -76,7 +76,7 @@ namespace WMS.DAL
 					{
 						query = query + " and  op.vendorid=" + vendorid;
 					}
-					query = query + " order by  track.enteredon desc  limit 1 ";
+					query = query + " order by  track.enteredon desc ";
 					await pgsql.OpenAsync();
 					return await pgsql.QueryAsync<OpenPoModel>(
 					   query, null, commandType: CommandType.Text);

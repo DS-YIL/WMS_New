@@ -258,8 +258,11 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to select * from wms.wms_gatepassmaterial material inner join wms.wms_gatepass pass on pass.gatepassid=material.gatepassid  inner join wms.employee emp on pass.requestedby=emp.employeeno
-        ///      where pass.gatepassid=#gatepassid and pass.deleteflag=false and material.deleteflag=false.
+        ///   Looks up a localized string similar to select * from wms.wms_gatepassmaterial material
+        ///      inner join wms.wms_gatepass pass on pass.gatepassid=material.gatepassid 
+        ///      inner join wms.employee emp on pass.requestedby=emp.employeeno
+        ///      inner join wms.&quot;MaterialMasterYGS&quot; ygs on ygs.material=material.materialid
+        ///           where pass.gatepassid=#gatepassid and pass.deleteflag=false --and material.deleteflag=false.
         /// </summary>
         public static string getgatepassmaterialdetailList {
             get {
@@ -490,7 +493,7 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to INSERT INTO wms.wms_trackstatus(pono,status,enteredon,returnqty)VALUES(@pono,&apos;Quality and Quantity Checked&apos;,current_date,@returnqty).
+        ///   Looks up a localized string similar to INSERT INTO wms.wms_trackstatus(pono,status,enteredon,returnqty)VALUES(@pono,&apos;Store Checked&apos;,current_date,@returnqty).
         /// </summary>
         public static string insertqueryforstatusforqty {
             get {
@@ -499,7 +502,7 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to INSERT INTO wms.wms_trackstatus(pono,status,enteredon)VALUES(@pono,&apos;WareHouse Checked&apos;,current_date).
+        ///   Looks up a localized string similar to INSERT INTO wms.wms_trackstatus(pono,status,enteredon)VALUES(@pono,&apos;In Store&apos;,current_date).
         /// </summary>
         public static string insertqueryforstatuswarehouse {
             get {
@@ -554,7 +557,7 @@ namespace WMS.Common {
         
         /// <summary>
         ///   Looks up a localized string similar to select * from wms.openpolistview op
-        ///      inner join wms.wms_trackstatus track on track.pono=op.pono
+        ///      left join wms.wms_trackstatus track on track.pono=op.pono
         ///      where projectmanager=&apos;#projectmanager&apos; and track.enteredon is not null .
         /// </summary>
         public static string openpolist {
@@ -595,7 +598,7 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to INSERT INTO wms.wms_trackstatus(pono,status,enteredon)VALUES(@pono,&apos;Security Check Done&apos;,current_date).
+        ///   Looks up a localized string similar to INSERT INTO wms.wms_trackstatus(pono,status,enteredon)VALUES(@pono,&apos;Security Checked&apos;,current_date).
         /// </summary>
         public static string statusupdatebySecurity {
             get {

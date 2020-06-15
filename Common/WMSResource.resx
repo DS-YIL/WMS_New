@@ -160,7 +160,7 @@ where  inwmaster.pono='#pono'</value>
   </data>
   <data name="openpolist" xml:space="preserve">
     <value>select * from wms.openpolistview op
-      inner join wms.wms_trackstatus track on track.pono=op.pono
+      left join wms.wms_trackstatus track on track.pono=op.pono
       where projectmanager='#projectmanager' and track.enteredon is not null </value>
     <comment>getopenpono list</comment>
   </data>
@@ -193,10 +193,10 @@ where itemid=#itemid</value>
     <value>INSERT INTO wms.wms_qualitycheck(inwardid,quality,qtype,qcdate,qcby,remarks,deleteflag)VALUES(@inwardid,@quality,@qtype,@qcdate,@qcby,@remarks,@deleteflag)</value>
   </data>
   <data name="insertqueryforstatusforqty" xml:space="preserve">
-    <value>INSERT INTO wms.wms_trackstatus(pono,status,enteredon,returnqty)VALUES(@pono,'Quality and Quantity Checked',current_date,@returnqty)</value>
+    <value>INSERT INTO wms.wms_trackstatus(pono,status,enteredon,returnqty)VALUES(@pono,'Store Checked',current_date,@returnqty)</value>
   </data>
   <data name="insertqueryforstatuswarehouse" xml:space="preserve">
-    <value>INSERT INTO wms.wms_trackstatus(pono,status,enteredon)VALUES(@pono,'WareHouse Checked',current_date)</value>
+    <value>INSERT INTO wms.wms_trackstatus(pono,status,enteredon)VALUES(@pono,'In Store',current_date)</value>
   </data>
   <data name="insertstock" xml:space="preserve">
     <value>INSERT INTO wms.wms_stock(inwmasterid,stockstatus,pono,binid,vendorid,totalquantity,shelflife,availableqty,deleteflag,itemlocation,createddate,createdby)VALUES(@inwmasterid,@stockstatus,@pono,@binid,@vendorid,@totalquantity,@shelflife,@availableqty,@deleteflag,@itemlocation,@createddate,@createdby)returning itemid</value>
@@ -215,7 +215,7 @@ inner join wms.openpolistview openpo on openpo.pono=inw.pono
 where inw.grnnumber='#grnnumber'</value>
   </data>
   <data name="statusupdatebySecurity" xml:space="preserve">
-    <value>INSERT INTO wms.wms_trackstatus(pono,status,enteredon)VALUES(@pono,'Security Check Done',current_date)</value>
+    <value>INSERT INTO wms.wms_trackstatus(pono,status,enteredon)VALUES(@pono,'Security Checked',current_date)</value>
   </data>
   <data name="updateackstatus" xml:space="preserve">
     <value>update  wms.wms_materialrequest set ackstatus=@ackstatus,ackremarks=@ackremarks where requestforissueid=@requestforissueid and materialid=@materialid</value>
@@ -267,8 +267,11 @@ where  inw.invoiceno='#invoiceno' and openpo.pono='#pono' group by grnnumber</va
     <value>update wms.wms_gatepassmaterial set deleteflag='true' where gatepassmaterialid=#gatepassmaterialid</value>
   </data>
   <data name="getgatepassmaterialdetailList" xml:space="preserve">
-    <value>select * from wms.wms_gatepassmaterial material inner join wms.wms_gatepass pass on pass.gatepassid=material.gatepassid  inner join wms.employee emp on pass.requestedby=emp.employeeno
-      where pass.gatepassid=#gatepassid and pass.deleteflag=false and material.deleteflag=false</value>
+    <value>select * from wms.wms_gatepassmaterial material
+      inner join wms.wms_gatepass pass on pass.gatepassid=material.gatepassid 
+      inner join wms.employee emp on pass.requestedby=emp.employeeno
+      inner join wms."MaterialMasterYGS" ygs on ygs.material=material.materialid
+           where pass.gatepassid=#gatepassid and pass.deleteflag=false --and material.deleteflag=false</value>
   </data>
   <data name="updategatepassapproverstatus" xml:space="preserve">
     <value>update wms.wms_gatepass set approverstatus=@approverstatus,approverremarks=@approverremarks,approvedon=@approvedon where gatepassid=#gatepassid</value>
