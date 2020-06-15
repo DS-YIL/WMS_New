@@ -308,8 +308,8 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to select req.requestid,req.requesteddate,req.requesterid,po.projectname from wms.wms_materialrequest req inner join wms.openpolistview po on po.pono=req.pono 
-        ///left join wms.employee emp on req.requesterid=emp.employeeno  where req.approverid=&apos;#approverid&apos; group by req.requestid,req.requesteddate,req.requesterid,po.projectname.
+        ///   Looks up a localized string similar to select req.requestid,req.requesteddate,req.requesterid,po.projectname,emp.&quot;name&quot; from wms.wms_materialrequest req inner join wms.openpolistview po on po.pono=req.pono 
+        ///left join wms.employee emp on req.requesterid=emp.employeeno  where req.approverid=&apos;#approverid&apos; group by req.requestid,req.requesteddate,req.requesterid,po.projectname,emp.&quot;name&quot;.
         /// </summary>
         public static string GetListForMaterialRequestByapproverid {
             get {
