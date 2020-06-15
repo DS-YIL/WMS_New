@@ -122,11 +122,18 @@
     <comment>checkpono</comment>
   </data>
   <data name="GetdetailsByrequestid" xml:space="preserve">
-    <value>select sum(mi.issuedqty) as issuedqty,op."JobName",requestforissueid,emp."name",req.requesteddate,sk.materialid,sk.pono,req.requestedquantity,sk.availableqty,req.requestid from wms.wms_materialrequest req inner join wms.wms_stock sk on req.requestid=sk.itemid inner join wms.employee emp on emp.employeeno=req.requesterid where requestid=#requestid and req.deleteflag=false group by requestforissueid,sk.materialid,sk.pono,req.requestedquantity,sk.availableqty,req.requestid,emp."name",req.requesteddate limit 1</value>
+    <value>select sum(mi.issuedqty) as issuedqty,op."JobName",req.requestforissueid,emp."name",req.requesteddate,sk.materialid,sk.pono,req.requestedquantity,sk.availableqty,req.requestid 
+ from wms.wms_materialrequest req 
+ left join wms.wms_materialissue mi on mi.requestforissueid=req.requestforissueid
+ inner join wms.wms_stock sk on req.requestid=sk.itemid 
+ inner join wms.employee emp on emp.employeeno=req.requesterid
+ inner join wms.openpolistview op on op.pono=sk.pono
+ where requestid=#requestid and req.deleteflag=false 
+ group by req.requestforissueid,sk.materialid,sk.pono,req.requestedquantity,sk.availableqty,req.requestid,emp."name",req.requesteddate,op."JobName" limit 1</value>
   </data>
   <data name="GetListForMaterialRequestByapproverid" xml:space="preserve">
     <value>select req.requestid,req.requesteddate,req.requesterid,po.projectname,emp."name" from wms.wms_materialrequest req inner join wms.openpolistview po on po.pono=req.pono 
-left join wms.employee emp on req.requesterid=emp.employeeno  where req.approverid='#approverid' group by req.requestid,req.requesteddate,req.requesterid,po.projectname,emp."name"</value>
+left join wms.employee emp on req.requesterid=emp.employeeno  where req.approverid='#approverid' group by req.requestid,req.requesteddate,req.requesterid,po.projectname,emp."name" order by req.requestid desc</value>
   </data>
   <data name="GetListForMaterialRequestByrequesterid" xml:space="preserve">
     <value>select * from wms.wms_materialrequest where requesterid='#requesterid'</value>
@@ -152,7 +159,9 @@ where  inwmaster.pono='#pono'</value>
     <comment>insert material request data</comment>
   </data>
   <data name="openpolist" xml:space="preserve">
-    <value>select * from wms.openpolistview  where  projectmanager='#projectmanager' </value>
+    <value>select * from wms.openpolistview op
+      inner join wms.wms_trackstatus track on track.pono=op.pono
+      where projectmanager='#projectmanager' and track.enteredon is not null </value>
     <comment>getopenpono list</comment>
   </data>
   <data name="Getdetailsforthreewaymatching" xml:space="preserve">

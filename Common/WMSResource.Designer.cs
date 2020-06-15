@@ -208,7 +208,13 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to select sum(mi.issuedqty) as issuedqty,op.&quot;JobName&quot;,requestforissueid,emp.&quot;name&quot;,req.requesteddate,sk.materialid,sk.pono,req.requestedquantity,sk.availableqty,req.requestid from wms.wms_materialrequest req inner join wms.wms_stock sk on req.requestid=sk.itemid inner join wms.employee emp on emp.employeeno=req.requesterid where requestid=#requestid and req.deleteflag=false group by requestforissueid,sk.materialid,sk.pono,req.requestedquantity,sk.availableqty,req.requestid,emp.&quot;name&quot;,req.requesteddate limit 1.
+        ///   Looks up a localized string similar to select sum(mi.issuedqty) as issuedqty,op.&quot;JobName&quot;,req.requestforissueid,emp.&quot;name&quot;,req.requesteddate,sk.materialid,sk.pono,req.requestedquantity,sk.availableqty,req.requestid 
+        /// from wms.wms_materialrequest req 
+        /// left join wms.wms_materialissue mi on mi.requestforissueid=req.requestforissueid
+        /// inner join wms.wms_stock sk on req.requestid=sk.itemid 
+        /// inner join wms.employee emp on emp.employeeno=req.requesterid
+        /// inner join wms.openpolistview op on op.pono=sk.pono
+        /// where requestid=#requestid and req.del [rest of string was truncated]&quot;;.
         /// </summary>
         public static string GetdetailsByrequestid {
             get {
@@ -309,7 +315,7 @@ namespace WMS.Common {
         
         /// <summary>
         ///   Looks up a localized string similar to select req.requestid,req.requesteddate,req.requesterid,po.projectname,emp.&quot;name&quot; from wms.wms_materialrequest req inner join wms.openpolistview po on po.pono=req.pono 
-        ///left join wms.employee emp on req.requesterid=emp.employeeno  where req.approverid=&apos;#approverid&apos; group by req.requestid,req.requesteddate,req.requesterid,po.projectname,emp.&quot;name&quot;.
+        ///left join wms.employee emp on req.requesterid=emp.employeeno  where req.approverid=&apos;#approverid&apos; group by req.requestid,req.requesteddate,req.requesterid,po.projectname,emp.&quot;name&quot; order by req.requestid desc.
         /// </summary>
         public static string GetListForMaterialRequestByapproverid {
             get {
@@ -547,7 +553,9 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to select * from wms.openpolistview  where  projectmanager=&apos;#projectmanager&apos; .
+        ///   Looks up a localized string similar to select * from wms.openpolistview op
+        ///      inner join wms.wms_trackstatus track on track.pono=op.pono
+        ///      where projectmanager=&apos;#projectmanager&apos; and track.enteredon is not null .
         /// </summary>
         public static string openpolist {
             get {

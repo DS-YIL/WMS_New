@@ -66,17 +66,17 @@ namespace WMS.DAL
 					string query = WMSResource.openpolist.Replace("#projectmanager", loginid);
 					if (pono != null)
 					{
-						query = query + " and pono='" + pono + "'";
+						query = query + " and op.pono='" + pono + "'";
 					}
 					if (docno != null)
 					{
-						query = query + " and documentno='" + docno + "'";
+						query = query + " and op.documentno='" + docno + "'";
 					}
 					if (vendorid != null)
 					{
-						query = query + " and  vendorid=" + vendorid;
+						query = query + " and  op.vendorid=" + vendorid;
 					}
-
+					query = query + " order by  track.enteredon desc  limit 1 ";
 					await pgsql.OpenAsync();
 					return await pgsql.QueryAsync<OpenPoModel>(
 					   query, null, commandType: CommandType.Text);
