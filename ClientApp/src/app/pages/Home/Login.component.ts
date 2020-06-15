@@ -120,7 +120,7 @@ export class LoginComponent implements OnInit {
     }
     if (this.employee.roleid == "7") {//admin
       MENU_ITEMS[6].hidden = MENU_ITEMS[7].hidden = MENU_ITEMS[8].hidden = MENU_ITEMS[9].hidden = MENU_ITEMS[10].hidden = MENU_ITEMS[11].hidden = MENU_ITEMS[12].hidden = MENU_ITEMS[13].hidden = MENU_ITEMS[14].hidden = MENU_ITEMS[15].hidden = false;
-      this.router.navigateByUrl('/WMS/Dashboard');
+      this.router.navigateByUrl('/WMS/GatePass');
     }
   }
 

@@ -61,7 +61,7 @@ export class DashboardComponent implements OnInit {
   bindList() {
     this.spinner.show();
     //this.PoFilterParams.venderid = 8;
-    this.PoFilterParams.loginid ="180129";
+    this.PoFilterParams.loginid =this.employee.employeeno;
     this.wmsService.getPOList(this.PoFilterParams).subscribe(data => {
       this.POList = data;
       this.loading = false;
