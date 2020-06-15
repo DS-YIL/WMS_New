@@ -1712,8 +1712,37 @@ namespace WMS.DAL
 			}
 		}
 
-        //Ramesh (08/06/2020) returns all  Materials to count
-        public async Task<IEnumerable<CycleCountList>> GetCyclecountList(int limita, int limitb, int limitc)
+		//Ramesh (08/06/2020) returns Enquiry Details
+		public async Task<Enquirydata> GetEnquirydata(string materialid)
+		{
+			using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
+			{
+
+				try
+				{
+					string query = "select stock.materialid, SUM(stock.availableqty) as availableqty, Max(op.materialdescription) as materialdescription from wms.wms_stock stock left outer join wms.\"MaterialMasterYGS\" op on  stock.materialid =op.material  where stock.materialid='" + materialid + "' group by stock.materialid";
+
+					await pgsql.OpenAsync();
+					var data = await pgsql.QueryAsync<Enquirydata>(
+					   query, null, commandType: CommandType.Text);
+					return data.FirstOrDefault();
+				}
+				catch (Exception Ex)
+				{
+					log.ErrorMessage("PODataProvider", "GetEnquirydata", Ex.StackTrace.ToString());
+					return null;
+				}
+				finally
+				{
+					pgsql.Close();
+				}
+
+			}
+		}
+
+
+		//Ramesh (08/06/2020) returns all  Materials to count
+		public async Task<IEnumerable<CycleCountList>> GetCyclecountList(int limita, int limitb, int limitc)
         { 
             using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
             {

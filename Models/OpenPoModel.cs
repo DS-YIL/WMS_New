@@ -367,4 +367,11 @@ namespace WMS.Models
 		public int userid { get; set; }
 		public string accessname { get; set; }
 	}
+	public class Enquirydata
+	{
+		public string materialid { get; set; }
+		public string materialdescription { get; set; }
+		public int availableqty { get; set; }
+
+	}
 }
