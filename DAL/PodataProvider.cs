@@ -320,7 +320,7 @@ namespace WMS.DAL
 						foreach (var item in datamodel)
 						{
 							string insertforinvoicequery = WMSResource.insertforinvoicequery;
-							item.deleteflag = false;
+							item.deleteflag=false;
 							using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
 							{
 								var results = DB.ExecuteScalar(insertforinvoicequery, new

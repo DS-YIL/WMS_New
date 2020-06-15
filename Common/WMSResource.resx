@@ -156,7 +156,9 @@ where  inwmaster.pono='#pono'</value>
     <comment>getopenpono list</comment>
   </data>
   <data name="Getdetailsforthreewaymatching" xml:space="preserve">
-    <value>select * from wms.wms_securityinward inwa  inner join wms.openpolistview openpo on openpo.pono=inwa.pono
+    <value>select distinct*, (inw.confirmqty+inw.returnqty) as totalrecivedqty from wms.wms_securityinward inwa  
+ left join wms.wms_storeinward inw on inw.inwmasterid=inwa.inwmasterid
+ inner join wms.openpolistview openpo on openpo.pono=inwa.pono
  where  inwa.pono='#pono'  and inwa.invoiceno ilike '%#invoiceno' limit 50</value>
   </data>
   <data name="getGRNNo" xml:space="preserve">
@@ -198,10 +200,10 @@ where itemid=#itemid</value>
   </data>
   <data name="queryforitemdetails" xml:space="preserve">
     <value>select distinct * from wms.wms_securityinward inw
-left join wms.wms_securityinward inwa on inw.inwmasterid=inwa.inwmasterid
+left join wms.wms_storeinward inwa on inw.inwmasterid=inwa.inwmasterid
 left join wms.wms_stock stocks on  stocks.inwmasterid=inwa.inwmasterid
-inner join wms.openpolistview openpo on openpo.pono=inwa.pono
-where inwa.grnnumber='#grnnumber'</value>
+inner join wms.openpolistview openpo on openpo.pono=inw.pono
+where inw.grnnumber='#grnnumber'</value>
   </data>
   <data name="statusupdatebySecurity" xml:space="preserve">
     <value>INSERT INTO wms.wms_trackstatus(pono,status,enteredon)VALUES(@pono,'Security Check Done',current_date)</value>

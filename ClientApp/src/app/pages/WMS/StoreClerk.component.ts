@@ -87,7 +87,7 @@ export class StoreClerkComponent implements OnInit {
         this.disGrnBtn = false;
         // this.PoDetails = data[0];
         this.podetailsList = data;
-       
+        this.grnnumber = this.podetailsList[0].grnnumber;
         this.showDetails = true;
       }
       else

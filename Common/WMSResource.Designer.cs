@@ -217,7 +217,9 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to select * from wms.wms_securityinward inwa  inner join wms.openpolistview openpo on openpo.pono=inwa.pono
+        ///   Looks up a localized string similar to select distinct*, (inw.confirmqty+inw.returnqty) as totalrecivedqty from wms.wms_securityinward inwa  
+        /// left join wms.wms_storeinward inw on inw.inwmasterid=inwa.inwmasterid
+        /// inner join wms.openpolistview openpo on openpo.pono=inwa.pono
         /// where  inwa.pono=&apos;#pono&apos;  and inwa.invoiceno ilike &apos;%#invoiceno&apos; limit 50.
         /// </summary>
         public static string Getdetailsforthreewaymatching {
@@ -564,10 +566,10 @@ namespace WMS.Common {
         
         /// <summary>
         ///   Looks up a localized string similar to select distinct * from wms.wms_securityinward inw
-        ///left join wms.wms_securityinward inwa on inw.inwmasterid=inwa.inwmasterid
+        ///left join wms.wms_storeinward inwa on inw.inwmasterid=inwa.inwmasterid
         ///left join wms.wms_stock stocks on  stocks.inwmasterid=inwa.inwmasterid
-        ///inner join wms.openpolistview openpo on openpo.pono=inwa.pono
-        ///where inwa.grnnumber=&apos;#grnnumber&apos;.
+        ///inner join wms.openpolistview openpo on openpo.pono=inw.pono
+        ///where inw.grnnumber=&apos;#grnnumber&apos;.
         /// </summary>
         public static string queryforitemdetails {
             get {

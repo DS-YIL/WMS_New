@@ -28,6 +28,8 @@ namespace WMS.Models
 		public int returnqty { get; set; }
         public int vendorid { get; set; }
 		public string grnnumber { get; set; }
+		public int confirmqty { get; set; }
+		public int totalrecivedqty { get; set; }
 	}
 	public class BarcodeModel
 	{
