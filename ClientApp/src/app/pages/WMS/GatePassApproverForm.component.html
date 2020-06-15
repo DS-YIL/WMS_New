@@ -47,7 +47,7 @@
             <td class="ptable-cell" style="text-align:right"><span *ngIf="rowData.materialcost">{{rowData.materialcost}}</span></td>
             <td class="ptable-cell" style="text-align:right"> {{rowData.remarks}} </td>
             <td class="ptable-cell" style="text-align:right">{{rowData.expecteddate | date :  constants.dateFormat}}</td>
-            <td *ngIf="materialList[0].gatepasstype=='Returnable'" class="ptable-cell" style="text-align:right">{{rowData.returneddate | date :  constants.dateFormat}}</td>
+            <td *ngIf="materialList[0].gatepasstype=='Returnable' && rowData.returneddate" class="ptable-cell" style="text-align:right">{{rowData.returneddate | date :  constants.dateFormat}}</td>
 
         </ng-template>
       </p-table>
