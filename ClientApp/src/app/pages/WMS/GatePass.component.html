@@ -156,9 +156,9 @@
       <p-table *ngIf="gatepassModel.materialList.length>0" [value]="gatepassModel.materialList" [style]="{'width':'87%','height':'80%','overflow':'auto!important'}">
         <ng-template pTemplate="header">
           <tr class="mprltbldata">
-            <th class="ptable-cell" style="text-align:center">S No</th>
+            <th class="ptable-cell" style="text-align:center;width:70px">S No</th>
             <th class="ptable-cell" style="text-align:center">Material</th>
-            <th class="ptable-cell" style="text-align:center">Materia Description</th>
+            <th class="ptable-cell" style="text-align:center;width:200px">Materia Description</th>
             <th class="ptable-cell" style="text-align:center">Quantity</th>
             <th class="ptable-cell" style="text-align:center">Price</th>
             <th class="ptable-cell" style="text-align:center">Remarks</th>
@@ -174,8 +174,8 @@
             <td class="ptable-cell" style="text-align:right"> {{rowData.materialdescription}} </td>
             <td class="ptable-cell" style="text-align:right"><input style="text-align:right" pInputText type="number" class="form-control" [(ngModel)]="rowData.quantity" (keyup)="checkMaterialandQty(rowData,ri)"></td>
             <td class="ptable-cell" style="text-align:right">{{rowData.materialcost}}</td>
-            <td class="ptable-cell" style="text-align:right"> {{rowData.remarks}} </td>
-            <td class="ptable-cell" style="text-align:right">{{rowData.expecteddate | date :  constants.dateFormat}}</td>
+            <td class="ptable-cell" style="text-align:left"> {{rowData.remarks}} </td>
+            <td class="ptable-cell" style="text-align:center">{{rowData.expecteddate | date :  constants.dateFormat}}</td>
             <!--<td *ngIf="gatepassModel.gatepasstype=='Returnable'" class="ptable-cell" style="text-align:center">{{rowData.returneddate | date :  constants.dateFormat}}-->
             <td class="ptable-cell" style="text-align:center"> <button pButton type="button" icon="fa fa-trash" class="ui-button-info" style="margin-left: 1px;" (click)="removematerial(rowData.gatepassmaterialid,ri)"></button></td>
         </ng-template>
