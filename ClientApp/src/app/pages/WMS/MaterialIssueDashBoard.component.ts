@@ -43,7 +43,7 @@ export class MaterialIssueDashBoardComponent implements OnInit {
 
   //get material issue list based on loginid
   getMaterialIssueList() {
-    this.employee.employeeno = "400095";
+    //this.employee.employeeno = "400095";
     this.wmsService.getMaterialIssueLlist(this.employee.employeeno).subscribe(data => {
       this.materialIssueList = data;    
     });

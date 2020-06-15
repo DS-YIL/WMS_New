@@ -33,14 +33,14 @@
         </td>
         <td class="ptable-cell" style="text-align:center"><button type="button" class="btn btn-link" (click)="showAbcListByCat(rowData);">{{rowData.category}}</button></td>
         <td class="ptable-cell" style="text-align:right">{{rowData.availableqty}}</td>
-        <td class="ptable-cell" style="text-align:right">{{((rowData.availableqty/totalQty)*100).toFixed(2)}}</td>
+        <td class="ptable-cell" style="text-align:right">{{((rowData.availableqty/totalQty)*100).toFixed(0)}}</td>
         <td class="ptable-cell" style="text-align:right">{{rowData.totalcost}}</td>
-        <td class="ptable-cell" style="text-align:right">{{((rowData.totalcost/totalunitprice)*100).toFixed(2)}}</td>
+        <td class="ptable-cell" style="text-align:right">{{((rowData.totalcost/totalunitprice)*100).toFixed(0)}}</td>
       </tr>
     </ng-template>
     <ng-template pTemplate="footer">
       <tr>
-        <td [attr.colspan]="2" style="color: #17a2b8;">Totals</td>
+        <td [attr.colspan]="2" style="color: #17a2b8;">Total</td>
         <td style="color: #17a2b8;text-align:right">{{totalQty}}</td>
         <td></td>
         <td style="color: #17a2b8;text-align:right">{{totalunitprice}}</td>

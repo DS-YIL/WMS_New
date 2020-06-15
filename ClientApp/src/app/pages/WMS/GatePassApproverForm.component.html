@@ -4,7 +4,7 @@
       <label class="form-label"><b>GatePass Id:</b></label>&nbsp;<span>{{materialList[0].gatepassid}}</span>
     </div>
     <div class="col-lg-2 col-md-2 col-sm-2 form-inline">
-      <label class="form-label"><b>Sendor Name:</b></label>&nbsp;<span>{{materialList[0].name}}</span>
+      <label class="form-label"><b>Sender Name:</b></label>&nbsp;<span>{{materialList[0].name}}</span>
     </div>
     <div class="col-lg-2 col-md-2 col-sm-2 form-inline">
       <label class="form-label"><b>Supplier Name:</b></label>&nbsp;<span>{{materialList[0].vendorname}}</span>
@@ -20,17 +20,22 @@
     </div>
     <br />
     <div class="row mt-4" style="margin:14px">
-      <p-table [value]="materialList">
+      <p-table [value]="materialList" [style]="{'width':'100%','overflow':'auto!important'}"
+               [responsive]="true" [rows]="50"
+               [resizableColumns]="true"
+               columnResizeMode="expand"
+               [paginator]="true" [rowsPerPageOptions]="[25,50,75,100]"
+               appendTo="body">
         <ng-template pTemplate="header">
           <tr class="mprltbldata">
-            <th class="ptable-cell">S No</th>
-            <th class="ptable-cell">Material</th>
-            <th class="ptable-cell">Materia Description</th>
-            <th class="ptable-cell">Quantity</th>
-            <th class="ptable-cell">Value</th>
-            <th class="ptable-cell">Remarks</th>
-            <th class="ptable-cell">Expected Date</th>
-            <th *ngIf="materialList[0].gatepasstype=='Returnable'" class="ptable-cell">Returned Date</th>
+            <th class="ptable-cell"  style="text-align:center">S No</th>
+            <th class="ptable-cell"  style="text-align:center">Material</th>
+            <th class="ptable-cell"  style="text-align:center">Material Description</th>
+            <th class="ptable-cell"  style="text-align:center">Quantity</th>
+            <th class="ptable-cell"  style="text-align:center">Value</th>
+            <th class="ptable-cell"  style="text-align:center">Remarks</th>
+            <th class="ptable-cell"  style="text-align:center">Expected Date</th>
+            <th *ngIf="materialList[0].gatepasstype=='Returnable'" class="ptable-cell"  style="text-align:center">Returned Date</th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-rowData let-editing="editing" let-ri="rowIndex" let-rindex=0>
@@ -39,7 +44,7 @@
             <td class="ptable-cell" style="text-align:right"> {{rowData.materialid}} </td>
             <td class="ptable-cell" style="text-align:right"> {{rowData.materialdescription}} </td>
             <td class="ptable-cell" style="text-align:right">{{rowData.quantity}}</td>
-            <td class="ptable-cell" style="text-align:right">{{rowData.materialcost}}</td>
+            <td class="ptable-cell" style="text-align:right"><span *ngIf="rowData.materialcost">{{rowData.materialcost}}</span></td>
             <td class="ptable-cell" style="text-align:right"> {{rowData.remarks}} </td>
             <td class="ptable-cell" style="text-align:right">{{rowData.expecteddate | date :  constants.dateFormat}}</td>
             <td *ngIf="materialList[0].gatepasstype=='Returnable'" class="ptable-cell" style="text-align:right">{{rowData.returneddate | date :  constants.dateFormat}}</td>

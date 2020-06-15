@@ -18,7 +18,7 @@ export class MaterialRequestComponent implements OnInit {
 
   public requestList: Array<any> = [];
   public employee: Employee;
-  public displayItemRequestDialog; RequestDetailsSubmitted; showAck: boolean = false;
+  public displayItemRequestDialog; RequestDetailsSubmitted; showAck; btnDisable: boolean = false;
   public materialRequestDetails: materialRequestDetails;
   public pono: string;
 
@@ -40,7 +40,7 @@ export class MaterialRequestComponent implements OnInit {
 
   //get Material Rquest based on login employee && po no
   getMaterialRequestlist() {
-    this.employee.employeeno = "180129";
+    //this.employee.employeeno = "180129";
     this.wmsService.getMaterialRequestlist(this.employee.employeeno, this.pono).subscribe(data => {
       this.requestList = data;
       this.requestList.forEach(item => {
@@ -61,6 +61,7 @@ export class MaterialRequestComponent implements OnInit {
   //requested quantity update
   onMaterialRequestDeatilsSubmit() {
     this.spinner.show();
+    this.btnDisable = true;
     this.wmsService.materialRequestUpdate(this.requestList).subscribe(data => {
       this.spinner.hide();
       if (data)
@@ -83,13 +84,13 @@ export class MaterialRequestComponent implements OnInit {
     }
     else {
       this.spinner.show();
+      this.btnDisable = true;
       this.wmsService.approvematerialrequest(this.requestList).subscribe(data => {
         this.spinner.hide();
         if (data)
           this.messageService.add({ severity: 'sucess', summary: 'sucee Message', detail: 'Status updated' });
         else
           this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Update Failed' });
-
       });
     }
   }

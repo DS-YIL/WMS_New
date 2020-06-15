@@ -56,4 +56,11 @@ export class GatePassApproverComponent implements OnInit {
       this.messageService.add({ severity: 'success', summary: 'success Message', detail: 'Status updated' });
     });
   }
+
+  //check date is valid or not
+  checkValiddate(date: any) {
+    var d = new Date(date);
+
+   
+  }
 }
