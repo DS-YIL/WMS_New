@@ -330,6 +330,7 @@ namespace WMS.DAL
 									//item.poitemid,
 									item.receiveddate,
 									item.receivedby,
+									item.receivedqty,
 									item.returnqty,
 									item.confirmqty,
 									materialid,
