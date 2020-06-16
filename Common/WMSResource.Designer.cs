@@ -440,7 +440,7 @@ namespace WMS.Common {
         
         /// <summary>
         ///   Looks up a localized string similar to INSERT INTO wms.wms_storeinward(inwmasterid,receiveddate,receivedby,receivedqty,returnqty,confirmqty,materialid,deleteflag)
-        ///VALUES(@inwmasterid,@receiveddate,@receivedby,receivedqty,@returnqty,@confirmqty,@materialid,@deleteflag)returning inwardid.
+        ///VALUES(@inwmasterid,@receiveddate,@receivedby,@receivedqty,@returnqty,@confirmqty,@materialid,@deleteflag)returning inwardid.
         /// </summary>
         public static string insertforinvoicequery {
             get {
