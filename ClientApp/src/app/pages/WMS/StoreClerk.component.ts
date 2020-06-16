@@ -65,17 +65,17 @@ export class StoreClerkComponent implements OnInit {
       this.spinner.show();
       //this.wmsService.verifythreewaymatch(this.PoDetails.pono).subscribe(data => {
       //  //this.wmsService.verifythreewaymatch("123", "228738234", "1", "SK19VASP8781").subscribe(data => {
-        //this.spinner.hide();
+      //this.spinner.hide();
       //  if (data == true) {
-          this.showQtyUpdateDialog = true;
-          this.getponodetails(this.PoDetails.pono);
-         // this.messageService.add({ severity: 'success', summary: 'Success Message', detail: 'GRN Posted  Sucessfully' });
-       // }
-        //else
-          //this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Already verified' });
-        //this.getponodetails(this.PoDetails.pono);
-     // })
-     
+      this.showQtyUpdateDialog = true;
+      this.getponodetails(this.PoDetails.pono);
+      // this.messageService.add({ severity: 'success', summary: 'Success Message', detail: 'GRN Posted  Sucessfully' });
+      // }
+      //else
+      //this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Already verified' });
+      //this.getponodetails(this.PoDetails.pono);
+      // })
+
     }
 
 
@@ -115,9 +115,9 @@ export class StoreClerkComponent implements OnInit {
   }
   onsubmitGRN() {
     if (this.podetailsList.length > 0) {
-     
+
       this.spinner.show();
-     // this.onVerifyDetails(this.podetailsList);
+      // this.onVerifyDetails(this.podetailsList);
       this.inwardModel.pono = this.PoDetails.pono;
       this.inwardModel.receivedqty = this.PoDetails.quotationqty;
       this.inwardModel.receivedby = this.inwardModel.qcby = this.employee.employeeno;
@@ -133,12 +133,12 @@ export class StoreClerkComponent implements OnInit {
           })
         }
         this.spinner.hide();
-        
-        //  if (data) {
-        this.messageService.add({ severity: 'success', summary: 'Success Message', detail: 'Saved Sucessfully' });
-        this.showQtyUpdateDialog = false;
-        this.disGrnBtn = true;
-        //}
+
+        if (data) {
+          this.messageService.add({ severity: 'success', summary: 'Success Message', detail: 'Saved Sucessfully' });
+          this.showQtyUpdateDialog = false;
+          this.disGrnBtn = true;
+        }
       });
     }
     else
