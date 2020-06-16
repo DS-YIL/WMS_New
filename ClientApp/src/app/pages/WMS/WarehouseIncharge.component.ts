@@ -132,7 +132,7 @@ export class WarehouseInchargeComponent implements OnInit {
   }
 
   onSubmitStockDetails() {
-    if (this.store.name && this.rack.name && this.bin.name) {
+    if (this.store.name && this.rack.name) {
       this.StockModel.itemid = this.PoDetails.itemid;
       this.StockModel.pono = this.PoDetails.pono;
       this.StockModel.grnnumber = this.PoDetails.grnnumber;
@@ -148,7 +148,9 @@ export class WarehouseInchargeComponent implements OnInit {
       this.wmsService.InsertStock(this.StockModel).subscribe(data => {
         // if (data) {
         //this.podetailsList[this.rowIndex].itemlocation = data;
-        this.podetailsList[this.rowIndex].itemlocation = this.store.name + "." + this.rack.name + '.' + this.bin.name;
+        this.podetailsList[this.rowIndex].itemlocation = this.store.name + "." + this.rack.name;
+        if (this.bin && this.bin.name)
+          this.podetailsList[this.rowIndex].itemlocation += '.' + this.bin.name;
         this.showLocationDialog = false;
         this.messageService.add({ severity: 'success', summary: 'Success Message', detail: 'Location Updated' });
         // }
@@ -159,8 +161,6 @@ export class WarehouseInchargeComponent implements OnInit {
         this.messageService.add({ severity: 'error', summary: 'Validation', detail: 'Select Location' });
       else if (!this.rack.name)
         this.messageService.add({ severity: 'error', summary: 'Validation', detail: 'Select Rack'});
-     else if (!this.bin.name)
-        this.messageService.add({ severity: 'error', summary: 'Validation', detail: 'Select Bin' });
     }
   }
 
