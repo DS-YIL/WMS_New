@@ -29,6 +29,7 @@ namespace WMS.Models
         public int vendorid { get; set; }
 		public string grnnumber { get; set; }
 		public int confirmqty { get; set; }
+		public int receivedqty { get; set; }
 		public int totalrecivedqty { get; set; }
 	}
 	public class BarcodeModel
