@@ -150,7 +150,7 @@ export class WarehouseInchargeComponent implements OnInit {
         //this.podetailsList[this.rowIndex].itemlocation = data;
         this.podetailsList[this.rowIndex].itemlocation = this.store.name + "." + this.rack.name + '.' + this.bin.name;
         this.showLocationDialog = false;
-        this.messageService.add({ severity: 'success', summary: 'Success Message', detail: 'Data saved' });
+        this.messageService.add({ severity: 'success', summary: 'Success Message', detail: 'Location Updated' });
         // }
       });
     }
