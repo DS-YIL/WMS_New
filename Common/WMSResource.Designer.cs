@@ -211,10 +211,9 @@ namespace WMS.Common {
         ///   Looks up a localized string similar to select sum(mi.issuedqty) as issuedqty,op.&quot;JobName&quot;,req.requestforissueid,emp.&quot;name&quot;,req.requesteddate,sk.materialid,sk.pono,req.requestedquantity,sk.availableqty,req.requestid 
         /// from wms.wms_materialrequest req 
         /// left join wms.wms_materialissue mi on mi.requestforissueid=req.requestforissueid
-        /// inner join wms.wms_stock sk on req.requestid=sk.itemid 
+        /// left join wms.wms_stock sk on req.requestid=sk.itemid
         /// inner join wms.employee emp on emp.employeeno=req.requesterid
-        /// inner join wms.openpolistview op on op.pono=sk.pono
-        /// where requestid=#requestid and req.del [rest of string was truncated]&quot;;.
+        /// left join wms.openpolistview op on op.pono=sk.pono  where requestid=#requestid and req.deletef [rest of string was truncated]&quot;;.
         /// </summary>
         public static string GetdetailsByrequestid {
             get {
@@ -548,7 +547,7 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to select distinct * from   wms.wms_stock  sk inner join wms.openpolistview openpo on openpo.material = sk.materialid left join wms.wms_materialrequest req on req.pono = openpo.pono where req.ackstatus is not null and req.deleteflag=false.
+        ///   Looks up a localized string similar to select distinct req.requestid,openpo.pono,openpo.projectname,openpo.material,openpo.materialdescription,openpo.quotationqty,req.requestedquantity,req.ackremarks from   wms.wms_stock  sk inner join wms.openpolistview openpo on openpo.material = sk.materialid left join wms.wms_materialrequest req on req.pono = openpo.pono where req.ackstatus is not null and req.deleteflag=false.
         /// </summary>
         public static string materialrequestquery {
             get {
