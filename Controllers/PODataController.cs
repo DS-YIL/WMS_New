@@ -289,6 +289,12 @@ namespace WMS.Controllers
 			return await this._poService.getuserAcessList(employeeid,roleid);
 		}
 
+		[HttpGet("getEnquirydata")]
+		public async Task<Enquirydata> getEnquirydata(string materialid)
+		{
+			return await this._poService.GetEnquirydata(materialid);
+		}
+
 		//[HttpPost("securitysendemail")]
 		//public EmailModel sendemail(EmailModel obj)
 		//{
