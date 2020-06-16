@@ -321,6 +321,7 @@ namespace WMS.DAL
 						{
 							string insertforinvoicequery = WMSResource.insertforinvoicequery;
 							item.deleteflag=false;
+							string materialid = item.Material;
 							using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
 							{
 								var results = DB.ExecuteScalar(insertforinvoicequery, new
@@ -331,7 +332,7 @@ namespace WMS.DAL
 									item.receivedby,
 									item.returnqty,
 									item.confirmqty,
-									item.Material,
+									materialid,
 									item.deleteflag,
 
 								});
