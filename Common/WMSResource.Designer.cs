@@ -557,7 +557,7 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to select * from wms.openpolistview op
+        ///   Looks up a localized string similar to select distinct track.enteredon,op.projectcode,op.pono,track.status,op.vendorname,op.&quot;JobName&quot;,op.quotationqty from wms.openpolistview op
         ///      left join wms.wms_trackstatus track on track.pono=op.pono
         ///      where projectmanager=&apos;#projectmanager&apos; and track.enteredon is not null .
         /// </summary>

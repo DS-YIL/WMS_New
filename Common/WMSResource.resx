@@ -159,7 +159,7 @@ where  inwmaster.pono='#pono'</value>
     <comment>insert material request data</comment>
   </data>
   <data name="openpolist" xml:space="preserve">
-    <value>select * from wms.openpolistview op
+    <value>select distinct track.enteredon,op.projectcode,op.pono,track.status,op.vendorname,op."JobName",op.quotationqty from wms.openpolistview op
       left join wms.wms_trackstatus track on track.pono=op.pono
       where projectmanager='#projectmanager' and track.enteredon is not null </value>
     <comment>getopenpono list</comment>
