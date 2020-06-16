@@ -31,6 +31,9 @@ export class GatePassComponent implements OnInit {
   public materialistModel: materialistModel;
   public material: any;
   public gpIndx: number;
+  public gpMaterial: string;
+  public materialListArray: Array<materialistModel> = [];
+  newmateriallist: any = {};
 
   ngOnInit() {
     if (localStorage.getItem("Employee"))
@@ -41,6 +44,51 @@ export class GatePassComponent implements OnInit {
     this.materialistModel = new materialistModel();
     this.getGatePassList();
     this.GatepassTxt = "GatePass"
+
+  }
+
+  //AddRow
+  addRow() {
+    debugger;
+    if (!this.material) {
+      this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Add Material' });
+      return false;
+    }
+    if (this.gatepassModel.materialList.filter(li => li.materialid == this.material.code).length > 0) {
+      this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Material already exist' });
+      return false;
+    }
+    this.gatePassChange();
+    this.materialistModel.materialid = this.material.code;
+    this.materialistModel.materialdescription = this.material.name;
+    this.materialistModel.quantity = this.materialListArray[this.materialListArray.length - 1].quantity;
+    this.materialListArray[this.materialListArray.length - 1].materialdescription = this.material.name;
+    this.materialistModel.materialcost = this.materialListArray[this.materialListArray.length - 1].materialcost;
+    this.materialistModel.remarks = this.materialListArray[this.materialListArray.length - 1].remarks;
+    this.materialistModel.expecteddate = this.materialListArray[this.materialListArray.length - 1].expecteddate;
+    if (this.materialistModel.materialid && this.materialListArray[this.materialListArray.length - 1].quantity) {
+      this.wmsService.checkMaterialandQty(this.material.code, this.materialistModel.quantity).subscribe(data => {
+        if (data == "true") {
+          this.gatepassModel.materialList.push(this.materialistModel);
+          this.materialistModel = new materialistModel();
+          this.material = "";
+
+          this.newmateriallist = { materialdescription: "", quantity: 0, materialcost: 0, remarks: " ", expecteddate: " ", returneddate: " " };
+          this.materialListArray.push(this.newmateriallist);
+        }
+        else
+          this.messageService.add({ severity: 'error', summary: 'Error Message', detail: data });
+      });
+    }
+    else {
+      if (!this.materialistModel.materialid)
+        this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'select material from list' });
+      else if (!this.materialistModel.quantity)
+        this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Enter Quantity' });
+    }
+
+
+
   }
 
   //bind materials based search
@@ -59,9 +107,9 @@ export class GatePassComponent implements OnInit {
       var fName = "";
       this.searchresult.forEach(item => {
         fName = item[this.constants[name].fieldName];
-           if (name == "ItemId") 
+        if (name == "ItemId")
           fName = item[this.constants[name].fieldName] + " - " + item[this.constants[name].fieldId];
-       
+
         var value = { listName: name, name: fName, code: item[this.constants[name].fieldId] };
         this.searchItems.push(value);
       });
@@ -102,11 +150,11 @@ export class GatePassComponent implements OnInit {
 
   //gatepass change
   gatePassChange() {
-    if (this.gatepassModel.gatepasstype!="0")
-    this.GatepassTxt = this.gatepassModel.gatepasstype + " - " + "Request Materials";
+    if (this.gatepassModel.gatepasstype != "0")
+      this.GatepassTxt = this.gatepassModel.gatepasstype + " - " + "Request Materials";
   }
   //open gate pass dialog
-  openGatepassDialog(gatepassobject: any, gpIndx: any,dialog) {
+  openGatepassDialog(gatepassobject: any, gpIndx: any, dialog) {
     this[dialog] = true;
     this.gatepassModel = new gatepassModel();
     if (gatepassobject) {
@@ -116,6 +164,9 @@ export class GatePassComponent implements OnInit {
       this.gatepassModel.gatepasstype = "0";
       this.gatepassModel.reasonforgatepass = "0";
     }
+    this.newmateriallist = { materialdescription: "", quantity: 0, materialcost: 0, remarks: " ", expecteddate: " ", returneddate: " " };
+    this.materialListArray.push(this.newmateriallist);
+    //alert(this.materialListArray[0].materialdescription);
     this.gatePassChange();
   }
 
@@ -168,10 +219,15 @@ export class GatePassComponent implements OnInit {
 
   //Delete material for gatepass
   removematerial(id: number, matIndex: number) {
-    this.wmsService.deleteGatepassmaterial(id).subscribe(data => {
-      this.gatepassModelList[this.gpIndx].materialList.splice(matIndex, 1);
-      this.messageService.add({ severity: 'success', summary: 'success Message', detail: 'Material Deleted' });
-    });
+    debugger;
+    alert(matIndex);
+    alert(this.gatepassModel.materialList.length);
+    this.gatepassModel.materialList.splice(matIndex, 1);
+    alert(this.gatepassModel.materialList.length);
+    //this.wmsService.deleteGatepassmaterial(id).subscribe(data => {
+    //  this.gatepassModelList[this.gpIndx].materialList.splice(matIndex, 1);
+    //  this.messageService.add({ severity: 'success', summary: 'success Message', detail: 'Material Deleted' });
+    //});
 
   }
 
@@ -187,15 +243,56 @@ export class GatePassComponent implements OnInit {
 
   //saving gatepass details
   onSubmitgatepassDetails() {
+    debugger;
     if (this.gatepassModel.gatepasstype != "0") {
       this.gatepassModel.requestedby = this.employee.employeeno;
-      this.wmsService.saveoreditgatepassmaterial(this.gatepassModel).subscribe(data => {
-        this.gatepassdialog = false;
-        this.updateReturnedDateDialog = false;
-        this.getGatePassList();
-        if (data)
-          this.messageService.add({ severity: 'success', summary: 'Success Message', detail: 'Data Saved' });
-      })
+      //Add material to list
+      if (!this.material) {
+        this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Add Material' });
+        return false;
+      }
+      if (this.gatepassModel.materialList.filter(li => li.materialid == this.material.code).length > 0) {
+        this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Material already exist' });
+        return false;
+      }
+      this.gatePassChange();
+      this.materialistModel.materialid = this.material.code;
+      this.materialistModel.materialdescription = this.material.name;
+      this.materialistModel.quantity = this.materialListArray[this.materialListArray.length - 1].quantity;
+      this.materialListArray[this.materialListArray.length - 1].materialdescription = this.material.name;
+      this.materialistModel.materialcost = this.materialListArray[this.materialListArray.length - 1].materialcost;
+      this.materialistModel.remarks = this.materialListArray[this.materialListArray.length - 1].remarks;
+      this.materialistModel.expecteddate = this.materialListArray[this.materialListArray.length - 1].expecteddate;
+      if (this.materialistModel.materialid && this.materialListArray[this.materialListArray.length - 1].quantity) {
+        this.wmsService.checkMaterialandQty(this.material.code, this.materialistModel.quantity).subscribe(data => {
+          if (data == "true") {
+            this.gatepassModel.materialList.push(this.materialistModel);
+            this.materialistModel = new materialistModel();
+            this.material = "";
+
+            this.wmsService.saveoreditgatepassmaterial(this.gatepassModel).subscribe(data => {
+              this.gatepassdialog = false;
+              this.updateReturnedDateDialog = false;
+              this.getGatePassList();
+              if (data)
+                this.messageService.add({ severity: 'success', summary: 'success Message', detail: 'Data saved' });
+            })
+
+          }
+          else
+            this.messageService.add({ severity: 'error', summary: 'Error Message', detail: data });
+        });
+      }
+      else {
+        if (!this.materialistModel.materialid)
+          this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'select material from list' });
+        else if (!this.materialistModel.quantity)
+          this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Enter Quantity' });
+      }
+
+
+
+
     }
     else
       this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Select Type' });
