@@ -33,9 +33,9 @@
         </td>
         <td class="ptable-cell" style="text-align:center"><button type="button" class="btn btn-link" (click)="showAbcListByCat(rowData);">{{rowData.category}}</button></td>
         <td class="ptable-cell" style="text-align:right">{{rowData.availableqty}}</td>
-        <td class="ptable-cell" style="text-align:right">{{((rowData.availableqty/totalQty)*100).toFixed(0)}}</td>
+        <td class="ptable-cell" style="text-align:right">{{((rowData.availableqty/totalQty)*100).toFixed()}}</td>
         <td class="ptable-cell" style="text-align:right">{{rowData.totalcost}}</td>
-        <td class="ptable-cell" style="text-align:right">{{((rowData.totalcost/totalunitprice)*100).toFixed(0)}}</td>
+        <td class="ptable-cell" style="text-align:right">{{((rowData.totalcost/totalunitprice)*100).toFixed()}}</td>
       </tr>
     </ng-template>
     <ng-template pTemplate="footer">
@@ -54,19 +54,19 @@
     <div class="row">
       <div class="col-lg-5 col-md-5 col-sm-5 form-inline"></div>
       <div class="col-lg-6 col-md-6 col-sm-6 form-inline">
-        <span *ngIf="ABCavailableqtyList[0]"><b> {{ABCavailableqtyList[0].category}} </b>&nbsp;&nbsp;&nbsp;&nbsp;{{((ABCavailableqtyList[0].availableqty/totalQty)*100).toFixed(2)}}% if inventory with {{((ABCavailableqtyList[0].totalcost/totalunitprice)*100).toFixed(2)}}% valuation</span>
+        <span *ngIf="ABCavailableqtyList[0]"><b> {{ABCavailableqtyList[0].category}} </b>&nbsp;&nbsp;&nbsp;&nbsp;{{((ABCavailableqtyList[0].availableqty/totalQty)*100).toFixed()}}% if inventory with {{((ABCavailableqtyList[0].totalcost/totalunitprice)*100).toFixed()}}% valuation</span>
       </div>
     </div>
     <div class="row">
       <div class="col-lg-5 col-md-5 col-sm-5 form-inline"></div>
       <div class="col-lg-6 col-md-6 col-sm-6 form-inline">
-     <span *ngIf="ABCavailableqtyList[1]"><b> {{ABCavailableqtyList[1].category}} </b>&nbsp;&nbsp;&nbsp;&nbsp;{{((ABCavailableqtyList[1].availableqty/totalQty)*100).toFixed(2)}}% if inventory with {{((ABCavailableqtyList[1].totalcost/totalunitprice)*100).toFixed(2)}}% valuation</span>
+     <span *ngIf="ABCavailableqtyList[1]"><b> {{ABCavailableqtyList[1].category}} </b>&nbsp;&nbsp;&nbsp;&nbsp;{{((ABCavailableqtyList[1].availableqty/totalQty)*100).toFixed()}}% if inventory with {{((ABCavailableqtyList[1].totalcost/totalunitprice)*100).toFixed()}}% valuation</span>
       </div>
     </div>
     <div class="row">
       <div class="col-lg-5 col-md-5 col-sm-5 form-inline"></div>
       <div class="col-lg-6 col-md-6 col-sm-6 form-inline">
-        <span *ngIf="ABCavailableqtyList[2]"><b> {{ABCavailableqtyList[2].category}} </b>&nbsp;&nbsp;&nbsp;&nbsp;{{((ABCavailableqtyList[2].availableqty/totalQty)*100).toFixed(2)}}% if inventory with {{((ABCavailableqtyList[2].totalcost/totalunitprice)*100).toFixed(2)}}% valuation</span>
+        <span *ngIf="ABCavailableqtyList[2]"><b> {{ABCavailableqtyList[2].category}} </b>&nbsp;&nbsp;&nbsp;&nbsp;{{((ABCavailableqtyList[2].availableqty/totalQty)*100).toFixed()}}% if inventory with {{((ABCavailableqtyList[2].totalcost/totalunitprice)*100).toFixed()}}% valuation</span>
       </div>
     </div>
   </div>
@@ -179,9 +179,9 @@
         </td>
         <!--<td class="ptable-cell" style="text-align:center">{{rowData.grnnumber}}</td>
         <td class="ptable-cell" style="text-align:center">{{rowData.receiveddate | date :  constants.dateFormat}}</td>-->
-        <td class="ptable-cell" style="text-align:center">{{rowData.totalquantity}}</td>
+        <td class="ptable-cell" style="text-align:right">{{rowData.totalquantity}}</td>
         <td class="ptable-cell" style="text-align:center">{{rowData.itemlocation}}</td>
-        <td class="ptable-cell" style="text-align:center">{{rowData.issuedqty}}</td>
+        <td class="ptable-cell" style="text-align:right">{{rowData.issuedqty}}</td>
         <td class="ptable-cell" style="text-align:right">{{rowData.availableqty}}</td>
       </tr>
     </ng-template>
