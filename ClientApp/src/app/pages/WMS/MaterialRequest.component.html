@@ -29,19 +29,19 @@
   </ng-template>
   <ng-template pTemplate="body" let-rowData let-editing="editing" let-ri="rowIndex">
     <tr>
-      <td class="ptable-cell">{{ri+1}}</td>
+      <td class="ptable-cell" style="text-align:right">{{ri+1}}</td>
       <td class="ptable-cell" style="text-align:center;width:100%;"><a *ngIf="rowData.requestid" [routerLink]="['/WMS/MaterialIssue',rowData.requestid]" routerLinkActive="active">{{rowData.requestid}}</a></td>
-      <td class="ptable-cell">{{rowData.pono}}</td>
-      <td class="ptable-cell">{{rowData.projectname}}</td>
-      <td class="ptable-cell">{{rowData.material}}</td>
-      <td class="ptable-cell">{{rowData.materialdescription}}</td>
-      <td class="ptable-cell">{{rowData.quotationqty}}</td>
-      <td class="ptable-cell">
+      <td class="ptable-cell" style="text-align:center">{{rowData.pono}}</td>
+      <td class="ptable-cell" style="text-align:left">{{rowData.projectname}}</td>
+      <td class="ptable-cell" style="text-align:left">{{rowData.material}}</td>
+      <td class="ptable-cell" style="text-align:left">{{rowData.materialdescription}}</td>
+      <td class="ptable-cell" style="text-align:right">{{rowData.quotationqty}}</td>
+      <td class="ptable-cell" style="text-align:right">
         <span *ngIf="rowData.approvedstatus=='approved'">{{rowData.requestedquantity}}</span>
         <input *ngIf="rowData.approvedstatus!='approved'" pInputText type="number" class="form-control" [(ngModel)]="rowData.requestedquantity" (change)="reqQtyChange(rowData)">
       </td>
-      <td class="ptable-cell">{{rowData.quotationqty}}</td>
-      <td class="ptable-cell">
+      <td class="ptable-cell" style="text-align:right">{{rowData.quotationqty}}</td>
+      <td class="ptable-cell" style="text-align:center">
         <div *ngIf="rowData.approvedstatus=='approved'" class="form-inline">
           <p-checkbox [(ngModel)]="rowData.status" binary="true" (click)="ackStatusChanges()"></p-checkbox> &nbsp;&nbsp;
           <textarea type="text" style="width:140px" class="form-control" [(ngModel)]="rowData.ackremarks"></textarea>
