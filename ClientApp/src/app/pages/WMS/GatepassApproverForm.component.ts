@@ -7,19 +7,20 @@ import { Employee, DynamicSearchResult, searchList } from '../../Models/Common.M
 import { NgxSpinnerService } from "ngx-spinner";
 import { MessageService } from 'primeng/api';
 import { gatepassModel, materialistModel } from '../../Models/WMS.Model';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-GatePassApprover',
   templateUrl: './GatePassApproverForm.component.html'
 })
 export class GatePassApproverComponent implements OnInit {
-  constructor(private formBuilder: FormBuilder, private messageService: MessageService, private wmsService: wmsService, private route: ActivatedRoute, private router: Router, public constants: constants, private spinner: NgxSpinnerService) { }
+  constructor(private formBuilder: FormBuilder, private messageService: MessageService, private wmsService: wmsService, private datePipe: DatePipe, private route: ActivatedRoute, private router: Router, public constants: constants, private spinner: NgxSpinnerService) { }
 
 
   public employee: Employee;
   public materialList: Array<any> = [];
   public gatepassModel: gatepassModel;
-  public btnDisable: boolean= false;
+  public btnDisable: boolean = false;
 
   ngOnInit() {
     if (localStorage.getItem("Employee"))
@@ -34,13 +35,13 @@ export class GatePassApproverComponent implements OnInit {
       }
     });
     this.gatepassModel = new gatepassModel();
-    this.gatepassModel.approverstatus="Approved"
+    this.gatepassModel.approverstatus = "Approved"
 
   }
 
- 
+
   //get gatepass list
-  bindMaterilaDetails(gatepassId:any) {
+  bindMaterilaDetails(gatepassId: any) {
     this.wmsService.gatepassmaterialdetail(gatepassId).subscribe(data => {
       this.materialList = data;
       this.gatepassModel = this.materialList[0];
@@ -59,8 +60,14 @@ export class GatePassApproverComponent implements OnInit {
 
   //check date is valid or not
   checkValiddate(date: any) {
-    var d = new Date(date);
-
-   
+    try {
+      if (!date || (this.datePipe.transform(date, this.constants.dateFormat) == "01/01/0001") )
+        return "";
+      else
+        return this.datePipe.transform(date, this.constants.dateFormat);
+    }
+    catch{
+      return "";
+    }
   }
 }

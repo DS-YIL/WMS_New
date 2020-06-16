@@ -331,6 +331,7 @@ namespace WMS.DAL
 									item.receivedby,
 									item.returnqty,
 									item.confirmqty,
+									item.Material,
 									item.deleteflag,
 
 								});

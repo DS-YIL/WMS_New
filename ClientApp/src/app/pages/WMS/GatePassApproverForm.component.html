@@ -41,13 +41,13 @@
         <ng-template pTemplate="body" let-rowData let-editing="editing" let-ri="rowIndex" let-rindex=0>
           <tr>
             <td class="ptable-cell" style="text-align:right"> {{ri+1}} </td>
-            <td class="ptable-cell" style="text-align:right"> {{rowData.materialid}} </td>
-            <td class="ptable-cell" style="text-align:right"> {{rowData.materialdescription}} </td>
+            <td class="ptable-cell" style="text-align:left"> {{rowData.materialid}} </td>
+            <td class="ptable-cell" style="text-align:left"> {{rowData.materialdescription}} </td>
             <td class="ptable-cell" style="text-align:right">{{rowData.quantity}}</td>
             <td class="ptable-cell" style="text-align:right"><span *ngIf="rowData.materialcost">{{rowData.materialcost}}</span></td>
-            <td class="ptable-cell" style="text-align:right"> {{rowData.remarks}} </td>
-            <td class="ptable-cell" style="text-align:right">{{rowData.expecteddate | date :  constants.dateFormat}}</td>
-            <td *ngIf="materialList[0].gatepasstype=='Returnable' && rowData.returneddate" class="ptable-cell" style="text-align:right">{{rowData.returneddate | date :  constants.dateFormat}}</td>
+            <td class="ptable-cell" style="text-align:left"> {{rowData.remarks}} </td>
+            <td class="ptable-cell" style="text-align:center">{{checkValiddate(rowData.expecteddate)}}</td>
+            <td *ngIf="materialList[0].gatepasstype=='Returnable' && rowData.returneddate" class="ptable-cell" style="text-align:right">{{checkValiddate(rowData.returneddate)}}</td>
 
         </ng-template>
       </p-table>

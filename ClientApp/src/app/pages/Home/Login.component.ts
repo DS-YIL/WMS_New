@@ -73,6 +73,7 @@ export class LoginComponent implements OnInit {
                 this.AcessNameList = data;
                 this.employee.roleid = this.LoginForm.value.roleid;
                 localStorage.setItem('Employee', JSON.stringify(this.employee));
+                this.wmsService.login();
                 this.bindMenu();
               }
               else {

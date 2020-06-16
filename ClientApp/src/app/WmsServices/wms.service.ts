@@ -38,7 +38,7 @@ export class wmsService {
         if (data.employeeno != null) {
           //const object = Object.assign({}, ...data);
 
-          this.currentUserSubject.next(data);
+          //this.currentUserSubject.next(data);
         }
         return data;
       }))
@@ -196,6 +196,10 @@ export class wmsService {
     return this.http.get<any>(this.url + 'POData/getuserAcessList?employeeid=' + employeeId + '&roleid=' + roleid, this.httpOptions);
   }
 
+  login() {
+    if (localStorage.getItem("Employee"))
+    this.currentUserSubject.next(JSON.parse(localStorage.getItem("Employee")));
+  }
   logout() {
     //localStorage.removeItem('Employee');
     this.currentUserSubject.next(null);

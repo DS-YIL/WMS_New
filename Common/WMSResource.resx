@@ -184,7 +184,8 @@ left join wms.wms_rd_rack rack on rack.rackid=stock.rackid
 where itemid=#itemid</value>
   </data>
   <data name="insertforinvoicequery" xml:space="preserve">
-    <value>INSERT INTO wms.wms_storeinward(inwmasterid,receiveddate,receivedby,returnqty,confirmqty,deleteflag)VALUES(@inwmasterid,@receiveddate,@receivedby,@returnqty,@confirmqty,@deleteflag)returning inwardid</value>
+    <value>INSERT INTO wms.wms_storeinward(inwmasterid,receiveddate,receivedby,returnqty,confirmqty,materialid,deleteflag)
+VALUES(@inwmasterid,@receiveddate,@receivedby,@returnqty,@confirmqty,@materialid,@deleteflag)returning inwardid</value>
   </data>
   <data name="insertqueryforlocationhistory" xml:space="preserve">
     <value>INSERT INTO wms.wms_storageallowcationhistorymaster(itemlocation,itemid,createddate,createdby)values(@itemlocation,@itemid,@createddate,@createdby)</value>
