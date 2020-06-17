@@ -36,7 +36,7 @@ export class ObsoleteInventoryMovementComponent implements OnInit {
     this.fromDate = new Date(new Date().setDate(new Date().getDate() - 30));
 
     this.daysSelection = "Weeks";
-    this.movingDays = 1;
+    this.movingDays = 4;
     this.getObsoleteInventoryList();
 
 
@@ -60,6 +60,7 @@ export class ObsoleteInventoryMovementComponent implements OnInit {
 
 
     this.exportColumns = this.cols.map(col => ({ title: col.header, dataKey: col.field }));
+    this.getObsoleteInventoryList();
   }
 
   getObsoleteInventoryList() {
@@ -75,27 +76,35 @@ export class ObsoleteInventoryMovementComponent implements OnInit {
   }
 
 //calculating  days
+
   dayscalculator() {
     this.movingDays = parseInt(this.movingDays.toString());
-    if (this.daysSelection == 'Weeks') {
-      this.minDays = this.movingDays * 1;
-      if (this.movingDays > 1)
-        this.minDays = this.movingDays * 7;
-      this.maxDays = (this.movingDays + 1) * 7;
-    }
-    if (this.daysSelection == 'Months') {
-      this.minDays = this.movingDays * 1;
-      if (this.movingDays > 1)
-        this.minDays = this.movingDays * 30;
-      this.maxDays = (this.movingDays + 1) * 30;
-    }
-    if (this.daysSelection == 'Years') {
-      this.minDays = this.movingDays * 1;
-      if (this.movingDays > 1)
-        this.minDays = this.movingDays * 365;
-      this.maxDays = (this.movingDays + 1) * 365;
-    }
+    this.minDays = 1;
+    this.maxDays = (this.movingDays) * 365;
+    //}
+
   }
+  //dayscalculator() {
+  //  this.movingDays = parseInt(this.movingDays.toString());
+  //  if (this.daysSelection == 'Weeks') {
+  //    this.minDays = this.movingDays * 1;
+  //    if (this.movingDays > 1)
+  //      this.minDays = this.movingDays * 7;
+  //    this.maxDays = (this.movingDays + 1) * 7;
+  //  }
+  //  if (this.daysSelection == 'Months') {
+  //    this.minDays = this.movingDays * 1;
+  //    if (this.movingDays > 1)
+  //      this.minDays = this.movingDays * 30;
+  //    this.maxDays = (this.movingDays + 1) * 30;
+  //  }
+  //  if (this.daysSelection == 'Years') {
+  //    this.minDays = this.movingDays * 1;
+  //    if (this.movingDays > 1)
+  //      this.minDays = this.movingDays * 365;
+  //    this.maxDays = (this.movingDays + 1) * 365;
+  //  }
+  //}
 
 
   //export to excel 
