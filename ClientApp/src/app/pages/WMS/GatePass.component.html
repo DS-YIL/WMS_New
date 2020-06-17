@@ -18,7 +18,7 @@
       <!--<th style="text-align:center">Status</th>-->
       <th style="text-align:center">Type</th>
       <th style="text-align:center">Supplier Name</th>
-      <th style="text-align:center">Vehicle No</th>
+      <!--<th style="text-align:center">Vehicle No</th>-->
       <th style="text-align:center">Reason</th>
       <th style="text-align:center">Approver Status</th>
       <th style="text-align:center">Creator Name</th>
@@ -35,7 +35,7 @@
       <!--<th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'status', 'contains')"></th>-->
       <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'gatepasstype', 'contains')"></th>
       <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'vendorname', 'contains')"></th>
-      <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'vehicleno', 'contains')"></th>
+      <!--<th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'vehicleno', 'contains')"></th>-->
       <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'reasonforgatepass', 'contains')"></th>
       <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'approverstatus', 'contains')"></th>
       <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'name', 'contains')"></th>
@@ -53,7 +53,7 @@
       <td class="ptable-cell" style="text-align:center"><a *ngIf="rowData.gatepassid" [routerLink]="['/WMS/GatePassApprover',rowData.gatepassid]" routerLinkActive="active">{{rowData.gatepassid}}</a></td>
       <td class="ptable-cell" style="text-align:center">{{rowData.gatepasstype}}</td>
       <td class="ptable-cell" style="text-align:center">{{rowData.vendorname}}</td>
-      <td class="ptable-cell" style="text-align:center">{{rowData.vehicleno}}</td>
+      <!--<td class="ptable-cell" style="text-align:center">{{rowData.vehicleno}}</td>-->
       <td class="ptable-cell" style="text-align:center">{{rowData.reasonforgatepass}}</td>
       <td class="ptable-cell" style="text-align:right">{{rowData.approverstatus}}</td>
       <td class="ptable-cell" style="text-align:center">{{rowData.name}}</td>
@@ -88,12 +88,12 @@
         </select>
       </div>
     </div>
-    <div class="col-lg-3 col-md-3 col-sm-3 form-group">
+    <!--<div class="col-lg-3 col-md-3 col-sm-3 form-group">
       <label class="form-label">Vehicle no (optional)</label>
       <div class="form-inline-list">
         <input type="text" class="form-control" [(ngModel)]="gatepassModel.vehicleno" />
       </div>
-    </div>
+    </div>-->
     <div class="col-lg-3 col-md-3 col-sm-3 form-group">
       <label class="form-label">Supplier</label>
       <div class="form-inline-list">
