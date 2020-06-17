@@ -142,6 +142,7 @@ export class GatePassComponent implements OnInit {
           material.materialid = result[i].materialid;
           material.materialdescription = result[i].materialdescription;
           material.quantity = result[i].quantity;
+          material.materialcost = result[i].materialcost;
           material.remarks = result[i].remarks;
           material.expecteddate = new Date(result[i].expecteddate);
           material.returneddate = new Date(result[i].returneddate);
