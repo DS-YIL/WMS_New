@@ -45,7 +45,7 @@
         <th style="text-align:center">Vendor Name</th>
         <th style="text-align:center">Job Name</th>
         <th style="text-align:center">Quotation Qty</th>
-        <!--<th style="text-align:center">MPR Document No</th>-->
+        <th style="text-align:center">Received Date</th>
         <!--<th>Material Description</th>-->
         <!--<th style="text-align:center">Invoice No</th>-->
       </tr>
@@ -57,8 +57,8 @@
         <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'vendorname', 'contains')"></th>
         <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'jobName', 'contains')"></th>
         <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'quotationqty', 'contains')"></th>
-        <!--<th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'documentno', 'contains')"></th>
-        <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'invoiceno', 'contains')"></th>-->
+        <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'enteredon', 'contains')"></th>
+        <!--<th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'invoiceno', 'contains')"></th>-->
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-rowData let-editing="editing" let-ri="rowIndex" let-rindex=0>
@@ -67,12 +67,12 @@
           {{ri+1}}
         </td>
         <td class="ptable-cell" style="text-align:left">{{rowData.projectcode}}</td>
-        <td class="ptable-cell" style="font-size:11px; text-align:center" ><a *ngIf="rowData.pono" [routerLink]="['/WMS/MaterialRequest',rowData.pono]" routerLinkActive="active">{{rowData.pono}}</a></td>
+        <td class="ptable-cell" style="font-size:11px; text-align:center"><a *ngIf="rowData.pono" [routerLink]="['/WMS/MaterialRequest',rowData.pono]" routerLinkActive="active">{{rowData.pono}}</a></td>
         <td class="ptable-cell" style="text-align:center">{{rowData.status}}</td>
         <td class="ptable-cell" style="text-align:center">{{rowData.vendorname}}</td>
         <td class="ptable-cell" style="text-align:center">{{rowData.jobName}}</td>
         <td class="ptable-cell" style="text-align:right">{{rowData.quotationqty}}</td>
-        <!--<td class="ptable-cell" style="text-align:center">{{rowData.documentno}}</td>-->
+        <td class="ptable-cell" style="text-align:center">{{rowData.enteredon | date :  constants.dateFormat}}</td>
         <!--<td class="ptable-cell">{{rowData.materialdescription}}</td>-->
         <!--<td class="ptable-cell" style="text-align:center">{{rowData.invoiceno}}</td>-->
       </tr>

@@ -144,13 +144,16 @@ export class WarehouseInchargeComponent implements OnInit {
       this.StockModel.rackid = this.rack.code;
       this.StockModel.binid = this.bin.code;
       this.StockModel.itemreceivedfrom = new Date();
-      this.StockModel.itemlocation = this.store.name + "." + this.rack.name + '.' + this.bin.name;
+      //this.StockModel.itemlocation = this.store.name + "." + this.rack.name + '.' + this.bin.name;
+      this.StockModel.itemlocation = this.store.name + "." + this.rack.name;
+      if (this.bin && this.bin.name)
+        this.StockModel.itemlocation += '.' + this.bin.name;
+      if (!this.bin && !this.bin.code)
+        this.StockModel.binid = 1;
       this.wmsService.InsertStock(this.StockModel).subscribe(data => {
         // if (data) {
         //this.podetailsList[this.rowIndex].itemlocation = data;
-        this.podetailsList[this.rowIndex].itemlocation = this.store.name + "." + this.rack.name;
-        if (this.bin && this.bin.name)
-          this.podetailsList[this.rowIndex].itemlocation += '.' + this.bin.name;
+        this.podetailsList[this.rowIndex].itemlocation = this.StockModel.itemlocation;
         this.showLocationDialog = false;
         this.messageService.add({ severity: 'success', summary: 'Success Message', detail: 'Location Updated' });
         // }
