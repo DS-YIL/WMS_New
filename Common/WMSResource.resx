@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="checkponoexists" xml:space="preserve">
-    <value>select distinct* from wms.openpolistview openpo inner join wms.wms_securityinward inw on openpo.pono=inw.pono where openpo.pono='#pono'  order by receiveddate desc limit 1</value>
+    <value>select distinct* from wms.openpolistview openpo left join wms.wms_securityinward inw on openpo.pono=inw.pono where openpo.pono='#pono'  order by receiveddate desc limit 1</value>
     <comment>checkpono</comment>
   </data>
   <data name="GetdetailsByrequestid" xml:space="preserve">
