@@ -12,7 +12,7 @@ import { commonComponent } from '../../WmsCommon/CommonCode';
   templateUrl: './ExcessInventoryMovement.component.html'
 })
 export class ExcessInventoryMovementComponent implements OnInit {
-  constructor(private wmsService: wmsService, private commonComponent: commonComponent,  private route: ActivatedRoute, private router: Router, public constants: constants, private spinner: NgxSpinnerService) { }
+  constructor(private wmsService: wmsService, private commonComponent: commonComponent, private route: ActivatedRoute, private router: Router, public constants: constants, private spinner: NgxSpinnerService) { }
 
   public employee: Employee;
   public fromDate: Date;
@@ -37,30 +37,32 @@ export class ExcessInventoryMovementComponent implements OnInit {
     this.fromDate = new Date(new Date().setDate(new Date().getDate() - 30));
 
     this.daysSelection = "Weeks";
-    this.movingDays = 1;
+    this.movingDays = 4;
     this.getExcessInventoryList();
 
     this.cols = [
-      { field: 'ponumber', header: 'PO No' },
+      //{ field: 'ponumber', header: 'PO No' },
       { field: 'materialid', header: 'Material' },
       { field: 'materialdescription', header: 'Material Descr' },
-      { field: 'departmentname', header: 'Dep Name' },
-      { field: 'itemlocation', header: 'Item Location' },
-      { field: 'projectname', header: 'Project Name' },
-      { field: 'vendorname', header: 'Vendor Name' },
-      { field: 'receiveddate', header: 'Received Date' },
-      { field: 'receivedqty', header: 'Received Qty' },
-      { field: 'issuedqty', header: 'Issued Qty' },
-      { field: 'availableqty', header: 'Available Qty' },
-      { field: 'unitprice', header: 'Unit Price' },
-      { field: 'category', header: 'Category' },
-      { field: 'daysinstock', header: 'Days In Stock' },
-      { field: 'reportdate', header: 'Report Date' },
+      { field: 'issuedqty', header: 'Total consumed Qty for last ' + this.movingDays + ' years' },
+      { field: 'availableqty', header: 'Total Available Qty for last ' + this.movingDays + ' years' },
+      //{ field: 'departmentname', header: 'Dep Name' },
+      //{ field: 'itemlocation', header: 'Item Location' },
+      //{ field: 'projectname', header: 'Project Name' },
+      //{ field: 'vendorname', header: 'Vendor Name' },
+      //{ field: 'receiveddate', header: 'Received Date' },
+      //{ field: 'receivedqty', header: 'Received Qty' },
+      //{ field: 'issuedqty', header: 'Issued Qty' },
+      //{ field: 'availableqty', header: 'Available Qty' },
+      //{ field: 'unitprice', header: 'Unit Price' },
+      //{ field: 'category', header: 'Category' },
+      //{ field: 'daysinstock', header: 'Days In Stock' },
+      //{ field: 'reportdate', header: 'Report Date' },
     ];
 
 
     this.exportColumns = this.cols.map(col => ({ title: col.header, dataKey: col.field }));
-
+    this.getExcessInventoryList();
   }
 
   getExcessInventoryList() {
@@ -78,24 +80,22 @@ export class ExcessInventoryMovementComponent implements OnInit {
   //days calculator
   dayscalculator() {
     this.movingDays = parseInt(this.movingDays.toString());
-    if (this.daysSelection == 'Weeks') {
-      this.minDays = this.movingDays * 1;
-      if (this.movingDays > 1)
-        this.minDays = this.movingDays * 7;
-      this.maxDays = (this.movingDays + 1) * 7;
-    }
-    if (this.daysSelection == 'Months') {
-      this.minDays = this.movingDays * 1;
-      if (this.movingDays > 1)
-        this.minDays = this.movingDays * 30;
-      this.maxDays = (this.movingDays + 1) * 30;
-    }
-    if (this.daysSelection == 'Years') {
-      this.minDays = this.movingDays * 1;
-      if (this.movingDays > 1)
-        this.minDays = this.movingDays * 365;
-      this.maxDays = (this.movingDays + 1) * 365;
-    }
+    //if (this.daysSelection == 'Weeks') {
+    //  this.minDays = this.movingDays * 1;
+    //  if (this.movingDays > 1)
+    //    this.minDays = this.movingDays * 7;
+    //  this.maxDays = (this.movingDays + 1) * 7;
+    //}
+    //if (this.daysSelection == 'Months') {
+    //  this.minDays = this.movingDays * 1;
+    //  if (this.movingDays > 1)
+    //    this.minDays = this.movingDays * 30;
+    //  this.maxDays = (this.movingDays + 1) * 30;
+    //}
+    //if (this.daysSelection == 'Years') {
+    this.minDays = 1;
+    this.maxDays = (this.movingDays) * 365;
+    //}
 
   }
 
