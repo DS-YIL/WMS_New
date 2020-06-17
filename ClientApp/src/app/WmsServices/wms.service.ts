@@ -60,8 +60,16 @@ export class wmsService {
     return this.http.get<any[]>(this.url + 'POData/GetOpenPoList?loginid=' + PoFilterParams.loginid + '&pono=' + PoFilterParams.PONo + '&docno=' + PoFilterParams.DocumentNo + '&vendorid=' + PoFilterParams.venderid + '', this.httpOptions);
   }
 
+  getPONumbers(): Observable<any[]> {
+    return this.http.get<any[]>(this.url + 'POData/GetPOList', this.httpOptions);
+  }
+
   insertbarcodeandinvoiceinfo(BarcodeModel: BarcodeModel): Observable<any> {
     return this.http.post<any>(this.url + 'POData/insertbarcodeandinvoiceinfo', BarcodeModel, this.httpOptions);
+  }
+
+  insertbarcodeinfo(BarcodeModel: BarcodeModel): Observable<any> {
+    return this.http.post<any>(this.url + 'POData/insertbarcodeinfo', BarcodeModel, this.httpOptions);
   }
 
   Getthreewaymatchingdetails(PoNo: string): Observable<inwardModel[]> {
@@ -70,6 +78,25 @@ export class wmsService {
 
   verifythreewaymatch(PoNo: string): Observable<any> {
     return this.http.get<any>(this.url + 'POData/verifythreewaymatch?pono=' + PoNo, this.httpOptions);
+  }
+
+  getInvoiceDetails(PoNo: string): Observable<any> {
+    return this.http.get<any>(this.url + 'POData/getinvoicedetailsforpo?pono=' + PoNo, this.httpOptions);
+  }
+
+  //Get Material Details
+  getMaterialDetails(grnno: string): Observable<any> {
+    return this.http.get<any>(this.url + 'POData/getMaterialDetailsforgrn?grnNo=' + grnno, this.httpOptions);
+  }
+
+  //Get location details
+  getLocationDetails(materialid: string): Observable<any> {
+    return this.http.get<any>(this.url + 'POData/getlocationdetailsformaterialid?materialid=' + materialid, this.httpOptions);
+  }
+
+  //Get material request, isuued and approved details
+  getMaterialRequestDetails(materialid: string): Observable<any> {
+    return this.http.get<any>(this.url + 'POData/getReqMatdetailsformaterialid?materialid=' + materialid, this.httpOptions);
   }
 
   insertitems(inwardModel: inwardModel[]): Observable<any> {

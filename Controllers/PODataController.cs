@@ -29,11 +29,46 @@ namespace WMS.Controllers
 		{
 			return await this._poService.getOpenPoList(loginid, pono, docno, vendorid);
 		}
+//Get list of PO 
+        [HttpGet("GetPOList")]
+        public async Task<IEnumerable<POList>> GetPoNo()
+        {
+            return await this._poService.getPOList();
+        }
 		[HttpGet("CheckPoNoexists")]
 		public OpenPoModel CheckPo(string PONO)
 		{
 			return this._poService.CheckPoexists(PONO);
 		}
+
+		//Get invoice details
+		[HttpGet("getinvoicedetailsforpo")]
+		public async Task<IEnumerable<InvoiceDetails>> getinvoiceforpo(string PONO)
+		{
+			return await this._poService.getinvoiveforpo(PONO);
+		}
+
+		//Get material details
+		[HttpGet("getMaterialDetailsforgrn")]
+		public async Task<IEnumerable<MaterialDetails>> getMaterialDetails(string grnNo)
+		{
+			return await this._poService.getMaterialDetails(grnNo);
+		}
+
+		//Get Location details for material
+		[HttpGet("getlocationdetailsformaterialid")]
+		public async Task<IEnumerable<LocationDetails>> getlocationdetails(string materialid)
+		{
+			return await this._poService.getlocationdetails(materialid);
+		}
+
+		//Get material request details
+		[HttpGet("getReqMatdetailsformaterialid")]
+		public async Task<IEnumerable<ReqMatDetails>> getReqMatdetails(string materialid)
+		{
+			return await this._poService.getReqMatdetails(materialid);
+		}
+
 		[HttpPost("insertbarcodeandinvoiceinfo")]
 		public int insertbardata(BarcodeModel data)
 		{

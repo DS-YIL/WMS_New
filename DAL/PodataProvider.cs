@@ -7,7 +7,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using WMS.Common;
 using WMS.Interfaces;
+using System.Web;
 using WMS.Models;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using System.Net.Sockets;
+using System.Net;
+using WMS.Utility;
 
 namespace WMS.DAL
 {
@@ -95,6 +101,36 @@ namespace WMS.DAL
 				//throw new NotImplementedException();
 			}
 		}
+		
+		 public async Task<IEnumerable<POList>> getPOList()
+        {
+            using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
+            {
+
+                try
+                {
+                    string query = WMSResource.getpolist;
+                   
+
+                    await pgsql.OpenAsync();
+                    return await pgsql.QueryAsync<POList>(
+                       query, null, commandType: CommandType.Text);
+
+
+                }
+                catch (Exception Ex)
+                {
+                    log.ErrorMessage("PODataProvider", "getPOList", Ex.StackTrace.ToString());
+                    return null;
+                }
+                finally
+                {
+                    pgsql.Close();
+                }
+                //throw new NotImplementedException();
+            }
+        }
+
 		/// <summary>
 		/// inserting barcode info
 		/// </summary>
@@ -159,6 +195,117 @@ namespace WMS.DAL
 			}
 
 		}
+
+		//Get Invoice details based on PONO.
+		public async Task<IEnumerable<InvoiceDetails>> getinvoiveforpo(string PONO)
+		{
+			using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
+			{
+
+				try
+				{
+					string query = WMSResource.getInvoiceDetails.Replace("#pono", PONO);
+					return await pgsql.QueryAsync<InvoiceDetails>(
+					   query, null, commandType: CommandType.Text);
+
+
+				}
+				catch (Exception Ex)
+				{
+					log.ErrorMessage("PODataProvider", "getinvoiveforpo", Ex.StackTrace.ToString());
+					return null;
+				}
+				finally
+				{
+					pgsql.Close();
+				}
+				//throw new NotImplementedException();
+			}
+		}
+
+		//get Material details based on grn number
+		public async Task<IEnumerable<MaterialDetails>> getMaterialDetails(string grnNo)
+		{
+			using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
+			{
+
+				try
+				{
+					string query = WMSResource.getMaterialDetails.Replace("#grn", grnNo);// + pono+"'";//li
+					return await pgsql.QueryAsync<MaterialDetails>(
+					   query, null, commandType: CommandType.Text);
+
+
+				}
+				catch (Exception Ex)
+				{
+					log.ErrorMessage("PODataProvider", "getMaterialDetails", Ex.StackTrace.ToString());
+					return null;
+				}
+				finally
+				{
+					pgsql.Close();
+				}
+				//throw new NotImplementedException();
+			}
+		}
+
+
+		//Get location details based on material id
+		public async Task<IEnumerable<LocationDetails>> getlocationdetails(string materialid)
+		{
+			using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
+			{
+
+				try
+				{
+					string query = WMSResource.getLocationDetails.Replace("#materialid", materialid);
+					return await pgsql.QueryAsync<LocationDetails>(
+					   query, null, commandType: CommandType.Text);
+
+
+				}
+				catch (Exception Ex)
+				{
+					log.ErrorMessage("PODataProvider", "getlocationdetails", Ex.StackTrace.ToString());
+					return null;
+				}
+				finally
+				{
+					pgsql.Close();
+				}
+				//throw new NotImplementedException();
+			}
+		}
+
+
+		//Get material requested, acknowledged and issued details
+		public async Task<IEnumerable<ReqMatDetails>> getReqMatdetails(string materialid)
+		{
+			using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
+			{
+
+				try
+				{
+					string query = WMSResource.getMaterialRequestDetails.Replace("#materialid", materialid);
+					return await pgsql.QueryAsync<ReqMatDetails>(
+					   query, null, commandType: CommandType.Text);
+
+
+				}
+				catch (Exception Ex)
+				{
+					log.ErrorMessage("PODataProvider", "getlocationdetails", Ex.StackTrace.ToString());
+					return null;
+				}
+				finally
+				{
+					pgsql.Close();
+				}
+				//throw new NotImplementedException();
+			}
+		}
+
 		/// <summary>
 		/// get list of info for three way matching
 		/// </summary>

@@ -42,6 +42,11 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { CyclecountComponent } from './WMS/Cyclecount.component';
 import { CycleconfigComponent } from './WMS/Cycleconfig.component';
 import { AssignRoleComponent } from './WMS/AssignRole.component';
+import { POStatusComponent } from './WMS/POStatus.component';
+import { InvoiceDetailsComponent } from './WMS/InvoiceDetails.component';
+import { MaterialDetailsComponent } from './WMS/MaterialDetails.component';
+import { LocationDetailsComponent } from './WMS/LocationDetails.component';
+import { MaterialRequestDetailsComponent } from './WMS/MaterialRequestDetails.component';
 
 
 @NgModule({
@@ -91,8 +96,12 @@ import { AssignRoleComponent } from './WMS/AssignRole.component';
     FIFOComponent,
     CyclecountComponent,
     CycleconfigComponent,
-    AssignRoleComponent
-
+    AssignRoleComponent,
+    POStatusComponent,
+    InvoiceDetailsComponent,
+    MaterialDetailsComponent,
+    LocationDetailsComponent,
+    MaterialRequestDetailsComponent
   ],
   providers: [MessageService, ConfirmationService],
   entryComponents: [ConfirmationDialogComponent]

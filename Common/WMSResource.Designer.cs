@@ -70,7 +70,7 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to select * from wms.wms_stock where materialid=&apos;#materialid&apos; and availableqty=#availableqty limit 1.
+        ///   Looks up a localized string similar to select * from wms.wms_stock where materialid=&apos;#materialid&apos; and availableqty&gt;=#availableqty limit 1.
         /// </summary>
         public static string checkmaterialandqty {
             get {
@@ -280,6 +280,19 @@ namespace WMS.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to select sinward.grnnumber,sinward.invoiceno, 
+        ///      max(storeinward .receivedqty) as receivedqty, max(storeinward.returnqty) as returnedqty,
+        ///      max(storeinward.confirmqty) as confirmedqty from wms.wms_securityinward sinward
+        ///left join wms.wms_storeinward storeinward on sinward.inwmasterid = storeinward.inwmasterid 
+        ///where sinward.pono = &apos;#pono&apos; group by sinward.grnnumber,sinward.invoiceno.
+        /// </summary>
+        public static string getInvoiceDetails {
+            get {
+                return ResourceManager.GetString("getInvoiceDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to select inwmasterid from wms.wms_securityinward where grnnumber=&apos;#grnnumber&apos; order by grndate desc limit 1.
         /// </summary>
         public static string getinwardmasterid {
@@ -347,11 +360,62 @@ namespace WMS.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to select itemlocation,availableqty from wms.wms_stock where materialid =&apos;#materialid&apos;.
+        /// </summary>
+        public static string getLocationDetails {
+            get {
+                return ResourceManager.GetString("getLocationDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to select sum(matiss.issuedqty) as qtyissued,sec.grnnumber,openpo.material,
+        ///    max(sk.availableqty) as qtyavailable,max(sk.totalquantity ) as qtytotal
+        ///    from wms.wms_stock sk
+        ///      left  join wms.wms_materialissue matiss on matiss.itemid=sk.itemid
+        ///      inner join wms.wms_securityinward sec on sec.inwmasterid=sk.inwmasterid
+        ///      left join wms.openpolistview openpo on sec.pono = openpo.pono
+        ///      where matiss.issuedqty is not null and sec.grnnumber=&apos;#grn&apos;
+        ///      group by sec.grnnumber,openpo.material, [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string getMaterialDetails {
+            get {
+                return ResourceManager.GetString("getMaterialDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to select distinct st.materialid,req.requesterid,issue.approvedby,issue.issuedqty,emp.name as requestername,
+        ///emp1.name as approvername
+        ///      from wms.wms_stock st
+        ///      left join wms.wms_materialissue issue on issue.itemid = st.itemid
+        ///      left join wms.wms_materialrequest req on req.requestforissueid  = issue .requestforissueid
+        ///     
+        ///      inner join wms.employee emp on emp.employeeno=req.requesterid
+        ///      inner join wms.employee emp1 on emp1.employeeno=issue.approvedby
+        ///      where issue.issuedqty is [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string getMaterialRequestDetails {
+            get {
+                return ResourceManager.GetString("getMaterialRequestDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to select requestid from wms.wms_materialrequest order by requestid desc limit 1.
         /// </summary>
         public static string getnextrequestid {
             get {
                 return ResourceManager.GetString("getnextrequestid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to select * from wms.openpolistview.
+        /// </summary>
+        public static string getpolist {
+            get {
+                return ResourceManager.GetString("getpolist", resourceCulture);
             }
         }
         

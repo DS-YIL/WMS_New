@@ -24,6 +24,11 @@ import { FIFOComponent } from './WMS/FIFO.component';
 import { CyclecountComponent } from './WMS/Cyclecount.component';
 import { CycleconfigComponent } from './WMS/Cycleconfig.component';
 import { AssignRoleComponent } from './WMS/AssignRole.component';
+import { POStatusComponent } from './WMS/POStatus.component';
+import { InvoiceDetailsComponent } from './WMS/InvoiceDetails.component';
+import { MaterialDetailsComponent } from './WMS/MaterialDetails.component';
+import { LocationDetailsComponent } from './WMS/LocationDetails.component';
+import { MaterialRequestDetailsComponent } from './WMS/MaterialRequestDetails.component';
 
 const routes: Routes = [{
   path: '',
@@ -60,7 +65,12 @@ const routes: Routes = [{
     { path: "FIFOList", component: FIFOComponent, canActivate: [AuthGuard] },
     { path: "Cyclecount", component: CyclecountComponent, canActivate: [AuthGuard] },
     { path: "Cycleconfig", component: CycleconfigComponent, canActivate: [AuthGuard] },
-    { path: "AssignRole", component: AssignRoleComponent, canActivate: [AuthGuard] }
+    { path: "AssignRole", component: AssignRoleComponent, canActivate: [AuthGuard] },
+    { path: "POStatus", component: POStatusComponent, canActivate: [AuthGuard] },
+    { path: "InvoiceDetails", component: InvoiceDetailsComponent, canActivate: [AuthGuard] },
+    { path: "MaterialDetails", component: MaterialDetailsComponent, canActivate: [AuthGuard] },
+    { path: "LocationDetails", component: LocationDetailsComponent, canActivate: [AuthGuard] },
+    { path: "MaterialReqDetails", component: MaterialRequestDetailsComponent, canActivate: [AuthGuard] }
   ],
 }];
 

@@ -249,7 +249,7 @@ where  inw.invoiceno='#invoiceno' and openpo.pono='#pono' group by grnnumber</va
     <value>select * from wms.wms_stock where materialid='#materialid' limit 1</value>
   </data>
   <data name="checkmaterialandqty" xml:space="preserve">
-    <value>select * from wms.wms_stock where materialid='#materialid' and availableqty=#availableqty limit 1</value>
+    <value>select * from wms.wms_stock where materialid='#materialid' and availableqty&gt;=#availableqty limit 1</value>
   </data>
   <data name="checkqty" xml:space="preserve">
     <value>select * from wms.wms_stock where availableqty &gt;=#availableqty limit 1</value>
@@ -390,5 +390,45 @@ LINK:&lt;/p&gt;
     <value>select grnnumber from wms.wms_securityinward inw 
 inner join wms.openpolistview openpo on inw.pono=openpo.pono 
 where  inw.invoiceno='#invoiceno' and openpo.pono='#pono'</value>
+  </data>
+  <data name="getInvoiceDetails" xml:space="preserve">
+    <value>select sinward.grnnumber,sinward.invoiceno, 
+      max(storeinward .receivedqty) as receivedqty, max(storeinward.returnqty) as returnedqty,
+      max(storeinward.confirmqty) as confirmedqty from wms.wms_securityinward sinward
+left join wms.wms_storeinward storeinward on sinward.inwmasterid = storeinward.inwmasterid 
+where sinward.pono = '#pono' group by sinward.grnnumber,sinward.invoiceno</value>
+    <comment>get invoice details and qty received , returned and confirmed</comment>
+  </data>
+  <data name="getLocationDetails" xml:space="preserve">
+    <value>select itemlocation,availableqty from wms.wms_stock where materialid ='#materialid'</value>
+    <comment>get location details for material</comment>
+  </data>
+  <data name="getMaterialDetails" xml:space="preserve">
+    <value>select sum(matiss.issuedqty) as qtyissued,sec.grnnumber,openpo.material,
+    max(sk.availableqty) as qtyavailable,max(sk.totalquantity ) as qtytotal
+    from wms.wms_stock sk
+      left  join wms.wms_materialissue matiss on matiss.itemid=sk.itemid
+      inner join wms.wms_securityinward sec on sec.inwmasterid=sk.inwmasterid
+      left join wms.openpolistview openpo on sec.pono = openpo.pono
+      where matiss.issuedqty is not null and sec.grnnumber='#grn'
+      group by sec.grnnumber,openpo.material,
+      sk.inwmasterid</value>
+    <comment>get material details based on grn number</comment>
+  </data>
+  <data name="getMaterialRequestDetails" xml:space="preserve">
+    <value>select distinct st.materialid,req.requesterid,issue.approvedby,issue.issuedqty,emp.name as requestername,
+emp1.name as approvername
+      from wms.wms_stock st
+      left join wms.wms_materialissue issue on issue.itemid = st.itemid
+      left join wms.wms_materialrequest req on req.requestforissueid  = issue .requestforissueid
+     
+      inner join wms.employee emp on emp.employeeno=req.requesterid
+      inner join wms.employee emp1 on emp1.employeeno=issue.approvedby
+      where issue.issuedqty is not null and st.materialid = '#materialid'</value>
+    <comment>get material requested and issued details</comment>
+  </data>
+  <data name="getpolist" xml:space="preserve">
+    <value>select * from wms.openpolistview</value>
+    <comment>get list of PO Numbers</comment>
   </data>
 </root>

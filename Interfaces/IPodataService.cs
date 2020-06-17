@@ -8,6 +8,20 @@ namespace WMS.Interfaces
    public interface IPodataService<T>
     {
         Task<IEnumerable<T>> getOpenPoList(string loginid,string pono = null, string docno = null, string vendorid = null);
+
+        Task<IEnumerable<POList>> getPOList();
+
+        //Get invoice details for PO no
+        Task<IEnumerable<InvoiceDetails>> getinvoiveforpo(string PONO);
+
+        //Get material Details
+        Task<IEnumerable<MaterialDetails>> getMaterialDetails(string grnno);
+
+        //Location Details
+        Task<IEnumerable<LocationDetails>> getlocationdetails(string materialid);
+
+        //Get material request and issued details
+        Task<IEnumerable<ReqMatDetails>> getReqMatdetails(string materialid);
         OpenPoModel CheckPoexists(string PONO);
         int InsertBarcodeInfo(BarcodeModel dataobj);
         //int insertInvoicedetails(iwardmasterModel obj);

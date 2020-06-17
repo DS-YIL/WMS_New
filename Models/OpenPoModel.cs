@@ -120,6 +120,60 @@ namespace WMS.Models
 		public string pono { get; set; }
 		public string status { get; set; }
 	}
+
+	//Polist model
+	public class POList
+	{
+		public string POno { get; set; }
+		public int quotationqty { get; set; }
+	}
+
+	//Invoice Details
+	public class InvoiceDetails
+	{
+		public string pono { get; set; }
+		public string invoiceno { get; set; }
+		public string grnnumber { get; set; }
+		public int receivedqty { get; set; }
+		public int confirmqty { get; set; }
+		public int returnqty { get; set; }
+		///public string receivedqty { get; set; }
+		public string returnedqty { get; set; }
+		public string confirmedqty { get; set; }
+	}
+
+	//Material Details
+	public class MaterialDetails
+	{
+		public string pono { get; set; }
+		public string grnnumber { get; set; }
+		public string materialdescription { get; set; }
+		public int totalquantity { get; set; }
+		public int availableqty { get; set; }
+		public int issued { get; set; }
+		public string qtyavailable { get; set; }
+		public string materialid { get;set; } 
+		public string qtytotal { get; set; }
+	}
+
+	//Location Details
+	public class LocationDetails
+	{
+		public string itemlocation { get; set; }
+		public string availableqty { get; set; }
+	}
+
+	//Material Request details
+	public class ReqMatDetails
+	{
+		public string materialid { get; set; }
+		public int quantity { get; set; }
+		public string requesterid { get; set; }
+		public string itemreceiverid { get; set; }
+		public string approverid { get; set; }
+		public string requestername { get; set; }
+		public string approvername { get; set; }
+	}
 	public class DynamicSearchResult
 	{
 		public string tableName { get; set; }
