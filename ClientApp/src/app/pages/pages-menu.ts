@@ -71,11 +71,6 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'list-outline',
     link: '/WMS/Cyclecount'
   },
-   {
-    title: 'PO Status',
-    icon: 'list-outline',
-    link: '/WMS/POStatus'
-  },
   //{
   //  title: 'Invoice Details',
   //  icon: 'list-outline',
@@ -85,6 +80,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
     title: 'Cycle Config',
     icon: 'list-outline',
     link: '/WMS/Cycleconfig'
+  },
+  {
+    title: 'PO Status',
+    icon: 'list-outline',
+    link: '/WMS/POStatus'
   },
   {
     title: 'Auth',
