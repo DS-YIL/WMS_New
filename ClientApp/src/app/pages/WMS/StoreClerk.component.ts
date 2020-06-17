@@ -58,8 +58,6 @@ export class StoreClerkComponent implements OnInit {
   }
   scanBarcode() {
     if (this.PoDetails.pono) {
-      var barcodeId = 3;
-      var pono = "228738234";
       this.PoDetails.pono;
       this.PoDetails.invoiceno;
       this.spinner.show();
@@ -81,6 +79,7 @@ export class StoreClerkComponent implements OnInit {
 
   }
   getponodetails(data) {
+    this.podetailsList = [];
     this.wmsService.Getthreewaymatchingdetails(data).subscribe(data => {
       this.spinner.hide();
       if (data) {
