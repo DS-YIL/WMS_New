@@ -125,6 +125,7 @@ export class StoreClerkComponent implements OnInit {
         item.receivedby = this.employee.employeeno;
       });
       this.wmsService.insertitems(this.podetailsList).subscribe(data => {
+        this.spinner.hide();
         if (data != null) {
           this.wmsService.verifythreewaymatch(this.PoDetails.pono).subscribe(info => {
             if (info != null)
@@ -132,8 +133,10 @@ export class StoreClerkComponent implements OnInit {
             //this.grnnumber = data;
           })
         }
-        this.spinner.hide();
-
+        if (data == null) {
+          this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Something went wrong' });
+        }
+        
         if (data) {
           this.messageService.add({ severity: 'success', summary: 'Success Message', detail: 'Saved Sucessfully' });
           this.showQtyUpdateDialog = false;
