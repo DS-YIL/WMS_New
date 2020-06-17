@@ -81,7 +81,7 @@ namespace WMS.DAL
 					{
 						query = query + " and  op.vendorid=" + vendorid;
 					}
-					query = query + " order by  track.enteredon desc ";
+					query = query + " group by track.pono order by max(track.enteredon) desc ";
 					await pgsql.OpenAsync();
 					return await pgsql.QueryAsync<OpenPoModel>(
 					   query, null, commandType: CommandType.Text);
@@ -780,7 +780,7 @@ namespace WMS.DAL
 				string materialrequestquery = WMSResource.materialrequestquery;
 				if (pono != null)
 				{
-					materialrequestquery = materialrequestquery + " and openpo.pono = '" + pono + "'";
+					materialrequestquery = materialrequestquery + " where openpo.pono = '" + pono + "'";
 				}
 				if (approverid != null)
 				{

@@ -557,7 +557,7 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to INSERT INTO wms.wms_trackstatus(pono,status,enteredon,returnqty)VALUES(@pono,&apos;Store Checked&apos;,current_date,@returnqty).
+        ///   Looks up a localized string similar to INSERT INTO wms.wms_trackstatus(pono,status,enteredon,returnqty)VALUES(@pono,&apos;Store Checked&apos;,current_timestamp,@returnqty).
         /// </summary>
         public static string insertqueryforstatusforqty {
             get {
@@ -566,7 +566,7 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to INSERT INTO wms.wms_trackstatus(pono,status,enteredon)VALUES(@pono,&apos;In Store&apos;,current_date).
+        ///   Looks up a localized string similar to INSERT INTO wms.wms_trackstatus(pono,status,enteredon)VALUES(@pono,&apos;In Store&apos;,current_timestamp).
         /// </summary>
         public static string insertqueryforstatuswarehouse {
             get {
@@ -611,7 +611,9 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to select distinct req.requestid,openpo.pono,openpo.projectname,openpo.material,openpo.materialdescription,openpo.quotationqty,req.requestedquantity,req.ackremarks from   wms.wms_stock  sk inner join wms.openpolistview openpo on openpo.material = sk.materialid left join wms.wms_materialrequest req on req.pono = openpo.pono where req.ackstatus is not null and req.deleteflag=false.
+        ///   Looks up a localized string similar to select distinct req.requestid,openpo.pono,openpo.projectname,openpo.material,openpo.materialdescription,openpo.quotationqty,req.requestedquantity,req.ackremarks 
+        /// from   wms.wms_stock  sk left join wms.openpolistview openpo on openpo.pono = sk.pono 
+        /// left join wms.wms_materialrequest req on req.pono = openpo.pono.
         /// </summary>
         public static string materialrequestquery {
             get {
@@ -620,9 +622,11 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to select distinct track.enteredon,op.projectcode,op.pono,track.status,op.vendorname,op.&quot;JobName&quot;,op.quotationqty from wms.openpolistview op
+        ///   Looks up a localized string similar to select  max(track.enteredon) as enteredon,max(op.projectcode)as projectcode,track.pono,min(track.status)as status,max(op.vendorname)as vendorname,max(op.&quot;JobName&quot;) as JobName,max(op.quotationqty)as quotationqty 
+        ///from wms.openpolistview op
         ///      left join wms.wms_trackstatus track on track.pono=op.pono
-        ///      where projectmanager=&apos;#projectmanager&apos; and track.enteredon is not null .
+        ///      where projectmanager=&apos;#projectmanager&apos; 
+        ///      and track.enteredon is not null.
         /// </summary>
         public static string openpolist {
             get {
@@ -662,7 +666,7 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to INSERT INTO wms.wms_trackstatus(pono,status,enteredon)VALUES(@pono,&apos;Security Checked&apos;,current_date).
+        ///   Looks up a localized string similar to INSERT INTO wms.wms_trackstatus(pono,status,enteredon)VALUES(@pono,&apos;Security Checked&apos;,current_timestamp).
         /// </summary>
         public static string statusupdatebySecurity {
             get {

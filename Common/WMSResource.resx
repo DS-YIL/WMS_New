@@ -158,9 +158,11 @@ where  inwmaster.pono='#pono'</value>
     <comment>insert material request data</comment>
   </data>
   <data name="openpolist" xml:space="preserve">
-    <value>select distinct track.enteredon,op.projectcode,op.pono,track.status,op.vendorname,op."JobName",op.quotationqty from wms.openpolistview op
+    <value>select  max(track.enteredon) as enteredon,max(op.projectcode)as projectcode,track.pono,min(track.status)as status,max(op.vendorname)as vendorname,max(op."JobName") as JobName,max(op.quotationqty)as quotationqty 
+from wms.openpolistview op
       left join wms.wms_trackstatus track on track.pono=op.pono
-      where projectmanager='#projectmanager' and track.enteredon is not null </value>
+      where projectmanager='#projectmanager' 
+      and track.enteredon is not null</value>
     <comment>getopenpono list</comment>
   </data>
   <data name="Getdetailsforthreewaymatching" xml:space="preserve">
@@ -193,10 +195,10 @@ VALUES(@inwmasterid,@receiveddate,@receivedby,@receivedqty,@returnqty,@confirmqt
     <value>INSERT INTO wms.wms_qualitycheck(inwardid,quality,qtype,qcdate,qcby,remarks,deleteflag)VALUES(@inwardid,@quality,@qtype,@qcdate,@qcby,@remarks,@deleteflag)</value>
   </data>
   <data name="insertqueryforstatusforqty" xml:space="preserve">
-    <value>INSERT INTO wms.wms_trackstatus(pono,status,enteredon,returnqty)VALUES(@pono,'Store Checked',current_date,@returnqty)</value>
+    <value>INSERT INTO wms.wms_trackstatus(pono,status,enteredon,returnqty)VALUES(@pono,'Store Checked',current_timestamp,@returnqty)</value>
   </data>
   <data name="insertqueryforstatuswarehouse" xml:space="preserve">
-    <value>INSERT INTO wms.wms_trackstatus(pono,status,enteredon)VALUES(@pono,'In Store',current_date)</value>
+    <value>INSERT INTO wms.wms_trackstatus(pono,status,enteredon)VALUES(@pono,'In Store',current_timestamp)</value>
   </data>
   <data name="insertstock" xml:space="preserve">
     <value>INSERT INTO wms.wms_stock(inwmasterid,stockstatus,pono,binid,vendorid,totalquantity,shelflife,availableqty,deleteflag,itemlocation,createddate,createdby)VALUES(@inwmasterid,@stockstatus,@pono,@binid,@vendorid,@totalquantity,@shelflife,@availableqty,@deleteflag,@itemlocation,@createddate,@createdby)returning itemid</value>
@@ -205,7 +207,9 @@ VALUES(@inwmasterid,@receiveddate,@receivedby,@receivedqty,@returnqty,@confirmqt
     <value>select * from  wms.wms_sequencemaster  where  enddate&gt;=current_date and id=1</value>
   </data>
   <data name="materialrequestquery" xml:space="preserve">
-    <value>select distinct req.requestid,openpo.pono,openpo.projectname,openpo.material,openpo.materialdescription,openpo.quotationqty,req.requestedquantity,req.ackremarks from   wms.wms_stock  sk inner join wms.openpolistview openpo on openpo.material = sk.materialid left join wms.wms_materialrequest req on req.pono = openpo.pono where req.ackstatus is not null and req.deleteflag=false</value>
+    <value>select distinct req.requestid,openpo.pono,openpo.projectname,openpo.material,openpo.materialdescription,openpo.quotationqty,req.requestedquantity,req.ackremarks 
+ from   wms.wms_stock  sk left join wms.openpolistview openpo on openpo.pono = sk.pono 
+ left join wms.wms_materialrequest req on req.pono = openpo.pono</value>
   </data>
   <data name="queryforitemdetails" xml:space="preserve">
     <value>select distinct stocks.itemlocation,stocks.itemid,inw.grnnumber,inw.pono,inw.invoiceno,openpo.projectname,openpo.material,openpo.materialdescription,openpo.quotationqty,inwa.receivedqty,inwa.confirmqty,inwa.returnqty from wms.wms_securityinward inw
@@ -215,7 +219,7 @@ inner join wms.openpolistview openpo on openpo.pono=inw.pono
 where inw.grnnumber='#grnnumber' limit 1</value>
   </data>
   <data name="statusupdatebySecurity" xml:space="preserve">
-    <value>INSERT INTO wms.wms_trackstatus(pono,status,enteredon)VALUES(@pono,'Security Checked',current_date)</value>
+    <value>INSERT INTO wms.wms_trackstatus(pono,status,enteredon)VALUES(@pono,'Security Checked',current_timestamp)</value>
   </data>
   <data name="updateackstatus" xml:space="preserve">
     <value>update  wms.wms_materialrequest set ackstatus=@ackstatus,ackremarks=@ackremarks where requestforissueid=@requestforissueid and materialid=@materialid</value>
