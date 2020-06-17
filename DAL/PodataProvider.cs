@@ -13,7 +13,6 @@ using Microsoft.AspNetCore.Http;
 using System.IO;
 using System.Net.Sockets;
 using System.Net;
-using WMS.Utility;
 
 namespace WMS.DAL
 {

@@ -31,6 +31,7 @@ namespace WMS.Models
 		public int confirmqty { get; set; }
 		public int receivedqty { get; set; }
 		public int totalrecivedqty { get; set; }
+		public DateTime enteredon { get; set; }
 	}
 	public class BarcodeModel
 	{

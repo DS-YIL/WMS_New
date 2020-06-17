@@ -88,7 +88,7 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to select distinct* from wms.openpolistview openpo inner join wms.wms_securityinward inw on openpo.pono=inw.pono where openpo.pono=&apos;#pono&apos;  order by receiveddate desc limit 1.
+        ///   Looks up a localized string similar to select distinct* from wms.openpolistview openpo left join wms.wms_securityinward inw on openpo.pono=inw.pono where openpo.pono=&apos;#pono&apos;  order by receiveddate desc limit 1.
         /// </summary>
         public static string checkponoexists {
             get {
@@ -640,11 +640,11 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to select distinct inw.grnnumber,inw.pono,inw.invoiceno,openpo.projectname,openpo.material,openpo.materialdescription,openpo.quotationqty,inwa.receivedqty,inwa.confirmqty,inwa.returnqty from wms.wms_securityinward inw
+        ///   Looks up a localized string similar to select distinct stocks.itemlocation,stocks.itemid,inw.grnnumber,inw.pono,inw.invoiceno,openpo.projectname,openpo.material,openpo.materialdescription,openpo.quotationqty,inwa.receivedqty,inwa.confirmqty,inwa.returnqty from wms.wms_securityinward inw
         ///left join wms.wms_storeinward inwa on inw.inwmasterid=inwa.inwmasterid
         ///left join wms.wms_stock stocks on  stocks.inwmasterid=inwa.inwmasterid
         ///inner join wms.openpolistview openpo on openpo.pono=inw.pono
-        ///where inw.grnnumber=&apos;#grnnumber&apos;.
+        ///where inw.grnnumber=&apos;#grnnumber&apos; limit 1.
         /// </summary>
         public static string queryforitemdetails {
             get {
