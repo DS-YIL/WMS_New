@@ -39,7 +39,7 @@
       <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'reasonforgatepass', 'contains')"></th>
       <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'approverstatus', 'contains')"></th>
       <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'name', 'contains')"></th>
-      <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'createddate', 'contains')"></th>
+      <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'requestedon', 'contains')"></th>
       <th> <input pInputText type="text" class="form-control"></th>
       <th> <input pInputText type="text" class="form-control"></th>
       <th *ngIf="employee.roleid=='7'"> <input pInputText type="text" class="form-control"></th>
@@ -57,7 +57,7 @@
       <td class="ptable-cell" style="text-align:center">{{rowData.reasonforgatepass}}</td>
       <td class="ptable-cell" style="text-align:right">{{rowData.approverstatus}}</td>
       <td class="ptable-cell" style="text-align:center">{{rowData.name}}</td>
-      <td class="ptable-cell" style="text-align:center">{{rowData.createddate | date :  constants.dateFormat}}</td>
+      <td class="ptable-cell" style="text-align:center">{{rowData.requestedon | date :  constants.dateFormat}}</td>
       <td class="ptable-cell" style="text-align:center"><button *ngIf="rowData.approverstatus!='Approved' && rowData.requestedby==employee.employeeno" type="button" icon="fa fa-edit" pButton aria-hidden="true" (click)="openGatepassDialog(rowData,ri,'gatepassdialog')"></button></td>
       <td class="ptable-cell" style="text-align:center"><button *ngIf="rowData.approverstatus=='Approved'" type="button" icon="fa fa-print" pButton aria-hidden="true" (click)="showprint(rowData)"></button></td>
       <td *ngIf="employee.roleid=='7'" class="ptable-cell" style="text-align:center"><button *ngIf="gatepassModel.gatepasstype=='Returnable' && employee.roleid=='7' && rowData.approverstatus=='Approved' && rowData.print==false" type="button" icon="fa fa-pencil" pButton aria-hidden="true" (click)="openGatepassDialog(rowData,ri,'updateReturnedDateDialog')"></button></td>
