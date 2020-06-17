@@ -95,5 +95,8 @@ export class MaterialRequestComponent implements OnInit {
     }
   }
 
-
+  //redirect to PM Dashboard
+  backtoDashboard() {
+    this.router.navigateByUrl("/WMS/Dashboard");
+  }
 }
