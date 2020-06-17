@@ -457,9 +457,9 @@ namespace WMS.DAL
 					obj = pgsql.QuerySingle<inwardModel>(
 					   query, null, commandType: CommandType.Text);
 					string getGRNno = WMSResource.getGRNNo.Replace("#pono", datamodel[0].pono);
-					getgrnnoforpo = pgsql.QuerySingle<inwardModel>(
+					getgrnnoforpo = pgsql.QueryFirstOrDefault<inwardModel>(
 					   getGRNno, null, commandType: CommandType.Text);
-
+					int inwardid = 0;
 					if (obj.inwmasterid != 0)
 					{
 
@@ -483,7 +483,7 @@ namespace WMS.DAL
 									item.deleteflag,
 
 								});
-								int inwardid = Convert.ToInt32(results);
+								 inwardid = Convert.ToInt32(results);
 								//if (inwardid != 0)
 								//{
 								//    string insertqueryforqualitycheck =WMSResource.insertqueryforqualitycheck;
@@ -513,7 +513,7 @@ namespace WMS.DAL
 					}
 
 					//}
-					return (getgrnnoforpo.grnnumber);
+					return (Convert.ToString(inwardid));
 				}
 				catch (Exception Ex)
 				{
