@@ -201,7 +201,7 @@ VALUES(@inwmasterid,@receiveddate,@receivedby,@receivedqty,@returnqty,@confirmqt
     <value>INSERT INTO wms.wms_trackstatus(pono,status,enteredon)VALUES(@pono,'In Store',current_timestamp)</value>
   </data>
   <data name="insertstock" xml:space="preserve">
-    <value>INSERT INTO wms.wms_stock(inwmasterid,stockstatus,pono,binid,vendorid,totalquantity,shelflife,availableqty,deleteflag,itemlocation,createddate,createdby)VALUES(@inwmasterid,@stockstatus,@pono,@binid,@vendorid,@totalquantity,@shelflife,@availableqty,@deleteflag,@itemlocation,@createddate,@createdby)returning itemid</value>
+    <value>INSERT INTO wms.wms_stock(inwmasterid,stockstatus,pono,binid,vendorid,totalquantity,shelflife,availableqty,deleteflag,itemlocation,createddate,createdby,materialid)VALUES(@inwmasterid,@stockstatus,@pono,@binid,@vendorid,@totalquantity,@shelflife,@availableqty,@deleteflag,@itemlocation,@createddate,@createdby,@materialid)returning itemid</value>
   </data>
   <data name="lastinsertedgrn" xml:space="preserve">
     <value>select * from  wms.wms_sequencemaster  where  enddate&gt;=current_date and id=1</value>
@@ -404,17 +404,18 @@ where sinward.pono = '#pono' group by sinward.grnnumber,sinward.invoiceno</value
     <comment>get invoice details and qty received , returned and confirmed</comment>
   </data>
   <data name="getLocationDetails" xml:space="preserve">
-    <value>select itemlocation,availableqty from wms.wms_stock where materialid ='#materialid'</value>
+    <value>select itemlocation,availableqty from wms.wms_stock where materialid ='#materialid' and availableqty!=0</value>
     <comment>get location details for material</comment>
   </data>
   <data name="getMaterialDetails" xml:space="preserve">
-    <value>select sum(matiss.issuedqty) as qtyissued,sec.grnnumber,openpo.material,
+    <value>select sum(matiss.issuedqty) as qtyissued,sec.grnnumber,openpo.material as materialid,
     max(sk.availableqty) as qtyavailable,max(sk.totalquantity ) as qtytotal
     from wms.wms_stock sk
       left  join wms.wms_materialissue matiss on matiss.itemid=sk.itemid
       inner join wms.wms_securityinward sec on sec.inwmasterid=sk.inwmasterid
       left join wms.openpolistview openpo on sec.pono = openpo.pono
-      where matiss.issuedqty is not null and sec.grnnumber='#grn'
+      where -- matiss.issuedqty is not null  and                         
+      sec.grnnumber='#grn'
       group by sec.grnnumber,openpo.material,
       sk.inwmasterid</value>
     <comment>get material details based on grn number</comment>

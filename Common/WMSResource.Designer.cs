@@ -360,7 +360,7 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to select itemlocation,availableqty from wms.wms_stock where materialid =&apos;#materialid&apos;.
+        ///   Looks up a localized string similar to select itemlocation,availableqty from wms.wms_stock where materialid =&apos;#materialid&apos; and availableqty!=0.
         /// </summary>
         public static string getLocationDetails {
             get {
@@ -369,14 +369,14 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to select sum(matiss.issuedqty) as qtyissued,sec.grnnumber,openpo.material,
+        ///   Looks up a localized string similar to select sum(matiss.issuedqty) as qtyissued,sec.grnnumber,openpo.material as materialid,
         ///    max(sk.availableqty) as qtyavailable,max(sk.totalquantity ) as qtytotal
         ///    from wms.wms_stock sk
         ///      left  join wms.wms_materialissue matiss on matiss.itemid=sk.itemid
         ///      inner join wms.wms_securityinward sec on sec.inwmasterid=sk.inwmasterid
         ///      left join wms.openpolistview openpo on sec.pono = openpo.pono
-        ///      where matiss.issuedqty is not null and sec.grnnumber=&apos;#grn&apos;
-        ///      group by sec.grnnumber,openpo.material, [rest of string was truncated]&quot;;.
+        ///      where -- matiss.issuedqty is not null  and                         
+        ///      sec.grnnumber=&apos;#g [rest of string was truncated]&quot;;.
         /// </summary>
         public static string getMaterialDetails {
             get {
@@ -584,7 +584,7 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to INSERT INTO wms.wms_stock(inwmasterid,stockstatus,pono,binid,vendorid,totalquantity,shelflife,availableqty,deleteflag,itemlocation,createddate,createdby)VALUES(@inwmasterid,@stockstatus,@pono,@binid,@vendorid,@totalquantity,@shelflife,@availableqty,@deleteflag,@itemlocation,@createddate,@createdby)returning itemid.
+        ///   Looks up a localized string similar to INSERT INTO wms.wms_stock(inwmasterid,stockstatus,pono,binid,vendorid,totalquantity,shelflife,availableqty,deleteflag,itemlocation,createddate,createdby,materialid)VALUES(@inwmasterid,@stockstatus,@pono,@binid,@vendorid,@totalquantity,@shelflife,@availableqty,@deleteflag,@itemlocation,@createddate,@createdby,@materialid)returning itemid.
         /// </summary>
         public static string insertstock {
             get {

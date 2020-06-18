@@ -544,8 +544,9 @@ namespace WMS.DAL
 					StockModel objs = new StockModel();
 					pgsql.Open();
 					string query = WMSResource.getinwardmasterid.Replace("#grnnumber", data.grnnumber);
-					objs = pgsql.QuerySingle<StockModel>(
+					objs = pgsql.QueryFirstOrDefault<StockModel>(
 					   query, null, commandType: CommandType.Text);
+					if(objs!=null)
 					inwmasterid = objs.inwmasterid;
 				}
 				//foreach (var item in data) { 
@@ -554,6 +555,7 @@ namespace WMS.DAL
 				int itemid = 0;
 				if (data.itemid == 0)
 				{
+					string materialid = data.Material;
 					using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
 					{
 						result = Convert.ToInt32(DB.ExecuteScalar(insertquery, new
@@ -570,7 +572,8 @@ namespace WMS.DAL
 							data.itemlocation,
 							data.createddate,
 							data.createdby,
-							data.stockstatus
+							data.stockstatus,
+							materialid
 						}));
 						if (result != 0)
 						{

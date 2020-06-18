@@ -93,6 +93,7 @@ namespace WMS.Models
 	}
 	public class StockModel
 	{
+		public string Material { get; set; }
 		public string stockstatus { get; set; }
 		public int itemid { get; set; }
 		public string grnnumber { get; set; }
