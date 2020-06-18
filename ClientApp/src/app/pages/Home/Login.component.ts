@@ -99,10 +99,11 @@ export class LoginComponent implements OnInit {
       this.router.navigateByUrl('/WMS/GRNPosting');
     }
     if (this.employee.roleid == "3") {//inventory clerk
+      MENU_ITEMS[2].hidden = false;
       MENU_ITEMS[3].hidden = false;
       MENU_ITEMS[4].hidden = false;
       MENU_ITEMS[6].hidden = false;
-      this.router.navigateByUrl('/WMS/WarehouseIncharge');
+      this.router.navigateByUrl('/WMS/GRNPosting');
     }
     if (this.employee.roleid == "4") {//inventory manager
       MENU_ITEMS[3].hidden = false;
