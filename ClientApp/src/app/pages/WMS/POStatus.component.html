@@ -10,7 +10,7 @@
   <ng-template pTemplate="header" let-columns>
     <tr class="mprltbldata">
       <th style="text-align:center;width:70px">S.No</th>
-      <th *ngFor="let col of columns">
+      <th *ngFor="let col of columns" style="text-align:center;" >
         {{col.header}}
       </th>
     </tr>

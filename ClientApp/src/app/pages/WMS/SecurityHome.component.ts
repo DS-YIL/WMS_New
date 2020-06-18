@@ -109,7 +109,7 @@ export class SecurityHomeComponent implements OnInit {
         }
         else { //data>=1
           this.disSaveBtn = true;
-          this.messageService.add({ severity: 'success', summary: 'Success Message', detail: 'Saved Sucessfully' });
+          this.messageService.add({ severity: 'success', summary: 'Success Message', detail: 'Invoice Updated' });
         }
       });
     }

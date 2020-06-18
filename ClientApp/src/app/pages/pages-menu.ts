@@ -82,7 +82,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: '/WMS/Cycleconfig'
   },
   {
-    title: 'PO Status',
+    title: 'Material Tracking',
     icon: 'list-outline',
     link: '/WMS/POStatus'
   },
