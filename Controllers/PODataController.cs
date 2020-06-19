@@ -330,6 +330,12 @@ namespace WMS.Controllers
 			return await this._poService.GetEnquirydata(materialid);
 		}
 
+		[HttpGet("getdashboarddata")]
+		public async Task<DashboardModel> getdashboarddata()
+		{
+			return await this._poService.getdashboarddata();
+		}
+
 		//[HttpPost("securitysendemail")]
 		//public EmailModel sendemail(EmailModel obj)
 		//{

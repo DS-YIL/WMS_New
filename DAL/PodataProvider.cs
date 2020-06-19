@@ -2477,5 +2477,102 @@ namespace WMS.DAL
 			}
 		}
 
+		//Name of Function : <<getdashboarddata>>  Author :<<Ramesh>>  
+		//Date of Creation <<17-06-2020>>
+		//Purpose : <<function to get dashboard data >>
+		//Review Date :<<>>   Reviewed By :<<>>
+		public async Task<DashboardModel> getdashboarddata()
+		{
+			using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
+			{
+
+
+				try
+				{
+					DashboardModel result = new DashboardModel();
+					result.graphdata = new List<DashboardGraphModel>();
+					DateTime dt = DateTime.Now;
+					int i = 1;
+					while (i <= 7)
+					{
+						if (i == 1)
+						{
+							string date = dt.ToString("yyyy-MM-dd");
+							string query1 = "Select Count(*) as todayexpextedcount from wms.openpolistview where deliverydate = current_date";
+							string query2 = "select count(*) as todayreceivedcount from wms.wms_securityinward where receiveddate <= '" + date + " 23:59:59' and receiveddate >= '" + date + " 00:00:00' ";
+							string query3 = "select count(*) as todaytoissuecount from wms.wms_materialrequest where requesteddate = '" + date + " 23:59:59' and requesteddate >= '" + date + " 00:00:00'";
+
+							await pgsql.OpenAsync();
+							var data1 = await pgsql.QueryAsync<DashboardModel>(query1, null, commandType: CommandType.Text);
+							var data2 = await pgsql.QueryAsync<DashboardModel>(query2, null, commandType: CommandType.Text);
+							var data3 = await pgsql.QueryAsync<DashboardModel>(query3, null, commandType: CommandType.Text);
+							DashboardGraphModel md = new DashboardGraphModel();
+							md.date = dt.ToString("dd/MM/yyyy");
+							if (data1 != null)
+							{
+								result.todayexpextedcount = data1.FirstOrDefault().todayexpextedcount;
+								md.expectedcount = data1.FirstOrDefault().todayexpextedcount;
+							}
+							if (data2 != null)
+							{
+								result.todayreceivedcount = data2.FirstOrDefault().todayreceivedcount;
+								md.receivedcount = data2.FirstOrDefault().todayreceivedcount;
+							}
+							if (data3 != null)
+							{
+								result.todaytoissuecount = data3.FirstOrDefault().todaytoissuecount;
+								md.toissuecount = data3.FirstOrDefault().todaytoissuecount;
+							}
+							result.graphdata.Add(md);
+						}
+						else
+						{
+							dt = dt.AddDays(-1);
+							string date = dt.ToString("yyyy-MM-dd");
+							string date1 = dt.ToString("dd/MM/yyyy");
+							string query1 = "Select Count(*) as todayexpextedcount from wms.openpolistview where deliverydate = '" + date + "'";
+							string query2 = "select count(*) as todayreceivedcount from wms.wms_securityinward where receiveddate <= '" + date + " 23:59:59' and receiveddate >= '" + date + " 00:00:00' ";
+							string query3 = "select count(*) as todaytoissuecount from wms.wms_materialrequest where requesteddate = '" + date + " 23:59:59' and requesteddate >= '" + date + " 00:00:00'";
+							var data1 = await pgsql.QueryAsync<DashboardModel>(query1, null, commandType: CommandType.Text);
+							var data2 = await pgsql.QueryAsync<DashboardModel>(query2, null, commandType: CommandType.Text);
+							var data3 = await pgsql.QueryAsync<DashboardModel>(query3, null, commandType: CommandType.Text);
+							DashboardGraphModel md = new DashboardGraphModel();
+							md.date = date1;
+							if (data1 != null)
+							{
+								md.expectedcount = data1.FirstOrDefault().todayexpextedcount;
+							}
+							if (data2 != null)
+							{
+								md.receivedcount = data2.FirstOrDefault().todayreceivedcount;
+							}
+							if (data3 != null)
+							{
+								md.toissuecount = data3.FirstOrDefault().todaytoissuecount;
+							}
+							result.graphdata.Add(md);
+						}
+
+						i++;
+					}
+
+
+
+					return result;
+				}
+				catch (Exception Ex)
+				{
+					log.ErrorMessage("PODataProvider", "getdashboarddata", Ex.StackTrace.ToString());
+					return null;
+				}
+				finally
+				{
+					pgsql.Close();
+				}
+
+			}
+		}
+
+
 	}
 }

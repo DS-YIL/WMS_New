@@ -72,7 +72,7 @@ namespace WMS.Interfaces
         int updateissuedmaterial(List<IssueRequestModel> obj);
         int assignRole(authUser authuser);
         Task<IEnumerable<userAcessNamesModel>> getuserAcessList(string employeeid, string roleid);
-
         Task<Enquirydata> GetEnquirydata(string materialid);
+        Task<DashboardModel> getdashboarddata();
     }
 }

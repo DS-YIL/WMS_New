@@ -431,4 +431,24 @@ namespace WMS.Models
 		public int availableqty { get; set; }
 
 	}
+
+	public class DashboardModel
+	{
+		public int todayexpextedcount { get; set; }
+		public int todayreceivedcount { get; set; }
+		public int todaytoissuecount { get; set; }
+
+		public List<DashboardGraphModel> graphdata { get; set; }
+
+	}
+
+	public class DashboardGraphModel
+	{
+		public string date { get; set; }
+		public int expectedcount { get; set; }
+
+		public int receivedcount { get; set; }
+
+		public int toissuecount { get; set; }
+	}
 }
