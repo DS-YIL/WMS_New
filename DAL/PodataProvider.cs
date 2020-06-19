@@ -1930,8 +1930,12 @@ namespace WMS.DAL
 
                     }
 
-                    //Ramesh (08/06/2020) returns random A/B/C List
-                    string QueryA = "select sum(ws.availableqty) as availableqty,'A' AS category,ws.materialid AS materialid from wms.wms_stock ws WHERE ws.materialid IS NOT null and ws.unitprice::numeric >= " + config.amin+ " group by ws.materialid order by random() limit "+limita+"";
+					//Ramesh (08/06/2020) returns today counted list 
+					string Querychecktodaycounted = "Select * from wms.cyclecount where counted_on = current_date";
+					var todaycountdata = await pgsql.QueryAsync<CycleCountList>(Querychecktodaycounted, null, commandType: CommandType.Text);
+
+					//Ramesh (08/06/2020) returns random A/B/C List
+					string QueryA = "select sum(ws.availableqty) as availableqty,'A' AS category,ws.materialid AS materialid from wms.wms_stock ws WHERE ws.materialid IS NOT null and ws.unitprice::numeric >= " + config.amin+ " group by ws.materialid order by random() limit "+limita+"";
                     string QueryB = "select sum(ws.availableqty) as availableqty,'B' AS category,ws.materialid AS materialid from wms.wms_stock ws WHERE ws.materialid IS NOT null and ws.unitprice::numeric >= " + config.bmin + " and ws.unitprice::numeric <= " + config.bmax + " group by ws.materialid order by random() limit " + limitb + "";
                     string QueryC = "select sum(ws.availableqty) as availableqty,'C' AS category,ws.materialid AS materialid from wms.wms_stock ws WHERE ws.materialid IS NOT null and ws.unitprice::numeric <= " + config.cmax + " group by ws.materialid order by random() limit " + limitc + "";
                     var adata = await pgsql.QueryAsync<CycleCountList>(QueryA, null, commandType: CommandType.Text);
@@ -1950,6 +1954,15 @@ namespace WMS.DAL
                             cc.physicalqty = dt.physicalqty;
                             cc.difference = dt.difference;
 							cc.iscounted = true;
+							if(todaycountdata != null && todaycountdata.Count() > 0)
+                            {
+								cc.todayscount = todaycountdata.Count();
+							}
+                            else
+                            {
+								cc.todayscount = 0;
+
+							}
                         }
                     }
 

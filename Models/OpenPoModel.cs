@@ -309,7 +309,9 @@ namespace WMS.Models
 		public DateTime? verified_on { get; set; }
 
 		public string verified_by { get; set; }
-		
+
+		public int todayscount { get; set; }
+
 
 
 	}
