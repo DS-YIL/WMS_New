@@ -1112,14 +1112,14 @@ namespace WMS.DAL
 				//data.createddate = System.DateTime.Now;
 				foreach (var item in dataobj)
 				{
-					string approverstatus = string.Empty;
-					if (item.issuedquantity != 0)
+					string approvedstatus = string.Empty;
+					if (item.issuedqty != 0)
 					{
-						approverstatus = "approved";
+						approvedstatus = "approved";
 					}
 					else
 					{
-						approverstatus = "rejected";
+						approvedstatus = "rejected";
 					}
 					DateTime approvedon = System.DateTime.Now;
 					int itemid = 0;
@@ -1143,8 +1143,8 @@ namespace WMS.DAL
 
 
 					int requestforissueid = item.requestforissueid;
-					string materialid = item.Material;
-					int issuedqty = item.issuedquantity;
+					string materialid = item.materialid;
+					int issuedqty = item.issuedqty;
 					DateTime itemissueddate = System.DateTime.Now;
 
 					string updateapproverstatus = WMSResource.updateapproverstatus;
@@ -1154,7 +1154,7 @@ namespace WMS.DAL
 
 						result = DB.Execute(updateapproverstatus, new
 						{
-							approverstatus,
+							approvedstatus,
 							requestforissueid,
 							approvedon,
 							issuedqty,

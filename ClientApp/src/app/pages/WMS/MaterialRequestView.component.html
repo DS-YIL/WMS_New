@@ -1,5 +1,5 @@
-<h5 style="text-align:center">Material Request List</h5>
-<div class="row"><button class="btn btn-primary fa fa-arrow-left" (click)="backtoDashboard();"></button></div>
+<h5 style="text-align:center">Reuested Material List</h5>
+
 <br />
 <div *ngIf="requestList.length>0">
   <div class="row " style="margin-top:10px">
@@ -44,19 +44,19 @@
       <td class="ptable-cell" style="text-align:right">{{ri+1}}</td>
       <td class="ptable-cell" style="text-align:center;width:100%;"><!--<a *ngIf="rowData.requestid" [routerLink]="['/WMS/MaterialIssue',rowData.requestid]" routerLinkActive="active">--><span *ngIf="rowData.requestid">{{rowData.requestid}}</span></td>
       <!--<td class="ptable-cell" style="text-align:center">{{rowData.pono}}</td>
-      <td class="ptable-cell" style="text-align:left">{{rowData.projectname}}</td>-->
+  <td class="ptable-cell" style="text-align:left">{{rowData.projectname}}</td>-->
       <td class="ptable-cell" style="text-align:left">{{rowData.material}}</td>
       <td class="ptable-cell" style="text-align:left">{{rowData.materialdescription}}</td>
       <td class="ptable-cell" style="text-align:right">{{rowData.quotationqty}}</td>
       <td class="ptable-cell" style="text-align:right">
         <span *ngIf="rowData.approvedstatus=='approved'">{{rowData.requestedquantity}}</span>
-        <input *ngIf="rowData.approvedstatus!='approved'" pInputText type="number" class="form-control" [(ngModel)]="rowData.requestedquantity" (change)="reqQtyChange(rowData)">
+        <!--<input *ngIf="rowData.approvedstatus!='approved'" pInputText type="number" class="form-control" [(ngModel)]="rowData.requestedquantity" (change)="reqQtyChange(rowData)">-->
       </td>
-      <td class="ptable-cell" style="text-align:right">{{rowData.quotationqty}}</td>
+      <td class="ptable-cell" style="text-align:right">{{rowData.requestedquantity}}</td>
       <td class="ptable-cell" style="text-align:center">
         <div *ngIf="rowData.approvedstatus=='approved'" class="form-inline">
-          <p-checkbox [(ngModel)]="rowData.status" binary="true" (click)="ackStatusChanges()"></p-checkbox> &nbsp;&nbsp;
-          <textarea type="text" style="width:140px" class="form-control" [(ngModel)]="rowData.ackremarks"></textarea>
+          <!--<p-checkbox [(ngModel)]="rowData.status" binary="true" (click)="ackStatusChanges()"></p-checkbox> &nbsp;&nbsp;-->
+          <textarea type="text" style="width:140px" class="form-control" disabled="disabled" [(ngModel)]="rowData.ackremarks"></textarea>
         </div>
         <span *ngIf="rowData.ackstatus=='received'">{{rowData.ackremarks}}</span>
       </td>
@@ -69,10 +69,10 @@
   <div class="row">
     <div class="col-lg-4 col-md-4 col-sm-4">
     </div>
-    <div class="col-lg-2 col-md-2 col-sm-2 " style="margin-top:5px;margin-bottom:5px">
+    <!--<div class="col-lg-2 col-md-2 col-sm-2 " style="margin-top:5px;margin-bottom:5px">
       <button type="button" class="btn btn-primary" [disabled]="btnDisable" (click)="onMaterialRequestDeatilsSubmit()">Material Request</button>
 
-    </div>
+    </div>-->
     <div *ngIf="showAck" class="col-lg-2 col-md-2 col-sm-2 " style="margin-top:5px;margin-bottom:5px">
       <button type="button" class="btn btn-primary" [disabled]="btnDisable" (click)="materialAckUpdate()">Send Acknowledge</button>
     </div>

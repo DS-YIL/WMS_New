@@ -117,6 +117,13 @@ export class DashboardComponent implements OnInit {
   dialogCancel(dialogName) {
     this[dialogName] = false;
   }
+  materialrequest(pono) {
+    this.router.navigate(['/WMS/MaterialRequest/', pono]);
+
+  }
+  materialrequestedview(pono) {
+    this.router.navigate(['/WMS/MaterialReqView/', pono]);
+  }
 
 
 }

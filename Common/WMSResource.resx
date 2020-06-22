@@ -124,15 +124,18 @@
   <data name="GetdetailsByrequestid" xml:space="preserve">
     <value>select sum(iss.issuedqty) as issuedqty,op."JobName",req.requestforissueid,emp."name",req.requesteddate,sk.materialid,sk.pono,req.requestedquantity,sk.availableqty,req.requestid from wms.wms_stock sk 
       inner join wms.openpolistview op on op.pono=sk.pono
-      inner join wms.wms_materialissue iss on iss.itemid=sk.itemid
-      inner join wms.wms_materialrequest req on req.requestforissueid=iss.requestforissueid
+       inner join wms.wms_materialrequest req on req.materialid=sk.materialid
+      left join wms.wms_materialissue iss on iss.itemid=sk.itemid
       inner join wms.employee emp on emp.employeeno=req.requesterid
- where requestid=#requestid and req.deleteflag=false 
+ where requestid=#requestid and req.deleteflag=false and sk.availableqty!=0
  group by req.requestforissueid,sk.materialid,sk.pono,req.requestedquantity,sk.availableqty,req.requestid,emp."name",req.requesteddate,op."JobName"</value>
   </data>
   <data name="GetListForMaterialRequestByapproverid" xml:space="preserve">
-    <value>select req.requestid,req.requesteddate,req.requesterid,po.projectname,emp."name" from wms.wms_materialrequest req inner join wms.openpolistview po on po.pono=req.pono 
-left join wms.employee emp on req.requesterid=emp.employeeno  where req.approverid='#approverid' group by req.requestid,req.requesteddate,req.requesterid,po.projectname,emp."name" order by req.requestid desc</value>
+    <value>select req.requestid,req.requesteddate,req.requesterid,po.projectname,emp."name" 
+ from wms.wms_materialrequest req inner join wms.openpolistview po on po.pono=req.pono 
+left join wms.employee emp on req.requesterid=emp.employeeno 
+--where req.approverid='#approverid'
+group by req.requestid,req.requesteddate,req.requesterid,po.projectname,emp."name" order by req.requestid desc</value>
   </data>
   <data name="GetListForMaterialRequestByrequesterid" xml:space="preserve">
     <value>select * from wms.wms_materialrequest where requesterid='#requesterid'</value>
@@ -207,9 +210,10 @@ VALUES(@inwmasterid,@receiveddate,@receivedby,@receivedqty,@returnqty,@confirmqt
     <value>select * from  wms.wms_sequencemaster  where  enddate&gt;=current_date and id=1</value>
   </data>
   <data name="materialrequestquery" xml:space="preserve">
-    <value>select distinct req.requestid,openpo.pono,openpo.projectname,openpo.material,openpo.materialdescription,openpo.quotationqty,req.requestedquantity,req.ackremarks 
+    <value>select distinct issue.issuedqty,req.requestforissueid,issue.approvedstatus,req.requestid,openpo.pono,openpo.projectname,openpo.material,openpo.materialdescription,openpo.quotationqty,req.requestedquantity,req.ackremarks 
  from   wms.wms_stock  sk left join wms.openpolistview openpo on openpo.pono = sk.pono 
- left join wms.wms_materialrequest req on req.pono = openpo.pono</value>
+  left join wms.wms_materialrequest req on req.pono = openpo.pono
+  left join  wms.wms_materialissue issue on issue.requestforissueid=req.requestforissueid</value>
   </data>
   <data name="queryforitemdetails" xml:space="preserve">
     <value>select distinct stocks.itemlocation,stocks.itemid,inw.grnnumber,inw.pono,inw.invoiceno,openpo.projectname,openpo.material,openpo.materialdescription,openpo.quotationqty,inwa.receivedqty,inwa.confirmqty,inwa.returnqty from wms.wms_securityinward inw
@@ -225,8 +229,8 @@ where inw.grnnumber='#grnnumber' limit 1</value>
     <value>update  wms.wms_materialrequest set ackstatus=@ackstatus,ackremarks=@ackremarks where requestforissueid=@requestforissueid and materialid=@materialid</value>
   </data>
   <data name="updateapproverstatus" xml:space="preserve">
-    <value>insert into wms.wms_materialissue(materialissueid,pono,itemid,requestforissueid,itemissueddate,itemreceiverid,deleteflag,itemreturnable,approvedby,approvedon,issuedqty)
-values(default,@pono,@itemid,@requestforissueid,@itemissueddate,@itemreceiverid,false,@itemreturnable,@approvedby,@approvedon,@issuedqty)</value>
+    <value>insert into wms.wms_materialissue(materialissueid,pono,itemid,requestforissueid,itemissueddate,itemreceiverid,deleteflag,itemreturnable,approvedby,approvedon,issuedqty,approvedstatus)
+values(default,@pono,@itemid,@requestforissueid,@itemissueddate,@itemreceiverid,false,@itemreturnable,@approvedby,@approvedon,@issuedqty,@approvedstatus)</value>
   </data>
   <data name="updategrnnumber" xml:space="preserve">
     <value>update wms.wms_securityinward set grnnumber=@grnnumber,grndate=current_date where invoiceno='#invoiceno' and pono='#pono'</value>
@@ -435,5 +439,8 @@ emp1.name as approvername
   <data name="getpolist" xml:space="preserve">
     <value>select * from wms.openpolistview</value>
     <comment>get list of PO Numbers</comment>
+  </data>
+  <data name="string1" xml:space="preserve">
+    <value />
   </data>
 </root>

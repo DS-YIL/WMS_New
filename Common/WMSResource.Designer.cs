@@ -210,10 +210,10 @@ namespace WMS.Common {
         /// <summary>
         ///   Looks up a localized string similar to select sum(iss.issuedqty) as issuedqty,op.&quot;JobName&quot;,req.requestforissueid,emp.&quot;name&quot;,req.requesteddate,sk.materialid,sk.pono,req.requestedquantity,sk.availableqty,req.requestid from wms.wms_stock sk 
         ///      inner join wms.openpolistview op on op.pono=sk.pono
-        ///      inner join wms.wms_materialissue iss on iss.itemid=sk.itemid
-        ///      inner join wms.wms_materialrequest req on req.requestforissueid=iss.requestforissueid
+        ///       inner join wms.wms_materialrequest req on req.materialid=sk.materialid
+        ///      left join wms.wms_materialissue iss on iss.itemid=sk.itemid
         ///      inner join wms.employee emp on emp.employeeno=req.requesterid
-        /// where requestid=#requ [rest of string was truncated]&quot;;.
+        /// where requestid=#requestid and req.d [rest of string was truncated]&quot;;.
         /// </summary>
         public static string GetdetailsByrequestid {
             get {
@@ -329,8 +329,11 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to select req.requestid,req.requesteddate,req.requesterid,po.projectname,emp.&quot;name&quot; from wms.wms_materialrequest req inner join wms.openpolistview po on po.pono=req.pono 
-        ///left join wms.employee emp on req.requesterid=emp.employeeno  where req.approverid=&apos;#approverid&apos; group by req.requestid,req.requesteddate,req.requesterid,po.projectname,emp.&quot;name&quot; order by req.requestid desc.
+        ///   Looks up a localized string similar to select req.requestid,req.requesteddate,req.requesterid,po.projectname,emp.&quot;name&quot; 
+        /// from wms.wms_materialrequest req inner join wms.openpolistview po on po.pono=req.pono 
+        ///left join wms.employee emp on req.requesterid=emp.employeeno 
+        ///--where req.approverid=&apos;#approverid&apos;
+        ///group by req.requestid,req.requesteddate,req.requesterid,po.projectname,emp.&quot;name&quot; order by req.requestid desc.
         /// </summary>
         public static string GetListForMaterialRequestByapproverid {
             get {
@@ -611,9 +614,10 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to select distinct req.requestid,openpo.pono,openpo.projectname,openpo.material,openpo.materialdescription,openpo.quotationqty,req.requestedquantity,req.ackremarks 
+        ///   Looks up a localized string similar to select distinct issue.issuedqty,req.requestforissueid,issue.approvedstatus,req.requestid,openpo.pono,openpo.projectname,openpo.material,openpo.materialdescription,openpo.quotationqty,req.requestedquantity,req.ackremarks 
         /// from   wms.wms_stock  sk left join wms.openpolistview openpo on openpo.pono = sk.pono 
-        /// left join wms.wms_materialrequest req on req.pono = openpo.pono.
+        ///  left join wms.wms_materialrequest req on req.pono = openpo.pono
+        ///  left join  wms.wms_materialissue issue on issue.requestforissueid=req.requestforissueid.
         /// </summary>
         public static string materialrequestquery {
             get {
@@ -675,6 +679,15 @@ namespace WMS.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string string1 {
+            get {
+                return ResourceManager.GetString("string1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to update wms.wms_rd_category set deleteflag=true,updatedby=@updatedby,updatedon=@updatedon.
         /// </summary>
         public static string updateABCrange {
@@ -693,8 +706,8 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to insert into wms.wms_materialissue(materialissueid,pono,itemid,requestforissueid,itemissueddate,itemreceiverid,deleteflag,itemreturnable,approvedby,approvedon,issuedqty)
-        ///values(default,@pono,@itemid,@requestforissueid,@itemissueddate,@itemreceiverid,false,@itemreturnable,@approvedby,@approvedon,@issuedqty).
+        ///   Looks up a localized string similar to insert into wms.wms_materialissue(materialissueid,pono,itemid,requestforissueid,itemissueddate,itemreceiverid,deleteflag,itemreturnable,approvedby,approvedon,issuedqty,approvedstatus)
+        ///values(default,@pono,@itemid,@requestforissueid,@itemissueddate,@itemreceiverid,false,@itemreturnable,@approvedby,@approvedon,@issuedqty,@approvedstatus).
         /// </summary>
         public static string updateapproverstatus {
             get {

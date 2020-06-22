@@ -29,6 +29,7 @@ import { InvoiceDetailsComponent } from './WMS/InvoiceDetails.component';
 import { MaterialDetailsComponent } from './WMS/MaterialDetails.component';
 import { LocationDetailsComponent } from './WMS/LocationDetails.component';
 import { MaterialRequestDetailsComponent } from './WMS/MaterialRequestDetails.component';
+import { MaterialRequestViewComponent} from './WMS/MaterialRequestView.component';
 
 const routes: Routes = [{
   path: '',
@@ -70,7 +71,9 @@ const routes: Routes = [{
     { path: "InvoiceDetails", component: InvoiceDetailsComponent, canActivate: [AuthGuard] },
     { path: "MaterialDetails", component: MaterialDetailsComponent, canActivate: [AuthGuard] },
     { path: "LocationDetails", component: LocationDetailsComponent, canActivate: [AuthGuard] },
-    { path: "MaterialReqDetails", component: MaterialRequestDetailsComponent, canActivate: [AuthGuard] }
+    { path: "MaterialReqDetails", component: MaterialRequestDetailsComponent, canActivate: [AuthGuard] },
+    { path: "MaterialReqView", component: MaterialRequestViewComponent, canActivate: [AuthGuard] },
+    { path: "MaterialReqView/:pono", component: MaterialRequestViewComponent, canActivate: [AuthGuard] }
   ],
 }];
 

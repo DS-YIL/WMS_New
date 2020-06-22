@@ -13,6 +13,7 @@ import { ConfirmationService } from 'primeng/api';
   templateUrl: './MaterialIssue.component.html'
 })
 export class MaterialIssueComponent implements OnInit {
+    roindex: any;
 
   constructor(private ConfirmationService: ConfirmationService, private formBuilder: FormBuilder, private messageService: MessageService, private wmsService: wmsService, private route: ActivatedRoute, private router: Router, public constants: constants, private spinner: NgxSpinnerService) { }
 
@@ -25,7 +26,7 @@ export class MaterialIssueComponent implements OnInit {
   public selectedItem: searchList;
   public searchresult: Array<object> = [];
   public AddDialog: boolean;
-  public id: number;
+  public id: string;
   public MaterialRequestForm: FormGroup
   public materialissueList: Array<any> = [];
   public employee: Employee;
@@ -38,6 +39,7 @@ export class MaterialIssueComponent implements OnInit {
   public showissueqtyOKorCancel: boolean = true;
   public showdialog: boolean = false;
   public txtDisable: boolean = true;
+  public FIFOvalues: FIFOValues;
   ngOnInit() {
     if (localStorage.getItem("Employee"))
       this.employee = JSON.parse(localStorage.getItem("Employee"));
@@ -50,7 +52,7 @@ export class MaterialIssueComponent implements OnInit {
       }
     });
 
-
+    this.FIFOvalues = new FIFOValues();
     this.getmaterialIssueListbyrequestid();
 
   }
@@ -58,19 +60,31 @@ export class MaterialIssueComponent implements OnInit {
     var totalissuedqty = 0;
     this.itemlocationData.forEach(item => {
       if (item.issuedquantity != 0)
+        
         totalissuedqty = totalissuedqty + (item.issuedquantity);
+      this.FIFOvalues.issueqty = totalissuedqty;
+      item.issuedqty = this.FIFOvalues.issueqty;
+      //item.issuedquantity = totalissuedqty;
+      //item.issuedqty = totalissuedqty;
+
     });
-    (<HTMLInputElement>document.getElementById("totalissuedqtyid")).value = totalissuedqty.toString();
+
+   
+    (<HTMLInputElement>document.getElementById(this.id)).value = totalissuedqty.toString();
+    this.materialissueList[this.roindex].issuedqty = totalissuedqty;
     this.txtDisable = true;
     this.AddDialog = false;
+   
   }
   Cancel() {
     this.AddDialog = false;
   }
+  
   //shows list of items for particular material
-  showmateriallocationList(material, $event) {
-    this.id = $event.target.id;
+  showmateriallocationList(material, id,rowindex) {
+    this.id = id;
     this.AddDialog = true;
+    this.roindex = rowindex;
     this.wmsService.getItemlocationListByMaterial(material).subscribe(data => {
       this.itemlocationData = data;
       this.showdialog = true;
@@ -147,9 +161,19 @@ export class MaterialIssueComponent implements OnInit {
 
     this.wmsService.UpdateMaterialqty(this.itemlocationData).subscribe(data => {
       if (data == 1) {
-        this.materialissueList.forEach(item => {
-          item.issuedqty = (<HTMLInputElement>document.getElementById('totalissuedqtyid')).value;
+        this.itemlocationData.forEach(item => {
+         
+         // item.issuedquantity = this.itemlocationData.issuedquantity;
+
         });
+        //this.materialissueList.forEach(item => {
+        //  if (item.issuedqty != 0)
+
+        //   // totalissuedqty = totalissuedqty + (item.issuedquantity);
+        //  // this.FIFOvalues.issueqty = totalissuedqty;
+        //  item.issuedqty = this.FIFOvalues.issueqty;
+
+        //});
 
         this.wmsService.approvematerialrequest(this.materialissueList).subscribe(data => {
           this.spinner.hide();
