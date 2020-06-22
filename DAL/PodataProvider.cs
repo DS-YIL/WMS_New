@@ -1022,15 +1022,16 @@ namespace WMS.DAL
 		public int updaterequestedqty(List<IssueRequestModel> dataobj)
 		{
 
-			int requestid = 0;
+			int requestid = 1;
 			using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
 			{
 				IssueRequestModel obj = new IssueRequestModel();
 				pgsql.Open();
 				string query = WMSResource.getnextrequestid;
-				obj = pgsql.QuerySingle<IssueRequestModel>(
+				obj = pgsql.QueryFirstOrDefault<IssueRequestModel>(
 				   query, null, commandType: CommandType.Text);
-				requestid = obj.requestid + 1;
+				if (obj != null)
+					requestid = obj.requestid + 1;
 			}
 			try
 			{
@@ -1041,6 +1042,7 @@ namespace WMS.DAL
 
 					item.requesteddate = System.DateTime.Now;
 					string insertquery = WMSResource.materialquest;
+					string materialid = item.Material;
 					using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
 					{
 						result = DB.Execute(insertquery, new
@@ -1051,7 +1053,7 @@ namespace WMS.DAL
 							item.approveremailid,
 							item.approverid,
 							item.pono,
-							item.materialid,
+							materialid,
 							item.requesterid,
 							requestid,
 							item.requestedquantity
