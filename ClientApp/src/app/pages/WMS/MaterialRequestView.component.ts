@@ -13,6 +13,9 @@ import { MessageService } from 'primeng/api';
   templateUrl: './MaterialRequestView.component.html'
 })
 export class MaterialRequestViewComponent implements OnInit {
+  AddDialog: boolean;
+  showdialog: boolean;
+  public materiallistData: Array<any> = [];
 
   constructor(private formBuilder: FormBuilder, private messageService: MessageService, private wmsService: wmsService, private route: ActivatedRoute, private router: Router, public constants: constants, private spinner: NgxSpinnerService) { }
 
@@ -85,7 +88,7 @@ export class MaterialRequestViewComponent implements OnInit {
     else {
       this.spinner.show();
       this.btnDisable = true;
-      this.wmsService.approvematerialrequest(this.requestList).subscribe(data => {
+      this.wmsService.ackmaterialreceived(this.requestList).subscribe(data => {
         this.spinner.hide();
         if (data)
           this.messageService.add({ severity: 'sucess', summary: 'sucee Message', detail: 'Status updated' });
@@ -98,5 +101,19 @@ export class MaterialRequestViewComponent implements OnInit {
   //redirect to PM Dashboard
   backtoDashboard() {
     this.router.navigateByUrl("/WMS/Dashboard");
+  }
+  showmaterialdetails(requestid) {
+    this.AddDialog = true;
+this.showdialog=true;
+    this.wmsService.getmaterialissueList(requestid).subscribe(data => {
+      this.materiallistData = data;
+      
+      if (data != null) {
+
+      }
+    });
+  }
+  Cancel() {
+    this.AddDialog = false;
   }
 }

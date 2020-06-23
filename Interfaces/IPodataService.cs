@@ -33,6 +33,7 @@ namespace WMS.Interfaces
         int IssueRequest(List<IssueRequestModel> reqdata);
         Task<IEnumerable<inwardModel>> getitemdeatils(string grnnumber);
         Task<IEnumerable<IssueRequestModel>> MaterialRequest(string pono,string material);
+        Task<IEnumerable<IssueRequestModel>> MaterialRequestdata(string pono, string material);
         int acknowledgeMaterialReceived(List<IssueRequestModel> dataobj);
         Task<IEnumerable<IssueRequestModel>> GetMaterialissueList(string requesterid);
         Task<IEnumerable<IssueRequestModel>> GetMaterialissueListforapprover(string approverid);
@@ -74,5 +75,6 @@ namespace WMS.Interfaces
         Task<IEnumerable<userAcessNamesModel>> getuserAcessList(string employeeid, string roleid);
         Task<Enquirydata> GetEnquirydata(string materialid);
         Task<DashboardModel> getdashboarddata();
+        Task<IEnumerable<IssueRequestModel>> getissuematerialdetails(int requestid);
     }
 }

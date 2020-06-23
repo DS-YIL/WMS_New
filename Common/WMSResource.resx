@@ -210,7 +210,7 @@ VALUES(@inwmasterid,@receiveddate,@receivedby,@receivedqty,@returnqty,@confirmqt
     <value>select * from  wms.wms_sequencemaster  where  enddate&gt;=current_date and id=1</value>
   </data>
   <data name="materialrequestquery" xml:space="preserve">
-    <value>select distinct issue.issuedqty,req.requestforissueid,issue.approvedstatus,req.requestid,openpo.pono,openpo.projectname,openpo.material,openpo.materialdescription,openpo.quotationqty,req.requestedquantity,req.ackremarks 
+    <value>select distinct  max(req.requesteddate)as requesteddate,max(issue.approvedstatus)as approvedstatus,max(issue.issuedqty) as issuedqty,max(req.requestforissueid)as requestforissueid,max(issue.approvedstatus) as approvedstatus,req.requestid,max(openpo.pono) as pono,max(openpo.projectname)as projectname,max(openpo.material)as material,max(openpo.materialdescription) as materialdescription,max(openpo.quotationqty) quotationqty,max(req.requestedquantity)as requestedquantity,max(req.ackremarks)as ackremarks 
  from   wms.wms_stock  sk left join wms.openpolistview openpo on openpo.pono = sk.pono 
   left join wms.wms_materialrequest req on req.pono = openpo.pono
   left join  wms.wms_materialissue issue on issue.requestforissueid=req.requestforissueid</value>
@@ -226,7 +226,7 @@ where inw.grnnumber='#grnnumber' limit 1</value>
     <value>INSERT INTO wms.wms_trackstatus(pono,status,enteredon)VALUES(@pono,'Security Checked',current_timestamp)</value>
   </data>
   <data name="updateackstatus" xml:space="preserve">
-    <value>update  wms.wms_materialrequest set ackstatus=@ackstatus,ackremarks=@ackremarks where requestforissueid=@requestforissueid and materialid=@materialid</value>
+    <value>update wms.wms_materialrequest set ackstatus=@ackstatus,ackremarks=@ackremarks where requestid=@requestid</value>
   </data>
   <data name="updateapproverstatus" xml:space="preserve">
     <value>insert into wms.wms_materialissue(materialissueid,pono,itemid,requestforissueid,itemissueddate,itemreceiverid,deleteflag,itemreturnable,approvedby,approvedon,issuedqty,approvedstatus)
@@ -442,5 +442,15 @@ emp1.name as approvername
   </data>
   <data name="string1" xml:space="preserve">
     <value />
+  </data>
+  <data name="getmaterialdetailfprrequest" xml:space="preserve">
+    <value>select distinct * from   wms.wms_stock  sk left join wms.openpolistview openpo on openpo.pono = sk.pono where sk.availableqty!=0</value>
+  </data>
+  <data name="issuedqtydetails" xml:space="preserve">
+    <value>select max(req.requestedquantity)as requestedquantity, max(req.materialid)as materialid, max(req.requestid)as requestid,req.requestforissueid,sum(issuedqty)as issuedquantity
+ from wms.wms_materialrequest  req
+ left join wms.wms_materialissue iss on req.requestforissueid=iss.requestforissueid
+ where req.requestid=#requestid
+  group by req.requestforissueid,iss.materialissueid</value>
   </data>
 </root>

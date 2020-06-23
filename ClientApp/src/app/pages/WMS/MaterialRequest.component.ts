@@ -41,11 +41,11 @@ export class MaterialRequestComponent implements OnInit {
   //get Material Rquest based on login employee && po no
   getMaterialRequestlist() {
     //this.employee.employeeno = "180129";
-    this.wmsService.getMaterialRequestlist(this.employee.employeeno, this.pono).subscribe(data => {
+    this.wmsService.getMaterialRequestlistdata(this.employee.employeeno, this.pono).subscribe(data => {
       this.requestList = data;
       this.requestList.forEach(item => {
         if (!item.requestedquantity)
-          item.requestedquantity = item.quotationqty;
+          item.requestedquantity = item.availableqty;
       });
     });
   }
@@ -67,10 +67,13 @@ export class MaterialRequestComponent implements OnInit {
     })
     this.wmsService.materialRequestUpdate(this.requestList).subscribe(data => {
       this.spinner.hide();
-      if (data)
+      if (data) {
         this.messageService.add({ severity: 'success', summary: 'success Message', detail: 'Request sent' });
-      else
+        this.router.navigateByUrl("/WMS/MaterialReqView/"+ this.pono);
+      }
+      else {
         this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Update Failed' });
+      }
 
     });
   }

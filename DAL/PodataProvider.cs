@@ -787,8 +787,9 @@ namespace WMS.DAL
 				}
 				if (approverid != null)
 				{
-					materialrequestquery = materialrequestquery + " and openpo.projectmanager = '" + approverid + "' limit 50";
+					materialrequestquery = materialrequestquery + " and openpo.projectmanager = '" + approverid + "' ";
 				}
+				materialrequestquery = materialrequestquery + " group by req.requestid limit 50";
 				try
 				{
 					await pgsql.OpenAsync();
@@ -823,7 +824,7 @@ namespace WMS.DAL
 				foreach (var item in dataobj)
 				{
 					string ackstatus = string.Empty;
-					if (item.status != true)
+					if (item.status == true)
 					{
 						ackstatus = "received";
 					}
@@ -834,7 +835,7 @@ namespace WMS.DAL
 					DateTime approveddate = System.DateTime.Now;
 
 					int requestforissueid = item.requestforissueid;
-					string materialid = item.Material;
+					int requestid = item.requestid;
 					string ackremarks = item.ackremarks;
 					int issuedquantity = item.issuedquantity;
 					string updateackstatus = WMSResource.updateackstatus;
@@ -846,8 +847,7 @@ namespace WMS.DAL
 						{
 							ackstatus,
 							ackremarks,
-							requestforissueid,
-							materialid,
+							requestid,
 
 						});
 					}
@@ -2588,6 +2588,67 @@ namespace WMS.DAL
 			}
 		}
 
+		public async Task<IEnumerable<IssueRequestModel>> MaterialRequestdata(string pono, string approverid)
+		{
+			using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
+			{
+			
 
+				try
+				{
+					string materialrequestquery = WMSResource.getmaterialdetailfprrequest;
+					if (pono != null)
+					{
+						materialrequestquery = materialrequestquery + " and openpo.pono = '" + pono + "'";
+					}
+					if (approverid != null)
+					{
+						materialrequestquery = materialrequestquery + " and openpo.projectmanager = '" + approverid + "' limit 50";
+					}
+					await pgsql.OpenAsync();
+					return await pgsql.QueryAsync<IssueRequestModel>(
+					  materialrequestquery, null, commandType: CommandType.Text);
+
+				}
+				catch (Exception Ex)
+				{
+					log.ErrorMessage("PODataProvider", "MaterialRequestdata", Ex.StackTrace.ToString());
+					return null;
+				}
+				finally
+				{
+					pgsql.Close();
+				}
+
+			}
+		}
+
+		public async Task<IEnumerable<IssueRequestModel>> getissuematerialdetails(int requestid)
+		{
+			using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
+			{
+
+
+				try
+				{
+					string materialrequestquery = WMSResource.issuedqtydetails.Replace("#requestid", Convert.ToString(requestid));
+					
+					await pgsql.OpenAsync();
+					return await pgsql.QueryAsync<IssueRequestModel>(
+					  materialrequestquery, null, commandType: CommandType.Text);
+
+				}
+				catch (Exception Ex)
+				{
+					log.ErrorMessage("PODataProvider", "getissuematerialdetails", Ex.StackTrace.ToString());
+					return null;
+				}
+				finally
+				{
+					pgsql.Close();
+				}
+
+			}
+		}
 	}
 }

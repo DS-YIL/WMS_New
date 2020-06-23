@@ -335,7 +335,16 @@ namespace WMS.Controllers
 		{
 			return await this._poService.getdashboarddata();
 		}
-
+		[HttpGet("getmaterialrequestListdata")]
+		public async Task<IEnumerable<IssueRequestModel>> getmaterialrequestListdata(string pono = null, string loginid = null)
+		{
+			return await this._poService.MaterialRequestdata(pono,loginid);
+		}
+		[HttpGet("getmaterialissueList")]
+		public async Task<IEnumerable<IssueRequestModel>> getmaterialissueList(int requestid)
+		{
+			return await this._poService.getissuematerialdetails(requestid);
+		}
 		//[HttpPost("securitysendemail")]
 		//public EmailModel sendemail(EmailModel obj)
 		//{

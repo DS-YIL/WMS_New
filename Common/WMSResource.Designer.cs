@@ -372,6 +372,15 @@ namespace WMS.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to select distinct * from   wms.wms_stock  sk left join wms.openpolistview openpo on openpo.pono = sk.pono where sk.availableqty!=0.
+        /// </summary>
+        public static string getmaterialdetailfprrequest {
+            get {
+                return ResourceManager.GetString("getmaterialdetailfprrequest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to select sum(matiss.issuedqty) as qtyissued,sec.grnnumber,openpo.material as materialid,
         ///    max(sk.availableqty) as qtyavailable,max(sk.totalquantity ) as qtytotal
         ///    from wms.wms_stock sk
@@ -596,6 +605,19 @@ namespace WMS.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to select max(req.requestedquantity)as requestedquantity, max(req.materialid)as materialid, max(req.requestid)as requestid,req.requestforissueid,sum(issuedqty)as issuedquantity
+        /// from wms.wms_materialrequest  req
+        /// left join wms.wms_materialissue iss on req.requestforissueid=iss.requestforissueid
+        /// where req.requestid=#requestid
+        ///  group by req.requestforissueid,iss.materialissueid.
+        /// </summary>
+        public static string issuedqtydetails {
+            get {
+                return ResourceManager.GetString("issuedqtydetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to select * from  wms.wms_sequencemaster  where  enddate&gt;=current_date and id=1.
         /// </summary>
         public static string lastinsertedgrn {
@@ -614,10 +636,8 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to select distinct issue.issuedqty,req.requestforissueid,issue.approvedstatus,req.requestid,openpo.pono,openpo.projectname,openpo.material,openpo.materialdescription,openpo.quotationqty,req.requestedquantity,req.ackremarks 
-        /// from   wms.wms_stock  sk left join wms.openpolistview openpo on openpo.pono = sk.pono 
-        ///  left join wms.wms_materialrequest req on req.pono = openpo.pono
-        ///  left join  wms.wms_materialissue issue on issue.requestforissueid=req.requestforissueid.
+        ///   Looks up a localized string similar to select distinct  max(req.requesteddate)as requesteddate,max(issue.approvedstatus)as approvedstatus,max(issue.issuedqty) as issuedqty,max(req.requestforissueid)as requestforissueid,max(issue.approvedstatus) as approvedstatus,req.requestid,max(openpo.pono) as pono,max(openpo.projectname)as projectname,max(openpo.material)as material,max(openpo.materialdescription) as materialdescription,max(openpo.quotationqty) quotationqty,max(req.requestedquantity)as requestedquantity,max(req.ackremarks)as ackremarks 
+        /// fro [rest of string was truncated]&quot;;.
         /// </summary>
         public static string materialrequestquery {
             get {
@@ -697,7 +717,7 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to update  wms.wms_materialrequest set ackstatus=@ackstatus,ackremarks=@ackremarks where requestforissueid=@requestforissueid and materialid=@materialid.
+        ///   Looks up a localized string similar to update wms.wms_materialrequest set ackstatus=@ackstatus,ackremarks=@ackremarks where requestid=@requestid.
         /// </summary>
         public static string updateackstatus {
             get {

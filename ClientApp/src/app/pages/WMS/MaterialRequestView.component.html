@@ -1,4 +1,4 @@
-<h5 style="text-align:center">Reuested Material List</h5>
+<h5 style="text-align:center">Requested Material List</h5>
 
 <br />
 <div *ngIf="requestList.length>0">
@@ -19,12 +19,12 @@
       <th style="text-align:center">Request Id</th>
       <!--<th style="text-align:center">PO No</th>
       <th style="text-align:center">Project Name</th>-->
-      <th style="text-align:center">Material</th>
-      <th style="text-align:center">Material Description</th>
-      <th style="text-align:center">PO Quantity</th>
-      <th style="text-align:center">Requested Quantity</th>
+      <th style="text-align:center">Requested On</th>
+      <th style="text-align:center">Acknowledge</th>
+      <th style="text-align:center">Status</th>
+      <!--<th style="text-align:center">Requested Quantity</th>
       <th style="text-align:center">Received Quantity</th>
-      <th style="text-align:center;width:200px">Acknowledge</th>
+      <th style="text-align:center;width:200px">Acknowledge</th>-->
     </tr>
     <tr>
       <th></th>
@@ -34,31 +34,38 @@
       <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'material', 'contains')"></th>
       <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'materialdescription', 'contains')"></th>
       <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'quotationqty', 'contains')"></th>
-      <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'requestedquantity', 'contains')"></th>
+      <!--<th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'requestedquantity', 'contains')"></th>
       <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'quotationqty', 'contains')"></th>
-      <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'ackremarks', 'contains')"></th>
+      <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'ackremarks', 'contains')"></th>-->
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-rowData let-editing="editing" let-ri="rowIndex">
     <tr>
       <td class="ptable-cell" style="text-align:right">{{ri+1}}</td>
-      <td class="ptable-cell" style="text-align:center;width:100%;"><!--<a *ngIf="rowData.requestid" [routerLink]="['/WMS/MaterialIssue',rowData.requestid]" routerLinkActive="active">--><span *ngIf="rowData.requestid">{{rowData.requestid}}</span></td>
+      <td class="ptable-cell" style="text-align:center;width:100%;">
+        <button type="button" class="btn btn-link" (click)="showmaterialdetails(rowData.requestid);" style="padding-left:0px;">{{rowData.requestid}}</button>
+      </td>
       <!--<td class="ptable-cell" style="text-align:center">{{rowData.pono}}</td>
   <td class="ptable-cell" style="text-align:left">{{rowData.projectname}}</td>-->
-      <td class="ptable-cell" style="text-align:left">{{rowData.material}}</td>
-      <td class="ptable-cell" style="text-align:left">{{rowData.materialdescription}}</td>
-      <td class="ptable-cell" style="text-align:right">{{rowData.quotationqty}}</td>
-      <td class="ptable-cell" style="text-align:right">
-        <span *ngIf="rowData.approvedstatus=='approved'">{{rowData.requestedquantity}}</span>
-        <!--<input *ngIf="rowData.approvedstatus!='approved'" pInputText type="number" class="form-control" [(ngModel)]="rowData.requestedquantity" (change)="reqQtyChange(rowData)">-->
-      </td>
-      <td class="ptable-cell" style="text-align:right">{{rowData.requestedquantity}}</td>
+      <td class="ptable-cell" style="text-align:left">{{rowData.requesteddate| date :  constants.dateFormat}}</td>
+      <td class="ptable-cell" style="text-align:center">
+       <div *ngIf="rowData.approvedstatus=='approved'||'rejected" class="form-inline">
+         <p-checkbox [(ngModel)]="rowData.status" binary="true"  (click)="ackStatusChanges()"></p-checkbox> &nbsp;&nbsp;
+         <textarea type="text" style="width:140px" class="form-control" [(ngModel)]="rowData.ackremarks"></textarea>
+       </div>
+        </td>
+     <!--<td class="ptable-cell" style="text-align:right">{{rowData.quotationqty}}</td>
+     <td class="ptable-cell" style="text-align:right">
+       <span *ngIf="rowData.approvedstatus=='approved'">{{rowData.requestedquantity}}</span>-->
+      <!--<input *ngIf="rowData.approvedstatus!='approved'" pInputText type="number" class="form-control" [(ngModel)]="rowData.requestedquantity" (change)="reqQtyChange(rowData)">-->
+      <!--</td>
+  <td class="ptable-cell" style="text-align:right">{{rowData.requestedquantity}}</td>-->
       <td class="ptable-cell" style="text-align:center">
         <div *ngIf="rowData.approvedstatus=='approved'" class="form-inline">
           <!--<p-checkbox [(ngModel)]="rowData.status" binary="true" (click)="ackStatusChanges()"></p-checkbox> &nbsp;&nbsp;-->
-          <textarea type="text" style="width:140px" class="form-control" disabled="disabled" [(ngModel)]="rowData.ackremarks"></textarea>
+          <textarea type="text" style="width:140px" class="form-control" disabled="disabled" [(ngModel)]="rowData.approvedstatus"></textarea>
         </div>
-        <span *ngIf="rowData.ackstatus=='received'">{{rowData.ackremarks}}</span>
+        <span *ngIf="rowData.ackstatus=='received'">{{rowData.approvedstatus}}</span>
       </td>
     </tr>
   </ng-template>
@@ -77,4 +84,52 @@
       <button type="button" class="btn btn-primary" [disabled]="btnDisable" (click)="materialAckUpdate()">Send Acknowledge</button>
     </div>
   </div>
+</div>
+<div style="height: 5px; overflow-y: scroll">
+
+  <p-dialog header="Material Requested Details" [(visible)]="AddDialog" [contentStyle]="{'overflow-y': 'auto', 'overflow-x': 'hidden', 'max-height': '80vh','min-height':'250px'}" showEffect="fade" [modal]="true" [responsive]="true" [style]="{width: '1024px'}">
+    <div *ngIf="showdialog">
+      <div class="row  pl-0">
+        <div class="col-lg-4 col-md-4 col-sm-4 pt-2">
+          <label>Request Id :</label>&nbsp;<span><label>{{materiallistData[0].requestid}}</label></span>
+        </div>
+        
+      </div>
+
+    </div>
+    <p-table #dt [value]="materiallistData">
+      <ng-template pTemplate="header">
+        <tr class="mprltbldata">
+          <th style="text-align:center;width:70px">S.No</th>
+          <th style="text-align:center">Material</th>
+          <th style="text-align:center">Requested  Qty</th>
+          <th style="text-align:center">Issued Qty</th>
+          
+
+        </tr>
+
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData let-editing="editing" let-ri="rowIndex">
+        <tr>
+          <td class="ptable-cell" style="text-align:right">
+            {{ri+1}}
+          </td>
+          <td class="ptable-cell" style="text-align:center">{{rowData.materialid}}</td>
+          <td class="ptable-cell" style="text-align:left">{{rowData.requestedquantity}}</td>
+          <td class="ptable-cell" style="text-align:left">
+            {{rowData.issuedquantity}}
+
+          </td>
+          <!--<td class="ptable-cell" style="text-align:left">{{rowData.createddate | date :  constants.dateFormat}}</td>-->
+        </tr>
+      </ng-template>
+
+    </p-table>
+    <p-footer>
+      <div class="ui-dialog-buttonpane ui-helper-clearfix">
+        <button type="button" pButton icon="fa fa-check" class="ui-button-success" (click)="issuematerial(itemlocationData)" label="OK"></button>
+        <button type="button" pButton icon="fa fa-close" class="ui-button-danger" (click)="Cancel()" label="Cancel"></button>
+      </div>
+    </p-footer>
+  </p-dialog>
 </div>
