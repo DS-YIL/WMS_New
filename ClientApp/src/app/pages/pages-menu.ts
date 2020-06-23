@@ -29,8 +29,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'PM Dashboard',
     icon: 'home-outline',
-    link: '/WMS/Dashboard'
+    link: '/WMS/Dashboard',
+   
   },
+  
   {
     title: 'Gate Pass',
     icon: 'list-outline',
@@ -97,6 +99,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
         icon: 'layers-outline'
       },
     ],
+  },
+  {
+    title: 'Material Requests',
+    icon: 'home-outline',
+    link: '/WMS/MaterialReqView',
   },
 
 ];

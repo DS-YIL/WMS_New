@@ -781,10 +781,10 @@ namespace WMS.DAL
 			using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
 			{
 				string materialrequestquery = WMSResource.materialrequestquery;
-				if (pono != null)
-				{
-					materialrequestquery = materialrequestquery + " where openpo.pono = '" + pono + "'";
-				}
+				//if (pono != null)
+				//{
+				//	materialrequestquery = materialrequestquery + " where openpo.pono = '" + pono + "'";
+				//}
 				if (approverid != null)
 				{
 					materialrequestquery = materialrequestquery + " and openpo.projectmanager = '" + approverid + "' ";
@@ -1117,10 +1117,10 @@ namespace WMS.DAL
 					{
 						approvedstatus = "approved";
 					}
-					else
-					{
-						approvedstatus = "rejected";
-					}
+					//else
+					//{
+					//	approvedstatus = "rejected";
+					//}
 					DateTime approvedon = System.DateTime.Now;
 					int itemid = 0;
 					using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
