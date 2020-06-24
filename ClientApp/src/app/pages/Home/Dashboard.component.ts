@@ -124,7 +124,9 @@ export class DashboardComponent implements OnInit {
   //materialrequestedview(pono) {
   //  this.router.navigate(['/WMS/MaterialReqView/', pono]);
   //}
-
+   materialReserve(pono) {
+     this.router.navigate(['/WMS/MaterialReserve/', pono]);
+  }
 
 }
 

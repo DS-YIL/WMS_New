@@ -453,4 +453,19 @@ namespace WMS.Models
 
 		public int toissuecount { get; set; }
 	}
+	public class ReserveMaterialModel
+	{
+		public int reserveformaterialid { get; set; }
+		public string materialid { get; set; }
+		public int itemid { get; set; }
+		public DateTime reservedon { get; set; }
+		public string reservedby { get; set; }
+		public int reservedqty { get; set; }
+		public string releasedby { get; set; }
+		public DateTime releasedon { get; set; }
+		public int releasedqty { get; set; }
+		public int reserveid { get; set; }
+		public string pono { get; set; }
+		public int availableqty { get; set; }
+	}
 }

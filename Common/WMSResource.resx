@@ -453,4 +453,14 @@ emp1.name as approvername
  where req.requestid=#requestid
   group by req.requestforissueid,iss.materialissueid</value>
   </data>
+  <data name="getnextreservetid" xml:space="preserve">
+    <value>select reserveid from wms.wms_materialreserve order by reserveid desc limit 1</value>
+  </data>
+  <data name="insertreservematerial" xml:space="preserve">
+    <value>insert into wms.wms_materialreserve(reserveformaterialid,materialid,itemid,pono,reservedon,reservedby,reservedqty,reserveid)
+values(default,@materialid,@itemid,@pono,current_timestamp,@reservedby,@reservedqty,@reserveid)</value>
+  </data>
+  <data name="updatestock" xml:space="preserve">
+    <value>update wms.wms_stock set availableqty=#availableqty where itemid=#itemid</value>
+  </data>
 </root>

@@ -76,5 +76,6 @@ namespace WMS.Interfaces
         Task<Enquirydata> GetEnquirydata(string materialid);
         Task<DashboardModel> getdashboarddata();
         Task<IEnumerable<IssueRequestModel>> getissuematerialdetails(int requestid);
+        int insertResevematerial(List<ReserveMaterialModel> datamodel);
     }
 }

@@ -48,7 +48,7 @@ import { MaterialDetailsComponent } from './WMS/MaterialDetails.component';
 import { LocationDetailsComponent } from './WMS/LocationDetails.component';
 import { MaterialRequestDetailsComponent } from './WMS/MaterialRequestDetails.component';
 import { MaterialRequestViewComponent } from './WMS/MaterialRequestView.component';
-
+import { MaterialReserveComponent } from './WMS/MaterialReserve.component';
 
 @NgModule({
   imports: [
@@ -103,7 +103,8 @@ import { MaterialRequestViewComponent } from './WMS/MaterialRequestView.componen
     MaterialDetailsComponent,
     LocationDetailsComponent,
     MaterialRequestDetailsComponent,
-    MaterialRequestViewComponent
+    MaterialRequestViewComponent,
+    MaterialReserveComponent
   ],
   providers: [MessageService, ConfirmationService],
   entryComponents: [ConfirmationDialogComponent]

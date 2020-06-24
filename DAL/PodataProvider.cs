@@ -1059,6 +1059,17 @@ namespace WMS.DAL
 							item.requestedquantity
 						});
 					}
+					if (result != 0)
+					{
+						int availableqty = item.availableqty - item.requestedquantity;
+						string updatequery = WMSResource.updatestock.Replace("#availableqty", Convert.ToString(availableqty)).Replace("#itemid", Convert.ToString(item.itemid));
+						using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
+						{
+							result = DB.Execute(updatequery, new
+							{
+							});
+						}
+					}
 
 
 
@@ -2648,6 +2659,69 @@ namespace WMS.DAL
 					pgsql.Close();
 				}
 
+			}
+		}
+
+		public int insertResevematerial(List<ReserveMaterialModel> datamodel)
+		{
+			int reserveid = 0;
+			using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
+			{
+				ReserveMaterialModel obj = new ReserveMaterialModel();
+				pgsql.Open();
+				string query = WMSResource.getnextreservetid;
+				obj = pgsql.QueryFirstOrDefault<ReserveMaterialModel>(
+				   query, null, commandType: CommandType.Text);
+				if (obj == null)
+					reserveid = 1;
+				else
+				{
+					reserveid = obj.reserveid + 1;
+				}
+				
+			}
+			try
+			{
+
+				var result = 0;
+				foreach (var item in datamodel)
+				{
+
+					
+					string insertquery = WMSResource.insertreservematerial;
+					using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
+					{
+						result = DB.Execute(insertquery, new
+						{
+							item.materialid,
+							item.itemid,
+							item.pono,
+							item.reservedby,
+							item.reservedqty,
+							reserveid,
+						});
+					}
+
+					if (result != 0)
+					{
+						int availableqty = item.availableqty - item.reservedqty;
+						string updatequery = WMSResource.updatestock.Replace("#availableqty", Convert.ToString(availableqty)).Replace("#itemid", Convert.ToString(item.itemid));
+						using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
+						{
+							result = DB.Execute(updatequery, new
+							{
+							});
+						}
+					}
+
+				}
+				
+				return (Convert.ToInt32(result));
+			}
+			catch (Exception Ex)
+			{
+				log.ErrorMessage("PODataProvider", "insertResevematerial", Ex.StackTrace.ToString());
+				return 0;
 			}
 		}
 	}

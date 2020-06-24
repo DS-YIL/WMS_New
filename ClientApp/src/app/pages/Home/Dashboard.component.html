@@ -48,6 +48,7 @@
         <th style="text-align:center">Received Date</th>
         <!--<th style="text-align:center">View</th>-->
         <th style="text-align:center">Request</th>
+        <th style="text-align:center">Reserve</th>
         <!--<th>Material Description</th>-->
         <!--<th style="text-align:center">Invoice No</th>-->
       </tr>
@@ -61,6 +62,7 @@
         <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'quotationqty', 'contains')"></th>
         <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'enteredon', 'contains')"></th>
         <!--<th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'quotationqty', 'contains')"></th>-->
+        <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'enteredon', 'contains')"></th>
         <th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'enteredon', 'contains')"></th>
         <!--<th> <input pInputText type="text" class="form-control" (input)="dt.filter($event.target.value, 'invoiceno', 'contains')"></th>-->
       </tr>
@@ -79,6 +81,7 @@
         <td class="ptable-cell" style="text-align:center">{{rowData.enteredon | date :  constants.dateFormat}}</td>
         <!--<td  class="ptable-cell" style="text-align:center" ><button class="btn btn-primary fa fa-eye" (click)="materialrequestedview(rowData.pono);"></button></td>-->
         <td class="ptable-cell" style="text-align:center"><button class="btn btn-primary fa fa-plus" (click)="materialrequest(rowData.pono);"></button></td>
+        <td class="ptable-cell" style="text-align:center"><button class="btn btn-primary fa fa-reorder" (click)="materialReserve(rowData.pono);"></button></td>
         <!--<td class="ptable-cell">{{rowData.materialdescription}}</td>-->
         <!--<td class="ptable-cell" style="text-align:center">{{rowData.invoiceno}}</td>-->
       </tr>

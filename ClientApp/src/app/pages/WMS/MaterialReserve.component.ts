@@ -10,13 +10,13 @@ import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-MaterialRequest',
-  templateUrl: './MaterialRequest.component.html'
+  templateUrl: './MaterialReserve.component.html'
 })
-export class MaterialRequestComponent implements OnInit {
+export class MaterialReserveComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder, private messageService: MessageService, private wmsService: wmsService, private route: ActivatedRoute, private router: Router, public constants: constants, private spinner: NgxSpinnerService) { }
 
-  public requestList: Array<any> = [];
+  public reserveList: Array<any> = [];
   public employee: Employee;
   public displayItemRequestDialog; RequestDetailsSubmitted; showAck; btnDisable: boolean = false;
   public materialRequestDetails: materialRequestDetails;
@@ -42,10 +42,10 @@ export class MaterialRequestComponent implements OnInit {
   getMaterialRequestlist() {
     //this.employee.employeeno = "180129";
     this.wmsService.getMaterialRequestlistdata(this.employee.employeeno, this.pono).subscribe(data => {
-      this.requestList = data;
-      this.requestList.forEach(item => {
+      this.reserveList = data;
+      this.reserveList.forEach(item => {
         if (!item.requestedquantity)
-          item.requestedquantity = item.availableqty;
+          item.reservedqty = item.availableqty;
       });
     });
   }
@@ -54,7 +54,7 @@ export class MaterialRequestComponent implements OnInit {
   reqQtyChange(data: any) {
     if (data.requestedquantity > data.quotationqty) {
       this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Requested Quantity should be lessthan or equal to po quantity' });
-      data.requestedquantity = data.quotationqty;
+      data.reservedqty = data.quotationqty;
     }
   }
 
@@ -62,17 +62,17 @@ export class MaterialRequestComponent implements OnInit {
   onMaterialRequestDeatilsSubmit() {
     this.spinner.show();
     this.btnDisable = true;
-    this.requestList.forEach(item => {
-      item.requesterid = this.employee.employeeno;
+    this.reserveList.forEach(item => {
+      item.reservedby = this.employee.employeeno;
     })
-    this.wmsService.materialRequestUpdate(this.requestList).subscribe(data => {
+    this.wmsService.materialReserveUpdate(this.reserveList).subscribe(data => {
       this.spinner.hide();
       if (data) {
-        this.messageService.add({ severity: 'success', summary: 'success Message', detail: 'Request sent' });
+        this.messageService.add({ severity: 'success', summary: 'success Message', detail: 'material Reserved' });
         //this.router.navigateByUrl("/WMS/MaterialReqView/"+ this.pono);
       }
       else {
-        this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Update Failed' });
+        this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Reserve Failed' });
       }
 
     });
@@ -85,14 +85,14 @@ export class MaterialRequestComponent implements OnInit {
 
   //received material acknowledgement
   materialAckUpdate() {
-    if (this.requestList.filter(li => li.status == true).length == 0) {
+    if (this.reserveList.filter(li => li.status == true).length == 0) {
       this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Select atleast  one checkbox' });
     }
     else {
       this.spinner.show();
       this.btnDisable = true;
       //this.wmsService.approvematerialrequest(this.requestList).subscribe(data => {
-      this.wmsService.ackmaterialreceived(this.requestList).subscribe(data => {
+      this.wmsService.ackmaterialreceived(this.reserveList).subscribe(data => {
         this.spinner.hide();
         if (data)
           this.messageService.add({ severity: 'sucess', summary: 'sucee Message', detail: 'Status updated' });

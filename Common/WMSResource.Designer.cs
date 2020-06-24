@@ -423,6 +423,15 @@ namespace WMS.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to select reserveid from wms.wms_materialreserve order by reserveid desc limit 1.
+        /// </summary>
+        public static string getnextreservetid {
+            get {
+                return ResourceManager.GetString("getnextreservetid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to select * from wms.openpolistview.
         /// </summary>
         public static string getpolist {
@@ -592,6 +601,16 @@ namespace WMS.Common {
         public static string insertreprintcount {
             get {
                 return ResourceManager.GetString("insertreprintcount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to insert into wms.wms_materialreserve(reserveformaterialid,materialid,itemid,pono,reservedon,reservedby,reservedqty,reserveid)
+        ///values(default,@materialid,@itemid,@pono,current_timestamp,@reservedby,@reservedqty,@reserveid).
+        /// </summary>
+        public static string insertreservematerial {
+            get {
+                return ResourceManager.GetString("insertreservematerial", resourceCulture);
             }
         }
         
@@ -814,6 +833,15 @@ namespace WMS.Common {
         public static string updateseqnumber {
             get {
                 return ResourceManager.GetString("updateseqnumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to update wms.wms_stock set availableqty=#availableqty where itemid=#itemid.
+        /// </summary>
+        public static string updatestock {
+            get {
+                return ResourceManager.GetString("updatestock", resourceCulture);
             }
         }
         

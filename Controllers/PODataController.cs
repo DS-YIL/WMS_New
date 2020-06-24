@@ -9,6 +9,7 @@ using WMS.Interfaces;
 using WMS.Models;
 using System.Globalization;
 using WMS.Common;
+using System.Reflection.Metadata;
 
 namespace WMS.Controllers
 {
@@ -344,6 +345,13 @@ namespace WMS.Controllers
 		public async Task<IEnumerable<IssueRequestModel>> getmaterialissueList(int requestid)
 		{
 			return await this._poService.getissuematerialdetails(requestid);
+		}
+
+
+		[HttpPost("insertreservematerial")]
+		public int getmaterialissueList([FromBody] List<ReserveMaterialModel> datamodel)
+		{
+			return  this._poService.insertResevematerial(datamodel);
 		}
 		//[HttpPost("securitysendemail")]
 		//public EmailModel sendemail(EmailModel obj)
