@@ -665,11 +665,11 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to select  max(track.enteredon) as enteredon,max(op.projectcode)as projectcode,track.pono,min(track.status)as status,max(op.vendorname)as vendorname,max(op.&quot;JobName&quot;) as JobName,max(op.quotationqty)as quotationqty 
+        ///   Looks up a localized string similar to select  max(track.enteredon) as enteredon,max(op.projectcode)as projectcode,op.pono,min(track.status)as status,max(op.vendorname)as vendorname,max(op.jobname) as jobname,max(op.quotationqty)as quotationqty 
         ///from wms.openpolistview op
         ///      left join wms.wms_trackstatus track on track.pono=op.pono
-        ///      where projectmanager=&apos;#projectmanager&apos; 
-        ///      and track.enteredon is not null.
+        ///      where projectmanager=&apos;#projectmanager&apos; and track.enteredon is not null
+        ///      .
         /// </summary>
         public static string openpolist {
             get {

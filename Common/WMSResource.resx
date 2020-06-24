@@ -161,11 +161,11 @@ where  inwmaster.pono='#pono'</value>
     <comment>insert material request data</comment>
   </data>
   <data name="openpolist" xml:space="preserve">
-    <value>select  max(track.enteredon) as enteredon,max(op.projectcode)as projectcode,track.pono,min(track.status)as status,max(op.vendorname)as vendorname,max(op."JobName") as JobName,max(op.quotationqty)as quotationqty 
+    <value>select  max(track.enteredon) as enteredon,max(op.projectcode)as projectcode,op.pono,min(track.status)as status,max(op.vendorname)as vendorname,max(op.jobname) as jobname,max(op.quotationqty)as quotationqty 
 from wms.openpolistview op
       left join wms.wms_trackstatus track on track.pono=op.pono
-      where projectmanager='#projectmanager' 
-      and track.enteredon is not null</value>
+      where projectmanager='#projectmanager' and track.enteredon is not null
+      </value>
     <comment>getopenpono list</comment>
   </data>
   <data name="Getdetailsforthreewaymatching" xml:space="preserve">

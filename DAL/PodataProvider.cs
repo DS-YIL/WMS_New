@@ -81,7 +81,7 @@ namespace WMS.DAL
 					{
 						query = query + " and  op.vendorid=" + vendorid;
 					}
-					query = query + " group by track.pono order by max(track.enteredon) desc ";
+					query = query + " group by track.pono,op.pono order by max(track.enteredon) desc ";
 					await pgsql.OpenAsync();
 					return await pgsql.QueryAsync<OpenPoModel>(
 					   query, null, commandType: CommandType.Text);
@@ -787,7 +787,7 @@ namespace WMS.DAL
 				//}
 				if (approverid != null)
 				{
-					materialrequestquery = materialrequestquery + " and openpo.projectmanager = '" + approverid + "' ";
+					materialrequestquery = materialrequestquery + " where  req.requesterid = '" + approverid + "' ";
 				}
 				materialrequestquery = materialrequestquery + " group by req.requestid limit 50";
 				try
