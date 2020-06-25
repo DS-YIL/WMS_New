@@ -10,16 +10,16 @@ import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-MaterialRequest',
-  templateUrl: './MaterialRequestView.component.html'
+  templateUrl: './MaterialReserveView.component.html'
 })
-export class MaterialRequestViewComponent implements OnInit {
+export class MaterialReserveViewComponent implements OnInit {
   AddDialog: boolean;
   showdialog: boolean;
   public materiallistData: Array<any> = [];
 
   constructor(private formBuilder: FormBuilder, private messageService: MessageService, private wmsService: wmsService, private route: ActivatedRoute, private router: Router, public constants: constants, private spinner: NgxSpinnerService) { }
 
-  public requestList: Array<any> = [];
+  public reserveList: Array<any> = [];
   public employee: Employee;
   public displayItemRequestDialog; RequestDetailsSubmitted; showAck; btnDisable: boolean = false;
   public materialRequestDetails: materialRequestDetails;
@@ -32,28 +32,28 @@ export class MaterialRequestViewComponent implements OnInit {
       this.router.navigateByUrl("Login");
 
 
-    this.route.params.subscribe(params => {
-      if (params["pono"]) {
-        this.pono = params["pono"];
-      }
-    });
+    //this.route.params.subscribe(params => {
+    //  if (params["pono"]) {
+    //    this.pono = params["pono"];
+    //  }
+    //});
 
-    this.getMaterialRequestlist();
+    this.getMaterialReservelist();
   }
 
-  //get Material Rquest based on login employee && po no
-  getMaterialRequestlist() {
+  //get Material reserve based on login employee && po no
+  getMaterialReservelist() {
     //this.employee.employeeno = "180129";
-    this.wmsService.getMaterialRequestlist(this.employee.employeeno, this.pono).subscribe(data => {
-      this.requestList = data;
-      this.requestList.forEach(item => {
+    this.wmsService.getMaterialReservelist(this.employee.employeeno).subscribe(data => {
+      this.reserveList = data;
+      this.reserveList.forEach(item => {
         if (!item.requestedquantity)
           item.requestedquantity = item.quotationqty;
       });
     });
   }
 
-  //check validations for requested quantity
+  //check validations for reserved quantity
   reqQtyChange(data: any) {
     if (data.requestedquantity > data.quotationqty) {
       this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Requested Quantity should be lessthan or equal to po quantity' });
@@ -61,11 +61,11 @@ export class MaterialRequestViewComponent implements OnInit {
     }
   }
 
-  //requested quantity update
+  //reserved quantity update
   onMaterialRequestDeatilsSubmit() {
     this.spinner.show();
     this.btnDisable = true;
-    this.wmsService.materialRequestUpdate(this.requestList).subscribe(data => {
+    this.wmsService.materialRequestUpdate(this.reserveList).subscribe(data => {
       this.spinner.hide();
       if (data)
         this.messageService.add({ severity: 'success', summary: 'success Message', detail: 'Request sent' });
@@ -82,13 +82,13 @@ export class MaterialRequestViewComponent implements OnInit {
 
   //received material acknowledgement
   materialAckUpdate() {
-    if (this.requestList.filter(li => li.status == true).length == 0) {
+    if (this.reserveList.filter(li => li.status == true).length == 0) {
       this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Select atleast  one checkbox' });
     }
     else {
       this.spinner.show();
       this.btnDisable = true;
-      this.wmsService.ackmaterialreceivedfroreserved(this.requestList).subscribe(data => {
+      this.wmsService.ackmaterialreceived(this.reserveList).subscribe(data => {
         this.spinner.hide();
         if (data)
           this.messageService.add({ severity: 'sucess', summary: 'sucee Message', detail: 'Status updated' });
@@ -102,10 +102,10 @@ export class MaterialRequestViewComponent implements OnInit {
   backtoDashboard() {
     this.router.navigateByUrl("/WMS/Dashboard");
   }
-  showmaterialdetails(requestid) {
+  showmaterialdetails(reservedid) {
     this.AddDialog = true;
 this.showdialog=true;
-    this.wmsService.getmaterialissueList(requestid).subscribe(data => {
+    this.wmsService.getmaterialissueListforreserved(reservedid).subscribe(data => {
       this.materiallistData = data;
       
       if (data != null) {

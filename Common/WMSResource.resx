@@ -122,17 +122,17 @@
     <comment>checkpono</comment>
   </data>
   <data name="GetdetailsByrequestid" xml:space="preserve">
-    <value>select sum(iss.issuedqty) as issuedqty,op."JobName",req.requestforissueid,emp."name",req.requesteddate,sk.materialid,sk.pono,req.requestedquantity,sk.availableqty,req.requestid from wms.wms_stock sk 
-      inner join wms.openpolistview op on op.pono=sk.pono
+    <value>select sum(iss.issuedqty) as issuedqty,op.jobname,req.requestforissueid,emp."name",req.requesteddate,sk.materialid,sk.pono,req.requestedquantity,sk.availableqty,req.requestid from wms.wms_stock sk 
+      left join wms.openpolistview op on op.pono=sk.pono
        inner join wms.wms_materialrequest req on req.materialid=sk.materialid
       left join wms.wms_materialissue iss on iss.itemid=sk.itemid
       inner join wms.employee emp on emp.employeeno=req.requesterid
  where requestid=#requestid and req.deleteflag=false and sk.availableqty!=0
- group by req.requestforissueid,sk.materialid,sk.pono,req.requestedquantity,sk.availableqty,req.requestid,emp."name",req.requesteddate,op."JobName"</value>
+ group by req.requestforissueid,sk.materialid,sk.pono,req.requestedquantity,sk.availableqty,req.requestid,emp."name",req.requesteddate,op.jobname</value>
   </data>
   <data name="GetListForMaterialRequestByapproverid" xml:space="preserve">
     <value>select req.requestid,req.requesteddate,req.requesterid,po.projectname,emp."name" 
- from wms.wms_materialrequest req inner join wms.openpolistview po on po.pono=req.pono 
+ from wms.wms_materialrequest req left join wms.openpolistview po on po.pono=req.pono 
 left join wms.employee emp on req.requesterid=emp.employeeno 
 --where req.approverid='#approverid'
 group by req.requestid,req.requesteddate,req.requesterid,po.projectname,emp."name" order by req.requestid desc</value>
@@ -164,7 +164,7 @@ where  inwmaster.pono='#pono'</value>
     <value>select  max(track.enteredon) as enteredon,max(op.projectcode)as projectcode,op.pono,min(track.status)as status,max(op.vendorname)as vendorname,max(op.jobname) as jobname,max(op.quotationqty)as quotationqty 
 from wms.openpolistview op
       left join wms.wms_trackstatus track on track.pono=op.pono
-      where projectmanager='#projectmanager' and track.enteredon is not null
+      where projectmanager='#projectmanager' 
       </value>
     <comment>getopenpono list</comment>
   </data>
@@ -386,7 +386,7 @@ LINK:&lt;/p&gt;
 &lt;p style='margin-bottom:0px;'&gt;Regards,&lt;/p&gt;&lt;p&gt; #sender.&lt;/p&gt;&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;</value>
   </data>
   <data name="getitemlocationList" xml:space="preserve">
-    <value>select distinct ygs.materialdescription,ygs.material,itemlocation,createddate,sk.itemid,availableqty from wms.wms_stock sk inner join wms."MaterialMasterYGS" ygs on ygs.material=sk.materialid where materialid='#materialid' and availableqty!=0 and sk.deleteflag=false</value>
+    <value>select distinct ygs.materialdescription,ygs.material,itemlocation,createddate,sk.itemid,availableqty from wms.wms_stock sk inner join wms."MaterialMasterYGS" ygs on ygs.material=sk.materialid where materialid='#materialid' and availableqty&gt;0 --and sk.deleteflag=false</value>
   </data>
   <data name="insertAuthUserData" xml:space="preserve">
     <value>insert into wms.auth_users(authid,employeeid,roleid,createddate,createdby,deleteflag)values(default,@employeeid,@roleid,@createddate,@createdby,@deleteflag)returning authid</value>
@@ -453,12 +453,50 @@ emp1.name as approvername
  where req.requestid=#requestid
   group by req.requestforissueid,iss.materialissueid</value>
   </data>
+  <data name="getmaterialdetailsbyreserveid" xml:space="preserve">
+    <value>select distinct max(res.reserveformaterialid) as reserveformaterialid, max(sk.availableqty)as availableqty,res.pono,max(res.materialid)as materialid,max(res.reserveid) as reserveid,max(op.jobname)as jobname,max(res.reservedon)as reservedon,max(res.reservedqty)as reservedqty from wms.wms_materialreserve res
+inner join wms.employee emp on emp.employeeno=res.reservedby
+inner join wms.wms_stock sk on sk.pono=res.pono 
+left join wms.openpolistview op on op.pono=res.pono
+where reserveid=#reserveid and sk.availableqty&gt;0
+group by res.pono</value>
+  </data>
   <data name="getnextreservetid" xml:space="preserve">
     <value>select reserveid from wms.wms_materialreserve order by reserveid desc limit 1</value>
+  </data>
+  <data name="GetreleasedmaterialList" xml:space="preserve">
+    <value>select req.reserveid,max(req.reservedon)as reservedon,req.reservedby,po.projectname,emp."name" 
+ from wms.wms_materialreserve req left join wms.openpolistview po on po.pono=req.pono 
+left join wms.employee emp on req.reservedby=emp.employeeno 
+group by req.reserveid,req.reservedby,po.projectname,emp."name" order by req.reserveid desc</value>
+  </data>
+  <data name="Getreleasedqty" xml:space="preserve">
+    <value>select max(req.reservedqty)as reservedqty, max(req.materialid)as materialid, max(req.reserveid)as reserveid,req.reserveformaterialid,sum(issuedqty)as releasedquantity
+         from wms.wms_materialreserve  req
+        left join wms.wms_materialissue iss on req.reserveformaterialid=iss.reserveformaterialid
+       where req.reserveid=#reserveid
+       group by req.reserveformaterialid,iss.materialissueid</value>
+  </data>
+  <data name="getreservedmaterialList" xml:space="preserve">
+    <value>select  res.reserveid,max(res.pono) as pono,max(op.projectname) as projectname,max(res.reservedon) as reservedon,
+max(iss.approvedstatus)as approvedstatus
+from wms.wms_materialreserve res 
+left join wms.wms_stock sk on sk.materialid=res.materialid
+left join wms.openpolistview op on op.pono=res.pono
+left join wms.wms_materialissue iss on iss.reserveformaterialid=res.reserveformaterialid 
+where reservedby='#reservedby'
+group by res.reserveid</value>
   </data>
   <data name="insertreservematerial" xml:space="preserve">
     <value>insert into wms.wms_materialreserve(reserveformaterialid,materialid,itemid,pono,reservedon,reservedby,reservedqty,reserveid)
 values(default,@materialid,@itemid,@pono,current_timestamp,@reservedby,@reservedqty,@reserveid)</value>
+  </data>
+  <data name="updateackstatusforreserved" xml:space="preserve">
+    <value>update wms.wms_materialreserve set ackstatus=@ackstatus,ackremarks=@ackremarks where reserveid=@reserveid</value>
+  </data>
+  <data name="updateapproverstatusforrelease" xml:space="preserve">
+    <value>insert into wms.wms_materialissue(materialissueid,pono,itemid,reserveformaterialid,itemissueddate,itemreceiverid,deleteflag,itemreturnable,approvedby,approvedon,issuedqty,approvedstatus)
+ values(default,@pono,@itemid,@reserveformaterialid,@itemissueddate,@itemreceiverid,false,@itemreturnable,@approvedby,@approvedon,@issuedqty,@approvedstatus)</value>
   </data>
   <data name="updatestock" xml:space="preserve">
     <value>update wms.wms_stock set availableqty=#availableqty where itemid=#itemid</value>

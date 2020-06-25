@@ -31,7 +31,9 @@ import { LocationDetailsComponent } from './WMS/LocationDetails.component';
 import { MaterialRequestDetailsComponent } from './WMS/MaterialRequestDetails.component';
 import { MaterialRequestViewComponent } from './WMS/MaterialRequestView.component';
 import { MaterialReserveComponent } from './WMS/MaterialReserve.component';
-
+import { MaterialReserveViewComponent } from './WMS/MaterialReserveView.component';
+import { MaterialReleaseDashBoardComponent } from './WMS/MaterialReleaseDashBoard.component';
+import { MaterialReleaseComponent } from './WMS/MaterialRelease.component';
 const routes: Routes = [{
   path: '',
   component: PagesComponent,
@@ -75,7 +77,12 @@ const routes: Routes = [{
     { path: "MaterialReqDetails", component: MaterialRequestDetailsComponent, canActivate: [AuthGuard] },
     { path: "MaterialReqView", component: MaterialRequestViewComponent, canActivate: [AuthGuard] },
     { path: "MaterialReqView/:pono", component: MaterialRequestViewComponent, canActivate: [AuthGuard] },
-    { path: "MaterialReserve/:pono", component: MaterialReserveComponent, canActivate: [AuthGuard] }
+    { path: "MaterialReserve/:pono", component: MaterialReserveComponent, canActivate: [AuthGuard] },
+    { path: "MaterialReserveView", component: MaterialReserveViewComponent, canActivate: [AuthGuard] },
+    { path: "MaterialReleaseDashboard", component: MaterialReleaseDashBoardComponent, canActivate: [AuthGuard] },
+    { path: "MaterialRelease/:reserveid", component: MaterialReleaseComponent, canActivate: [AuthGuard] },
+    
+    
   ],
 }];
 

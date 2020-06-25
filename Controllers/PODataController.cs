@@ -346,12 +346,42 @@ namespace WMS.Controllers
 		{
 			return await this._poService.getissuematerialdetails(requestid);
 		}
-
+		[HttpGet("getmaterialissueListforreserved")]
+		public async Task<IEnumerable<ReserveMaterialModel>> getmaterialissueListforreserved(int reservedid)
+		{
+			return await this._poService.getissuematerialdetailsforreserved(reservedid);
+		}
 
 		[HttpPost("insertreservematerial")]
 		public int getmaterialissueList([FromBody] List<ReserveMaterialModel> datamodel)
 		{
 			return  this._poService.insertResevematerial(datamodel);
+		}
+		[HttpGet("GetreserveMaterilalist")]
+		public async Task<IEnumerable<ReserveMaterialModel>> GetReservedMaterialList(string reservedby)
+		{
+			return await this._poService.GetReservedMaterialList(reservedby);
+		}
+		[HttpGet("GetreleasedMaterilalist")]
+		public async Task<IEnumerable<ReserveMaterialModel>> GetreleasedMaterilalist()
+		{
+			return await this._poService.GetReleasedmaterialList();
+		}
+		[HttpGet("Getmaterialdetailsbyreserveid")]
+		public async Task<IEnumerable<ReserveMaterialModel>> Getmaterialdetailsbyreserveid(string reserveid)
+		{
+			return await this._poService.GetmaterialdetailsByreserveid(reserveid);
+		}
+		[HttpPost("approvematerialrelease")]
+		public int approvematerialrelease([FromBody] List<ReserveMaterialModel> data)
+		{
+			return this._poService.ApproveMaterialRelease(data);
+
+		}
+		[HttpPost("ackmaterialreceivedfroreserved")]
+		public int ackmaterialreceivedfroreserved([FromBody] List<ReserveMaterialModel> data)
+		{
+			return this._poService.acknowledgeMaterialReceivedforreserved(data);
 		}
 		//[HttpPost("securitysendemail")]
 		//public EmailModel sendemail(EmailModel obj)

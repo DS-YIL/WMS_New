@@ -7,12 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WMS.Common;
 using WMS.Interfaces;
-using System.Web;
 using WMS.Models;
-using Microsoft.AspNetCore.Http;
-using System.IO;
-using System.Net.Sockets;
-using System.Net;
 
 namespace WMS.DAL
 {
@@ -100,35 +95,35 @@ namespace WMS.DAL
 				//throw new NotImplementedException();
 			}
 		}
-		
-		 public async Task<IEnumerable<POList>> getPOList()
-        {
-            using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
-            {
 
-                try
-                {
-                    string query = WMSResource.getpolist;
-                   
+		public async Task<IEnumerable<POList>> getPOList()
+		{
+			using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
+			{
 
-                    await pgsql.OpenAsync();
-                    return await pgsql.QueryAsync<POList>(
-                       query, null, commandType: CommandType.Text);
+				try
+				{
+					string query = WMSResource.getpolist;
 
 
-                }
-                catch (Exception Ex)
-                {
-                    log.ErrorMessage("PODataProvider", "getPOList", Ex.StackTrace.ToString());
-                    return null;
-                }
-                finally
-                {
-                    pgsql.Close();
-                }
-                //throw new NotImplementedException();
-            }
-        }
+					await pgsql.OpenAsync();
+					return await pgsql.QueryAsync<POList>(
+					   query, null, commandType: CommandType.Text);
+
+
+				}
+				catch (Exception Ex)
+				{
+					log.ErrorMessage("PODataProvider", "getPOList", Ex.StackTrace.ToString());
+					return null;
+				}
+				finally
+				{
+					pgsql.Close();
+				}
+				//throw new NotImplementedException();
+			}
+		}
 
 		/// <summary>
 		/// inserting barcode info
@@ -354,9 +349,9 @@ namespace WMS.DAL
 					string lastinsertedgrn = WMSResource.lastinsertedgrn;
 					iwardmasterModel info = new iwardmasterModel();
 					string query = WMSResource.Verifythreewaymatch.Replace("#pono", pono).Replace("#invoiceno", invoiceno);
-					 info = pgsql.QuerySingle<iwardmasterModel>(
-					   query, null, commandType: CommandType.Text);
-					if (info != null && info.grnnumber==null )
+					info = pgsql.QuerySingle<iwardmasterModel>(
+					  query, null, commandType: CommandType.Text);
+					if (info != null && info.grnnumber == null)
 					{
 						//iwardmasterModel infos = new iwardmasterModel();
 						//string queryforgrn = WMSResource.verifyGRNgenerated.Replace("#pono", pono).Replace("#invoiceno", invoiceno);
@@ -364,54 +359,54 @@ namespace WMS.DAL
 						//   queryforgrn, null, commandType: CommandType.Text);
 						//if (infos.grnnumber == null)
 						//{
-							//verify = s;
-							int grnnextsequence = 0;
-							string grnnumber = string.Empty;
-							obj = pgsql.QuerySingle<sequencModel>(
-						   lastinsertedgrn, null, commandType: CommandType.Text);
-							if (obj.id != 0)
-							{
-								grnnextsequence = (Convert.ToInt32(obj.sequencenumber) + 1);
-								grnnumber = obj.sequenceid + "-" + obj.year + "-" + grnnextsequence.ToString().PadLeft(6, '0');
-								string updategrnnumber = WMSResource.updategrnnumber.Replace("#invoiceno", invoiceno).Replace("#pono", pono);
-								using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
-								{
-									var results = DB.ExecuteScalar(updategrnnumber, new
-									{
-										grnnumber,
-
-									});
-								}
-							verify.grnnumber = grnnumber;
-								int id = obj.id;
-								string updateseqnumber = WMSResource.updateseqnumber;
-								using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
-								{
-									var results = DB.ExecuteScalar(updateseqnumber, new
-									{
-										grnnextsequence,
-										id,
-
-									});
-								}
-							}
-
-
-
-
-							else
-							{
-
-							}
-							string insertqueryforstatus = WMSResource.statusupdatebySecurity;
+						//verify = s;
+						int grnnextsequence = 0;
+						string grnnumber = string.Empty;
+						obj = pgsql.QuerySingle<sequencModel>(
+					   lastinsertedgrn, null, commandType: CommandType.Text);
+						if (obj.id != 0)
+						{
+							grnnextsequence = (Convert.ToInt32(obj.sequencenumber) + 1);
+							grnnumber = obj.sequenceid + "-" + obj.year + "-" + grnnextsequence.ToString().PadLeft(6, '0');
+							string updategrnnumber = WMSResource.updategrnnumber.Replace("#invoiceno", invoiceno).Replace("#pono", pono);
 							using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
 							{
-								var results = DB.ExecuteScalar(insertqueryforstatus, new
+								var results = DB.ExecuteScalar(updategrnnumber, new
 								{
-									pono,
+									grnnumber,
 
 								});
 							}
+							verify.grnnumber = grnnumber;
+							int id = obj.id;
+							string updateseqnumber = WMSResource.updateseqnumber;
+							using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
+							{
+								var results = DB.ExecuteScalar(updateseqnumber, new
+								{
+									grnnextsequence,
+									id,
+
+								});
+							}
+						}
+
+
+
+
+						else
+						{
+
+						}
+						string insertqueryforstatus = WMSResource.statusupdatebySecurity;
+						using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
+						{
+							var results = DB.ExecuteScalar(insertqueryforstatus, new
+							{
+								pono,
+
+							});
+						}
 						//}
 					}
 
@@ -453,7 +448,7 @@ namespace WMS.DAL
 					datamodel[0].receiveddate = System.DateTime.Now;
 					await pgsql.OpenAsync();
 
-					string query = WMSResource.getinwmasterid.Replace("#pono", datamodel[0].pono).Replace("#invoiceno",datamodel[0].invoiceno);
+					string query = WMSResource.getinwmasterid.Replace("#pono", datamodel[0].pono).Replace("#invoiceno", datamodel[0].invoiceno);
 					obj = pgsql.QuerySingle<inwardModel>(
 					   query, null, commandType: CommandType.Text);
 					string getGRNno = WMSResource.getGRNNo.Replace("#pono", datamodel[0].pono);
@@ -466,7 +461,7 @@ namespace WMS.DAL
 						foreach (var item in datamodel)
 						{
 							string insertforinvoicequery = WMSResource.insertforinvoicequery;
-							item.deleteflag=false;
+							item.deleteflag = false;
 							string materialid = item.Material;
 							using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
 							{
@@ -483,7 +478,7 @@ namespace WMS.DAL
 									item.deleteflag,
 
 								});
-								 inwardid = Convert.ToInt32(results);
+								inwardid = Convert.ToInt32(results);
 								//if (inwardid != 0)
 								//{
 								//    string insertqueryforqualitycheck =WMSResource.insertqueryforqualitycheck;
@@ -546,8 +541,8 @@ namespace WMS.DAL
 					string query = WMSResource.getinwardmasterid.Replace("#grnnumber", data.grnnumber);
 					objs = pgsql.QueryFirstOrDefault<StockModel>(
 					   query, null, commandType: CommandType.Text);
-					if(objs!=null)
-					inwmasterid = objs.inwmasterid;
+					if (objs != null)
+						inwmasterid = objs.inwmasterid;
 				}
 				//foreach (var item in data) { 
 				data.createddate = System.DateTime.Now;
@@ -889,7 +884,7 @@ namespace WMS.DAL
 		/// </summary>
 		/// <param name="requesterid"></param>
 		/// <returns></returns>
-		
+
 		public async Task<IEnumerable<IssueRequestModel>> GetMaterialissueList(string requesterid)
 		{
 			using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
@@ -949,11 +944,11 @@ namespace WMS.DAL
 
 			}
 		}
-/// <summary>
-/// get list of materail details based on particlular requestid
-/// </summary>
-/// <param name="requestid"></param>
-/// <returns></returns>
+		/// <summary>
+		/// get list of materail details based on particlular requestid
+		/// </summary>
+		/// <param name="requestid"></param>
+		/// <returns></returns>
 		public async Task<IEnumerable<IssueRequestModel>> GetmaterialdetailsByrequestid(string requestid)
 		{
 
@@ -1908,21 +1903,21 @@ namespace WMS.DAL
 
 		//Ramesh (08/06/2020) returns all  Materials to count
 		public async Task<IEnumerable<CycleCountList>> GetCyclecountList(int limita, int limitb, int limitc)
-        { 
-            using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
-            {
+		{
+			using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
+			{
 
-                try
-                {
-                    Cyclecountconfigmodel config = new Cyclecountconfigmodel();
-                    await pgsql.OpenAsync();
+				try
+				{
+					Cyclecountconfigmodel config = new Cyclecountconfigmodel();
+					await pgsql.OpenAsync();
 
-                    //Ramesh (08/06/2020) returns category A/B/C configuration
+					//Ramesh (08/06/2020) returns category A/B/C configuration
 
-                    string QueryABC = "select * from wms.wms_rd_category order by categoryid desc limit 3";
-                    var abcdata = await pgsql.QueryAsync<ABCCategoryModel>(QueryABC, null, commandType: CommandType.Text);
-                    foreach(ABCCategoryModel dt in abcdata)
-                    {
+					string QueryABC = "select * from wms.wms_rd_category order by categoryid desc limit 3";
+					var abcdata = await pgsql.QueryAsync<ABCCategoryModel>(QueryABC, null, commandType: CommandType.Text);
+					foreach (ABCCategoryModel dt in abcdata)
+					{
 						if (dt.categoryname == "A")
 						{
 							config.amin = Convert.ToInt32(dt.minpricevalue);
@@ -1939,159 +1934,159 @@ namespace WMS.DAL
 							config.cmax = Convert.ToInt32(dt.maxpricevalue);
 						}
 						config.startdate = dt.startdate;
-                        config.enddate = dt.enddate;
+						config.enddate = dt.enddate;
 
-                    }
+					}
 
 					//Ramesh (08/06/2020) returns today counted list 
 					string Querychecktodaycounted = "Select * from wms.cyclecount where counted_on = current_date";
 					var todaycountdata = await pgsql.QueryAsync<CycleCountList>(Querychecktodaycounted, null, commandType: CommandType.Text);
 
 					//Ramesh (08/06/2020) returns random A/B/C List
-					string QueryA = "select sum(ws.availableqty) as availableqty,'A' AS category,ws.materialid AS materialid from wms.wms_stock ws WHERE ws.materialid IS NOT null and ws.unitprice::numeric >= " + config.amin+ " group by ws.materialid order by random() limit "+limita+"";
-                    string QueryB = "select sum(ws.availableqty) as availableqty,'B' AS category,ws.materialid AS materialid from wms.wms_stock ws WHERE ws.materialid IS NOT null and ws.unitprice::numeric >= " + config.bmin + " and ws.unitprice::numeric <= " + config.bmax + " group by ws.materialid order by random() limit " + limitb + "";
-                    string QueryC = "select sum(ws.availableqty) as availableqty,'C' AS category,ws.materialid AS materialid from wms.wms_stock ws WHERE ws.materialid IS NOT null and ws.unitprice::numeric <= " + config.cmax + " group by ws.materialid order by random() limit " + limitc + "";
-                    var adata = await pgsql.QueryAsync<CycleCountList>(QueryA, null, commandType: CommandType.Text);
-                    var bdata = await pgsql.QueryAsync<CycleCountList>(QueryB, null, commandType: CommandType.Text);
-                    var cdata = await pgsql.QueryAsync<CycleCountList>(QueryC, null, commandType: CommandType.Text);
-                    var finaltempdata = adata.Concat(bdata);
-                    var finaldata = finaltempdata.Concat(cdata);
-                    foreach(CycleCountList cc in finaldata)
-                    {
-                        string Querycheckcounted = "Select * from wms.cyclecount where materialid = '" + cc.materialid + "' and counted_on = current_date";
-                        var countdata = await pgsql.QueryAsync<CycleCountList>(Querycheckcounted, null, commandType: CommandType.Text);
-                        if(countdata != null && countdata.Count() > 0)
-                        {
-                            var dt = countdata.FirstOrDefault();
-                            cc.status = dt.status;
-                            cc.physicalqty = dt.physicalqty;
-                            cc.difference = dt.difference;
+					string QueryA = "select sum(ws.availableqty) as availableqty,'A' AS category,ws.materialid AS materialid from wms.wms_stock ws WHERE ws.materialid IS NOT null and ws.unitprice::numeric >= " + config.amin + " group by ws.materialid order by random() limit " + limita + "";
+					string QueryB = "select sum(ws.availableqty) as availableqty,'B' AS category,ws.materialid AS materialid from wms.wms_stock ws WHERE ws.materialid IS NOT null and ws.unitprice::numeric >= " + config.bmin + " and ws.unitprice::numeric <= " + config.bmax + " group by ws.materialid order by random() limit " + limitb + "";
+					string QueryC = "select sum(ws.availableqty) as availableqty,'C' AS category,ws.materialid AS materialid from wms.wms_stock ws WHERE ws.materialid IS NOT null and ws.unitprice::numeric <= " + config.cmax + " group by ws.materialid order by random() limit " + limitc + "";
+					var adata = await pgsql.QueryAsync<CycleCountList>(QueryA, null, commandType: CommandType.Text);
+					var bdata = await pgsql.QueryAsync<CycleCountList>(QueryB, null, commandType: CommandType.Text);
+					var cdata = await pgsql.QueryAsync<CycleCountList>(QueryC, null, commandType: CommandType.Text);
+					var finaltempdata = adata.Concat(bdata);
+					var finaldata = finaltempdata.Concat(cdata);
+					foreach (CycleCountList cc in finaldata)
+					{
+						string Querycheckcounted = "Select * from wms.cyclecount where materialid = '" + cc.materialid + "' and counted_on = current_date";
+						var countdata = await pgsql.QueryAsync<CycleCountList>(Querycheckcounted, null, commandType: CommandType.Text);
+						if (countdata != null && countdata.Count() > 0)
+						{
+							var dt = countdata.FirstOrDefault();
+							cc.status = dt.status;
+							cc.physicalqty = dt.physicalqty;
+							cc.difference = dt.difference;
 							cc.iscounted = true;
-							if(todaycountdata != null && todaycountdata.Count() > 0)
-                            {
+							if (todaycountdata != null && todaycountdata.Count() > 0)
+							{
 								cc.todayscount = todaycountdata.Count();
 							}
-                            else
-                            {
+							else
+							{
 								cc.todayscount = 0;
 
 							}
-                        }
-                    }
+						}
+					}
 
-                    return finaldata;
+					return finaldata;
 
-                    //string query = WMSResource.getCyclecountList;
-                    //return await pgsql.QueryAsync<CycleCountList>(
-                    //query, null, commandType: CommandType.Text);
+					//string query = WMSResource.getCyclecountList;
+					//return await pgsql.QueryAsync<CycleCountList>(
+					//query, null, commandType: CommandType.Text);
 
 
-                }
-                catch (Exception Ex)
-                {
-                    log.ErrorMessage("PODataProvider", "GetCyclecountList", Ex.StackTrace.ToString());
-                    return null;
-                }
-                finally
-                {
-                    pgsql.Close();
-                }
+				}
+				catch (Exception Ex)
+				{
+					log.ErrorMessage("PODataProvider", "GetCyclecountList", Ex.StackTrace.ToString());
+					return null;
+				}
+				finally
+				{
+					pgsql.Close();
+				}
 
-            }
-        }
-        //Ramesh (08/06/2020) returns All counted Material list
-        public async Task<IEnumerable<CycleCountList>> GetCyclecountPendingList()
-        {
-            using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
-            {
+			}
+		}
+		//Ramesh (08/06/2020) returns All counted Material list
+		public async Task<IEnumerable<CycleCountList>> GetCyclecountPendingList()
+		{
+			using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
+			{
 
-                try
-                {
-                    Cyclecountconfigmodel config = new Cyclecountconfigmodel();
-                    await pgsql.OpenAsync();
-                    string QueryA = "Select * from wms.cyclecount";
-                    var adata = await pgsql.QueryAsync<CycleCountList>(QueryA, null, commandType: CommandType.Text);
-                    return adata;
-                }
-                catch (Exception Ex)
-                {
-                    log.ErrorMessage("PODataProvider", "GetCyclecountPendingList", Ex.StackTrace.ToString());
-                    return null;
-                }
-                finally
-                {
-                    pgsql.Close();
-                }
+				try
+				{
+					Cyclecountconfigmodel config = new Cyclecountconfigmodel();
+					await pgsql.OpenAsync();
+					string QueryA = "Select * from wms.cyclecount";
+					var adata = await pgsql.QueryAsync<CycleCountList>(QueryA, null, commandType: CommandType.Text);
+					return adata;
+				}
+				catch (Exception Ex)
+				{
+					log.ErrorMessage("PODataProvider", "GetCyclecountPendingList", Ex.StackTrace.ToString());
+					return null;
+				}
+				finally
+				{
+					pgsql.Close();
+				}
 
-            }
-        }
+			}
+		}
 
-        //Ramesh (08/06/2020) update or insert cycle count
-        public int UpdateinsertCycleCount(List<CycleCountList> dataobj)
-        {
-            using (var DB = new NpgsqlConnection(config.PostgresConnectionString))
-            {
-                DB.OpenAsync();
-                try
-                {
-                    foreach (CycleCountList obj in dataobj)
-                    {
-                        //Ramesh (08/06/2020) approver action updation 
-                        if (obj.isapprovalprocess)
-                        {
-                                string status = obj.isapproved ? "Approved" : "Rejected";
-                           
-                                string insertquery = "update wms.cyclecount set status='"+ status + "', remarks='" + obj.remarks + "',verified_on = current_date , verified_by = 'Ramesh' where id = '" + obj.id + "' ";
-                                var result = DB.ExecuteScalar(insertquery);
+		//Ramesh (08/06/2020) update or insert cycle count
+		public int UpdateinsertCycleCount(List<CycleCountList> dataobj)
+		{
+			using (var DB = new NpgsqlConnection(config.PostgresConnectionString))
+			{
+				DB.OpenAsync();
+				try
+				{
+					foreach (CycleCountList obj in dataobj)
+					{
+						//Ramesh (08/06/2020) approver action updation 
+						if (obj.isapprovalprocess)
+						{
+							string status = obj.isapproved ? "Approved" : "Rejected";
 
-                            
+							string insertquery = "update wms.cyclecount set status='" + status + "', remarks='" + obj.remarks + "',verified_on = current_date , verified_by = 'Ramesh' where id = '" + obj.id + "' ";
+							var result = DB.ExecuteScalar(insertquery);
 
-                        }
-                       else
-                        {
-                            //Ramesh (08/06/2020) user count action updation/insertion 
-                            string selquery = "select * from wms.cyclecount where materialid = '" + obj.materialid + "' and counted_on = current_date ";
-                            var seldata = DB.QueryAsync<CycleCountList>(selquery, null, commandType: CommandType.Text);
-                            CycleCountList dt = new CycleCountList();
-                            if (seldata.Result.Count() > 0)
-                            {
-                                //Ramesh (08/06/2020) user count action updation 
-                                obj.difference = Math.Abs(obj.physicalqty - obj.availableqty);
-                                string insertquery = "update wms.cyclecount set category='" + obj.category + "', materialid= '" + obj.materialid + "', availableqty= " + obj.availableqty + ", physicalqty=" + obj.physicalqty + ", difference=" + obj.difference + ", status='Pending', counted_on = current_date , counted_by = 'Ramesh', verified_on = null , verified_by = null where materialid = '" + obj.materialid + "' ";
-                                var result = DB.ExecuteScalar(insertquery);
 
-                            }
-                            else
-                            {
-                                //Ramesh (08/06/2020) user count action insertion 
-                                obj.difference = Math.Abs(obj.physicalqty - obj.availableqty);
-                                string insertquery = "insert into wms.cyclecount(category, materialid, availableqty, physicalqty, difference, status, counted_on, counted_by, verified_on, verified_by) values('" + obj.category + "', '" + obj.materialid + "', " + obj.availableqty + ", " + obj.physicalqty + ", " + obj.difference + ", 'Pending', current_date , 'Ramesh', null, null)";
-                                var result = DB.ExecuteScalar(insertquery);
-                            }
 
-                        }
-                      
+						}
+						else
+						{
+							//Ramesh (08/06/2020) user count action updation/insertion 
+							string selquery = "select * from wms.cyclecount where materialid = '" + obj.materialid + "' and counted_on = current_date ";
+							var seldata = DB.QueryAsync<CycleCountList>(selquery, null, commandType: CommandType.Text);
+							CycleCountList dt = new CycleCountList();
+							if (seldata.Result.Count() > 0)
+							{
+								//Ramesh (08/06/2020) user count action updation 
+								obj.difference = Math.Abs(obj.physicalqty - obj.availableqty);
+								string insertquery = "update wms.cyclecount set category='" + obj.category + "', materialid= '" + obj.materialid + "', availableqty= " + obj.availableqty + ", physicalqty=" + obj.physicalqty + ", difference=" + obj.difference + ", status='Pending', counted_on = current_date , counted_by = 'Ramesh', verified_on = null , verified_by = null where materialid = '" + obj.materialid + "' ";
+								var result = DB.ExecuteScalar(insertquery);
 
-                    }
-                   return 1;
-                }
-                catch (Exception Ex)
-                {
-                    log.ErrorMessage("PODataProvider", "UpdateinsertCycleCount", Ex.StackTrace.ToString());
-                    return 0;
-                }
-                finally
-                {
-                    DB.Close();
-                }
-           }
-        }
+							}
+							else
+							{
+								//Ramesh (08/06/2020) user count action insertion 
+								obj.difference = Math.Abs(obj.physicalqty - obj.availableqty);
+								string insertquery = "insert into wms.cyclecount(category, materialid, availableqty, physicalqty, difference, status, counted_on, counted_by, verified_on, verified_by) values('" + obj.category + "', '" + obj.materialid + "', " + obj.availableqty + ", " + obj.physicalqty + ", " + obj.difference + ", 'Pending', current_date , 'Ramesh', null, null)";
+								var result = DB.ExecuteScalar(insertquery);
+							}
 
-        //Ramesh (08/06/2020) update cycle count configuration 
-        public int UpdateCycleCountconfig(Cyclecountconfig dataobj)
-        {
-            try
-            {
+						}
+
+
+					}
+					return 1;
+				}
+				catch (Exception Ex)
+				{
+					log.ErrorMessage("PODataProvider", "UpdateinsertCycleCount", Ex.StackTrace.ToString());
+					return 0;
+				}
+				finally
+				{
+					DB.Close();
+				}
+			}
+		}
+
+		//Ramesh (08/06/2020) update cycle count configuration 
+		public int UpdateCycleCountconfig(Cyclecountconfig dataobj)
+		{
+			try
+			{
 				//foreach(var item in dataobj._list)
 				//{
 
@@ -2117,79 +2112,79 @@ namespace WMS.DAL
 
 				}
 				return 1;
-               
-            }
-            catch (Exception Ex)
-            {
-                log.ErrorMessage("PODataProvider", "UpdateCycleCountconfig", Ex.StackTrace.ToString());
-                return 0;
-            }
-        }
 
-        //Ramesh (08/06/2020) update cycle count configuration
-        public async Task<Cyclecountconfig> GetCyclecountConfig()
-        {
-            using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
-            {
+			}
+			catch (Exception Ex)
+			{
+				log.ErrorMessage("PODataProvider", "UpdateCycleCountconfig", Ex.StackTrace.ToString());
+				return 0;
+			}
+		}
 
-                try
-                {
-                    Cyclecountconfig config = new Cyclecountconfig();
-                    await pgsql.OpenAsync();
-                    int count = 0;
-                    //Ramesh (08/06/2020) get count of all materials on which cycle configuration and randon percentage will be applied
-                    string QueryALL = "select sum(availableqty) as availableqty,ws.materialid AS materialid from wms.wms_stock ws WHERE ws.materialid IS NOT null and ws.unitprice IS NOT null  group by materialid";
-                    var alldata = await pgsql.QueryAsync<CycleCountList>(QueryALL, null, commandType: CommandType.Text);
+		//Ramesh (08/06/2020) update cycle count configuration
+		public async Task<Cyclecountconfig> GetCyclecountConfig()
+		{
+			using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
+			{
 
-                    //Ramesh (08/06/2020) get cycle configuration
+				try
+				{
+					Cyclecountconfig config = new Cyclecountconfig();
+					await pgsql.OpenAsync();
+					int count = 0;
+					//Ramesh (08/06/2020) get count of all materials on which cycle configuration and randon percentage will be applied
+					string QueryALL = "select sum(availableqty) as availableqty,ws.materialid AS materialid from wms.wms_stock ws WHERE ws.materialid IS NOT null and ws.unitprice IS NOT null  group by materialid";
+					var alldata = await pgsql.QueryAsync<CycleCountList>(QueryALL, null, commandType: CommandType.Text);
 
-                    string QueryABC = "select * from wms.cyclecountconfig where id = 1";
-                    var abcdata = await pgsql.QueryAsync<Cyclecountconfig>(QueryABC, null, commandType: CommandType.Text);
-                    if(abcdata != null)
-                    {
-                        config = abcdata.FirstOrDefault();
-                    }
+					//Ramesh (08/06/2020) get cycle configuration
 
-                    //Ramesh (08/06/2020) get ABC configuration start and end date of cycle
-                    string QueryABC1 = "select * from wms.wms_rd_category order by categoryid desc limit 3";
-                    var abcdata1 = await pgsql.QueryAsync<ABCCategoryModel>(QueryABC1, null, commandType: CommandType.Text);
-                    ABCCategoryModel abcconfig = new ABCCategoryModel();
-                    if(abcdata1 != null)
-                    {
-                        abcconfig = abcdata1.FirstOrDefault();
-                        config.startdate = abcconfig.startdate;
-                        config.enddate = abcconfig.enddate;
-                    }
-                    if (alldata != null)
-                    {
-                        count = alldata.Count();
-                        config.countall = count;
+					string QueryABC = "select * from wms.cyclecountconfig where id = 1";
+					var abcdata = await pgsql.QueryAsync<Cyclecountconfig>(QueryABC, null, commandType: CommandType.Text);
+					if (abcdata != null)
+					{
+						config = abcdata.FirstOrDefault();
+					}
 
-                    }
+					//Ramesh (08/06/2020) get ABC configuration start and end date of cycle
+					string QueryABC1 = "select * from wms.wms_rd_category order by categoryid desc limit 3";
+					var abcdata1 = await pgsql.QueryAsync<ABCCategoryModel>(QueryABC1, null, commandType: CommandType.Text);
+					ABCCategoryModel abcconfig = new ABCCategoryModel();
+					if (abcdata1 != null)
+					{
+						abcconfig = abcdata1.FirstOrDefault();
+						config.startdate = abcconfig.startdate;
+						config.enddate = abcconfig.enddate;
+					}
+					if (alldata != null)
+					{
+						count = alldata.Count();
+						config.countall = count;
 
-
-                    return config;
+					}
 
 
+					return config;
 
-                }
-                catch (Exception Ex)
-                {
-                    log.ErrorMessage("PODataProvider", "GetCyclecountConfig", Ex.StackTrace.ToString());
-                    return null;
-                }
-                finally
-                {
-                    pgsql.Close();
-                }
 
-            }
-        }
 
-        public async Task<IEnumerable<ReportModel>> GetABCListBycategory(string category)
-        {
-            using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
-            {
+				}
+				catch (Exception Ex)
+				{
+					log.ErrorMessage("PODataProvider", "GetCyclecountConfig", Ex.StackTrace.ToString());
+					return null;
+				}
+				finally
+				{
+					pgsql.Close();
+				}
+
+			}
+		}
+
+		public async Task<IEnumerable<ReportModel>> GetABCListBycategory(string category)
+		{
+			using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
+			{
 
 				try
 				{
@@ -2365,9 +2360,9 @@ namespace WMS.DAL
 					string query = WMSResource.getitemlocationList.Replace("#materialid", material);
 
 
-					 await pgsql.OpenAsync();
-					 return await pgsql.QueryAsync<IssueRequestModel>(
-					   query, null, commandType: CommandType.Text);
+					await pgsql.OpenAsync();
+					return await pgsql.QueryAsync<IssueRequestModel>(
+					  query, null, commandType: CommandType.Text);
 
 
 				}
@@ -2431,7 +2426,7 @@ namespace WMS.DAL
 				}
 			}
 		}
-		
+
 		//Name of Function : <<AssignRoles>>  Author :<<prasanna>>  
 		//Date of Creation <<10-06-2020>>
 		//Purpose : <<insert method to Asssign roles for employee >>
@@ -2485,7 +2480,7 @@ namespace WMS.DAL
 				{
 					string query = WMSResource.getUserAcessNames.Replace("#employeeid", employeeid);
 					query = query.Replace("#roleid", roleid);
-					 await pgsql.OpenAsync();
+					await pgsql.OpenAsync();
 					return await pgsql.QueryAsync<userAcessNamesModel>(
 					  query, null, commandType: CommandType.Text);
 
@@ -2603,7 +2598,7 @@ namespace WMS.DAL
 		{
 			using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
 			{
-			
+
 
 				try
 				{
@@ -2643,7 +2638,7 @@ namespace WMS.DAL
 				try
 				{
 					string materialrequestquery = WMSResource.issuedqtydetails.Replace("#requestid", Convert.ToString(requestid));
-					
+
 					await pgsql.OpenAsync();
 					return await pgsql.QueryAsync<IssueRequestModel>(
 					  materialrequestquery, null, commandType: CommandType.Text);
@@ -2678,7 +2673,7 @@ namespace WMS.DAL
 				{
 					reserveid = obj.reserveid + 1;
 				}
-				
+
 			}
 			try
 			{
@@ -2687,7 +2682,7 @@ namespace WMS.DAL
 				foreach (var item in datamodel)
 				{
 
-					
+
 					string insertquery = WMSResource.insertreservematerial;
 					using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
 					{
@@ -2715,7 +2710,7 @@ namespace WMS.DAL
 					}
 
 				}
-				
+
 				return (Convert.ToInt32(result));
 			}
 			catch (Exception Ex)
@@ -2723,6 +2718,240 @@ namespace WMS.DAL
 				log.ErrorMessage("PODataProvider", "insertResevematerial", Ex.StackTrace.ToString());
 				return 0;
 			}
+		}
+
+		public async Task<IEnumerable<ReserveMaterialModel>> GetReservedMaterialList(string reservedby)
+		{
+			using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
+			{
+
+
+				try
+				{
+					string materialrequestquery = WMSResource.getreservedmaterialList.Replace("#reservedby", reservedby);
+					await pgsql.OpenAsync();
+					return await pgsql.QueryAsync<ReserveMaterialModel>(
+					  materialrequestquery, null, commandType: CommandType.Text);
+
+				}
+				catch (Exception Ex)
+				{
+					log.ErrorMessage("PODataProvider", "GetReservedMaterialList", Ex.StackTrace.ToString());
+					return null;
+				}
+				finally
+				{
+					pgsql.Close();
+				}
+
+			}
+		}
+
+		public async Task<IEnumerable<ReserveMaterialModel>> getissuematerialdetailsforreserved(int reservedid)
+		{
+			using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
+			{
+
+
+				try
+				{
+					string materialrequestquery = WMSResource.Getreleasedqty.Replace("#reserveid", Convert.ToString(reservedid));
+
+					await pgsql.OpenAsync();
+					return await pgsql.QueryAsync<ReserveMaterialModel>(
+					  materialrequestquery, null, commandType: CommandType.Text);
+
+				}
+				catch (Exception Ex)
+				{
+					log.ErrorMessage("PODataProvider", "getissuematerialdetails", Ex.StackTrace.ToString());
+					return null;
+				}
+				finally
+				{
+					pgsql.Close();
+				}
+
+			}
+		}
+
+		public async Task<IEnumerable<ReserveMaterialModel>> GetReleasedmaterialList()
+		{
+			using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
+			{
+				try
+				{
+					string materialrequestquery = WMSResource.GetreleasedmaterialList;
+
+					await pgsql.OpenAsync();
+					return await pgsql.QueryAsync<ReserveMaterialModel>(
+					  materialrequestquery, null, commandType: CommandType.Text);
+
+				}
+				catch (Exception Ex)
+				{
+					log.ErrorMessage("PODataProvider", "GetReleasedmaterialList", Ex.StackTrace.ToString());
+					return null;
+				}
+				finally
+				{
+					pgsql.Close();
+				}
+
+			}
+		}
+
+		public async Task<IEnumerable<ReserveMaterialModel>> GetmaterialdetailsByreserveid(string reserveid)
+		{
+			using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
+			{
+				try
+				{
+					string materialrequestquery = WMSResource.getmaterialdetailsbyreserveid.Replace("#reserveid", reserveid);
+
+					await pgsql.OpenAsync();
+					return await pgsql.QueryAsync<ReserveMaterialModel>(
+					  materialrequestquery, null, commandType: CommandType.Text);
+
+				}
+				catch (Exception Ex)
+				{
+					log.ErrorMessage("PODataProvider", "GetmaterialdetailsByreserveid", Ex.StackTrace.ToString());
+					return null;
+				}
+				finally
+				{
+					pgsql.Close();
+				}
+
+			}
+		}
+		/// <summary>
+		/// ApproveMaterialRelease
+		/// </summary>
+		/// <param name="dataobj"></param>
+		/// <returns></returns>
+		public int ApproveMaterialRelease(List<ReserveMaterialModel> dataobj)
+		{
+			try
+			{
+				var result = 0;
+				//data.createddate = System.DateTime.Now;
+				foreach (var item in dataobj)
+				{
+					string approvedstatus = string.Empty;
+					if (item.issuedqty != 0)
+					{
+						approvedstatus = "approved";
+					}
+					//else
+					//{
+					//	approvedstatus = "rejected";
+					//}
+					DateTime approvedon = System.DateTime.Now;
+					int itemid = 0;
+					using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
+					{
+						IssueRequestModel obj = new IssueRequestModel();
+						IssueRequestModel objs = new IssueRequestModel();
+						pgsql.Open();
+						string getitemidqry = WMSResource.getitemid.Replace("#materialid", item.materialid).Replace("#pono", item.pono);
+						// string getmaterialidqry = WMSResource.getrequestforissueid.Replace("#materialid", item.materialid).Replace("#pono", item.pono);
+
+						obj = pgsql.QueryFirstOrDefault<IssueRequestModel>(
+						   getitemidqry, null, commandType: CommandType.Text);
+						itemid = obj.itemid;
+						//objs = pgsql.QuerySingle<IssueRequestModel>(
+						//getmaterialidqry, null, commandType: CommandType.Text);
+
+						//requestforissueid = objs.requestforissueid;
+					}
+
+
+
+					int reserveformaterialid = item.reserveformaterialid;
+					string materialid = item.materialid;
+					int issuedqty = item.issuedqty;
+					DateTime itemissueddate = System.DateTime.Now;
+
+					string updateapproverstatus = WMSResource.updateapproverstatusforrelease;
+
+					using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
+					{
+
+						result = DB.Execute(updateapproverstatus, new
+						{
+							approvedstatus,
+							reserveformaterialid,
+							approvedon,
+							issuedqty,
+							materialid,
+							item.pono,
+							itemid,
+							item.itemreturnable,
+							item.approvedby,
+							itemissueddate,
+							item.itemreceiverid,
+
+						});
+					}
+				}
+				return (Convert.ToInt32(result));
+			}
+			catch (Exception Ex)
+			{
+				log.ErrorMessage("PODataProvider", "updaterequestedqty", Ex.StackTrace.ToString());
+				return 0;
+			}
+		
+
+	}
+
+		public int acknowledgeMaterialReceivedforreserved(List<ReserveMaterialModel> dataobj)
+		{
+			try
+			{
+				var result = 0;
+				//data.createddate = System.DateTime.Now;
+				foreach (var item in dataobj)
+				{
+					string ackstatus = string.Empty;
+					if (item.status == true)
+					{
+						ackstatus = "received";
+					}
+					else if (item.status == false)
+					{
+						ackstatus = "not received";
+					}
+					DateTime approveddate = System.DateTime.Now;
+
+					int requestforissueid = item.reserveformaterialid;
+					int requestid = item.reserveid;
+					string ackremarks = item.ackremarks;
+					int issuedquantity = item.issuedqty;
+					string updateackstatus = WMSResource.updateackstatusforreserved;
+
+					using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
+					{
+
+						result = DB.Execute(updateackstatus, new
+						{
+							ackstatus,
+							ackremarks,
+							requestid,
+
+						});
+					}
+				}
+				return (Convert.ToInt32(result));
+			}
+			catch (Exception Ex)
+			{
+				log.ErrorMessage("PODataProvider", "updaterequestedqty", Ex.StackTrace.ToString());
+				return 0;
+			}
+
 		}
 	}
 }

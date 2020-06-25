@@ -17,7 +17,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'list-outline'
   },
   {
-    title: 'Material Issue Dashboard',
+    title: 'Material Requests',
     link: '/WMS/MaterialIssueDashboard',
     icon: 'home-outline'
   },
@@ -104,6 +104,16 @@ export const MENU_ITEMS: NbMenuItem[] = [
     title: 'Material Requests',
     icon: 'home-outline',
     link: '/WMS/MaterialReqView',
+  },
+  {
+    title: 'Materials Reserved',
+    icon: 'home-outline',
+    link: '/WMS/MaterialReserveView',
+  },
+  {
+    title: 'Materials Release',
+    icon: 'home-outline',
+    link: '/WMS/MaterialReleaseDashboard',
   },
 
 ];

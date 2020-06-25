@@ -455,6 +455,7 @@ namespace WMS.Models
 	}
 	public class ReserveMaterialModel
 	{
+		public int issuedqty { get; set; }
 		public int reserveformaterialid { get; set; }
 		public string materialid { get; set; }
 		public int itemid { get; set; }
@@ -467,5 +468,14 @@ namespace WMS.Models
 		public int reserveid { get; set; }
 		public string pono { get; set; }
 		public int availableqty { get; set; }
+		public int releasedquantity { get; set; }
+		public string name { get; set; }
+		public string jobname { get; set; }
+		public Boolean itemreturnable { get; set; }
+		public string approvedby { get; set; }
+		public string itemreceiverid { get; set; }
+		public string approvedstatus { get; set; }
+		public bool status { get; set; }
+		public string ackremarks { get; set; }
 	}
 }

@@ -112,6 +112,9 @@ export class wmsService {
   getMaterialRequestlist(loginid: string, pono: string): Observable<any> {
     return this.http.get<any>(this.url + 'POData/getmaterialrequestList?PONO=' + pono + '&loginid=' + loginid + '', this.httpOptions);
   }
+  getMaterialReservelist(loginid: string): Observable<any> {
+    return this.http.get<any>(this.url + 'POData/GetreserveMaterilalist?reservedby=' + loginid + '', this.httpOptions);
+  }
   getMaterialRequestlistdata(loginid: string, pono: string): Observable<any> {
     return this.http.get<any>(this.url + 'POData/getmaterialrequestListdata?PONO=' + pono + '&loginid=' + loginid + '', this.httpOptions);
   }
@@ -127,22 +130,36 @@ export class wmsService {
   getMaterialIssueLlist(loginid: string): Observable<any> {
     return this.http.get<any>(this.url + 'POData/getmaterialIssueListbyapproverid?approverid=' + loginid + '', this.httpOptions);
   }
+  GetreleasedMaterilalist(loginid: string): Observable<any> {
+    return this.http.get<any>(this.url + 'POData/GetreleasedMaterilalist', this.httpOptions);
+  }
   getmaterialIssueListbyrequestid(requestid: string): Observable<any> {
     return this.http.get<any>(this.url + 'POData/getmaterialIssueListbyrequestid?requestid=' + requestid + '', this.httpOptions);
+  }
+  getmaterialIssueListbyreserveid(reserveid: string): Observable<any> {
+    return this.http.get<any>(this.url + 'POData/Getmaterialdetailsbyreserveid?reserveid=' + reserveid + '', this.httpOptions);
   }
   getmaterialissueList(requestid: string): Observable<any> {
     return this.http.get<any>(this.url + 'POData/getmaterialissueList?requestid=' + requestid + '', this.httpOptions);
   }
-  
+  getmaterialissueListforreserved(reservedid: string): Observable<any> {
+    return this.http.get<any>(this.url + 'POData/getmaterialissueListforreserved?reservedid=' + reservedid + '', this.httpOptions);
+  }
+
 
   approvematerialrequest(materialIssueList: any): Observable<any> {
     return this.http.post<any>(this.url + 'POData/approvematerialrequest/', materialIssueList, this.httpOptions);
   }
-
+  approvematerialrelease(materialIssueList: any): Observable<any> {
+    return this.http.post<any>(this.url + 'POData/approvematerialrelease/', materialIssueList, this.httpOptions);
+  }
+  
   ackmaterialreceived(materialAckList: any): Observable<any> {
     return this.http.post<any>(this.url + 'POData/ackmaterialreceived/', materialAckList, this.httpOptions);
   }
-
+  ackmaterialreceivedfroreserved(materialAckList: any): Observable<any> {
+    return this.http.post<any>(this.url + 'POData/ackmaterialreceivedfroreserved/', materialAckList, this.httpOptions);
+  }
   getGatePassList(): Observable<any> {
     return this.http.get<any>(this.url + 'POData/getgatepasslist/', this.httpOptions);
   }

@@ -89,7 +89,7 @@ export class LoginComponent implements OnInit {
   //1-security operator 2-inventoryenquiry, 3-inventoryclerk, 4-inventory manager, 5-project manager,6-dashboard user,7-admin
   bindMenu() {
     MENU_ITEMS[1].hidden = MENU_ITEMS[2].hidden = MENU_ITEMS[3].hidden = MENU_ITEMS[4].hidden = MENU_ITEMS[5].hidden = MENU_ITEMS[5].hidden = MENU_ITEMS[6].hidden = MENU_ITEMS[7].hidden = MENU_ITEMS[8].hidden = MENU_ITEMS[9].hidden = MENU_ITEMS[10].hidden = true;
-    MENU_ITEMS[11].hidden = MENU_ITEMS[12].hidden = MENU_ITEMS[13].hidden = MENU_ITEMS[14].hidden = MENU_ITEMS[15].hidden = MENU_ITEMS[16].hidden = MENU_ITEMS[17].hidden= true;
+    MENU_ITEMS[11].hidden = MENU_ITEMS[12].hidden = MENU_ITEMS[13].hidden = MENU_ITEMS[14].hidden = MENU_ITEMS[15].hidden = MENU_ITEMS[16].hidden = MENU_ITEMS[17].hidden = MENU_ITEMS[18].hidden = MENU_ITEMS[19].hidden = true;
     if (this.employee.roleid == "1") {//security perator
       MENU_ITEMS[1].hidden = false;
       this.router.navigateByUrl('/WMS/Home');
@@ -103,6 +103,7 @@ export class LoginComponent implements OnInit {
       MENU_ITEMS[3].hidden = false;
       MENU_ITEMS[4].hidden = false;
       MENU_ITEMS[6].hidden = false;
+      MENU_ITEMS[19].hidden = false;
       this.router.navigateByUrl('/WMS/GRNPosting');
     }
     if (this.employee.roleid == "4") {//inventory manager
@@ -110,11 +111,13 @@ export class LoginComponent implements OnInit {
       MENU_ITEMS[4].hidden = false;
       MENU_ITEMS[6].hidden = false;
       MENU_ITEMS[13].hidden = false;
+      MENU_ITEMS[19].hidden = false;
       this.router.navigateByUrl('/WMS/MaterialIssueDashboard');
     }
     if (this.employee.roleid == "5") {//project manager
       MENU_ITEMS[5].hidden = false;
       MENU_ITEMS[17].hidden = false;
+      MENU_ITEMS[18].hidden = false;
       this.router.navigateByUrl('/WMS/Dashboard');
     }
     if (this.employee.roleid == "6") {//dashboard
