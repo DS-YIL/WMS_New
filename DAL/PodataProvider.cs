@@ -2927,7 +2927,7 @@ namespace WMS.DAL
 					DateTime approveddate = System.DateTime.Now;
 
 					int requestforissueid = item.reserveformaterialid;
-					int requestid = item.reserveid;
+					int reserveid = item.reserveid;
 					string ackremarks = item.ackremarks;
 					int issuedquantity = item.issuedqty;
 					string updateackstatus = WMSResource.updateackstatusforreserved;
@@ -2939,7 +2939,7 @@ namespace WMS.DAL
 						{
 							ackstatus,
 							ackremarks,
-							requestid,
+							reserveid,
 
 						});
 					}

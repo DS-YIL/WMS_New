@@ -88,7 +88,7 @@ export class MaterialReserveViewComponent implements OnInit {
     else {
       this.spinner.show();
       this.btnDisable = true;
-      this.wmsService.ackmaterialreceived(this.reserveList).subscribe(data => {
+      this.wmsService.ackmaterialreceivedfroreserved(this.reserveList).subscribe(data => {
         this.spinner.hide();
         if (data)
           this.messageService.add({ severity: 'sucess', summary: 'sucee Message', detail: 'Status updated' });
