@@ -58,8 +58,7 @@
         <td class="ptable-cell" style="text-align:right">{{rowData.quotationqty}}</td>
         <td class="ptable-cell" style="    text-align: right">
           <!--<span *ngIf="rowData.approvedstatus=='approved'">{{rowData.requestedquantity}}</span>-->
-   ap
-          ng
+  
           <input *ngIf="rowData.approvedstatus!='approved'" pInputText type="number" class="form-control" [(ngModel)]="rowData.requestedquantity" (change)="reqQtyChange(rowData)">
         </td>
         <td class="ptable-cell" style="text-align:right">{{rowData.availableqty}}</td>
