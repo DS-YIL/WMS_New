@@ -143,6 +143,7 @@ export class WarehouseInchargeComponent implements OnInit {
       this.StockModel.itemlocation = this.store.code;
       this.StockModel.rackid = this.rack.code;
       this.StockModel.binid = this.bin.code;
+      this.StockModel.confirmqty = this.PoDetails.confirmqty;
       this.StockModel.itemreceivedfrom = new Date();
       //this.StockModel.itemlocation = this.store.name + "." + this.rack.name + '.' + this.bin.name;
       this.StockModel.itemlocation = this.store.name + "." + this.rack.name;

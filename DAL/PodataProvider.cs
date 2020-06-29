@@ -551,6 +551,7 @@ namespace WMS.DAL
 				if (data.itemid == 0)
 				{
 					string materialid = data.Material;
+					data.availableqty = data.confirmqty;
 					using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
 					{
 						result = Convert.ToInt32(DB.ExecuteScalar(insertquery, new
@@ -1735,7 +1736,11 @@ namespace WMS.DAL
 
 			}
 		}
-
+		/// <summary>
+		/// updating abccategorydata
+		/// </summary>
+		/// <param name="model"></param>
+		/// <returns></returns>
 		public int updateABCcategorydata(List<ABCCategoryModel> model)
 		{
 			int returndata = 0;
@@ -1814,7 +1819,10 @@ namespace WMS.DAL
 				return 0;
 			}
 		}
-
+/// <summary>
+/// getabc categorydata
+/// </summary>
+/// <returns></returns>
 		public async Task<IEnumerable<ABCCategoryModel>> GetABCCategorydata()
 		{
 			using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))
@@ -1843,7 +1851,10 @@ namespace WMS.DAL
 
 			}
 		}
-
+		/// <summary>
+		/// availability qty
+		/// </summary>
+		/// <returns></returns>
 		public async Task<IEnumerable<ReportModel>> GetABCavailableqtyList()
 		{
 			using (var pgsql = new NpgsqlConnection(config.PostgresConnectionString))

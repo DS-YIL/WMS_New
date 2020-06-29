@@ -26,6 +26,8 @@ export class PoDetails {
   materialdescription: string;
   grnnumber: string;
   itemid: number;
+  confirmqty: number;
+
 }
 
 export class BarcodeModel {
@@ -99,7 +101,8 @@ export class StockModel {
   itemlocation: string;
   createddate: Date;
   createdby: string;
-
+  confirmqty: number;
+ 
 }
 
 export class materialRequestDetails {
@@ -163,6 +166,7 @@ export class categoryValues {
 export class FIFOValues {
   materialid: string;
   issueqty: number;
+  //issuedquantity: number;
 }
 
 export class authUser {

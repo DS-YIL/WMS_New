@@ -113,8 +113,9 @@ namespace WMS.Models
 		public string createdby { get; set; }
         public string binnumber { get; set; }
         public string racknumber { get; set; }
+	  public int confirmqty { get; set; }
 
-    }
+	}
 	public class trackstatusModel
 	{
 		public int trackid { get; set; }
