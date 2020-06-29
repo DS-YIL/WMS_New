@@ -24,7 +24,8 @@ export class StoreClerkComponent implements OnInit {
   public BarcodeModel: BarcodeModel;
   public inwardModel: inwardModel;
   public grnnumber: string = "";
-
+  public totalqty: number;
+  public recqty: number;
   ngOnInit() {
     if (localStorage.getItem("Employee"))
       this.employee = JSON.parse(localStorage.getItem("Employee"));
@@ -123,25 +124,33 @@ export class StoreClerkComponent implements OnInit {
       this.podetailsList.forEach(item => {
         item.receivedby = this.employee.employeeno;
       });
-      this.wmsService.insertitems(this.podetailsList).subscribe(data => {
+      this.recqty = this.podetailsList[0].confirmqty + this.podetailsList[0].returnqty;
+      this.totalqty = parseInt(this.podetailsList[0].receivedqty);
+      if (this.totalqty == this.recqty) {
+        this.wmsService.insertitems(this.podetailsList).subscribe(data => {
+          this.spinner.hide();
+          if (data != null) {
+            this.wmsService.verifythreewaymatch(this.PoDetails.pono).subscribe(info => {
+              if (info != null)
+                this.grnnumber = info.grnnumber;
+              //this.grnnumber = data;
+            })
+          }
+          if (data == null) {
+            this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Something went wrong' });
+          }
+
+          if (data) {
+            this.messageService.add({ severity: 'success', summary: 'Success Message', detail: 'Saved Sucessfully' });
+            this.showQtyUpdateDialog = false;
+            this.disGrnBtn = true;
+          }
+        });
+      }
+      else {
+        this.messageService.add({ severity: 'error', summary: 'Validation', detail: 'Accept and return quantity  should be equal to  Received quantity ' });
         this.spinner.hide();
-        if (data != null) {
-          this.wmsService.verifythreewaymatch(this.PoDetails.pono).subscribe(info => {
-            if (info != null)
-              this.grnnumber = info.grnnumber;
-            //this.grnnumber = data;
-          })
-        }
-        if (data == null) {
-          this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Something went wrong' });
-        }
-        
-        if (data) {
-          this.messageService.add({ severity: 'success', summary: 'Success Message', detail: 'Saved Sucessfully' });
-          this.showQtyUpdateDialog = false;
-          this.disGrnBtn = true;
-        }
-      });
+      }
     }
     else
       this.messageService.add({ severity: 'error', summary: 'Validation', detail: 'Enter Quantity' });
