@@ -397,11 +397,11 @@ namespace WMS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to select distinct max(res.reserveformaterialid) as reserveformaterialid, max(sk.availableqty)as availableqty,res.pono,max(res.materialid)as materialid,max(res.reserveid) as reserveid,max(op.jobname)as jobname,max(res.reservedon)as reservedon,max(res.reservedqty)as reservedqty from wms.wms_materialreserve res
+        ///   Looks up a localized string similar to select distinct max(res.reserveformaterialid) as reserveformaterialid, max(sk.availableqty)as availableqty,res.pono,max(res.materialid)as materialid,max(res.reserveid) as reserveid,max(op.jobname)as jobname,max(res.reservedon)as reservedon,max(res.reservedqty)as reservedqty,max(emp.&quot;name&quot;)as name from wms.wms_materialreserve res
         ///inner join wms.employee emp on emp.employeeno=res.reservedby
         ///inner join wms.wms_stock sk on sk.pono=res.pono 
         ///left join wms.openpolistview op on op.pono=res.pono
-        ///where reserveid=#reserveid and sk.avai [rest of string was truncated]&quot;;.
+        ///where reserveid [rest of string was truncated]&quot;;.
         /// </summary>
         public static string getmaterialdetailsbyreserveid {
             get {
@@ -488,7 +488,7 @@ namespace WMS.Common {
         ///   Looks up a localized string similar to select max(req.reservedqty)as reservedqty, max(req.materialid)as materialid, max(req.reserveid)as reserveid,req.reserveformaterialid,sum(issuedqty)as releasedquantity
         ///         from wms.wms_materialreserve  req
         ///        left join wms.wms_materialissue iss on req.reserveformaterialid=iss.reserveformaterialid
-        ///       where req.reserveid=#reserveid
+        ///       where req.reserveid=#reserveid and req.reservedqty&gt;0
         ///       group by req.reserveformaterialid,iss.materialissueid.
         /// </summary>
         public static string Getreleasedqty {
@@ -522,7 +522,7 @@ namespace WMS.Common {
         ///left join wms.wms_stock sk on sk.materialid=res.materialid
         ///left join wms.openpolistview op on op.pono=res.pono
         ///left join wms.wms_materialissue iss on iss.reserveformaterialid=res.reserveformaterialid 
-        ///where reservedby=&apos;#reservedby&apos;
+        ///where reservedby=&apos;#reservedby&apos; 
         ///group by res.reserveid.
         /// </summary>
         public static string getreservedmaterialList {

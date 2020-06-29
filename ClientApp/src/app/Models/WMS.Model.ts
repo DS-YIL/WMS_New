@@ -102,6 +102,7 @@ export class StockModel {
   createddate: Date;
   createdby: string;
   confirmqty: number;
+  material: string;
  
 }
 

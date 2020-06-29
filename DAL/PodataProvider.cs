@@ -1035,8 +1035,9 @@ namespace WMS.DAL
 				var result = 0;
 				foreach (var item in dataobj)
 				{
-
-					item.requesteddate = System.DateTime.Now;
+					if (item.requestedquantity > 0) { 
+						
+						item.requesteddate = System.DateTime.Now;
 					string insertquery = WMSResource.materialquest;
 					string materialid = item.Material;
 					using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
@@ -1067,7 +1068,7 @@ namespace WMS.DAL
 						}
 					}
 
-
+				}
 
 				}
 				return (Convert.ToInt32(result));
@@ -2693,33 +2694,36 @@ namespace WMS.DAL
 				foreach (var item in datamodel)
 				{
 
-
-					string insertquery = WMSResource.insertreservematerial;
-					using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
+					if (item.reservedqty > 0)
 					{
-						result = DB.Execute(insertquery, new
-						{
-							item.materialid,
-							item.itemid,
-							item.pono,
-							item.reservedby,
-							item.reservedqty,
-							reserveid,
-						});
-					}
-
-					if (result != 0)
-					{
-						int availableqty = item.availableqty - item.reservedqty;
-						string updatequery = WMSResource.updatestock.Replace("#availableqty", Convert.ToString(availableqty)).Replace("#itemid", Convert.ToString(item.itemid));
+						item.materialid = item.material;
+						string insertquery = WMSResource.insertreservematerial;
 						using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
 						{
-							result = DB.Execute(updatequery, new
+							result = DB.Execute(insertquery, new
 							{
+								item.materialid,
+								item.itemid,
+								item.pono,
+								item.reservedby,
+								item.reservedqty,
+								reserveid,
 							});
 						}
-					}
 
+						if (result != 0)
+						{
+							int availableqty = item.availableqty - item.reservedqty;
+							string updatequery = WMSResource.updatestock.Replace("#availableqty", Convert.ToString(availableqty)).Replace("#itemid", Convert.ToString(item.itemid));
+							using (IDbConnection DB = new NpgsqlConnection(config.PostgresConnectionString))
+							{
+								result = DB.Execute(updatequery, new
+								{
+								});
+							}
+						}
+
+					}
 				}
 
 				return (Convert.ToInt32(result));

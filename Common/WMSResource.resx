@@ -454,7 +454,7 @@ emp1.name as approvername
   group by req.requestforissueid,iss.materialissueid</value>
   </data>
   <data name="getmaterialdetailsbyreserveid" xml:space="preserve">
-    <value>select distinct max(res.reserveformaterialid) as reserveformaterialid, max(sk.availableqty)as availableqty,res.pono,max(res.materialid)as materialid,max(res.reserveid) as reserveid,max(op.jobname)as jobname,max(res.reservedon)as reservedon,max(res.reservedqty)as reservedqty from wms.wms_materialreserve res
+    <value>select distinct max(res.reserveformaterialid) as reserveformaterialid, max(sk.availableqty)as availableqty,res.pono,max(res.materialid)as materialid,max(res.reserveid) as reserveid,max(op.jobname)as jobname,max(res.reservedon)as reservedon,max(res.reservedqty)as reservedqty,max(emp."name")as name from wms.wms_materialreserve res
 inner join wms.employee emp on emp.employeeno=res.reservedby
 inner join wms.wms_stock sk on sk.pono=res.pono 
 left join wms.openpolistview op on op.pono=res.pono
@@ -474,7 +474,7 @@ group by req.reserveid,req.reservedby,po.projectname,emp."name" order by req.res
     <value>select max(req.reservedqty)as reservedqty, max(req.materialid)as materialid, max(req.reserveid)as reserveid,req.reserveformaterialid,sum(issuedqty)as releasedquantity
          from wms.wms_materialreserve  req
         left join wms.wms_materialissue iss on req.reserveformaterialid=iss.reserveformaterialid
-       where req.reserveid=#reserveid
+       where req.reserveid=#reserveid and req.reservedqty&gt;0
        group by req.reserveformaterialid,iss.materialissueid</value>
   </data>
   <data name="getreservedmaterialList" xml:space="preserve">
@@ -484,7 +484,7 @@ from wms.wms_materialreserve res
 left join wms.wms_stock sk on sk.materialid=res.materialid
 left join wms.openpolistview op on op.pono=res.pono
 left join wms.wms_materialissue iss on iss.reserveformaterialid=res.reserveformaterialid 
-where reservedby='#reservedby'
+where reservedby='#reservedby' 
 group by res.reserveid</value>
   </data>
   <data name="insertreservematerial" xml:space="preserve">

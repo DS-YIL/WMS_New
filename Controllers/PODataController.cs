@@ -308,7 +308,7 @@ namespace WMS.Controllers
 		public int updateMaterialavailabality([FromBody]List<IssueRequestModel> model)
 		{
 
-			return this._poService.updateissuedmaterial(model);
+		return this._poService.updateissuedmaterial(model);
 		}
 
 		[HttpPost("assignRole")]

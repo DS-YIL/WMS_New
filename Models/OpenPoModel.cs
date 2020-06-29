@@ -459,6 +459,7 @@ namespace WMS.Models
 		public int issuedqty { get; set; }
 		public int reserveformaterialid { get; set; }
 		public string materialid { get; set; }
+		public string material { get; set; }
 		public int itemid { get; set; }
 		public DateTime reservedon { get; set; }
 		public string reservedby { get; set; }

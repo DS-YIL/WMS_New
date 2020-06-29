@@ -14,6 +14,7 @@ import { ConfirmationService } from 'primeng/api';
 })
 export class MaterialReleaseComponent implements OnInit {
     roindex: any;
+    executetrueorfalse: boolean=false;
 
   constructor(private ConfirmationService: ConfirmationService, private formBuilder: FormBuilder, private messageService: MessageService, private wmsService: wmsService, private route: ActivatedRoute, private router: Router, public constants: constants, private spinner: NgxSpinnerService) { }
 
@@ -159,31 +160,33 @@ export class MaterialReleaseComponent implements OnInit {
   onMaterialIssueDeatilsSubmit() {
     this.spinner.show();
 
-    this.wmsService.UpdateMaterialqty(this.itemlocationData).subscribe(data => {
-      if (data == 1) {
-        this.itemlocationData.forEach(item => {
-         
-         // item.issuedquantity = this.itemlocationData.issuedquantity;
-
-        });
-        //this.materialissueList.forEach(item => {
-        //  if (item.issuedqty != 0)
-
-        //   // totalissuedqty = totalissuedqty + (item.issuedquantity);
-        //  // this.FIFOvalues.issueqty = totalissuedqty;
-        //  item.issuedqty = this.FIFOvalues.issueqty;
-
-        //});
-
-        this.wmsService.approvematerialrelease(this.materialissueList).subscribe(data => {
-          this.spinner.hide();
-          if (data)
-            this.messageService.add({ severity: 'success', summary: 'sucee Message', detail: 'Status updated' });
-          else
-            this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Update Failed' });
-
-        });
+    this.materialissueList.forEach(item => {
+      if (item.issuedqty > item.reservedqty) {
+        this.executetrueorfalse = false;
+        this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Issued qty should be less than reserved qty' });
       }
-    })
+      else {
+        this.executetrueorfalse = true;
+      }
+      // item.issuedquantity = this.itemlocationData.issuedquantity;
+
+    });
+
+    if (this.executetrueorfalse == true) {
+      this.wmsService.UpdateMaterialqty(this.itemlocationData).subscribe(data => {
+      if (data == 1) {
+          this.wmsService.approvematerialrelease(this.materialissueList).subscribe(data => {
+            this.spinner.hide();
+            if (data)
+              this.messageService.add({ severity: 'success', summary: 'sucee Message', detail: 'Status updated' });
+            else
+              this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Update Failed' });
+
+          });
+
+        }
+      })
+    }
+
   }
 }

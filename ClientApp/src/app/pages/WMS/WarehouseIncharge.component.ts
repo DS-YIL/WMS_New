@@ -133,6 +133,7 @@ export class WarehouseInchargeComponent implements OnInit {
 
   onSubmitStockDetails() {
     if (this.store.name && this.rack.name) {
+      this.StockModel.material = this.PoDetails.material;
       this.StockModel.itemid = this.PoDetails.itemid;
       this.StockModel.pono = this.PoDetails.pono;
       this.StockModel.grnnumber = this.PoDetails.grnnumber;
